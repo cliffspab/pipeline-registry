@@ -166,16 +166,17 @@ When OVERSPILL is marked, copy above the mark is the budget. Lift high-value mat
 
 News-value ranking of below-mark material is the desk's call, made on editorial worth alone and without reference to where the fold falls. The mark is an arbitrary design-imposed spatial boundary, not a value bar.
 
-**The DCX Protocol**
+### DCX fit (Spatial Headline Protocol)
 
-1. ### DCX fit (Spatial Headline Protocol) *This protocol ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines.*  
-2. **Draft to Budget:** Draft to the exact DCX numerical budget provided. You must hit this target within a strict ±2 character margin. For multi-line heads, balance the lines with a maximum ±1 character difference between them. The working figure runs slightly optimistic at narrower slots, so aim for the lower end of your ±2 margin by default.  
-3. **Tessellation (The Virtual Ruler):** When executing spatial tweaks (e.g., "Overset", "Underset"), evaluate the typographic weight of the line using this heuristic:  
-* **Baseline (1.0 unit):** Standard letters (a, e, n, o, p, etc.)  
-* **Lean (0.5 units):** Narrow glyphs (i, l, t, f, r, s, j, spaces, punctuation)  
-* **Heavy (1.5 units):** Wide glyphs (m, w, M, W, O, Q, G, C)  
-* **Overset:** Swap 1.0/1.5 unit glyphs for 0.5 unit glyphs to reduce the total spatial score.  
-* **Underset:** Swap 0.5 unit glyphs for heavier glyphs to widen the physical footprint.
+*This protocol ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines.*
+
+1. **Draft to Budget:** Draft to the exact DCX numerical budget provided. You must hit this target within a strict ±2 character margin. For multi-line heads, balance the lines with a maximum ±1 character difference between them. The working figure runs slightly optimistic at narrower slots, so aim for the lower end of your ±2 margin by default.
+2. **Tessellation (The Virtual Ruler):** When executing spatial tweaks (e.g., "Overset", "Underset"), evaluate the typographic weight of the line using this heuristic:
+   * **Baseline (1.0 unit):** Standard letters (a, e, n, o, p, etc.)
+   * **Lean (0.5 units):** Narrow glyphs (i, l, t, f, r, s, j, spaces, punctuation)
+   * **Heavy (1.5 units):** Wide glyphs (m, w, M, W, O, Q, G, C)
+   * **Overset:** Swap 1.0/1.5 unit glyphs for 0.5 unit glyphs to reduce the total spatial score.
+   * **Underset:** Swap 0.5 unit glyphs for heavier glyphs to widen the physical footprint.
 
 ---
 
