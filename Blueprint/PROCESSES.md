@@ -10,7 +10,7 @@ When copy is in front of you and a specific element requires action, this is the
 
 **270626_pro_githubdone.md**
 
-**\#\# PART 1: HOUSE CONVENTIONS**
+## PART 1: HOUSE CONVENTIONS
 
 Presentational substitutions applied wherever the relevant element appears in copy.
 
@@ -149,7 +149,7 @@ UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus app
 
 ---
 
-**\#\# PART 2: SPATIAL MECHANICS**
+## PART 2: SPATIAL MECHANICS
 
 The rules in this part use substitution rather than calculation. The framing is deliberate: LLMs handle swaps reliably and counting unreliably, so the operations are designed as substitutions whose volume is preserved by construction. "1-in / 1-out" and "swap heavy for lean" are the operations themselves, not shorthand for "preserve length" or "make it narrower."
 
@@ -179,7 +179,7 @@ News-value ranking of below-mark material is the desk's call, made on editorial 
 
 ---
 
-**\#\# PART 3: PR HANDLING**
+## PART 3: PR HANDLING
 
 PR copy is a minimum-intervention style pass — a basic read-through with house conventions applied where the structure permits. The frame is spellcheck-plus-style, not editing.
 
