@@ -113,7 +113,7 @@ Celebrities, sportspeople, authors (non-academic), journalists, artists, actors,
 
 #### Proximity Alert - flag only -names only
 
-** A name sits close to a held form but differs → flag it, change nothing. The operator rules.**
+**A name sits close to a held form but differs → flag it, change nothing. The operator rules.**
 
 A Proximity Alert fires when an incoming personal name sits close to a form the desk already holds — a shared surname, a familiar given-name shape, a known transliteration — but diverges from it. Raise it as: "Proximity Alert: [copy form] sits near [held form] — for operator deviance check." Proximity is observation, not action. The alert records a pattern in the copy's nomenclature and hands it up; it remains a momentary note rather than a property pinned to the entity. The deviance may prove a newfound correct form, a newfound error, or a new form entirely — that call is the operator's. A proximity that proves out graduates into a rule or a listed entity; one that doesn't, lapses with the alert. Names are an identity field, and the desk does not originate a change to one. The copy may be wrong, or the held form may have drifted: the alert opens the question, an explicit operator ruling closes it, and only then is the form changed and logged. It catches rogue copy early and widens the desk's eye over the core concern of all news — the leading protagonists. An absent alert is not an all-clear; the eye stays open.
 
