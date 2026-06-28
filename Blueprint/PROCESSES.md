@@ -8,7 +8,7 @@ When copy is in front of you and a specific element requires action, this is the
 
 ---
 
-**270626_pro_githubdone.md**
+**290626_pro_overspill-python.md**
 
 ## PART 1: HOUSE CONVENTIONS
 
@@ -151,7 +151,9 @@ UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus app
 
 ## PART 2: SPATIAL MECHANICS
 
-The rules in this part use substitution rather than calculation. The framing is deliberate: LLMs handle swaps reliably and counting unreliably, so the operations are designed as substitutions whose volume is preserved by construction. "1-in / 1-out" and "swap heavy for lean" are the operations themselves, not shorthand for "preserve length" or "make it narrower."
+The rules in this part address one flaw: the model's innate counting is unreliable. There are two valid answers to that flaw, and this part uses both. Where the operation suits it, design around counting entirely — substitution whose volume is preserved by construction ("1-in / 1-out" and "swap heavy for lean" are the operations themselves, not shorthand for "preserve length" or "make it narrower"). Where the operation needs a real number, hand the count to an external tool that does it deterministically. Bringing in Python to count is not a departure from this part's logic — it is the same flaw corrected by the same principle, with an external mechanism instead of an avoidance design.
+
+So: the body-text footprint change (Overspill below) is counted with a verified Python character count. The DCX headline protocol stays on substitution and does no counting. Both honour the rule that the model never trusts its own count.
 
 ### Editing Scope
 
@@ -160,11 +162,47 @@ The rules in this part use substitution rather than calculation. The framing is 
 * No footprint instruction — edit freely for structure, sequence, hierarchy, paragraphing and narrative logic. The 10% bloat allowance applies: Thai-to-English translation introduces padding, so the smallest-intervention rule is suspended for structural bloat — cut up to 10% to clear tautology, passive voice and fat, provided the core narrative stays intact. Cuts beyond 10% are logged.  
 * "Fits" is a footprint instruction: the slot is already met — no bloat-cutting, no footprint-changing rewrites, full style pass still expected. Hand back the footprint intact; the operator makes final width adjustments. Fit > elegance.
 
-### Overspill
+### Overspill (body-text footprint change)
 
-When OVERSPILL is marked, copy above the mark is the budget. Lift high-value material from below the mark into the body where it improves the story; trim to hold the budget. 1-in / 1-out. Log adds and cuts.
+A footprint change to story BODY is counted, not substituted — the count handed to Python, this part's own principle applied (external mechanism for an innate flaw), not a departure from it. A verified Python character count replaces in-head estimation, the historical root of overspill error. (Headlines are NOT covered here — they stay on the DCX spatial protocol below.)
 
-News-value ranking of below-mark material is the desk's call, made on editorial worth alone and without reference to where the fold falls. The mark is an arbitrary design-imposed spatial boundary, not a value bar.
+**Unit:** characters with spaces. The count is `len(text)` — the .dcx-native measure (probe-confirmed: .dcx counts the space). Never report a count not returned by `len()`.
+
+**Input (preferred): the .dcx pair** — "story = X chars, box = Y chars". The spill is `X - Y`, exact, from verified figures; the proportion is built on these, never on the model's own baseline count. (Fallback input: a signed spill — +N remove, -N add.)
+
+**No cut point.** There is no marked overspill position; only a character target against the whole body. The team often picks a story imagining its own cut points into a smaller box — that imagined cut is not the instruction. Recast the whole story to the target by value; if the imagined cut coincides with the low-value material, fine, but arrive there by reading the story, not by inheriting the guess.
+
+**Selection — recast by value, not position:**
+
+* Assess every block by news value; remove lowest-value material wherever it sits. Surplus is not assumed to be at the tail.
+* LOW value (cut first): redundant restatement, secondary/third-tier incident, transitional or hedging line, background already implied, colour that adds no fact.
+* HIGH value (protect): the core event, named-source quotes, figures, the causal "why", consequence, anything not stated elsewhere.
+* Inverted pyramid is a tendency, not a rule: value usually thins toward the bottom, BUT copy often holds a key fact for the final paragraph (kicker). Read the last paragraph before cutting it — never reflex-trim from the bottom.
+* One fact in one place: if information appears twice, cut the weaker instance.
+* Whole weak block before gutting a strong one.
+
+**Procedure (hybrid — 2 Python calls, not a loop):**
+
+1. `spill = X - Y` from the .dcx pair. Judgment first pass: cut by value (or 1-in/1-out on a small spill) aimed at the proportion — no Python yet. The sweep aims; Python confirms.
+2. One Python count: check the swept copy against Y, set the exact residual.
+3. Correct the residual by deleting already-counted material (its length is known from the verify pass — subtract, no recheck needed if landing UNDER target). A rewrite makes new uncounted text, so it costs one more count.
+4. Strip metadata, then report the count of the stripped text. No model-introduced markup (crosshead flags, notes) survives into counted copy or the deliverable:
+
+   ```python
+   import re
+   clean = re.sub(r'^\s*\[[A-Z][^\]]*\]\s*', '', body, flags=re.M)
+   print(len(clean))   # the reported count
+   ```
+
+   Land UNDER target (inside the hole), never over.
+
+**Fallback (full loop):** if the first pass is wildly off, or the spill is large and structural, revert to: count -> one edit -> re-count -> repeat -> land under.
+
+**Calibration check (free):** the verify-call count should match X. If it drifts, the counter has diverged from .dcx — surface it; do not silently trust either number.
+
+**Story priority.** Prioritise telling the headline story properly over maintaining multiple narratives. The minimum deliverable is one relatively complete news story told to the fullest the space allows. Better to drop a story and tell the survivor(s) well — the dropped one can run online — than run two stories badly under one head. Where a whole story is dropped, record it in the Style Log in one sentence (what it was). Log trims and the drop decision.
+
+News-value ranking is the desk's call, made on editorial worth alone and without reference to where any fold falls. A design-imposed boundary is a spatial fact, never a value bar.
 
 ### DCX fit (Spatial Headline Protocol)
 
