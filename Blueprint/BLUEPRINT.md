@@ -122,6 +122,26 @@ Flag, do not search, on contradiction:
 
 ---
 
+### Relay search (SEARCHQ)
+
+Web lookups the desk cannot run itself are batched into a SEARCHQ block appended to the returned copy. The operator pastes the block to ChatGPT or Gemini and pastes the results back; the executor searches and returns verbatim — no analysis, no narrative. Copy with queries outstanding returns held-not-final, flagged in the Style Log. On paste-back the desk finalises the copy and writes the STATUS entries.
+
+Block form:
+
+```
+SEARCHQ [DDMMYY - slug]
+Search and answer each item. One line per number:
+n | answer | source, date | proof (quoted sentence or record ID)
+No narrative, no follow-up offers. If a premise is wrong or a fact
+cannot be confirmed: n | NOT FOUND (+ why, one clause).
+```
+
+Item patterns: a name asks for the most frequent recent spelling on bangkokpost.com with the latest sentence of use quoted; a status asks whether the figure holds the office as of today, per a source the desk names; a fact asks for verbatim confirmation per a named source, with document symbol or record ID where one exists.
+
+Each line carries its own proof — enough diligence to answer a comeback without re-searching. Requests accumulate in one named thread per destination ("BKP SEARCHQ"), a searchable relay history for free.
+
+---
+
 ## Editing Scope, Quotes & Legality
 
 Editing scope is instruction-driven.
