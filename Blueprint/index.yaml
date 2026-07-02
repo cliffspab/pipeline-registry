@@ -1,0 +1,7 @@
+entry: blueprint
+
+files:
+  blueprint: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/BLUEPRINT.md
+  processes: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/PROCESSES.md
+  references: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/REFERENCES.yaml
+  status: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/STATUS.yaml

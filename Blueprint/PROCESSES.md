@@ -52,7 +52,13 @@ Timeline conflicts — where the copy's internal chronology disagrees with itsel
 
 **Month abbreviation:** months running to six letters or more are abbreviated. The forms are Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec.
 
+**Weekdays** take British English "on" — "it happened on Saturday", never "it happened Saturday". Trust the filed local copy's day/date usage; it is usually correctly applied. ("Deeply entrenched" takes no hyphen.)
+
 A missing slug or unclear date logic is flagged in the Style Log.
+
+### Datelines
+
+Datelines are left exactly as provided — never added, never localised (BEIJING stays BEIJING, whatever the case filed). Agency credits are never stripped.
 
 ### Currency
 
@@ -93,6 +99,8 @@ Forms are not mixed within a story. Naming conventions are unchanged by location
 
 Mr and Ms apply to civilians, no full stop. Dr applies only to practising medical doctors, not to academic or other doctorates. Khun is reserved for direct quotes.
 
+An honorific attaches to a surname given in copy: a person the copy names without a surname carries no honorific after first mention.
+
 Higher ranks are retained on all references: Sir, Lord, ML, MR, Khunying, Thanphuying, Phra, royal titles, police and military ranks.
 
 British royals carry first name plus title throughout (Prince William, not William).
@@ -102,6 +110,8 @@ British royals carry first name plus title throughout (Prince William, not Willi
 A title prefixing a name is lower case ("the prime minister said") except for Prime Minister, King, royal titles, and ministry heads acting as a title ("Prime Minister Anutin said", "Foreign Minister X said").
 
 Former titles are always lower case ("former prime minister Yingluck Shinawatra"). Senator, governor and mayor are lower case and carry Mr/Ms unless a higher rank applies.
+
+Deputy ministers take the capped title (Deputy Transport Minister Phattrapong Phattraprasit); deputy government spokespeople and similar posts do not. "cabinet" is lower case, always.
 
 Titles appear before names, not after: "Secretary of State Rex Tillerson said", not "Rex Tillerson, secretary of state, said".
 
@@ -153,7 +163,9 @@ UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus app
 
 The rules in this part address one flaw: the model's innate counting is unreliable. There are two valid answers to that flaw, and this part uses both. Where the operation suits it, design around counting entirely — substitution whose volume is preserved by construction ("1-in / 1-out" and "swap heavy for lean" are the operations themselves, not shorthand for "preserve length" or "make it narrower"). Where the operation needs a real number, hand the count to an external tool that does it deterministically. Bringing in Python to count is not a departure from this part's logic — it is the same flaw corrected by the same principle, with an external mechanism instead of an avoidance design.
 
-So: the body-text footprint change (Overspill below) is counted with a verified Python character count. The DCX headline protocol stays on substitution and does no counting. Both honour the rule that the model never trusts its own count.
+So: the body-text footprint change (Overspill below) is counted with a verified character tool **where the model can run one** — and falls back to 1-in/1-out substitution where it cannot. The DCX headline protocol stays on substitution and does no counting. All routes honour the rule that the model never trusts its own *in-head* count.
+
+**Route depends on the actor.** Not every model can execute code: a Python `len()` count is exact and preferred, but Gemini cannot run Python and other models may not fire it up. The overspill procedure therefore specifies BOTH paths — Option A (verified count) and Option B (1-in/1-out substitution) — and the model or operator takes whichever the situation allows. Option B is not deprecated; for some actors it is the only path.
 
 ### Editing Scope
 
@@ -161,12 +173,14 @@ So: the body-text footprint change (Overspill below) is counted with a verified 
 * Footprint instruction given — hold, halve, trim, grow, a DCX budget, or overspill marked. Do exactly that. The instruction is a concrete spatial target: the copy is being worked into its allotted slot. Hit it via 1-in/1-out substitution and structural tweaking. The full house-style pass always applies — style fixes are never skipped to protect width; where a fix shifts width, absorb it in the swap or hold and flag for the operator's fit.  
 * No footprint instruction — edit freely for structure, sequence, hierarchy, paragraphing and narrative logic. The 10% bloat allowance applies: Thai-to-English translation introduces padding, so the smallest-intervention rule is suspended for structural bloat — cut up to 10% to clear tautology, passive voice and fat, provided the core narrative stays intact. Cuts beyond 10% are logged.  
 * "Fits" is a footprint instruction: the slot is already met — no bloat-cutting, no footprint-changing rewrites, full style pass still expected. Hand back the footprint intact; the operator makes final width adjustments. Fit > elegance.
+* Sub-heads removed from a story free space the body inherits: increase the body footprint to fill it rather than leave the gap.  
+* Default target of every edit: land just over, never under — overmatter shaves at paste; undermatter leaves a physical gap in the column. The model's observed drift is to cut slightly under: that is the fault to correct, not caution.
 
 ### Overspill (body-text footprint change)
 
-A footprint change to story BODY is counted, not substituted — the count handed to Python, this part's own principle applied (external mechanism for an innate flaw), not a departure from it. A verified Python character count replaces in-head estimation, the historical root of overspill error. (Headlines are NOT covered here — they stay on the DCX spatial protocol below.)
+A footprint change to story BODY targets a character figure, reached by ONE OF TWO ROUTES depending on what the actor can do (see Route A / Route B below). Either way the model never trusts its own in-head count — the historical root of overspill error. (Headlines are NOT covered here — they stay on the DCX spatial protocol below.)
 
-**Unit:** characters with spaces. The count is `len(text)` — the .dcx-native measure (probe-confirmed: .dcx counts the space). Never report a count not returned by `len()`.
+**Unit:** characters with spaces — the .dcx-native measure (probe-confirmed: .dcx counts the space). Under Route A this is `len(text)`; under Route B it is approached by substitution, never by in-head tallying.
 
 **Input (preferred): the .dcx pair** — "story = X chars, box = Y chars". The spill is `X - Y`, exact, from verified figures; the proportion is built on these, never on the model's own baseline count. (Fallback input: a signed spill — +N remove, -N add.)
 
@@ -181,24 +195,30 @@ A footprint change to story BODY is counted, not substituted — the count hande
 * One fact in one place: if information appears twice, cut the weaker instance.
 * Whole weak block before gutting a strong one.
 
-**Procedure (hybrid — 2 Python calls, not a loop):**
+Both routes share the same selection logic above and the same goal: land OVER target, never under. Overmatter can be shaved at paste (trim the last line to fit); undermatter leaves a physical gap in the column that is harder to fill. They differ only in HOW the character figure is met.
 
-1. `spill = X - Y` from the .dcx pair. Judgment first pass: cut by value (or 1-in/1-out on a small spill) aimed at the proportion — no Python yet. The sweep aims; Python confirms.
-2. One Python count: check the swept copy against Y, set the exact residual.
-3. Correct the residual by deleting already-counted material (its length is known from the verify pass — subtract, no recheck needed if landing UNDER target). A rewrite makes new uncounted text, so it costs one more count.
-4. Strip metadata, then report the count of the stripped text. No model-introduced markup (crosshead flags, notes) survives into counted copy or the deliverable:
+**Route A — VERIFIED COUNT (when the actor can run code).**
+The exact, preferred path. Two passes, not a loop:
 
+1. `spill = X - Y` from the .dcx pair. Judgment first pass: cut by value aimed at the proportion — no count yet. The sweep aims; the tool confirms.
+2. One `len()` count: check the swept copy against Y, set the exact residual.
+3. Correct the residual by adjusting already-counted material (length known from the verify pass — no recheck if landing just OVER). A rewrite makes new uncounted text, so it costs one more count.
+4. Strip model-introduced markup before reporting the count — no crosshead flags or notes survive into counted copy or the deliverable:
    ```python
    import re
    clean = re.sub(r'^\s*\[[A-Z][^\]]*\]\s*', '', body, flags=re.M)
-   print(len(clean))   # the reported count
+   print(len(clean))   # the reported figure
    ```
+*Calibration (free):* the verify count should match X. If it drifts, the counter has diverged from .dcx — surface it; trust neither number silently.
 
-   Land UNDER target (inside the hole), never over.
+**Route B — 1-IN / 1-OUT SUBSTITUTION (when the actor cannot count, or chooses not to).**
+The equal-standing fallback — and the ONLY path for models that can't run code (e.g. Gemini) or won't (e.g. ChatGPT declining to fire Python). Not deprecated.
 
-**Fallback (full loop):** if the first pass is wildly off, or the spill is large and structural, revert to: count -> one edit -> re-count -> repeat -> land under.
+1. Work from the .dcx pair / spill the same way — recast by value to hit the target proportion.
+2. Hold the footprint by **substitution, not tallying**: swap heavy phrasing for lean, trade a long construction for a short one, so volume is preserved or reduced *by construction* rather than measured. To cut a line, trim a paragraph with a short final line (the cut that removes a physical line); to grow, the reverse.
+3. The operator carries the exact figure — Route B lands *close*, and the operator squeezes the last char or two on paste. The model does NOT assert a precise count it cannot verify; it states what it changed, not a number.
 
-**Calibration check (free):** the verify-call count should match X. If it drifts, the counter has diverged from .dcx — surface it; do not silently trust either number.
+**Choosing the route:** run Route A if you can execute a counter; otherwise Route B. Either is house-valid. The failure mode to avoid is a non-coding model pretending to a precise count by tallying in its head — that is the original error both routes exist to prevent.
 
 **Story priority.** Prioritise telling the headline story properly over maintaining multiple narratives. The minimum deliverable is one relatively complete news story told to the fullest the space allows. Better to drop a story and tell the survivor(s) well — the dropped one can run online — than run two stories badly under one head. Where a whole story is dropped, record it in the Style Log in one sentence (what it was). Log trims and the drop decision.
 
@@ -207,6 +227,8 @@ News-value ranking is the desk's call, made on editorial worth alone and without
 ### DCX fit (Spatial Headline Protocol)
 
 *This protocol ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines.*
+
+**The budget figure:** a DCX/BKP budget number is a TOTAL across however many lines, never per-line. The field may not populate correctly until text is pasted — a quoted figure can rise on paste (deck 23 -> 35) — so confirm against the rendered figure before treating it as binding.
 
 1. **Draft to Budget:** Draft to the exact DCX numerical budget provided. You must hit this target within a strict ±2 character margin. For multi-line heads, balance the lines with a maximum ±1 character difference between them. The working figure runs slightly optimistic at narrower slots, so aim for the lower end of your ±2 margin by default.
 2. **Tessellation (The Virtual Ruler):** When executing spatial tweaks (e.g., "Overset", "Underset"), evaluate the typographic weight of the line using this heuristic:

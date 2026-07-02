@@ -193,7 +193,7 @@ foreign_people:
 * name: Susilo Bambang Yudhoyono second_ref: Mr Yudhoyono notes: Indonesian — uses surname on second ref
 * name: Basuki Tjahaja Purnama notes: Indonesian — verify second-ref form per DCX precedent
 --- Myanmar/Cambodian: full name throughout ---
-* name: Aung San Suu Kyi second_ref: Ms Suu Kyi notes: Myanmar and Cambodian names use full name on all references with no honorific. Aung San Suu Kyi is the sole exception and takes Ms Suu Kyi on second reference.
+* name: Aung San Suu Kyi second_ref: Ms Suu Kyi notes: Sole exception to the Myanmar/Cambodian full-name, no-honorific convention — the rule itself lives in PROCESSES, Second reference.
 --- Title retention ---
 * name: Ayatollah Ali Khamenei notes: Title "Ayatollah" retained on all references. (Title-retention rule applies across this block — Ayatollah, King, Pope, Prince, Duchess, etc all kept on every reference.)
 * name: King Salman bin Abdulaziz al-Saud notes: '"King Salman" usually suffices'
