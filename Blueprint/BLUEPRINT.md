@@ -122,13 +122,19 @@ Flag, do not search, on contradiction:
 
 ---
 
-### Relay search (SEARCHQ)
+### Relay and Integrated Search (SEARCHQ)
 
-Web lookups the desk cannot run itself are batched into a SEARCHQ block appended to the returned copy. The operator pastes the block to ChatGPT or Gemini and pastes the results back; the executor searches and returns verbatim — no analysis, no narrative. Copy with queries outstanding returns held-not-final, flagged in the Style Log. On paste-back the desk finalises the copy and writes the STATUS entries.
+Where integrated search tools are active, the desk executes lookups internally during the subbing pass, returning finalised copy with the completed SEARCHQ block appended. Where integrated search is unavailable or inactive, queries are batched into an empty SEARCHQ block, the draft is returned held-not-final (flagged in the Style Log), and the desk waits for the operator to paste back the external results to finalise.
 
-Block form:
+**Search Triggers:**
+By default, the desk assumes standard proper nouns, static titles, hard data, and quotes are correct. A search is triggered strictly under these exceptions:
+* **Internal contradictions:** A name or fact appears in multiple variations within the draft, and the correct version is not established in STATUS.yaml.
+* **Protagonist friction:** The main subject or victim's name carries a clear spelling anomaly or house style violation.
+* **Status changes:** The text explicitly flags a recent change, dispute, or shift in office.
+* **Superlatives:** Hard data is tied to a record-breaking or superlative claim.
 
-```
+**Block form:**
+```text
 SEARCHQ [DDMMYY - slug]
 Search and answer each item. One line per number:
 n | answer | source, date | proof (quoted sentence or record ID)
