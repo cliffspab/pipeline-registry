@@ -8,7 +8,7 @@ When copy is in front of you and a specific element requires action, this is the
 
 ---
 
-**020726_pro_register-sweep-live.md**
+**110726_pro_intro30-titlecaps-shortheads-pr.md**
 
 ## PART 1: HOUSE CONVENTIONS
 
@@ -107,11 +107,11 @@ British royals carry first name plus title throughout (Prince William, not Willi
 
 #### Title capitalisation
 
-A title prefixing a name is lower case ("the prime minister said") except for Prime Minister, King, royal titles, and ministry heads acting as a title ("Prime Minister Anutin said", "Foreign Minister X said").
+A title directly prefixing a full name takes caps as the general rule ("Prime Minister Anutin said", "Foreign Minister X said", "Deputy Transport Minister Phattrapong Phattraprasit", "Governor Chadchart Sittipunt"). This sweeps in senator, governor, mayor and deputy-spokesperson-type posts — previously lowercase exceptions. (Ruled 110726; caps-before-full-name confirmed against live bangkokpost.com usage.)
 
-Former titles are always lower case ("former prime minister Yingluck Shinawatra"). Senator, governor and mayor are lower case and carry Mr/Ms unless a higher rank applies.
+A title standing alone, without a name, is lower case ("the prime minister said", "the governor added").
 
-Deputy ministers take the capped title (Deputy Transport Minister Phattrapong Phattraprasit); deputy government spokespeople and similar posts do not. "cabinet" is lower case, always.
+Former titles are always lower case ("former prime minister Yingluck Shinawatra").
 
 Titles appear before names, not after: "Secretary of State Rex Tillerson said", not "Rex Tillerson, secretary of state, said".
 
@@ -175,6 +175,7 @@ So: the body-text footprint change (Overspill below) is counted with a verified 
 * "Fits" is a footprint instruction: the slot is already met — no bloat-cutting, no footprint-changing rewrites, full style pass still expected. Hand back the footprint intact; the operator makes final width adjustments. Fit > elegance.
 * Sub-heads removed from a story free space the body inherits: increase the body footprint to fill it rather than leave the gap.  
 * Default target of every edit: land just over, never under — overmatter shaves at paste; undermatter leaves a physical gap in the column. The model's observed drift is to cut slightly under: that is the fault to correct, not caution.
+* News-story opening paragraphs carry a soft limit of 30 words (Kevin's rule, operator-ruled 110726). Soft means target, not gate: an intro that must run longer to hold the fact runs longer, but default drafting and free edits bring news intros in at or under 30. Overruns that stand are flagged in the Style Log. Scope: news stories only — features, columns, editorial and PR copy are untouched.
 
 ### Overspill (body-text footprint change)
 
@@ -211,6 +212,8 @@ The exact, preferred path. Two passes, not a loop:
    ```
 *Calibration (free):* the verify count should match X. If it drifts, the counter has diverged from .dcx — surface it; trust neither number silently.
 
+*Paragraph breaks* count as single newlines for Route A verification — the .dcx field counts a break as one character. Double-newline counting runs ~1 char heavy per break. Normalise before `len()`: `clean = clean.replace('\n\n', '\n')`
+
 **Route B — 1-IN / 1-OUT SUBSTITUTION (when the actor cannot count, or chooses not to).**
 The equal-standing fallback — and the ONLY path for models that can't run code (e.g. Gemini) or won't (e.g. ChatGPT declining to fire Python). Not deprecated.
 
@@ -226,7 +229,7 @@ News-value ranking is the desk's call, made on editorial worth alone and without
 
 ### DCX fit (Spatial Headline Protocol)
 
-*This protocol ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines.*
+*This protocol ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines — short by default. Michael's standing preference: short, sharp heads. Between candidates that both say the thing, the shorter is first choice; length is never padded for its own sake. Where a DCX budget is supplied, the budget still governs fit.*
 
 **The budget figure:** a DCX/BKP budget number is a TOTAL across however many lines, never per-line. The field may not populate correctly until text is pasted — a quoted figure can rise on paste (deck 23 -> 35) — so confirm against the rendered figure before treating it as binding.
 
@@ -251,7 +254,8 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Honorifics: house conventions applied  
 * Punctuation: house style (Oxford comma removed)  
 * Currency, dates and numbers: Part 1 rules apply  
-* Plain errors of grammar and punctuation: corrected
+* Plain errors of grammar and punctuation: corrected  
+* Headline and deck: PR copy carries a [Head] line (max 90 characters) and a [Deck] line (max 120 characters), literal bracket prefixes, BKP sentence case, placed ahead of the body
 
 ### What stays
 

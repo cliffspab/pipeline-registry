@@ -10,7 +10,7 @@
 
 ---
 
-`020726_com_VER-04-RELAY-SEARCHQ-LIVE.md`
+`110726_com_searchq-restored-gemini-default.md`
 
 ## Operating Doctrine & Tone
 
@@ -122,19 +122,13 @@ Flag, do not search, on contradiction:
 
 ---
 
-### Relay and Integrated Search (SEARCHQ)
+### Relay search (SEARCHQ)
 
-Where integrated search tools are active, the desk executes lookups internally during the subbing pass, returning finalised copy with the completed SEARCHQ block appended. Where integrated search is unavailable or inactive, queries are batched into an empty SEARCHQ block, the draft is returned held-not-final (flagged in the Style Log), and the desk waits for the operator to paste back the external results to finalise.
+Web lookups the desk cannot run itself are batched into a SEARCHQ block appended to the returned copy. The operator pastes the block to Gemini (default destination — speed, convenience, proven so far; ChatGPT as alternative for heavy batch verification) and pastes the results back; the executor searches and returns verbatim — no analysis, no narrative. Copy with queries outstanding returns held-not-final, flagged in the Style Log. On paste-back the desk finalises the copy and writes the STATUS entries.
 
-**Search Triggers:**
-By default, the desk assumes standard proper nouns, static titles, hard data, and quotes are correct. A search is triggered strictly under these exceptions:
-* **Internal contradictions:** A name or fact appears in multiple variations within the draft, and the correct version is not established in STATUS.yaml.
-* **Protagonist friction:** The main subject or victim's name carries a clear spelling anomaly or house style violation.
-* **Status changes:** The text explicitly flags a recent change, dispute, or shift in office.
-* **Superlatives:** Hard data is tied to a record-breaking or superlative claim.
+Block form:
 
-**Block form:**
-```text
+```
 SEARCHQ [DDMMYY - slug]
 Search and answer each item. One line per number:
 n | answer | source, date | proof (quoted sentence or record ID)
@@ -248,9 +242,7 @@ They must be:
 * recoverable in an emergency handoff; and  
 * scannable against the core files afterwards to confirm the work landed.
 
-Operator-approved changes to `STATUS`, `PROCESSES`, `BLUEPRINT` or `REFERENCES` are written directly into the local pipeline-registry clone on the turn they are ruled, and logged one line each in `COMMITS-PENDING.md` at the clone root. The operator checks that list before every push — the guard against a bulk file-swap erasing a desk commit. Lines clear on push. The desk never touches the clone without a ruling. (Op-ruled 2026-07-04; supersedes shift-close drop-in drafts for these four files.)
-
-Full drop-in drafts of other changed documents are produced once, at shift close or on request, not turn by turn.
+Full drop-in drafts of changed documents are produced once, at shift close or on request, not turn by turn.
 
 Between shifts, candidate rule changes, amendments and refinements collect in `DECISIONS-OPEN.yaml` — one file, keyed to the standing series (LEN/NAM/ARC/OUT/VER/STA/OTH), swept by the operator periodically. Nothing there is authoritative until ruled.
 
