@@ -1,7 +1,7 @@
 # **STATUS**  
 
 (go.fuzzylogic.page/status)  
-270626_status_githubdone.yaml
+110726_status_iran-chain-suriya-chadchart.yaml
 
 ### Verified Editorial Overrides: 2024-2026 Timeline Status Changes
 
@@ -23,6 +23,8 @@
 | ***Move Forward Party (MFP)*** | *Unanimously dissolved by the Constitutional Court on August 7, 2024\.* | *FLAG any reference to the party as currently active.* |
 | ***Dr. Prasert Prasarttong-Osoth*** | *Passed away on April 21, 2026\.* | *FLAG any present-tense reference to him in business wire copy.* |
 | ***HRH Princess Bajrakitiyabha Narendiradebyavati*** | ***Passed away on June 11, 2026\.*** | ***FLAG all copy that diverges from this entry.*** |
+| ***Ayatollah Ali Khamenei*** | *Assassinated in Tehran on February 28, 2026, in strikes targeting senior Iranian officials.* | *FLAG any present-tense reference to him as supreme leader.* |
+| ***Mojtaba Khamenei*** | *Named supreme leader of Iran on March 8, 2026, by the Assembly of Experts, succeeding his father.* | *FLAG any reference to him as merely a cleric or unofficial figure. Title form (Ayatollah or not) unresolved — check bangkokpost.com precedent before first use.* |
 
 ### Portfolio Swappers
 
@@ -37,6 +39,7 @@
 | Suriya Juangroongruangkit | Minister of Industry. | No longer Minister of Transport/Industry (Replaced late 2025). | FLAG any reference to him as an active minister. |
 | Cholnan Srikaew | Active Pheu Thai Leader / Minister of Public Health. | Removed from cabinet in April 2024 reshuffle. | FLAG any reference to him as an active minister or party leader. |
 | Nan Boonthida Somchai | Post-dates training cutoff | Deputy Minister of Digital Economy and Society (DES); assumed office 30 March 2026 (Anutin administration). | Name parses as given name Nan Boonthida \+ surname Somchai; second ref Ms Nan. |
+| Suriya Singhakamol | Desk held "Pol Maj", rank unverified. | ONCB secretary-general; rank per bangkokpost.com copy is Pol Maj Gen (verified 110726, flight-crew heroin case coverage). | Rank above captain — retain on all references. Distinct from Suriya Juangroongruangkit above. |
 
 ---
 
@@ -64,10 +67,10 @@
   * *Bias:* Not reliably associated with a current cabinet post in training data.  
   * *Reality:* Minister of Digital Economy and Society (DES) of Thailand.  
   * *Directive:* Accept DES portfolio; flag any reference to him in other ministry roles. House spelling: Chidchob, not Chidchorb.  
-* Chadchart Sittipunt:  
-  * *Bias:* Former Bangkok governor.  
-  * *Reality:* Incumbent Bangkok governor, running for re-election (candidate No.9); seat runs until the 28 June 2026 vote. "Incoming governor/council" acceptable for the successor.  
-  * *Directive:* Use "incumbent", not "former"; \[Placeholder — rewrite after 28 June result.\]
+* Chadchart Sittipunt:
+  * *Bias:* Former Bangkok governor, or first-term governor.
+  * *Reality:* Re-elected Bangkok governor on June 28, 2026 (1,537,784 votes, a record); second term began July 9, 2026. Ran as an independent after resigning early in May 2026.
+  * *Directive:* "Incumbent" or "governor" as filed; FLAG "former" or any first-term framing. Capped before full name per title rule: Bangkok Governor Chadchart Sittipunt.
 
 ### Mortalities and Successions
 

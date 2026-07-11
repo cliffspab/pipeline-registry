@@ -1,6 +1,6 @@
 @echo off
 setlocal
-cd /d "%userprofile%\Documents\pipeline-registry" || (echo [ERROR] repo folder not found & pause & exit /b 1)
+cd /d "D:\Documents\BANGKOK POST DESK EDITOR\pipeline-registry" || (echo [ERROR] repo folder not found & pause & exit /b 1)
 
 REM --- clear a STALE lock, but only if no git process is running ---
 if exist ".git\index.lock" (

@@ -1,6 +1,6 @@
  BKP_REFERENCES
 Role: House exceptions, traps, transliterations and fixed BKP forms
-040726_refs_recompiled_to_full_length.yaml
+110726_refs_fulllength-restored-khamenei.yaml
 ============================================================
 1. COUNTRIES
 ============================================================
@@ -116,7 +116,7 @@ foreign_people:
 --- Myanmar/Cambodian: full name throughout ---
 * name: Aung San Suu Kyi second_ref: Ms Suu Kyi notes: Myanmar and Cambodian names use full name on all references with no honorific. Aung San Suu Kyi is the sole exception and takes Ms Suu Kyi on second reference.
 --- Title retention ---
-* name: Ayatollah Ali Khamenei notes: Title "Ayatollah" retained on all references. (Title-retention rule applies across this block — Ayatollah, King, Pope, Prince, Duchess, etc all kept on every reference.)
+* name: Ayatollah Ali Khamenei notes: Deceased Feb 2026 — see STATUS. Retained as structural exemplar — title "Ayatollah" retained on all references. (Title-retention rule applies across this block — Ayatollah, King, Pope, Prince, Duchess, etc all kept on every reference.)
 * name: King Salman bin Abdulaziz al-Saud notes: '"King Salman" usually suffices'
 * name: King Jigme Khesar Namgyel Wangchuck notes: Bhutanese king; full title first reference
 * name: Pope Emeritus Benedict XVI notes: '"Pope Benedict" usually suffices'
@@ -225,6 +225,7 @@ vocabulary:
 * term: banzai vs bonsai rule: Banzai = hooray; bonsai = miniature trees
 * term: Blu-ray rule: Trademark; cap B, hyphen, lower r
 * term: capital of rule: Bangkok IS the capital. Do not write "the Thai capital of Bangkok"
+* term: Chatichai Choonhavan rule: BKP form for the former prime minister (d.1998) — NOT Chatchai Choonahavan (trap observed in filed PostBag copy, July 2026). Gen retained on all references (military rank, deceased). Relay-verified against bangkokpost.com usage, May 27, 2026.
 * term: collide rule: Two cars collided; vehicles hit (not collide with) stationary objects
 * term: comprising vs including rule: Comprising = full list; including = partial list
 * term: completely destroyed rule: Tautology — use destroyed
