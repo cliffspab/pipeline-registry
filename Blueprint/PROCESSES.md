@@ -8,7 +8,7 @@ When copy is in front of you and a specific element requires action, this is the
 
 ---
 
-**110726_pro_intro30-titlecaps-shortheads-pr.md**
+**170726_pro_pr-pictures-noappend.md**
 
 ## PART 1: HOUSE CONVENTIONS
 
@@ -256,6 +256,7 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Currency, dates and numbers: Part 1 rules apply  
 * Plain errors of grammar and punctuation: corrected  
 * Headline and deck: PR copy carries a [Head] line (max 90 characters) and a [Deck] line (max 120 characters), literal bracket prefixes, BKP sentence case, placed ahead of the body
+* Captions: where pictures carry them, corrected — the caption gets the same pass as the body
 
 ### What stays
 
@@ -263,6 +264,8 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Bold, italics, capitalisation, line breaks: as filed  
 * Tone and voice: the client's choices stand  
 * Length: PR copy runs at the length the client paid for
+* Pictures: **never stripped**. Images ride with the copy exactly as filed
+* Nothing is appended: no slug, no reference or background information the client did not provide
 
 ### Principle
 

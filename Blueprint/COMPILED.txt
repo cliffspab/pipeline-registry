@@ -1,5 +1,5 @@
 BKP PIPELINE — COMPILED GOVERNANCE SET
-110726_compiled_full.txt (rev 2 — post-restoration) — regenerated monthly or on major change
+170726_compiled_full.txt (rev 3 — pr pictures-noappend amendment) — regenerated monthly or on major change
 Order follows companion sequence: BLUEPRINT, PROCESSES, STATUS, REFERENCES.
 
 ============================================================
@@ -336,7 +336,6 @@ Unresolved:
 ============================================================
 ==== PROCESSES.md
 ============================================================
-
 # PROCESSES
 
 **Status:** Live, shift-ready **Purpose:** The procedures invoked during editing — when each rule applies, what gets substituted for what, how to handle special kinds of copy
@@ -347,7 +346,7 @@ When copy is in front of you and a specific element requires action, this is the
 
 ---
 
-**110726_pro_intro30-titlecaps-shortheads-pr.md**
+**170726_pro_pr-pictures-noappend.md**
 
 ## PART 1: HOUSE CONVENTIONS
 
@@ -595,6 +594,7 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Currency, dates and numbers: Part 1 rules apply  
 * Plain errors of grammar and punctuation: corrected  
 * Headline and deck: PR copy carries a [Head] line (max 90 characters) and a [Deck] line (max 120 characters), literal bracket prefixes, BKP sentence case, placed ahead of the body
+* Captions: where pictures carry them, corrected — the caption gets the same pass as the body
 
 ### What stays
 
@@ -602,6 +602,8 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Bold, italics, capitalisation, line breaks: as filed  
 * Tone and voice: the client's choices stand  
 * Length: PR copy runs at the length the client paid for
+* Pictures: **never stripped**. Images ride with the copy exactly as filed
+* Nothing is appended: no slug, no reference or background information the client did not provide
 
 ### Principle
 
@@ -612,7 +614,6 @@ Where copy is libellous, factually wrong in a way that creates legal exposure, o
 ### Output
 
 Format follows the request (usually rich text). Style Log applies if requested.
-
 ============================================================
 ==== STATUS.yaml
 ============================================================
