@@ -9,6 +9,25 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-07-17 | REFERENCES.yaml | DEDUPE Phrao (Chiang Mai) and Tha Tum
+  (Surin), each listed twice. Tag 170726_refs_dedupe-phrao-thatum.
+  Op-ruled 170726 ("keep genuine corrections", review triage OTH-13).
+- 2026-07-17 | STATUS.yaml | FIX stale body header "As of: June 5, 2026"
+  -> "As of: July 11, 2026" (date content last brought current).
+  Tag 170726_status_asof-header-fix. Op-ruled 170726.
+- 2026-07-17 | STATUS.txt + REFERENCES.txt + COMPILED.txt | REGENERATED
+  (twins byte-identical; COMPILED restamped rev 4). Mechanical
+  consequence of the two lines above.
+
+
+## Pushed (recent, for audit)
+
+Cleared 2026-07-17: the two PROCESSES lines below rode the operator's
+2026-07-17 push — desk-verified live same session via cache-busted fetch
+(slug 170726_pro_pr-pictures-noappend serving on GitHub main).
+Also cleared: the .gitattributes line — desk-verified live same session
+(raw .gitattributes serving `* text=auto` on main, cache-busted fetch).
+
 - 2026-07-17 | PROCESSES.md | AMEND Part 3 PR handling: pictures never
   stripped, captions corrected in the pass; nothing appended — no slug,
   no non-provided reference info. Tag 170726_pro_pr-pictures-noappend.
@@ -17,12 +36,6 @@ desk commit. Clear each line once pushed.
   Part 3 amendment (twin verified byte-identical; COMPILED restamped
   170726_compiled_full.txt rev 3). Mechanical consequence of the line
   above, not a separate ruling.
-- 2026-07-15 | .gitattributes | NEW: `* text=auto` — ends the CRLF churn
-  that made git report STATUS.yaml/index.txt/index.yaml as modified with
-  zero content change (editor/pCloud round-trip rewrote line endings).
-  Normalisation rides the next push.bat run automatically. Op-ruled 150726.
-
-## Pushed (recent, for audit)
 
 Cleared 2026-07-15: all six lines below rode the 2026-07-11 pushes
 (f88ad11 17:15 and 6ccf891 20:10) — verified against reflog and a
