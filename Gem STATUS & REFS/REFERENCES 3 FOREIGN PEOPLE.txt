@@ -1,0 +1,62 @@
+REFERENCES 3 — FOREIGN PEOPLE
+Split from REFERENCES (270626_refs_githubdone), content verbatim.
+
+============================================================
+3. FOREIGN PEOPLE
+============================================================
+Convention exemplars, title retention, spelling traps.
+Dead, retired, or off-radar figures from the 2018 source have been dropped.
+Structural exemplars (Mao, Mother Teresa) retained where they still teach the rule.
+foreign_people:
+--- Chinese: surname first, Mr + surname on second ref ---
+* name: Xi Jinping second_ref: Mr Xi notes: Chinese convention (surname first)
+* name: Li Keqiang second_ref: Mr Li notes: Chinese convention
+* name: Mao Zedong notes: Historical; no honorific
+* name: Deng Xiaoping notes: Historical; no honorific
+--- Indonesian: variable; consult ---
+* name: Joko Widodo second_ref: Mr Widodo notes: Do not use "Jokowi" except in quotes. Indonesian second-reference convention is variable across this block — some take Mr/Ms + last component, some take given name, some are single-name. Consult each entry; default to DCX precedent if unsure.
+* name: Susilo Bambang Yudhoyono second_ref: Mr Yudhoyono notes: Indonesian — uses surname on second ref
+* name: Basuki Tjahaja Purnama notes: Indonesian — verify second-ref form per DCX precedent
+--- Myanmar/Cambodian: full name throughout ---
+* name: Aung San Suu Kyi second_ref: Ms Suu Kyi notes: Myanmar and Cambodian names use full name on all references with no honorific. Aung San Suu Kyi is the sole exception and takes Ms Suu Kyi on second reference.
+--- Title retention ---
+* name: Ayatollah Ali Khamenei notes: Deceased Feb 2026 — see STATUS. Retained as structural exemplar — title "Ayatollah" retained on all references. (Title-retention rule applies across this block — Ayatollah, King, Pope, Prince, Duchess, etc all kept on every reference.)
+* name: King Salman bin Abdulaziz al-Saud notes: '"King Salman" usually suffices'
+* name: King Jigme Khesar Namgyel Wangchuck notes: Bhutanese king; full title first reference
+* name: Pope Emeritus Benedict XVI notes: '"Pope Benedict" usually suffices'
+* name: Catherine, Duchess of Cambridge notes: Not Princess
+* name: Prince William notes: British royals retain "Prince" on all references — not just "William"
+--- Given-name-as-surname (Mahathir, Sabah) ---
+* name: Mahathir Mohamad second_ref: Mr Mahathir notes: Given name used as surname on second ref. This pattern applies across the block — for Mahathir, Sabah and similar where the given name conventionally serves as the surname on second reference.
+* name: Sheikh Sabah al-Ahmad al-Sabah second_ref: Mr Sabah notes: First name used as surname on second ref
+* name: Mahmoud Abbas second_ref: Mr Abbas notes: Standard Arabic convention
+--- Arabic al- drop on second ref ---
+* name: Bashar al-Assad second_ref: Mr Assad notes: Arabic names with al-/el- prefix carry the full form on first reference and drop the prefix on second reference (Mr Assad, Mr Sissi). Lower-case al-. Exception for company names — Al Jazeera retains the cap.
+* name: Abdel Fattah el-Sissi second_ref: Mr Sissi notes: Drop "el-" on second ref
+* name: Abed Rabbo Mansour Hadi second_ref: Mr Hadi notes: Yemen — Hadi is the surname
+--- Korean: family name + hyphenated given name ---
+* name: Kim Jong-un second_ref: Mr Kim notes: Korean convention; hyphenated given name, second component lower case
+* name: Ban Ki-moon second_ref: Mr Ban notes: Korean convention
+* name: Syngman Rhee notes: Historical; pre-modern romanisation retained
+--- Vietnamese: given name is last in sequence ---
+* name: Nguyen Xuan Phuc second_ref: Mr Phuc notes: Vietnamese — given name is the last component
+* name: Ngo Dinh Diem notes: Historical
+--- Argentinian / shortened-name rulings ---
+* name: Cristina Kirchner notes: Drop "de Fernandez" from the middle
+--- Single-name rule / no honorific ---
+* name: Mother Teresa notes: No H in Teresa; no honorific. Single-name rule — figures known by one name (Mao, Suharto, Mother Teresa) take no honorific. Same applies to deceased non-political figures and to celebrities, sportspeople, musicians and artists regardless of name length.
+* name: Muhammad Ali notes: No honorific (deceased; sportsperson)
+* name: Jay-Z notes: Hyphenated
+* name: Tupac Shakur notes: No honorific (deceased; musician)
+* name: Pharrell Williams notes: No honorific (musician)
+--- Pakistani / British boxer name confusion ---
+* name: Aamir Khan notes: The actor (Pakistani). The British boxer is Amir Khan — different spelling.
+* name: Amir Khan notes: The boxer (British). The Pakistani actor is Aamir Khan.
+--- Spelling traps ---
+* name: Sid'Ahmed Raiss notes: Apostrophe in Sid'Ahmed; NOT Rais
+* name: Micheal Martin notes: Irish spelling — "Micheal" NOT Michael
+* name: Tony Abbott notes: Two Ts in Abbott
+* name: Moammar Gadhafi notes: BKP form; no Col honorific
+* name: Recep Tayyip Erdogan notes: Standard spelling — no accents
+* name: Voreqe Bainimarama notes: Fiji; do not use "Frank" as first name
+* name: Salva Kiir notes: South Sudan; not David Kiir

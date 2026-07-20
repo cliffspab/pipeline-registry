@@ -1,0 +1,53 @@
+name: Rebuild COMPILED governance set
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Blueprint/BLUEPRINT.md'
+      - 'Blueprint/PROCESSES.md'
+      - 'Blueprint/STATUS.yaml'
+      - 'Blueprint/REFERENCES.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build COMPILED.md
+        run: |
+          python3 - <<'EOF'
+          import datetime
+          stamp = datetime.datetime.now().strftime("%d%m%y")
+          parts = [
+              ("BLUEPRINT",  "Blueprint/BLUEPRINT.md"),
+              ("PROCESSES",  "Blueprint/PROCESSES.md"),
+              ("STATUS",     "Blueprint/STATUS.yaml"),
+              ("REFERENCES", "Blueprint/REFERENCES.yaml"),
+          ]
+          sep = "\n\n" + "=" * 60 + "\n"
+          out = [
+              "# BKP PIPELINE — COMPILED GOVERNANCE SET\n\n"
+              f"{stamp}_compiled.md\n"
+              "Components: BLUEPRINT + PROCESSES + STATUS + REFERENCES, "
+              "compiled verbatim from the live registry. "
+              "Auto-rebuilt on every push to a component file.\n"
+          ]
+          for name, path in parts:
+              body = open(path).read().strip()
+              out.append(f"{sep}# PART: {name}\n{'=' * 60}\n\n{body}\n")
+          open("Blueprint/COMPILED.md", "w").write("".join(out))
+          EOF
+
+      - name: Commit if changed
+        run: |
+          git config user.name "compile-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add Blueprint/COMPILED.md
+          git diff --cached --quiet || git commit -m "Auto-rebuild COMPILED.md"
+          git push

@@ -1,0 +1,99 @@
+REFERENCES 1-2 — COUNTRIES, FOREIGN PLACES
+Split from REFERENCES (270626_refs_githubdone), content verbatim.
+
+============================================================
+1. COUNTRIES
+============================================================
+Country-name rulings, naming conventions, abbreviation forms.
+countries:
+--- preferred forms ---
+* name: Myanmar notes: Not Burma
+* name: Türkiye notes: Updated from Turkey
+* name: Netherlands notes: Not Holland; government seat is The Hague (cap "The")
+* name: DR Congo notes: Distinguish from Republic of Congo; DRC acceptable in headlines and body after full name
+* name: Czech Republic notes: Avoid Czechia
+* name: East Timor notes: Avoid Timor-Leste
+* name: Ivory Coast notes: Avoid Cote d'Ivoire
+* name: Gambia notes: Avoid "The Gambia"
+* name: United Kingdom notes: Avoid Britain; UK preferred; excludes Northern Ireland in some contexts
+--- adjectival / demonym traps ---
+* name: Argentina notes: Argentine (people); Argentinian (things)
+* name: Cambodia notes: Khmer = language only, not people
+* name: Comoros notes: Comoran (people); Comorian (language) 
+* name: Madagascar notes: Malagasy (plural same as singular)
+* name: Mauritania notes: Mauritanian (not Mauritian)
+* name: Niger notes: Nigerien (not Nigerian)
+* name: Philippines notes: Filipino (male/neutral); Filipina (female)
+* name: Somalia notes: Somali (people); Somalian (adjective for things)
+* name: Vanuatu notes: Avoid Ni-Vanuatu
+--- capital / structural rulings ---
+* name: Australia notes: Labor Party (no "u")
+* name: Chad notes: Capital N'Djamena (apostrophe)
+* name: Laos notes: Lao (not Laotian) for people
+* name: Malaysia notes: Putrajaya is admin capital; Kuala Lumpur is capital
+* name: Moldova notes: Avoid Moldavia
+* name: Monaco notes: Monte Carlo is a district, not the capital
+* name: Myanmar_language notes: Language is Burmese (not Myanmar)
+* name: Palestine notes: Ramallah is admin centre; largest population in Gaza
+* name: South Africa notes: Three capitals — Pretoria (executive), Cape Town (legislative), Bloemfontein (judicial)
+* name: Sri Lanka notes: Capital is Kotte (not Colombo)
+* name: China notes: Taiwan separate; Hong Kong and Macau are SARs
+* name: United States notes: Write state names in full (New Jersey not NJ)
+--- headline abbreviation forms ---
+* name: NK notes: North Korea (headlines only)
+* name: SK notes: South Korea (headlines only)
+* name: NZ notes: New Zealand (headlines only)
+* name: STP notes: Sao Tome and Principe (headlines)
+* name: UAE notes: United Arab Emirates
+* name: Saudi notes: Saudi Arabia (headlines only)
+* name: DRC notes: DR Congo (headlines, or body after full first reference)
+* name: PNG notes: Papua New Guinea (headlines, or body after full first reference)
+--- "the" article ---
+* name: the_article_rule notes: | Drop "the" before Congo, Ukraine, Sudan, Lebanon. Keep "the" for adjective-led names (the United States, the Democratic Republic of Congo) and plural-form names (the Bahamas, the Maldives). Seychelles is NOT plural — named after a person — so no "the".
+============================================================
+2. FOREIGN PLACES
+============================================================
+Place names whose BKP form diverges from common spelling or transliteration.
+foreign_places:
+AUSTRALIA: - Uluru (not Ayer's Rock) - Western Australia (cap the W)
+AZERBAIJAN: - Nagorny-Karabakh
+BANGLADESH: - Cox's Bazar - Shah Porir Dwip
+BELGIUM: - Molenbeek
+BOSNIA & HERZEGOVINA: - Srebrenica
+BRAZIL: - Brasilia - Sao Paulo
+BURKINA FASO: - Ouagadougou
+CAMBODIA: - Oddar Meanchey
+CHILE: - Easter Island (not Rapa Nui)
+CHINA: - Beijing (not Peking) - Chongqing - Guangxi - Guangzhou (not Canton) - Kashgar - Lhasa - Nanjing - Tiananmen Square - Urumqi - Xinjiang - Xishuangbanna
+EGYPT: - Sharm el-Sheikh - Tahrir Square
+GERMANY: - Cologne (not Koln) - Dusseldorf
+GREENLAND: - Nuuk (not Godthab)
+HONG KONG: - Mong Kok - Wanchai
+ICELAND: - Eyjafjallajokul (volcano) - Reykjavik
+INDIA: - Bengaluru (not Bangalore) - Chhattisgarh - Kolkata (not Calcutta) - Mumbai (not Bombay) - Puducherry (not Pondicherry) - Thiruvananthapuram
+INDONESIA: - Yogyakarta
+IRAN: - Lake Urmia - Tehran
+IRAQ: - Irbil (not Urbil, Arbil or Erbil) - Fallujah
+ISRAEL: - al-Aqsa Mosque (lower case al-)
+ITALY: - Naples (not Napoli) - Pompeii
+JAPAN: - Fukushima - Fukushima Dai-ichi nuclear plant - Yasukuni shrine
+KAZAKHSTAN: - Baikonur
+KIRIBATI: - Kiritimati Island (not Christmas Island)
+MOLDOVA: - Transnistria
+MONGOLIA: - Gandantegchenlin - Ulan Bator
+MOROCCO: - Tangier
+MYANMAR: - Irrawaddy - Ka Htaung Ni - Kawthaung (not Victoria Point) - Mawlamyine (not Moulmein) - Myawaddy - Myitkyina - Nay Pyi Taw - Tachileik - Thabyuchaung - Yangon (not Rangoon)
+NEPAL: - Birganj - Everest Base Camp (all capped) - Kathmandu - Khumbu Icefall - Nepalganj
+NETHERLANDS: - The Hague (cap "The")
+NIGERIA: - Maiduguri
+NORTH KOREA: - Punggye-ri Nuclear Test Site - Rason (not Rajin)
+RUSSIA: - Ekaterinberg - Nizhny Novgorod - Rostov-on-Don - St Petersburg
+SOUTH AFRICA: - Hluhluwe-iMfolozi Game Reserve - KwaZulu-Natal
+SWEDEN: - Gothenburg (not Goteburg)
+SYRIA: - Ain al-Arab (prefer Kobane unless in quotes) - Dara'a - Deir al-Zor - Douma - Hasakah - Hmeimim airbase (lower-case airbase) - Kobane (preferred form) - Raqqa
+TANZANIA: - Dar-es-Salaam
+TURKEY: - Taksim Square
+UKRAINE: - Ilovaysk - Luhansk - Lviv
+UNITED STATES: - Hawaii - Papahanaumokuakea Marine National Monument - Pearl Harbor - Washington DC
+VIETNAM: - Da Nang - Gulf of Tonkin (not Tonkin Bay) - Hanoi - Ho Chi Minh City (not Saigon) - Hoi An
+YEMEN: - Hadramawt - Sana'a - Seyoun

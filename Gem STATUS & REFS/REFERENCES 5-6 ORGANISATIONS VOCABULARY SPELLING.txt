@@ -1,0 +1,105 @@
+REFERENCES 5-6 — ORGANISATIONS, VOCABULARY & SPELLING
+Split from REFERENCES (270626_refs_githubdone), content verbatim.
+
+============================================================
+5. ORGANISATIONS
+============================================================
+organisations:
+* name: Abu Sayyaf
+* name: al-Nusra Front
+* name: al-Qaeda
+* name: al-Qaeda in the Arabian Peninsula short: Aqap (after first reference)
+* name: al-Shebab
+* name: Ba'ath Party
+* name: Hezbollah
+* name: Houthis
+* name: The Islamic State short: The IS (after first reference) notes: Do not use Isil, Isis or Daesh unless in quotes
+* name: Jamaat-ul-Ahrar
+* name: Labor Party notes: Australia — no "u"
+* name: Malaysia Airlines notes: Not MalaysiaN
+* name: Medecins Sans Frontieres notes: Not Doctors Without Borders
+* name: Moro Islamic Liberation Front short: MILF (after first reference) notes: Exception to the lower-case-acronym-said-as-word rule; avoids slang collision
+* name: Pavena Foundation notes: Not Paveena. The founder Pavena Hongsakul is spelled the same way.
+* name: sharia law notes: Lower case
+* name: Shia notes: Not Shi'ite or Shiite
+* name: Yezidis
+* name: Fifa notes: Never FIFA, eg "2026 Fifa World Cup".
+============================================================
+6. VOCABULARY & SPELLING
+============================================================
+Words with BKP-specific ruling, common UK/US traps, and recurring errors.
+General British English usage is assumed; only divergent items listed.
+vocabulary:
+--- numbers and symbols ---
+* term: 2D, 3D, 4D rule: No hyphen
+* term: 7-Eleven rule: Use exact form; not 7-11
+* term: 9/11 rule: Use "Sept 11" except in quotes
+--- UK vs US traps (use the British form) ---
+* term: bashed rule: Use assaulted
+* term: bill rule: Banknote for cash
+* term: cellphone rule: Mobile phone
+* term: check rule: Cheque for money
+* term: chips rule: Crisps for bags; chips/fries for hot food
+* term: coach rule: Economy class
+* term: drugstore rule: Pharmacy
+* term: fall rule: Autumn
+* term: football rule: Football is for soccer; specify gridiron or American where needed
+* term: garage rule: Repairs or storage only — petrol station for fuel
+* term: gas rule: Petrol, diesel or fuel
+* term: pants rule: Trousers
+* term: rubber rule: Eraser
+* term: sneakers rule: Trainers
+* term: US forms acceptable rule: Apartment, ATM, elevator, internship, public holiday, capsicum — these are acceptable
+--- vocabulary rulings (alphabetical) ---
+* term: accede rule: Not ascend. Accede to the throne; accession not ascension.
+* term: AirAsia rule: One word; Asia capped
+* term: antivenene rule: Not antivenom
+* term: Asia-Pacific rule: Hyphenated
+* term: average rule: Not a synonym for poor
+* term: banzai vs bonsai rule: Banzai = hooray; bonsai = miniature trees
+* term: Blu-ray rule: Trademark; cap B, hyphen, lower r
+* term: capital of rule: Bangkok IS the capital. Do not write "the Thai capital of Bangkok"
+* term: Chatichai Choonhavan rule: BKP form for the former prime minister (d.1998) — NOT Chatchai Choonahavan (trap observed in filed PostBag copy, July 2026). Gen retained on all references (military rank, deceased). Relay-verified against bangkokpost.com usage, May 27, 2026.
+* term: collide rule: Two cars collided; vehicles hit (not collide with) stationary objects
+* term: comprising vs including rule: Comprising = full list; including = partial list
+* term: completely destroyed rule: Tautology — use destroyed
+* term: czar rule: Use tsar (exception — "crime czar")
+* term: decimate rule: Means heavy casualties, not "almost destroy"
+* term: defuse vs diffuse rule: Defuse a bomb; diffuse means to spread
+* term: dhamma rule: Not dharma. (Karma is karma, not khamma.)
+* term: elicit vs illicit rule: Elicit = draw out; illicit = illegal
+* term: ensure vs insure rule: Ensure = make certain; insure = insurance
+* term: farther vs further rule: Farther = physical distance; further = abstract
+* term: fewer than vs less than rule: Fewer for countable numbers; less for sizes/quantities
+* term: flaunt vs flout rule: Flaunt = show off; flout = treat with contempt
+* term: Formula 1 rule: Cap F, numeral 1. Abbreviate to F1.
+* term: future tense in news rule: Avoid. Use past-tense-as-future construction — "they were to meet on Friday", not "they will meet on Friday". Applies to events scheduled after the copy was filed but before publication.
+* term: historic vs historical rule: Historic = part of history; historical = concerning history
+* term: imply vs infer rule: Imply = suggest; infer = deduce
+* term: knots rule: A measure of speed, not distance. Do not say "knots per hour".
+* term: literally rule: Do not use figuratively
+* term: media rule: Singular
+* term: percent rule: Use %
+* term: police rule: Not a noun. Use "police officers", not "five police"
+* term: protest rule: Specify if for or against something
+* term: refute rule: Means disprove, not deny
+* term: regime vs regimen rule: Regime = government; regimen = diet/exercise
+* term: serial vs series rule: Serial = continuous plot; series = unrelated stories
+* term: swat vs swot rule: Swat flies; swot for an exam
+* term: Thai prefix rule: Superfluous in most cases ("the Thai government"). Strip unless differentiating.
+* term: Thailand time rule: Use only if event crosses calendar days. Never "Bangkok time" — one zone.
+* term: that vs which rule: That = definitive (no comma); which = descriptive (comma)
+* term: tortuous vs torturous rule: Tortuous = winding; torturous = excruciating
+* term: transpire rule: Means leak out, not occur or happen
+* term: Twitter / tweet rule: Twitter upper; tweet lower
+* term: urban vs urbane rule: Urban = city; urbane = sophisticated
+* term: versus / vs rule: Full in body text; "vs" in headlines and sports
+* term: virus variant names rule: Cap the variant name (Delta variant, Omicron variant). Applies to Greek-letter and place-name variant designations alike.
+* term: weather rule: High/low temps (33C); kph for wind speeds
+* term: where rule: Often misused for when or in which
+* term: whether rule: Not "whether or not" if meaning "if"
+* term: whilst, amongst, amidst rule: Drop the -st (while, among, amid)
+* term: whisky vs whiskey rule: Whisky = Scotch; whiskey = American/Irish
+* term: who vs whom rule: Who = he/she/they; whom = him/her/them
+* term: widow rule: '"Widow of the late" is tautology'
+* term: Xmas rule: Banned; use Christmas
