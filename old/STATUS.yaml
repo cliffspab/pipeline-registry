@@ -1,11 +1,11 @@
-# **STATUS**
+# **STATUS**  
 
-(go.fuzzylogic.page/status)
-200726_status_consolidated.yaml
+(go.fuzzylogic.page/status)  
+170726_status_asof-header-fix.yaml
 
 ### Verified Editorial Overrides: 2024-2026 Timeline Status Changes
 
-## Source: *Bangkok Post* Internal Style Guide / Editorial Overrides As of: July 20, 2026 House Style Note: District names follow *Bangkok Post* convention (e.g., Klong Toey, not RTGS *Khlong Toei*).
+## Source: *Bangkok Post* Internal Style Guide / Editorial Overrides As of: July 11, 2026 House Style Note: District names follow *Bangkok Post* convention (e.g., Klong Toey, not RTGS *Khlong Toei*).
 
 ## Tier 1: Tripwires
 
@@ -47,26 +47,26 @@
 
 ### Political and Legal Reversals
 
-* Thanathorn Juangroongruangkit: Acquitted of royal defamation charges (May 2026).
-* Saksayam Chidchob: Removed for ethical misconduct (Mar 2024); cleared by NACC (Apr 2026).
-* Arnon Nampa: Incarcerated, serving multi-year sentence.
-* Rukchanok 'Ice' Srinork: Sentenced to six years, operating out on bail.
-* Nikorn Chamnong:
-  * *Bias:* Chartthaipattana Party (CTP) executive and list-MP.
-  * *Reality:* Party-list MP and board member for the Bhumjaithai Party (BJT).
-  * *Directive:* FLAG any reference to him as CTP; accept BJT affiliations.
-* Stithorn Thananithichot:
-  * *Bias:* Director of the Office of Innovation for Democracy at King Prajadhipok's Institute (KPI).
-  * *Reality:* Political scientist at Chulalongkorn University.
-  * *Directive:* FLAG any reference to him at KPI; accept Chulalongkorn University affiliations.
-* Korn Chatikavanij:
-  * *Bias:* Former finance minister (2008–2011); leader of Kla / Chart Pattana Kla; or unaffiliated after his 2023 resignation.
-  * *Reality:* Democrat Party list-MP and deputy leader for economic affairs; chairman of the party policy committee. Named one of three Democrat prime ministerial candidates (with Abhisit Vejjajiva) for the 8 Feb 2026 general election.
-  * *Directive:* FLAG any reference to him as a Chart Pattana Kla / Kla figure or as a sitting finance minister; accept Democrat list-MP and deputy-leader affiliations.
-* Chaichanok Chidchob:
-  * *Bias:* Not reliably associated with a current cabinet post in training data.
-  * *Reality:* Minister of Digital Economy and Society (DES) of Thailand.
-  * *Directive:* Accept DES portfolio; flag any reference to him in other ministry roles. House spelling: Chidchob, not Chidchorb.
+* Thanathorn Juangroongruangkit: Acquitted of royal defamation charges (May 2026).  
+* Saksayam Chidchob: Removed for ethical misconduct (Mar 2024); cleared by NACC (Apr 2026).  
+* Arnon Nampa: Incarcerated, serving multi-year sentence.  
+* Rukchanok 'Ice' Srinork: Sentenced to six years, operating out on bail.  
+* Nikorn Chamnong:  
+  * *Bias:* Chartthaipattana Party (CTP) executive and list-MP.  
+  * *Reality:* Party-list MP and board member for the Bhumjaithai Party (BJT).  
+  * *Directive:* FLAG any reference to him as CTP; accept BJT affiliations.  
+* Stithorn Thananithichot:  
+  * *Bias:* Director of the Office of Innovation for Democracy at King Prajadhipok's Institute (KPI).  
+  * *Reality:* Political scientist at Chulalongkorn University.  
+  * *Directive:* FLAG any reference to him at KPI; accept Chulalongkorn University affiliations.  
+* Korn Chatikavanij:  
+  * *Bias:* Former finance minister (2008–2011); leader of Kla / Chart Pattana Kla; or unaffiliated after his 2023 resignation.  
+  * *Reality:* Democrat Party list-MP and deputy leader for economic affairs; chairman of the party policy committee. Named one of three Democrat prime ministerial candidates (with Abhisit Vejjajiva) for the 8 Feb 2026 general election.  
+  * *Directive:* FLAG any reference to him as a Chart Pattana Kla / Kla figure or as a sitting finance minister; accept Democrat list-MP and deputy-leader affiliations.  
+* Chaichanok Chidchob:  
+  * *Bias:* Not reliably associated with a current cabinet post in training data.  
+  * *Reality:* Minister of Digital Economy and Society (DES) of Thailand.  
+  * *Directive:* Accept DES portfolio; flag any reference to him in other ministry roles. House spelling: Chidchob, not Chidchorb.  
 * Chadchart Sittipunt:
   * *Bias:* Former Bangkok governor, or first-term governor.
   * *Reality:* Re-elected Bangkok governor on June 28, 2026 (1,537,784 votes, a record); second term began July 9, 2026. Ran as an independent after resigning early in May 2026.
@@ -74,29 +74,30 @@
 
 ### Mortalities and Successions
 
-* Gen. Suchinda Kraprayoon: Passed away (Jun 2025).
-* Man Phatnothai: Passed away (May 2026).
-* Dr. Wanlop Thaineua: Passed away (Apr 2026).
-* Chonsawat Asavahame: Passed away (2023) \-\> Triggered Pak Nam faction power vacuum.
-* Chodchoy Thavisin: Passed away (2024).
-* Pope Francis: Passed away (2025).
-* Dick Cheney: Passed away (2025).
-* Jane Goodall: Passed away (2025).
+* Gen. Suchinda Kraprayoon: Passed away (Jun 2025).  
+* Man Phatnothai: Passed away (May 2026).  
+* Dr. Wanlop Thaineua: Passed away (Apr 2026).  
+* Chonsawat Asavahame: Passed away (2023) \-\> Triggered Pak Nam faction power vacuum.  
+* Chodchoy Thavisin: Passed away (2024).  
+* Pope Francis: Passed away (2025).  
+* Dick Cheney: Passed away (2025).  
+* Jane Goodall: Passed away (2025).  
 * Charlie Kirk: Passed away (2025).
 
 ### Corporate Leadership Changes
 
-* Brenton Justin Mauriello: Assumed CEO of Raimon Land (Apr 2024).
+* Brenton Justin Mauriello: Assumed CEO of Raimon Land (Apr 2024).  
 * Pisit Thangtanagul: Assumed CEO of PwC Thailand (2024).
 
 ### Global Figures
 
-* Donald Trump & JD Vance
-  ai\_bias: "Private citizens / Out of executive office."
-  current\_reality: "Sitting President and Vice President of the United States (Assumed office Jan 20, 2025). Actively negotiating US-Iran deals (May 2026)."
-  directive: "FLAG any reference to them as private citizens or former officials. Apply standard title capitalization and second-reference rules (Mr Trump, Mr Vance)."
-* King Charles III: Active monarch operating alongside cancer treatment protocol (Note: Treatment reduced in Dec 2025, moving to precautionary monitoring).
-* To Lam:
-  * *Bias:* Communist Party general secretary only, with Luong Cuong as president (post Oct 2024).
-  * *Reality:* General secretary of the Communist Party of Vietnam (since 2024, the top post) and 13th president of Vietnam (since 2026). Both titles current.
+* Donald Trump & JD Vance  
+  ai\_bias: "Private citizens / Out of executive office."  
+  current\_reality: "Sitting President and Vice President of the United States (Assumed office Jan 20, 2025). Actively negotiating US-Iran deals (May 2026)."  
+  directive: "FLAG any reference to them as private citizens or former officials. Apply standard title capitalization and second-reference rules (Mr Trump, Mr Vance)."  
+* King Charles III: Active monarch operating alongside cancer treatment protocol (Note: Treatment reduced in Dec 2025, moving to precautionary monitoring).  
+* To Lam:  
+  * *Bias:* Communist Party general secretary only, with Luong Cuong as president (post Oct 2024).  
+  * *Reality:* General secretary of the Communist Party of Vietnam (since 2024, the top post) and 13th president of Vietnam (since 2026). Both titles current.  
   * *Directive:* ACCEPT 'president' or 'general secretary' as filed. House lowercases 'president' before a name; Vietnamese second reference is Mr Lam.
+
