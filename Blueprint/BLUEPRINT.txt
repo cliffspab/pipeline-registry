@@ -180,15 +180,16 @@ Full procedure is in `PROCESSES`.
 
 #### Primary deliverable
 
-The primary deliverable is a single page-ready box: first-choice headline seated at the top, clean body beneath, nothing else inside.
+The primary deliverable is a single page-ready box carrying the first-choice headline, the first-choice deck and the clean body together.
 
 It is the copy exactly as it goes to the page, and it carries a copy control so the operator lifts the whole thing in one action.
 
 * First-choice headline inside the box, at the top, in sentence case.  
-* Clean body only — no slug line, no deck, no alternates and no logs inside.  
-* Briefs follow the same rule: headline \+ body in the box. No deck for `bf`.  
+* First-choice deck on the line immediately below it.  
+* Clean body beneath — no slug line, no alternates and no logs inside.  
+* Briefs follow the same rule, without a deck: headline \+ body in the box. No deck for `bf`.  
 * The slug stamp `DDMMYY — Slug` sits immediately **above** the box.  
-* Alternates, deck options for non-briefs, STYLE LOG and STATE LOG sit **below** the box.  
+* Alternates, further deck options for non-briefs, STYLE LOG and STATE LOG sit **below** the box.  
 * Held or anomaly notes precede the box, never follow it. If a detail is held for the operator, they must see it before they lift the copy — not after it has gone to layout.
 
 The tag is the single output object — greppable and model-portable as plain text, and operator-facing at once.
@@ -198,6 +199,22 @@ The clean copy sits in a fenced code block inside the tag:
 * the tag markers provide the grep handle;  
 * the fence provides the operator a copy button;  
 * one emission serves both surfaces.
+
+#### Spacing is structural
+
+Spacing inside the box is load-bearing, not cosmetic.
+
+* **Head and deck sit flush** — consecutive lines, no gap between them. The pair reads as one display unit, and it holds the deck hard away from the body. If the deck is ever dropped in error, it drops cleanly and the body survives intact. That is the intended direction of failure.  
+* **The body is always preceded by exactly two blank lines.** This is invariant: deck or no deck, the double gap sits above the body. It is the unmistakable structural boundary for human parsing.  
+* **Never merge the deck into the first body paragraph.** The two-line gap is preserved even when the deck is short.
+
+#### Nothing in the box but the copy
+
+Clean publication copy only. No delimiters or wrappers, no brackets, markers, labels, character counts, alternates or logs inside the box. Nothing goes in the box that is not going on the page.
+
+Character counts are working data, not deliverable. They are not reported in the return.
+
+**PR exception:** PR copy is returned in the format it was filed in, with the requested `[HEAD]` and `[DECK]` tags added at the top per `PROCESSES`. It does not take the page-ready box and is not subject to the clean-copy rule above.
 
 **Source gap retained:** The original text read, “Wait for the operator to provide .” The missing object has not been inferred or supplied here.
 
@@ -209,7 +226,10 @@ DDMMYY — Slug
 
 \`\`\`text
 
-\[First-choice headline in sentence case\]
+\[First-choice headline in sentence case\]  
+\[First-choice deck\]
+
+  
 
 \[Full clean body copy\]
 
@@ -219,10 +239,11 @@ DDMMYY — Slug
 
 ### Briefs
 
-Follow the same rule:
+Same structure, without a deck:
 
 * headline \+ body inside the box;  
-* no deck.
+* no deck;  
+* the two blank lines above the body do not change.
 
 ### Anomalies / Held Notes
 
@@ -234,7 +255,7 @@ If a detail is held for the operator, note it **above** the slug so it is seen b
 
 * Provide two or three headline options. The first choice is the one seated in the box.  
 * A good second-choice headline matches the first on width, not only on sense, so an editorial swap drops into the same slot without layout re-fitting anything.  
-* Provide two deck options for non-briefs.  
+* Provide two deck options for non-briefs. The first choice is the one seated in the box.  
 * Do not provide decks for briefs (`bf`).
 
 ---

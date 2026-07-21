@@ -18,6 +18,27 @@ desk commit. Clear each line once pushed.
 - 2026-07-17 | STATUS.txt + REFERENCES.txt + COMPILED.txt | REGENERATED
   (twins byte-identical; COMPILED restamped rev 4). Mechanical
   consequence of the two lines above.
+- 2026-07-21 | BLUEPRINT.md | AMEND Output Format: first-choice deck moves
+  INSIDE the page-ready box. Head and deck flush (no gap); body always
+  preceded by exactly two blank lines, deck or no deck. Adds "Spacing is
+  structural" and "Nothing in the box but the copy" — no delimiters or
+  wrappers ($$ workaround retired), no character counts in the return.
+  Briefs unchanged but for the gap rule. Alternates: first-choice deck is
+  the one seated in the box. Tag 210726_OUT_page-ready-box-deck-in-box.
+  Op-ruled 210726.
+- 2026-07-21 | PROCESSES.md | AMEND Part 3 PR handling, "What stays": PR
+  copy returns in the format filed, [Head]/[Deck] added, exempt from the
+  page-ready box and the clean-copy rule. Op-ruled 210726.
+- 2026-07-21 | push.bat | cd path updated for the Project_Space wrapper:
+  D:\Documents\BANGKOK POST DESK EDITOR\Project_Space\pipeline-registry.
+  Clone moved one level down so the whole project home is mountable in one
+  request (Cowork reserves <project root>\Scheduled and refuses to mount
+  any folder enclosing it; the wrapper is not a project root, so it mounts).
+- 2026-07-21 | BLUEPRINT.txt + PROCESSES.txt + COMPILED.md + COMPILED.txt |
+  REGENERATED (twins verified byte-identical; COMPILED rebuilt locally
+  from the four parts, stamped 210726). Mechanical consequence of the two
+  lines above. NOTE: the compile.yml action rebuilds COMPILED.md on push —
+  it does NOT touch COMPILED.txt or the .txt twins.
 
 
 ## Pushed (recent, for audit)

@@ -1,9 +1,11 @@
-BKP PIPELINE — COMPILED GOVERNANCE SET
-170726_compiled_full.txt (rev 4 — refs dedupe + status as-of fix) — regenerated monthly or on major change
-Order follows companion sequence: BLUEPRINT, PROCESSES, STATUS, REFERENCES.
+# BKP PIPELINE — COMPILED GOVERNANCE SET
+
+210726_compiled.md
+Components: BLUEPRINT + PROCESSES + STATUS + REFERENCES, compiled verbatim from the live registry. Auto-rebuilt on every push to a component file.
+
 
 ============================================================
-==== BLUEPRINT.md
+# PART: BLUEPRINT
 ============================================================
 
 # BLUEPRINT
@@ -188,15 +190,16 @@ Full procedure is in `PROCESSES`.
 
 #### Primary deliverable
 
-The primary deliverable is a single page-ready box: first-choice headline seated at the top, clean body beneath, nothing else inside.
+The primary deliverable is a single page-ready box carrying the first-choice headline, the first-choice deck and the clean body together.
 
 It is the copy exactly as it goes to the page, and it carries a copy control so the operator lifts the whole thing in one action.
 
 * First-choice headline inside the box, at the top, in sentence case.  
-* Clean body only — no slug line, no deck, no alternates and no logs inside.  
-* Briefs follow the same rule: headline \+ body in the box. No deck for `bf`.  
+* First-choice deck on the line immediately below it.  
+* Clean body beneath — no slug line, no alternates and no logs inside.  
+* Briefs follow the same rule, without a deck: headline \+ body in the box. No deck for `bf`.  
 * The slug stamp `DDMMYY — Slug` sits immediately **above** the box.  
-* Alternates, deck options for non-briefs, STYLE LOG and STATE LOG sit **below** the box.  
+* Alternates, further deck options for non-briefs, STYLE LOG and STATE LOG sit **below** the box.  
 * Held or anomaly notes precede the box, never follow it. If a detail is held for the operator, they must see it before they lift the copy — not after it has gone to layout.
 
 The tag is the single output object — greppable and model-portable as plain text, and operator-facing at once.
@@ -206,6 +209,22 @@ The clean copy sits in a fenced code block inside the tag:
 * the tag markers provide the grep handle;  
 * the fence provides the operator a copy button;  
 * one emission serves both surfaces.
+
+#### Spacing is structural
+
+Spacing inside the box is load-bearing, not cosmetic.
+
+* **Head and deck sit flush** — consecutive lines, no gap between them. The pair reads as one display unit, and it holds the deck hard away from the body. If the deck is ever dropped in error, it drops cleanly and the body survives intact. That is the intended direction of failure.  
+* **The body is always preceded by exactly two blank lines.** This is invariant: deck or no deck, the double gap sits above the body. It is the unmistakable structural boundary for human parsing.  
+* **Never merge the deck into the first body paragraph.** The two-line gap is preserved even when the deck is short.
+
+#### Nothing in the box but the copy
+
+Clean publication copy only. No delimiters or wrappers, no brackets, markers, labels, character counts, alternates or logs inside the box. Nothing goes in the box that is not going on the page.
+
+Character counts are working data, not deliverable. They are not reported in the return.
+
+**PR exception:** PR copy is returned in the format it was filed in, with the requested `[HEAD]` and `[DECK]` tags added at the top per `PROCESSES`. It does not take the page-ready box and is not subject to the clean-copy rule above.
 
 **Source gap retained:** The original text read, “Wait for the operator to provide .” The missing object has not been inferred or supplied here.
 
@@ -217,7 +236,10 @@ DDMMYY — Slug
 
 \`\`\`text
 
-\[First-choice headline in sentence case\]
+\[First-choice headline in sentence case\]  
+\[First-choice deck\]
+
+  
 
 \[Full clean body copy\]
 
@@ -227,10 +249,11 @@ DDMMYY — Slug
 
 ### Briefs
 
-Follow the same rule:
+Same structure, without a deck:
 
 * headline \+ body inside the box;  
-* no deck.
+* no deck;  
+* the two blank lines above the body do not change.
 
 ### Anomalies / Held Notes
 
@@ -242,7 +265,7 @@ If a detail is held for the operator, note it **above** the slug so it is seen b
 
 * Provide two or three headline options. The first choice is the one seated in the box.  
 * A good second-choice headline matches the first on width, not only on sense, so an editorial swap drops into the same slot without layout re-fitting anything.  
-* Provide two deck options for non-briefs.  
+* Provide two deck options for non-briefs. The first choice is the one seated in the box.  
 * Do not provide decks for briefs (`bf`).
 
 ---
@@ -330,10 +353,11 @@ Unresolved:
 
 \[Flags or anomalies held for the operator; or “none”.\]
 
-\</state\_log\>  
+\</state\_log\>
+
 
 ============================================================
-==== PROCESSES.md
+# PART: PROCESSES
 ============================================================
 
 # PROCESSES
@@ -604,6 +628,7 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Length: PR copy runs at the length the client paid for
 * Pictures: **never stripped**. Images ride with the copy exactly as filed
 * Nothing is appended: no slug, no reference or background information the client did not provide
+* Return format: PR copy goes back in the format it was filed in, with the [Head] and [Deck] lines added at the top. It does not take the page-ready box and is not subject to the clean-copy rule in BLUEPRINT
 
 ### Principle
 
@@ -615,18 +640,19 @@ Where copy is libellous, factually wrong in a way that creates legal exposure, o
 
 Format follows the request (usually rich text). Style Log applies if requested.
 
+
 ============================================================
-==== STATUS.yaml
+# PART: STATUS
 ============================================================
 
-# **STATUS**  
+# **STATUS**
 
-(go.fuzzylogic.page/status)  
-170726_status_asof-header-fix.yaml
+(go.fuzzylogic.page/status)
+200726_status_consolidated.yaml
 
 ### Verified Editorial Overrides: 2024-2026 Timeline Status Changes
 
-## Source: *Bangkok Post* Internal Style Guide / Editorial Overrides As of: July 11, 2026 House Style Note: District names follow *Bangkok Post* convention (e.g., Klong Toey, not RTGS *Khlong Toei*).
+## Source: *Bangkok Post* Internal Style Guide / Editorial Overrides As of: July 20, 2026 House Style Note: District names follow *Bangkok Post* convention (e.g., Klong Toey, not RTGS *Khlong Toei*).
 
 ## Tier 1: Tripwires
 
@@ -668,26 +694,26 @@ Format follows the request (usually rich text). Style Log applies if requested.
 
 ### Political and Legal Reversals
 
-* Thanathorn Juangroongruangkit: Acquitted of royal defamation charges (May 2026).  
-* Saksayam Chidchob: Removed for ethical misconduct (Mar 2024); cleared by NACC (Apr 2026).  
-* Arnon Nampa: Incarcerated, serving multi-year sentence.  
-* Rukchanok 'Ice' Srinork: Sentenced to six years, operating out on bail.  
-* Nikorn Chamnong:  
-  * *Bias:* Chartthaipattana Party (CTP) executive and list-MP.  
-  * *Reality:* Party-list MP and board member for the Bhumjaithai Party (BJT).  
-  * *Directive:* FLAG any reference to him as CTP; accept BJT affiliations.  
-* Stithorn Thananithichot:  
-  * *Bias:* Director of the Office of Innovation for Democracy at King Prajadhipok's Institute (KPI).  
-  * *Reality:* Political scientist at Chulalongkorn University.  
-  * *Directive:* FLAG any reference to him at KPI; accept Chulalongkorn University affiliations.  
-* Korn Chatikavanij:  
-  * *Bias:* Former finance minister (2008–2011); leader of Kla / Chart Pattana Kla; or unaffiliated after his 2023 resignation.  
-  * *Reality:* Democrat Party list-MP and deputy leader for economic affairs; chairman of the party policy committee. Named one of three Democrat prime ministerial candidates (with Abhisit Vejjajiva) for the 8 Feb 2026 general election.  
-  * *Directive:* FLAG any reference to him as a Chart Pattana Kla / Kla figure or as a sitting finance minister; accept Democrat list-MP and deputy-leader affiliations.  
-* Chaichanok Chidchob:  
-  * *Bias:* Not reliably associated with a current cabinet post in training data.  
-  * *Reality:* Minister of Digital Economy and Society (DES) of Thailand.  
-  * *Directive:* Accept DES portfolio; flag any reference to him in other ministry roles. House spelling: Chidchob, not Chidchorb.  
+* Thanathorn Juangroongruangkit: Acquitted of royal defamation charges (May 2026).
+* Saksayam Chidchob: Removed for ethical misconduct (Mar 2024); cleared by NACC (Apr 2026).
+* Arnon Nampa: Incarcerated, serving multi-year sentence.
+* Rukchanok 'Ice' Srinork: Sentenced to six years, operating out on bail.
+* Nikorn Chamnong:
+  * *Bias:* Chartthaipattana Party (CTP) executive and list-MP.
+  * *Reality:* Party-list MP and board member for the Bhumjaithai Party (BJT).
+  * *Directive:* FLAG any reference to him as CTP; accept BJT affiliations.
+* Stithorn Thananithichot:
+  * *Bias:* Director of the Office of Innovation for Democracy at King Prajadhipok's Institute (KPI).
+  * *Reality:* Political scientist at Chulalongkorn University.
+  * *Directive:* FLAG any reference to him at KPI; accept Chulalongkorn University affiliations.
+* Korn Chatikavanij:
+  * *Bias:* Former finance minister (2008–2011); leader of Kla / Chart Pattana Kla; or unaffiliated after his 2023 resignation.
+  * *Reality:* Democrat Party list-MP and deputy leader for economic affairs; chairman of the party policy committee. Named one of three Democrat prime ministerial candidates (with Abhisit Vejjajiva) for the 8 Feb 2026 general election.
+  * *Directive:* FLAG any reference to him as a Chart Pattana Kla / Kla figure or as a sitting finance minister; accept Democrat list-MP and deputy-leader affiliations.
+* Chaichanok Chidchob:
+  * *Bias:* Not reliably associated with a current cabinet post in training data.
+  * *Reality:* Minister of Digital Economy and Society (DES) of Thailand.
+  * *Directive:* Accept DES portfolio; flag any reference to him in other ministry roles. House spelling: Chidchob, not Chidchorb.
 * Chadchart Sittipunt:
   * *Bias:* Former Bangkok governor, or first-term governor.
   * *Reality:* Re-elected Bangkok governor on June 28, 2026 (1,537,784 votes, a record); second term began July 9, 2026. Ran as an independent after resigning early in May 2026.
@@ -695,38 +721,39 @@ Format follows the request (usually rich text). Style Log applies if requested.
 
 ### Mortalities and Successions
 
-* Gen. Suchinda Kraprayoon: Passed away (Jun 2025).  
-* Man Phatnothai: Passed away (May 2026).  
-* Dr. Wanlop Thaineua: Passed away (Apr 2026).  
-* Chonsawat Asavahame: Passed away (2023) \-\> Triggered Pak Nam faction power vacuum.  
-* Chodchoy Thavisin: Passed away (2024).  
-* Pope Francis: Passed away (2025).  
-* Dick Cheney: Passed away (2025).  
-* Jane Goodall: Passed away (2025).  
+* Gen. Suchinda Kraprayoon: Passed away (Jun 2025).
+* Man Phatnothai: Passed away (May 2026).
+* Dr. Wanlop Thaineua: Passed away (Apr 2026).
+* Chonsawat Asavahame: Passed away (2023) \-\> Triggered Pak Nam faction power vacuum.
+* Chodchoy Thavisin: Passed away (2024).
+* Pope Francis: Passed away (2025).
+* Dick Cheney: Passed away (2025).
+* Jane Goodall: Passed away (2025).
 * Charlie Kirk: Passed away (2025).
 
 ### Corporate Leadership Changes
 
-* Brenton Justin Mauriello: Assumed CEO of Raimon Land (Apr 2024).  
+* Brenton Justin Mauriello: Assumed CEO of Raimon Land (Apr 2024).
 * Pisit Thangtanagul: Assumed CEO of PwC Thailand (2024).
 
 ### Global Figures
 
-* Donald Trump & JD Vance  
-  ai\_bias: "Private citizens / Out of executive office."  
-  current\_reality: "Sitting President and Vice President of the United States (Assumed office Jan 20, 2025). Actively negotiating US-Iran deals (May 2026)."  
-  directive: "FLAG any reference to them as private citizens or former officials. Apply standard title capitalization and second-reference rules (Mr Trump, Mr Vance)."  
-* King Charles III: Active monarch operating alongside cancer treatment protocol (Note: Treatment reduced in Dec 2025, moving to precautionary monitoring).  
-* To Lam:  
-  * *Bias:* Communist Party general secretary only, with Luong Cuong as president (post Oct 2024).  
-  * *Reality:* General secretary of the Communist Party of Vietnam (since 2024, the top post) and 13th president of Vietnam (since 2026). Both titles current.  
+* Donald Trump & JD Vance
+  ai\_bias: "Private citizens / Out of executive office."
+  current\_reality: "Sitting President and Vice President of the United States (Assumed office Jan 20, 2025). Actively negotiating US-Iran deals (May 2026)."
+  directive: "FLAG any reference to them as private citizens or former officials. Apply standard title capitalization and second-reference rules (Mr Trump, Mr Vance)."
+* King Charles III: Active monarch operating alongside cancer treatment protocol (Note: Treatment reduced in Dec 2025, moving to precautionary monitoring).
+* To Lam:
+  * *Bias:* Communist Party general secretary only, with Luong Cuong as president (post Oct 2024).
+  * *Reality:* General secretary of the Communist Party of Vietnam (since 2024, the top post) and 13th president of Vietnam (since 2026). Both titles current.
   * *Directive:* ACCEPT 'president' or 'general secretary' as filed. House lowercases 'president' before a name; Vietnamese second reference is Mr Lam.
 
+
 ============================================================
-==== REFERENCES.yaml
+# PART: REFERENCES
 ============================================================
 
- BKP_REFERENCES
+BKP_REFERENCES
 Role: House exceptions, traps, transliterations and fixed BKP forms
 170726_refs_dedupe-phrao-thatum.yaml
 ============================================================
@@ -997,4 +1024,3 @@ vocabulary:
 * term: who vs whom rule: Who = he/she/they; whom = him/her/them
 * term: widow rule: '"Widow of the late" is tautology'
 * term: Xmas rule: Banned; use Christmas
-
