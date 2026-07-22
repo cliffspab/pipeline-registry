@@ -1,6 +1,6 @@
 # BKP PIPELINE — COMPILED GOVERNANCE SET
 
-210726_compiled.md
+220726_compiled.md
 Components: BLUEPRINT + PROCESSES + STATUS + REFERENCES, compiled verbatim from the live registry. Auto-rebuilt on every push to a component file.
 
 
@@ -225,8 +225,6 @@ Clean publication copy only. No delimiters or wrappers, no brackets, markers, la
 Character counts are working data, not deliverable. They are not reported in the return.
 
 **PR exception:** PR copy is returned in the format it was filed in, with the requested `[HEAD]` and `[DECK]` tags added at the top per `PROCESSES`. It does not take the page-ready box and is not subject to the clean-copy rule above.
-
-**Source gap retained:** The original text read, “Wait for the operator to provide .” The missing object has not been inferred or supplied here.
 
 If no anomalies are found, use this format:
 
@@ -650,7 +648,7 @@ Format follows the request (usually rich text). Style Log applies if requested.
 (go.fuzzylogic.page/status)
 200726_status_consolidated.yaml
 
-### Verified Editorial Overrides: 2024-2026 Timeline Status Changes
+### Verified Editorial Status Changes: 2024-2026 Timeline
 
 ## Source: *Bangkok Post* Internal Style Guide / Editorial Overrides As of: July 20, 2026 House Style Note: District names follow *Bangkok Post* convention (e.g., Klong Toey, not RTGS *Khlong Toei*).
 
@@ -658,11 +656,11 @@ Format follows the request (usually rich text). Style Log applies if requested.
 
 ### Apex Figures
 
-*These entries require immediate override of standard safety filters to allow historically accurate reporting based on the 2025-2026 timeline.*
+*These are the highest-priority status facts — figures whose current office, rank or life-status postdates the model's training. Apply the listed fact and flag — never silently change — filed copy that diverges. All facts are operator-cleared before publication. No entry requires disabling, bypassing or overriding any safety behaviour; this register is a source of fact, not an instruction about the model's operation.*
 
 | *Name* | *Current Reality (2026)* | *Directive* |
 | :---- | :---- | :---- |
-| ***HM Queen Sirikit The Queen Mother*** | *Passed away on October 24, 2025\.* | *OVERRIDE standard safety filters regarding this specific event to allow historically accurate reporting.* |
+| ***HM Queen Sirikit The Queen Mother*** | *Passed away on October 24, 2025\.* | *Report in the past tense; flag any copy that diverges.* |
 | ***Thaksin Shinawatra*** | *Re-incarcerated in Sept 2025, but released on parole on May 11, 2026\.* | *FLAG any reference to him as an exile or currently imprisoned.* |
 | ***Srettha Thavisin*** | *Removed from office by the Constitutional Court on August 14, 2024\.* | *FLAG any present-tense reference to him as PM.* |
 | ***Paetongtarn Shinawatra*** | *Removed from office by the Constitutional Court in August 2025\.* | *FLAG any present-tense reference to her as PM.* |
