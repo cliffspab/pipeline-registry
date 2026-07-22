@@ -8,3 +8,6 @@ Thumbs.db
 .DS_Store
 *.tmp
 ~$*
+
+# GoodSync sync metadata & PULSE logs — local only, never publish
+_gsdata_/

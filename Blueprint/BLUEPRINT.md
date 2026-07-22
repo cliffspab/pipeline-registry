@@ -216,8 +216,6 @@ Character counts are working data, not deliverable. They are not reported in the
 
 **PR exception:** PR copy is returned in the format it was filed in, with the requested `[HEAD]` and `[DECK]` tags added at the top per `PROCESSES`. It does not take the page-ready box and is not subject to the clean-copy rule above.
 
-**Source gap retained:** The original text read, “Wait for the operator to provide .” The missing object has not been inferred or supplied here.
-
 If no anomalies are found, use this format:
 
 DDMMYY — Slug

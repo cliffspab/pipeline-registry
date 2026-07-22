@@ -1,4 +1,4 @@
-name: Rebuild COMPILED governance set
+name: Rebuild COMPILED governance set and .txt twins
 
 on:
   push:
@@ -19,10 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build COMPILED.md
+      - name: Build COMPILED set and .txt twins
         run: |
           python3 - <<'EOF'
           import datetime
+
+          # Canonical source of truth: the four component files below.
+          # Everything else this job writes is DERIVED OUTPUT — never edit
+          # a .txt twin or a COMPILED file by hand; edit the component and
+          # push, and this job regenerates them byte-identically.
           stamp = datetime.datetime.now().strftime("%d%m%y")
           parts = [
               ("BLUEPRINT",  "Blueprint/BLUEPRINT.md"),
@@ -30,6 +35,7 @@ jobs:
               ("STATUS",     "Blueprint/STATUS.yaml"),
               ("REFERENCES", "Blueprint/REFERENCES.yaml"),
           ]
+
           sep = "\n\n" + "=" * 60 + "\n"
           out = [
               "# BKP PIPELINE — COMPILED GOVERNANCE SET\n\n"
@@ -39,15 +45,41 @@ jobs:
               "Auto-rebuilt on every push to a component file.\n"
           ]
           for name, path in parts:
-              body = open(path).read().strip()
+              body = open(path, encoding="utf-8").read().strip()
               out.append(f"{sep}# PART: {name}\n{'=' * 60}\n\n{body}\n")
-          open("Blueprint/COMPILED.md", "w").write("".join(out))
+          compiled = "".join(out)
+
+          # COMPILED, both extensions, identical bytes.
+          for target in ("Blueprint/COMPILED.md", "Blueprint/COMPILED.txt"):
+              open(target, "w", encoding="utf-8").write(compiled)
+
+          # Component .txt twins — verbatim copies for distribution
+          # (NotebookLM / Drive / sending to people). Canonical stays
+          # .md and .yaml; these exist only to travel.
+          for _, path in parts:
+              twin = path.rsplit(".", 1)[0] + ".txt"
+              open(twin, "w", encoding="utf-8").write(
+                  open(path, encoding="utf-8").read()
+              )
+              print(f"twin: {path} -> {twin}")
           EOF
+
+      - name: Verify twins are byte-identical
+        run: |
+          set -e
+          cmp Blueprint/BLUEPRINT.md   Blueprint/BLUEPRINT.txt
+          cmp Blueprint/PROCESSES.md   Blueprint/PROCESSES.txt
+          cmp Blueprint/STATUS.yaml    Blueprint/STATUS.txt
+          cmp Blueprint/REFERENCES.yaml Blueprint/REFERENCES.txt
+          cmp Blueprint/COMPILED.md    Blueprint/COMPILED.txt
+          echo "all twins byte-identical"
 
       - name: Commit if changed
         run: |
           git config user.name "compile-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add Blueprint/COMPILED.md
-          git diff --cached --quiet || git commit -m "Auto-rebuild COMPILED.md"
+          git add Blueprint/COMPILED.md Blueprint/COMPILED.txt \
+                  Blueprint/BLUEPRINT.txt Blueprint/PROCESSES.txt \
+                  Blueprint/STATUS.txt Blueprint/REFERENCES.txt
+          git diff --cached --quiet || git commit -m "Auto-rebuild COMPILED set and .txt twins"
           git push

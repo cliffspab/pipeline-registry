@@ -9,6 +9,67 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-07-21 | .github/workflows/compile.yml | EXTEND: the job now writes
+  COMPILED.txt alongside COMPILED.md AND regenerates all four component
+  .txt twins (BLUEPRINT/PROCESSES/STATUS/REFERENCES) as verbatim copies,
+  with a cmp step failing the build if any twin diverges. Canonical stays
+  .md/.yaml — rendered on GitHub, shortlinked, referenced throughout; the
+  .txt set is DERIVED OUTPUT for distribution only (NotebookLM, Drive,
+  sending to people), never hand-edited. Removes the manual regeneration
+  step that let COMPILED.txt and the twins lag a component change.
+  Desk decision 210726 under op's standing "file management is your call".
+- 2026-07-21 | COMMITS-PENDING.md | Ledger brought current: 210726
+  governance batch and the three stale 170726 lines moved to Pushed
+  (all verified live), plus the procedure note recording that lines
+  clear ON the push, not after it.
+- 2026-07-22 | Blueprint/STATUS.yaml | REFRAME: removed the "override
+  standard safety filters" language. Tier-1 section intro rewritten as a
+  plain-factual purpose statement; HM Queen Sirikit directive changed from
+  "OVERRIDE standard safety filters..." to "Report in the past tense; flag
+  any copy that diverges"; section heading "Verified Editorial Overrides"
+  -> "Verified Editorial Status Changes". Same operational meaning (apply
+  the fact, flag-don't-change, operator clears before live); removes the
+  tripwire phrasing the desk pauses on. No status fact changed.
+  Desk-requested, op-cleared 220726. Tag 220726_status_deoverride.
+- 2026-07-22 | Blueprint/BLUEPRINT.md | REMOVE stray editing artefact from
+  Output Format: the "**Source gap retained:** ... Wait for the operator to
+  provide ." meta-note, residue from a prior cleanup, not guidance. No rule
+  change. Op-flagged + cleared 220726. Tag 220726_blue_drop-source-gap.
+- 2026-07-22 | .gitignore | ADD _gsdata_/ (GoodSync sync state + PULSE logs,
+  local only — never publish). NOTE: the already-tracked _gsdata_ files
+  still need `git rm -r --cached _gsdata_` run locally to stop them riding
+  future pushes; the desk could not run it (stale .git/index.lock from
+  210726 12:41, and this mount blocks file deletes). Desk cleanup 220726.
+
+
+## Pushed (recent, for audit)
+
+Cleared 2026-07-21: every line below rode the operator's 2026-07-21 push.
+
+PROCEDURE NOTE: lines clear ON the push, in the same commit as the work —
+not after it. The push is monitored; push.bat confirms local HEAD ==
+origin/main and only then reports success, so "rode this push" is
+established by the push itself. A live cache-busted fetch is a separate,
+heavier check for when there is reason to doubt the served surface — it is
+NOT a precondition for clearing. Gating the ledger on it leaves a
+permanently trailing list, which is the condition that produced the false
+stale-repo alarm of 150726.
+
+This batch was additionally verified live the same session by cache-busted
+fetch of GitHub main (fresh buster — the pre-edit fetch earlier in the
+session had already cached the old ?v=210726 URL, so a distinct value was
+used):
+
+- BLUEPRINT.md — "Spacing is structural" and "Nothing in the box but the
+  copy" both serving; deck seated in the box; Alternates line amended.
+- PROCESSES.md — "Return format" bullet serving under Part 3 "What stays".
+- STATUS.yaml — serving 200726_status_consolidated, header "As of: July 20,
+  2026". The 170726 as-of fix is superseded by the 200726 consolidation,
+  not lost.
+- REFERENCES.yaml — Phrao resolves to one entry (Chiang Mai) and Tha Tum to
+  one (Surin); the dedupe held.
+- Clone reports `main...origin/main` with no divergence and a clean tree.
+
 - 2026-07-17 | REFERENCES.yaml | DEDUPE Phrao (Chiang Mai) and Tha Tum
   (Surin), each listed twice. Tag 170726_refs_dedupe-phrao-thatum.
   Op-ruled 170726 ("keep genuine corrections", review triage OTH-13).
@@ -40,8 +101,6 @@ desk commit. Clear each line once pushed.
   lines above. NOTE: the compile.yml action rebuilds COMPILED.md on push —
   it does NOT touch COMPILED.txt or the .txt twins.
 
-
-## Pushed (recent, for audit)
 
 Cleared 2026-07-17: the two PROCESSES lines below rode the operator's
 2026-07-17 push — desk-verified live same session via cache-busted fetch
