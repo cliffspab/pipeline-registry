@@ -9,6 +9,58 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-07-24 | BLUEPRINT.md + PROCESSES.md + STATUS.yaml + REFERENCES.yaml |
+  VERSION SCHEME: the four component stamps unified to a single volume
+  string. Previously each carried its own quadrant stamp (110726_com_,
+  170726_pro_, 200726_status_, 170726_refs_); they now all read
+  240726_all_records-extracted. The stamp names the date and the change,
+  not the file — so a model fetching any single component reports which
+  volume build it is running. Quadrant code `all` where a change touches
+  every component. Op-ruled 240726.
+- 2026-07-24 | REFERENCES.yaml | STRUCTURE: the six section titles
+  (1. COUNTRIES through 6. VOCABULARY & SPELLING) converted from
+  ====-wrapped plain text to ATX H2. They were previously invisible to
+  any Markdown parser — absent from the docx contents, rendered as body
+  text. No content change. Op-ruled 240726.
+- 2026-07-24 | BLUEPRINT.md -> RECORDS-AND-CONSOLIDATION.md | EXTRACT:
+  the Records & Consolidation section lifted out whole to its own file at
+  clone root. Repository administration, not editorial instruction —
+  fails the test "can a model sub a BKP story without this?". Placed at
+  root rather than Blueprint/ so the compile job does not treat it as a
+  fifth component. One phrase edited in transit: "this document" ->
+  "BLUEPRINT" in the closing bullet, which referred to BLUEPRINT while
+  the section sat inside it. Op-ruled 240726.
+- 2026-07-24 | BLUEPRINT.md + PROCESSES.md + compile.yml | RENAME: Part 1
+  is now CORE, not BLUEPRINT — the volume is called the Blueprint, so a
+  part of the same name is a collision. CORE promotes a term the document
+  already used (Authority Hierarchy item 4, "CORE Rules — this document").
+  Filename, short link /blue and the `com` stamp code unchanged. New short
+  link /core is live. Cross-references swept: PROCESSES companion line and
+  the Part 3 PR return-format bullet both now read CORE. Op-ruled 240726.
+- 2026-07-24 | .github/workflows/compile.yml | EXTEND: the job now builds
+  Blueprint/BLUEPRINT.docx via pandoc on every component push. Reads
+  COMPILED.md into a scratch copy at /tmp — COMPILED.md is never modified,
+  the twins cmp check depends on it. Scratch pass strips the compile
+  header, converts the ==== part dividers to page breaks, deletes any
+  surviving ==== rules (NOT converted to ---, which is setext syntax and
+  would silently promote the preceding line to a heading), and strips
+  Google-Docs over-escaping (\+ \[ \] \< \> \_ only; \* and \\ left alone).
+  Prepends volume front matter. Uses Blueprint/reference.docx if present,
+  builds unstyled if not — reference.docx does not yet exist. Contents
+  generated at --toc-depth=3. Desk decision 240726 under standing "file
+  management is your call".
+- 2026-07-24 | Blueprint/qr-code.svg + compile.yml | ADD: QR code to the
+  volume cover, resolving to go.fuzzylogic.page/blue (repointed today from
+  BLUEPRINT.md to the compendium, so the code takes a reader from the
+  printed snapshot to the live text). librsvg2-bin added to the apt install
+  so pandoc can rasterise SVG; --resource-path=Blueprint added so the
+  scratch file in /tmp resolves the image. Width 3.5cm — provisional, the
+  centre logo eats error-correction budget and it wants a scan test from
+  print. Renders left-aligned until reference.docx provides a centred
+  style. NOTE: the code carries the Bangkok Post masthead; desk flagged
+  that the mark asserts institutional endorsement the cover text does not.
+  Op-ruled 240726.
+
 - 2026-07-21 | .github/workflows/compile.yml | EXTEND: the job now writes
   COMPILED.txt alongside COMPILED.md AND regenerates all four component
   .txt twins (BLUEPRINT/PROCESSES/STATUS/REFERENCES) as verbatim copies,

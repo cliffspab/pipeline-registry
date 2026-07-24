@@ -30,7 +30,7 @@ jobs:
           # push, and this job regenerates them byte-identically.
           stamp = datetime.datetime.now().strftime("%d%m%y")
           parts = [
-              ("BLUEPRINT",  "Blueprint/BLUEPRINT.md"),
+              ("CORE",       "Blueprint/BLUEPRINT.md"),
               ("PROCESSES",  "Blueprint/PROCESSES.md"),
               ("STATUS",     "Blueprint/STATUS.yaml"),
               ("REFERENCES", "Blueprint/REFERENCES.yaml"),
@@ -40,7 +40,7 @@ jobs:
           out = [
               "# BKP PIPELINE — COMPILED GOVERNANCE SET\n\n"
               f"{stamp}_compiled.md\n"
-              "Components: BLUEPRINT + PROCESSES + STATUS + REFERENCES, "
+              "Components: CORE + PROCESSES + STATUS + REFERENCES, "
               "compiled verbatim from the live registry. "
               "Auto-rebuilt on every push to a component file.\n"
           ]
@@ -74,12 +74,83 @@ jobs:
           cmp Blueprint/COMPILED.md    Blueprint/COMPILED.txt
           echo "all twins byte-identical"
 
+      - name: Install pandoc
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y pandoc librsvg2-bin
+
+      - name: Build BLUEPRINT.docx
+        run: |
+          python3 - <<'EOF'
+          import re, subprocess, os
+
+          # Builds the published volume from COMPILED.md via a scratch copy.
+          # COMPILED.md is NEVER modified here — the twins check depends on
+          # it staying byte-identical to COMPILED.txt.
+
+          src = open("Blueprint/COMPILED.md", encoding="utf-8").read()
+
+          # Drop the compile header block (first 5 lines) — the volume
+          # gets its own front matter below.
+          body = "\n".join(src.split("\n")[5:])
+
+          # Part dividers: the ==== rules the compile step generates.
+          # Convert '==== / # PART: NAME / ====' to a bare page break.
+          # Each component already carries its own H1.
+          body = re.sub(
+              r"={10,}\n# PART: [A-Z]+\n={10,}\n",
+              "\\\\newpage\n",
+              body,
+          )
+
+          # Any surviving ==== rules are deleted outright. NOT converted
+          # to '---': in Markdown that is setext syntax and would silently
+          # promote the preceding line to a heading.
+          body = re.sub(r"^={10,}$\n?", "", body, flags=re.M)
+
+          # Strip Google-Docs over-escaping. Deliberately narrow: does not
+          # touch \* or \\ , which can be load-bearing.
+          body = re.sub(r"\\([+<>_\[\]])", r"\1", body)
+
+          front = (
+              "---\n"
+              'title: "The Bangkok Post Blueprint 2026"\n'
+              'subtitle: "A deterministic, AI-first reimagining of '
+              'newspaper sub-editing"\n'
+              "---\n\n"
+              "# The Bangkok Post Blueprint 2026\n\n"
+              "**A deterministic, AI-first reimagining of "
+              "newspaper sub-editing**\n\n"
+              "*This is why we have style…*\n\n"
+              "![](qr-code.svg){width=3.5cm}\n\n"
+              "\\newpage\n\n"
+          )
+
+          open("/tmp/volume.md", "w", encoding="utf-8").write(front + body)
+
+          args = [
+              "pandoc", "/tmp/volume.md",
+              "-o", "Blueprint/BLUEPRINT.docx",
+              "--resource-path=Blueprint",
+              "--toc", "--toc-depth=3",
+          ]
+          if os.path.exists("Blueprint/reference.docx"):
+              args.append("--reference-doc=Blueprint/reference.docx")
+              print("using reference.docx")
+          else:
+              print("no reference.docx — building unstyled")
+
+          subprocess.run(args, check=True)
+          print("built Blueprint/BLUEPRINT.docx")
+          EOF
+
       - name: Commit if changed
         run: |
           git config user.name "compile-bot"
           git config user.email "actions@users.noreply.github.com"
           git add Blueprint/COMPILED.md Blueprint/COMPILED.txt \
                   Blueprint/BLUEPRINT.txt Blueprint/PROCESSES.txt \
-                  Blueprint/STATUS.txt Blueprint/REFERENCES.txt
-          git diff --cached --quiet || git commit -m "Auto-rebuild COMPILED set and .txt twins"
+                  Blueprint/STATUS.txt Blueprint/REFERENCES.txt \
+                  Blueprint/BLUEPRINT.docx
+          git diff --cached --quiet || git commit -m "Auto-rebuild COMPILED set, .txt twins and BLUEPRINT.docx"
           git push
