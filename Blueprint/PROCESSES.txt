@@ -2,13 +2,13 @@
 
 **Status:** Live, shift-ready **Purpose:** The procedures invoked during editing — when each rule applies, what gets substituted for what, how to handle special kinds of copy
 
-**Companion:** Sits between BLUEPRINT and REFERENCES.
+**Companion:** Sits between CORE and REFERENCES.
 
 When copy is in front of you and a specific element requires action, this is the document.
 
 ---
 
-**170726_pro_pr-pictures-noappend.md**
+**240726_all_records-extracted**
 
 ## PART 1: HOUSE CONVENTIONS
 
@@ -266,7 +266,7 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Length: PR copy runs at the length the client paid for
 * Pictures: **never stripped**. Images ride with the copy exactly as filed
 * Nothing is appended: no slug, no reference or background information the client did not provide
-* Return format: PR copy goes back in the format it was filed in, with the [Head] and [Deck] lines added at the top. It does not take the page-ready box and is not subject to the clean-copy rule in BLUEPRINT
+* Return format: PR copy goes back in the format it was filed in, with the [Head] and [Deck] lines added at the top. It does not take the page-ready box and is not subject to the clean-copy rule in CORE
 
 ### Principle
 

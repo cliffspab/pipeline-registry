@@ -1,14 +1,14 @@
 # BKP PIPELINE — COMPILED GOVERNANCE SET
 
-220726_compiled.md
-Components: BLUEPRINT + PROCESSES + STATUS + REFERENCES, compiled verbatim from the live registry. Auto-rebuilt on every push to a component file.
+240726_compiled.md
+Components: CORE + PROCESSES + STATUS + REFERENCES, compiled verbatim from the live registry. Auto-rebuilt on every push to a component file.
 
 
 ============================================================
-# PART: BLUEPRINT
+# PART: CORE
 ============================================================
 
-# BLUEPRINT
+# CORE
 
 ([go.fuzzylogic.page/blue](https://go.fuzzylogic.page/blue))
 
@@ -20,7 +20,7 @@ Components: BLUEPRINT + PROCESSES + STATUS + REFERENCES, compiled verbatim from 
 
 ---
 
-`110726_com_integrated-searchq-restored.md`
+`240726_all_records-extracted`
 
 ## Operating Doctrine & Tone
 
@@ -268,30 +268,6 @@ If a detail is held for the operator, note it **above** the slug so it is seen b
 
 ---
 
-## Records & Consolidation
-
-Pending register or document changes are recorded as a single line in the field on the turn they are made.
-
-They must be:
-
-* recoverable in an emergency handoff; and  
-* scannable against the core files afterwards to confirm the work landed.
-
-Operator-approved changes to `STATUS`, `PROCESSES`, `BLUEPRINT` or `REFERENCES` are written directly into the local pipeline-registry clone on the turn they are ruled, and logged one line each in `COMMITS-PENDING.md` at the clone root. The operator checks that list before every push — the guard against a bulk file-swap erasing a desk commit. Lines clear on push. The desk never touches the clone without a ruling. (Op-ruled 2026-07-04; supersedes shift-close drop-in drafts for these four files.)
-
-Full drop-in drafts of other changed documents are produced once, at shift close or on request, not turn by turn.
-
-Between shifts, candidate rule changes, amendments and refinements collect in `DECISIONS-OPEN.yaml` — one file, keyed to the standing series (LEN/NAM/ARC/OUT/VER/STA/OTH), swept by the operator periodically. Nothing there is authoritative until ruled.
-
-Deployment is per model: each model produces its own deployment-ready system prompt from the full guide — self-contained, no external reference files required, optimised for its own processing.
-
-At close:
-
-* hand back patches rather than full reprints for the large files — `REFERENCES` and this document;  
-* short files — `STATUS` — may be reprinted whole.
-
----
-
 ## STYLE LOG
 
 ### Mandatory
@@ -362,13 +338,13 @@ Unresolved:
 
 **Status:** Live, shift-ready **Purpose:** The procedures invoked during editing — when each rule applies, what gets substituted for what, how to handle special kinds of copy
 
-**Companion:** Sits between BLUEPRINT and REFERENCES.
+**Companion:** Sits between CORE and REFERENCES.
 
 When copy is in front of you and a specific element requires action, this is the document.
 
 ---
 
-**170726_pro_pr-pictures-noappend.md**
+**240726_all_records-extracted**
 
 ## PART 1: HOUSE CONVENTIONS
 
@@ -626,7 +602,7 @@ PR copy is a minimum-intervention style pass — a basic read-through with house
 * Length: PR copy runs at the length the client paid for
 * Pictures: **never stripped**. Images ride with the copy exactly as filed
 * Nothing is appended: no slug, no reference or background information the client did not provide
-* Return format: PR copy goes back in the format it was filed in, with the [Head] and [Deck] lines added at the top. It does not take the page-ready box and is not subject to the clean-copy rule in BLUEPRINT
+* Return format: PR copy goes back in the format it was filed in, with the [Head] and [Deck] lines added at the top. It does not take the page-ready box and is not subject to the clean-copy rule in CORE
 
 ### Principle
 
@@ -646,7 +622,7 @@ Format follows the request (usually rich text). Style Log applies if requested.
 # **STATUS**
 
 (go.fuzzylogic.page/status)
-200726_status_consolidated.yaml
+240726_all_records-extracted
 
 ### Verified Editorial Status Changes: 2024-2026 Timeline
 
@@ -753,10 +729,8 @@ Format follows the request (usually rich text). Style Log applies if requested.
 
 BKP_REFERENCES
 Role: House exceptions, traps, transliterations and fixed BKP forms
-170726_refs_dedupe-phrao-thatum.yaml
-============================================================
-1. COUNTRIES
-============================================================
+240726_all_records-extracted
+## 1. COUNTRIES
 Country-name rulings, naming conventions, abbreviation forms.
 countries:
 --- preferred forms ---
@@ -803,9 +777,7 @@ countries:
 * name: PNG notes: Papua New Guinea (headlines, or body after full first reference)
 --- "the" article ---
 * name: the_article_rule notes: | Drop "the" before Congo, Ukraine, Sudan, Lebanon. Keep "the" for adjective-led names (the United States, the Democratic Republic of Congo) and plural-form names (the Bahamas, the Maldives). Seychelles is NOT plural — named after a person — so no "the".
-============================================================
-2. FOREIGN PLACES
-============================================================
+## 2. FOREIGN PLACES
 Place names whose BKP form diverges from common spelling or transliteration.
 foreign_places:
 AUSTRALIA: - Uluru (not Ayer's Rock) - Western Australia (cap the W)
@@ -850,9 +822,7 @@ UKRAINE: - Ilovaysk - Luhansk - Lviv
 UNITED STATES: - Hawaii - Papahanaumokuakea Marine National Monument - Pearl Harbor - Washington DC
 VIETNAM: - Da Nang - Gulf of Tonkin (not Tonkin Bay) - Hanoi - Ho Chi Minh City (not Saigon) - Hoi An
 YEMEN: - Hadramawt - Sana'a - Seyoun
-============================================================
-3. FOREIGN PEOPLE
-============================================================
+## 3. FOREIGN PEOPLE
 Convention exemplars, title retention, spelling traps.
 Dead, retired, or off-radar figures from the 2018 source have been dropped.
 Structural exemplars (Mao, Mother Teresa) retained where they still teach the rule.
@@ -909,9 +879,7 @@ foreign_people:
 * name: Recep Tayyip Erdogan notes: Standard spelling — no accents
 * name: Voreqe Bainimarama notes: Fiji; do not use "Frank" as first name
 * name: Salva Kiir notes: South Sudan; not David Kiir
-============================================================
-4. THAI GEOGRAPHY
-============================================================
+## 4. THAI GEOGRAPHY
 BKP THAI GEOGRAPHY INDEX
 Use RTGS transliteration. Global rules: Muang (not Mueang), Phra (not Pra), Chai (not Chay), Isan (not Isaan).
 thai_geography:
@@ -920,9 +888,7 @@ transliteration_rules: - Muang (not Mueang) - Phra (not Pra) - Chai (not Chay) -
 airports: - Two Bangkok airports — always specify Don Muang or Suvarnabhumi - Never "Bangkok airport" - '"Suvarnabhumi airport" suffices for body text; "Suvarnabhumi International Airport" only when using official name'
 third_party_spellings: notes: | Some institutions named after places spell their own names differently from BKP house style. Follow their official spelling for their name. Examples — Hatyai Hospital (BKP spells the town "Hat Yai"), Prince of Songkla University (not "Songkhla"), Sriracha Tiger Zoo (not "Sri Racha"), Minburi Prison (BKP spells the district "Min Buri"), Khlong Prem Prachakon (canal/prison area; the general rule "Klong not Khlong" still applies to district and road names).
 provinces: Amnat Charoen: [Muang Amnat Charoen, Chanuman, Phana, Hua Thapan, Pathumrat Wongsa, Senangkhanikhom, Lue Amnat] Ang Thong: [Muang Ang Thong, Chaiyo, Pa Mok, Pho Thong, Samko, Sawaengha, Wiset Chai Chan] Ayutthaya: [Phra Nakhon Si Ayutthaya, Ban Phraek, Bang Ban, Bang Pahan, Bang Pa-in, Bang Sai, Lat Bua Luang, Maha Rat, Nakhon Luang, Phachi, Phak Hai, Sena, Uthai, Wang Noi] Bangkok: [Bang Bon, Bang Kae, Bang Kapi, Bang Khen, Bang Kholaem, Bang Khunthian, Bang Na, Bang Phlat, Bang Rak, Bang Sue, Bangkok Noi, Bangkok Yai, Bung Kum, Chatuchak, Chom Thong, Din Daeng, Don Muang, Dusit, Huai Khwang, Kannayao, Klong San, Klong Toey, Laksi, Lat Krabang, Lat Phrao, Min Buri, Nong Chok, Nong Khaem, Pathumwan, Phasicharoen, Phaya Thai, Phra Khanong, Phra Nakhon, Pomprap Sattruphai, Prawet, Rat Burana, Ratchathewi, Sai Mai, Saphan Sung, Samphanthawong, Sathon, Suan Luang, Taling Chan, Thon Buri, Thung Kru, Watthana, Yannawa] Bung Kan: [Muang Bung Kan, Bung Khong Long, Pak Khat, Phon Charoen, Phon Phisai, Seka, Si Wilai, So Phisai] Buri Ram: [Muang Buri Ram, Ban Dan, Ban Kruat, Chamni, Chaloem Phra Kiat, Huai Rat, Khaen Dong, Khu Mueang, Krasang, Lahan Sai, Lam Plai Mat, Na Pho, Nang Rong, Non Din Daeng, Non Suwan, Pakham, Phlapphla Chai, Prakhon Chai, Phutthaisong, Satuek] Chachoengsao: [Muang Chachoengsao, Ban Pho, Bang Kla, Bang Nam Priao, Bang Pakong, Khlong Khuean, Phanom Sarakham, Plaeng Yao, Ratchasan, Sanam Chai Khet, Tha Takiap] Chai Nat: [Muang Chai Nat, Hankha, Manorom, Noen Kham, Nong Mamong, Sankhaburi, Sapphaya, Wat Sing] Chaiyaphum: [Muang Chaiyaphum, Bamnet Narong, Ban Khwao, Ban Thaen, Chatturat, Kaeng Khro, Kaset Sombun, Khon San, Khon Sawan, Nong Bua Daeng, Nong Bua Rawe, Phakdi Chumphon, Phu Khiao, Sap Yai, Thep Sathit] Chanthaburi: [Muang Chanthaburi, Kaeng Hang Maeo, Khao Khitchakut, Khlung, Laem Sing, Makham, Na Yai Am, Pong Nam Ron, Soi Dao, Tha Mai] Chiang Mai: [Muang Chiang Mai, Chai Prakan, Chiang Dao, Chom Thong, Doi Lo, Doi Saket, Doi Tao, Fang, Galyani Vadhana, Hang Dong, Hot, Mae Ai, Mae Chaem, Mae On, Mae Rim, Mae Taeng, Mae Wang, Phrao, Samoeng, San Kamphaeng, San Pa Tong, San Sai, Saraphi, Wiang Haeng] Chiang Rai: [Muang Chiang Rai, Chiang Khong, Chiang Saen, Doi Luang, Khun Tan, Mae Chan, Mae Fa Luang, Mae Lao, Mae Sai, Mae Suai, Pa Daet, Phan, Phaya Mengrai, Thoeng, Wiang Chaeng, Wiang Chiang Rung, Wiang Kaen, Wiang Pa Pao] Chon Buri: [Muang Chon Buri, Ban Bueng, Bo Thong, Bang Lamung, Koh Chan, Koh Sichang, Nong Yai, Phan Thong, Phanat Nikhom, Sattahip, Si Racha] Chumphon: [Muang Chumphon, Lamae, Pathio, Phato, Sawi, Tha Sae, Thung Tako] Kalasin: [Muang Kalasin, Don Chan, Huai Mek, Huai Phueng, Kamalasai, Khao Wong, Khong Chai, Kuchinarai, Na Mon, Na Khu, Nong Kung Si, Rong Kham, Sahatsakhan, Sam Chai, Somdet, Tha Khantho, Yang Talat] Kamphaeng Phet: [Muang Kamphaeng Phet, Bueng Samakkhi, Khanu Woralaksaburi, Khlong Khlung, Khlong Lan, Kosamphi Nakhon, Lan Krabue, Pang Sila Thong, Phran Kratai, Sai Thong Watthana, Trai Ngam] Kanchanaburi: [Muang Kanchanaburi, Bo Phloi, Dan Makham Tia, Huai Krachao, Lao Khwan, Nong Prue, Phanom Thuan, Sai Yok, Sangkhla Buri, Si Sawat, Tha Maka, Tha Muang, Thong Pha Phum] Khon Kaen: [Muang Khon Kaen, Ban Fang, Ban Haet, Ban Phai, Chonnabot, Chum Phae, Khao Suan Kwang, Kranuan, Manchakhiri, Nam Phong, Non Sila, Nong Na Kham, Nong Ruea, Nong Song Hong, Phu Pha Man, Phu Wiang, Pueai Noi, Sam Sung, Si Chomphu, Ubolratana, Waeng Noi, Waeng Yai] Krabi: [Muang Krabi, Ao Luk, Khao Phanom, Khlong Thom, Koh Lanta, Lam Thap, Nuea Khlong, Plai Phraya] Lampang: [Muang Lampang, Chae Hom, Hang Chat, Ko Kha, Mae Mo, Mae Phrik, Mae Tha, Mueang Pan, Ngao, Soem Ngam, Sop Prap, Thoen, Wang Nuea] Lamphun: [Muang Lamphun, Ban Hong, Ban Thi, Mae Tha, Pa Sang, Thung Hua Chang, Wiang Nong Long] Loei: [Muang Loei, Chiang Khan, Dan Sai, Erawan, Nong Hin, Na Duang, Na Haeo, Pak Chom, Pha Khao, Phu Kradueng, Phu Luang, Phu Ruea, Tha Li, Wang Saphung] Lop Buri: [Muang Lop Buri, Ban Mi, Chai Badan, Khok Charoen, Khok Samrong, Lam Sonthi, Nong Muang, Phatthana Nikhom, Tha Luang, Tha Wung] Mae Hong Son: [Muang Mae Hong Son, Khun Yuam, Mae La Noi, Mae Sariang, Pai, Pang Mapha, Sop Moei] Maha Sarakham: [Muang Maha Sarakham, Borabue, Chiang Kuan, Chuen Chom, Kae Dam, Kantharawichai, Kosum Phisai, Kut Rang, Na Chueak, Na Dun, Phayakkhaphum Phisai, Wapi Pathum] Mukdahan: [Muang Mukdahan, Camcha-i, Dong Luang, Khamcha-i, Nong Sung, Wan Yai] Nakhon Nayok: [Muang Nakhon Nayok, Ban Na, Ongkharak, Pak Phli] Nakhon Pathom: [Muang Nakhon Pathom, Bang Len, Don Tum, Kamphaeng Saen, Nakhon Chai Si, Phutthamonthon, Sam Phran] Nakhon Phanom: [Muang Nakhon Phanom, Ban Phaeng, Khaen Dong, Na Kae, Na Thom, Na Wa, Pla Pak, Phon Sawan, Renu Nakhon, Si Songkhram, Tha Uthen, That Phanom] Nakhon Ratchasima: [Muang Nakhon Ratchasima, Ban Lai, Bua Lai, Bua Yai, Chakkarat, Chaloem Phra Kiat, Chok Chai, Chum Phuang, Dan Khun Thot, Huai Thalaeng, Kaeng Sanam Nang, Kham Sakaesaeng, Kham Thale So, Khon Buri, Mueang Yang, Non Daeng, Non Thai, Non Sung, Nong Bun Mak, Pak Chong, Pak Thong Chai, Phimai, Phra Thong Kham, Prathai, Sida, Sikhio, Soeng Sang, Sung Noen, Thepharak, Wang Nam Khiao] Nakhon Sawan: [Muang Nakhon Sawan, Banphot Phisai, Chum Ta Bong, Chum Saeng, Kao Liao, Krok Phra, Lat Yao, Mae Wong, Nong Bua, Phaisali, Phayuha Khiri, Tak Fa, Takhli] Nakhon Si Thammarat: [Muang Nakhon Si Thammarat, Bang Khan, Cha-uat, Chaloem Phra Kiat, Chang Klang, Chian Yai, Chulabhorn, Hua Sai, Khanom, Lan Saka, Na Bon, Nopphitam, Pak Phanang, Phipun, Phrom Khiri, Ron Phibun, Sichon, Tha Sala, Thung Song, Thung Yai] Nan: [Muang Nan, Ban Luang, Bo Kluea, Chaloem Phra Kiat, Chiang Klang, Mae Charim, Na Noi, Na Muen, Phu Phiang, Pua, Santi Suk, Song Khwae, Tha Wang Pha, Thung Chang, Wiang Sa] Narathiwat: [Muang Narathiwat, Bacho, Chanae, Cho-airong, Ra-ngae, Rueso, Sri Sakhon, Sukhirin, Su-ngai Kolok, Su-ngai Padi, Tak Bai, Waeng, Yi-ngo] Nong Bua Lam Phu: [Muang Nong Bua Lam Phu, Na Klang, Na Wang, Non Sang, Si Bun Rueang, Suwannakhuha] Nong Khai: [Muang Nong Khai, Fao Rai, Pho Tak, Phon Phisai, Rattanawapi, Sa Khrai, Sangkhom, Si Chiang Mai, Tha Bo] Nonthaburi: [Muang Nonthaburi, Bang Bua Thong, Bang Kruai, Bang Yai, Pak Kret, Sai Noi] Pathum Thani: [Muang Pathum Thani, Khlong Luang, Lam Luk Ka, Lat Lum Kaeo, Nong Suea, Sam Khok, Thanyaburi] Pattani: [Muang Pattani, Kapho, Khok Pho, Mae Lan, Mai Kaen, Mayo, Nong Chik, Panare, Sai Buri, Thung Yang Daeng, Yarang, Yaring] Phangnga: [Muang Phangnga, Kapong, Khura Buri, Koh Yao, Thap Put, Thai Mueang, Takua Pa, Takua Thung] Phatthalung: [Muang Phatthalung, Bang Kaeo, Khao Chaison, Khuan Khanun, Kong Ra, Pa Bon, Pa Phayom, Pak Phayun, Srinagarindra, Tamot] Phayao: [Muang Phayao, Chiang Kham, Chiang Muan, Chun, Dok Khamtai, Mae Chai, Phu Kamyao, Phu Sang, Pong] Phetchabun: [Muang Phetchabun, Bueng Sam Phan, Chon Daen, Khao Kho, Lom Kao, Lom Sak, Nam Nao, Nong Phai, Si Thep, Wang Pong] Phetchaburi: [Muang Phetchaburi, Ban Laem, Ban Lat, Cha-am, Kaeng Krachan, Khao Yoi, Nong Ya Plong, Tha Yang] Phichit: [Muang Phichit, Bueng Na Rang, Dong Charoen, Pho Prathap Chang, Pho Thale, Sak Lek, Sam Ngam, Taphan Hin, Thap Khlo, Wachirabarami, Wang Sai Phun] Phitsanulok: [Muang Phitsanulok, Bang Krathum, Bang Rakam, Chat Trakan, Nakhon Thai, Noen Maprang, Phrom Phiram, Wang Thong, Wat Bot] Phrae: [Muang Phrae, Den Chai, Long, Nong Muang Khai, Rong Kwang, Song, Sung Men, Wang Chin] Phuket: [Muang Phuket, Kathu, Thalang] Prachin Buri: [Muang Prachin Buri, Ban Sang, Kabin Buri, Na Di, Prachantakham, Si Maha Phot, Si Mahosot] Prachuap Khiri Khan: [Muang Prachuap Khiri Khan, Bang Saphan, Bang Saphan Noi, Hua Hin, Kui Buri, Pran Buri, Sam Roi Yot, Thap Sakae] Ranong: [Muang Ranong, Kapoe, Kra Buri, La-un, Suk Samran] Ratchaburi: [Muang Ratchaburi, Ban Kha, Ban Pong, Bang Phae, Chom Bueng, Damnoen Saduak, Pak Tho, Photharam, Suan Phueng, Wat Phleng] Rayong: [Muang Rayong, Ban Chang, Ban Khai, Khao Chamao, Klaeng, Nikhom Phatthana, Pluak Daeng, Wang Chan] Roi Et: [Muang Roi Et, At Samat, Changhan, Chaturaphak Phiman, Chiang Khwan, Jung Han, Kaset Wisai, Moei Wadi, Nong Hi, Nong Phok, Pathum Rat, Phanom Phrai, Pho Chai, Phon Sai, Phon Thong, Selaphum, Si Somdet, Suwannaphum, Thawat Buri, Thung Khao Luang] Sa Kaeo: [Muang Sa Kaeo, Aranyaprathet, Khao Chakan, Khlong Hat, Khok Sung, Ta Phraya, Wang Nam Yen, Wang Sombun, Watthana Nakhon] Sakon Nakhon: [Muang Sakon Nakhon, Akat Amnuai, Ban Muang, Charoen Sin, Kham Ta Kla, Khok Si Suphan, Kusuman, Kut Bak, Nikhom Nam Un, Phang Khon, Phanna Nikhom, Phon Na Kaeo, Phu Phan, Sawang Daen Din, Song Dao, Tao Ngoi, Wanon Niwat] Samut Prakan: [Muang Samut Prakan, Bang Bo, Bang Phli, Bang Sao Thong, Phra Samut Chedi, Phra Pradaeng] Samut Sakhon: [Muang Samut Sakhon, Ban Phaeo, Krathum Baen] Samut Songkhram: [Muang Samut Songkhram, Amphawa, Bang Khonthi] Saraburi: [Muang Saraburi, Ban Mo, Don Phut, Kaeng Khoi, Muak Lek, Nong Don, Nong Khae, Nong Saeng, Phra Phutthabat, Sao Hai, Wang Muang, Wihan Daeng] Satun: [Muang Satun, Khuan Don, Khuan Kalong, La-ngu, Manang, Tha Phae, Thung Wa] Sing Buri: [Muang Sing Buri, Bang Rachan, In Buri, Khai Bang Rachan, Phrom Buri, Tha Chang] Si Sa Ket: [Muang Si Sa Ket, Benchalak, Bueng Bun, Huai Thap Than, Kantharalak, Kanthararom, Khukhan, Khun Han, Mueang Chan, Nam Kliang, Non Kunn, Phayu, Pho Si Suwan, Phrai Bueng, Phu Sing, Prang Ku, Rasi Salai, Si Rattana, Sila Lat, Uthumphon Phisai, Wang Hin, Yang Chum Noi] Songkhla: [Muang Songkhla, Bang Klam, Chana, Hat Yai, Khlong Hoi Khong, Khuha Sawan, Na Mom, Na Thawi, Ranot, Rattaphum, Saba Yoi, Sadao, Sathing Phra, Singhanakhon, Thepha] Sukhothai: [Muang Sukhothai, Ban Dan Lan Naik, Khiri Mat, Kong Krailat, Sawankhalok, Si Nakhon, Si Samrong, Si Satchanalai, Thung Saliam] Suphan Buri: [Muang Suphan Buri, Bang Pla Ma, Dan Chang, Doem Bang Nang Buat, Nong Ya Sai, Sam Chuk, Song Phi Nong, U Thong] Surat Thani: [Muang Surat Thani, Ban Na Doem, Ban Na San, Ban Takhun, Chaiya, Chai Buri, Don Sak, Kanchanadit, Khian Sa, Khiri Rat Nikhom, Koh Pha-ngan, Koh Samui, Phanom, Phrasaeng, Phunphin, Tha Chang, Tha Chana, Vibhavadi, Wiang Sa] Surin: [Muang Surin, Buachet, Chom Phra, Chumphon Buri, Kap Choeng, Khwao Sinarin, Non Narai, Phanom Dong Rak, Prasat, Rattanaburi, Samrong Thap, Sangkha, Sikhoraphum, Si Narong, Tha Tum] Tak: [Muang Tak, Ban Tak, Mae Ramat, Mae Sot, Phop Phra, Sam Ngao, Tha Song Yang, Wang Chao, Umphang] Trang: [Muang Trang, Na Yong, Hat Samran, Huai Yot, Kantang, Palian, Ratsada, Sikao, Wang Wiset, Yan Ta Khao] Trat: [Muang Trat, Bo Rai, Khao Saming, Khlong Yai, Koh Chang, Koh Kut, Laem Ngop] Ubon Ratchathani: [Muang Ubon Ratchathani, Buntharik, Det Udom, Don Mot Daeng, Khemarat, Khong Chiam, Khuang Nai, Kut Khaopun, Lao Sue Kok, Muang Samsip, Na Chaluai, Na Tan, Na Yia, Nam Khun, Nam Yuen, Phibun Mangsahan, Pho Sai, Samrong, Sawang Wirawong, Sri Muang Mai, Sirinthorn, Tan Sum, Trakan Phuetphon, Thung Si Udom, Warin Chamrap] Udon Thani: [Muang Udon Thani, Ban Dung, Ban Phue, Chaiwan, Ku Kaeo, Kumphawapi, Kut Chap, Nam Som, Na Yoong, Non Sa-at, Nong Han, Nong Sang, Nong Wua So, Phibun Rak, Phen, Prachak, Sang Khom, Sri That, Thung Fon, Wang Sam Mo] Uthai Thani: [Muang Uthai Thani, Ban Rai, Huai Khot, Lan Sak, Nong Chang, Nong Khayang, Sawang Arom, Thap Than] Uttaradit: [Muang Uttaradit, Ban Khok, Fak Tha, Laplae, Nam Pat, Phichai, Tha Pla, Thong Saen Khan, Tron] Yala: [Muang Yala, Bannang Sata, Betong, Kabang, Krong Pinang, Raman, Than To, Yaha] Yasothon: [Muang Yasothon, Kham Khuean Kaeo, Kho Wang, Kut Chum, Loeng Nok Tha, Maha Chana Chai, Pa Tio, Sai Mun, Thai Charoen]
-============================================================
-5. ORGANISATIONS
-============================================================
+## 5. ORGANISATIONS
 organisations:
 * name: Abu Sayyaf
 * name: al-Nusra Front
@@ -943,9 +909,7 @@ organisations:
 * name: Shia notes: Not Shi'ite or Shiite
 * name: Yezidis
 * name: Fifa notes: Never FIFA, eg "2026 Fifa World Cup".
-============================================================
-6. VOCABULARY & SPELLING
-============================================================
+## 6. VOCABULARY & SPELLING
 Words with BKP-specific ruling, common UK/US traps, and recurring errors.
 General British English usage is assumed; only divergent items listed.
 vocabulary:
