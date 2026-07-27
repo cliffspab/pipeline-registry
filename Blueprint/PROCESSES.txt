@@ -1,16 +1,10 @@
 # PROCESSES
 
-**Status:** Live, shift-ready **Purpose:** The procedures invoked during editing — when each rule applies, what gets substituted for what, how to handle special kinds of copy
+[go.fuzzylogic.page/pro](https://go.fuzzylogic.page/pro)
 
-**Companion:** Sits between CORE and REFERENCES.
+`270726_all_records-extracted`
 
-When copy is in front of you and a specific element requires action, this is the document.
-
----
-
-**240726_all_records-extracted**
-
-## PART 1: HOUSE CONVENTIONS
+## 1. HOUSE CONVENTIONS
 
 Presentational substitutions applied wherever the relevant element appears in copy.
 
@@ -64,7 +58,15 @@ Datelines are left exactly as provided — never added, never localised (BEIJING
 
 Symbols for dollar, pound, euro, yen: $1, £10, €100, ¥1,000. Other currencies are spelled out: 5 baht, 50 rial, 500 rupees.
 
-Dollar type is specified at first reference (US$, Aus$, NZ$, S$, HK$); default is US$ but specification is still given. Baht abbreviates to B in headlines (B500, B5m). "Thai baht" is superfluous and not used.
+Dollar type is specified at first reference. The forms are:
+
+* US$
+* Aus$
+* NZ$
+* S$
+* HK$
+
+US$ is the default, but the type is still specified. Baht abbreviates to B in headlines (B500, B5m). "Thai baht" is superfluous and not used.
 
 Foreign currency converts to baht at first mention, rounded to three leading digits. The conversion happens once, not throughout. Tickers (THB, USD, GBP) are not used. Yuan suffices on its own — not "yuan renminbi".
 
@@ -157,9 +159,7 @@ MILF stays all caps (Moro Islamic Liberation Front) — house ruling, avoids sla
 
 UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus appear in heads and decks. PNG and DRC appear in heads, or in body after the full first reference.
 
----
-
-## PART 2: SPATIAL MECHANICS
+## 2. SPATIAL MECHANICS
 
 The rules in this part address one flaw: the model's innate counting is unreliable. There are two valid answers to that flaw, and this part uses both. Where the operation suits it, design around counting entirely — substitution whose volume is preserved by construction ("1-in / 1-out" and "swap heavy for lean" are the operations themselves, not shorthand for "preserve length" or "make it narrower"). Where the operation needs a real number, hand the count to an external tool that does it deterministically. Bringing in Python to count is not a departure from this part's logic — it is the same flaw corrected by the same principle, with an external mechanism instead of an avoidance design.
 
@@ -241,9 +241,7 @@ News-value ranking is the desk's call, made on editorial worth alone and without
    * **Overset:** Swap 1.0/1.5 unit glyphs for 0.5 unit glyphs to reduce the total spatial score.
    * **Underset:** Swap 0.5 unit glyphs for heavier glyphs to widen the physical footprint.
 
----
-
-## PART 3: PR HANDLING
+## 3. PR HANDLING
 
 PR copy is a minimum-intervention style pass — a basic read-through with house conventions applied where the structure permits. The frame is spellcheck-plus-style, not editing.
 

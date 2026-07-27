@@ -1,156 +1,301 @@
-name: Rebuild COMPILED governance set and .txt twins
+name: Split BLUEPRINT into parts and build the style guide
+
+# ---------------------------------------------------------------------------
+# 270726.
+#
+# ONE file is edited:
+#   Blueprint/BLUEPRINT.txt
+#
+# FIVE are derived from it on push, and never touched by hand:
+#   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
+#   Blueprint/CORE.txt         )
+#   Blueprint/PROCESSES.txt    )  part delivery for machine consumers:
+#   Blueprint/STATUS.txt       )  /core /pro /status /refs
+#   Blueprint/REFERENCES.txt   )
+#
+# ---------------------------------------------------------------------------
+# THE CONTENT IS MARKDOWN. THE EXTENSION IS NOT.
+#
+# Everything here is .txt because nothing in the chain reads the extension:
+# the converter and the audit both pass "-f gfm" explicitly, and
+# raw.githubusercontent.com serves every extension as text/plain. Building the
+# volume from a .txt source was verified to produce a character-identical
+# document to the .md build.
+#
+# But the SYNTAX is load-bearing and is not optional. The Word build reads
+# markdown to make real Word headings, bold, lists and tables:
+#     ## PART 1: HOUSE CONVENTIONS   ->  ruled major section
+#     ### Numbers                    ->  operational subsection
+#     **Status:**                    ->  bold run
+#     | a | b |                      ->  native Word table
+#     * item                         ->  native Word numbering
+# Type a heading as bare text and the words survive but the heading does not.
+# The coverage audit will NOT catch that - every word is still present, just
+# no longer structural. The block-profile guard below exists for exactly this.
+# ---------------------------------------------------------------------------
+#
+# RETIRED 270726:
+#   .md as an extension  nothing read it; the syntax carries the certainty
+#   .txt twins           byte-identical duplicates of their source
+#   module .docx         clutter beside the style guide
+#   COMPILED             retired as a name; the full document is BLUEPRINT
+#
+# COMPILED.{md,txt} and the STATUS/REFERENCES .yaml paths are still written as
+# compatibility shims so existing shortlinks resolve until adoption is
+# confirmed. Delete that block once they are repointed.
+# ---------------------------------------------------------------------------
 
 on:
   push:
     branches: [main]
     paths:
-      - 'Blueprint/BLUEPRINT.md'
-      - 'Blueprint/PROCESSES.md'
-      - 'Blueprint/STATUS.yaml'
-      - 'Blueprint/REFERENCES.yaml'
+      - 'Blueprint/BLUEPRINT.txt'
+      - '.github/workflows/compile.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  compile:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Build COMPILED set and .txt twins
-        run: |
-          python3 - <<'EOF'
-          import datetime
-
-          # Canonical source of truth: the four component files below.
-          # Everything else this job writes is DERIVED OUTPUT — never edit
-          # a .txt twin or a COMPILED file by hand; edit the component and
-          # push, and this job regenerates them byte-identically.
-          stamp = datetime.datetime.now().strftime("%d%m%y")
-          parts = [
-              ("CORE",       "Blueprint/BLUEPRINT.md"),
-              ("PROCESSES",  "Blueprint/PROCESSES.md"),
-              ("STATUS",     "Blueprint/STATUS.yaml"),
-              ("REFERENCES", "Blueprint/REFERENCES.yaml"),
-          ]
-
-          sep = "\n\n" + "=" * 60 + "\n"
-          out = [
-              "# BKP PIPELINE — COMPILED GOVERNANCE SET\n\n"
-              f"{stamp}_compiled.md\n"
-              "Components: CORE + PROCESSES + STATUS + REFERENCES, "
-              "compiled verbatim from the live registry. "
-              "Auto-rebuilt on every push to a component file.\n"
-          ]
-          for name, path in parts:
-              body = open(path, encoding="utf-8").read().strip()
-              out.append(f"{sep}# PART: {name}\n{'=' * 60}\n\n{body}\n")
-          compiled = "".join(out)
-
-          # COMPILED, both extensions, identical bytes.
-          for target in ("Blueprint/COMPILED.md", "Blueprint/COMPILED.txt"):
-              open(target, "w", encoding="utf-8").write(compiled)
-
-          # Component .txt twins — verbatim copies for distribution
-          # (NotebookLM / Drive / sending to people). Canonical stays
-          # .md and .yaml; these exist only to travel.
-          for _, path in parts:
-              twin = path.rsplit(".", 1)[0] + ".txt"
-              open(twin, "w", encoding="utf-8").write(
-                  open(path, encoding="utf-8").read()
-              )
-              print(f"twin: {path} -> {twin}")
-          EOF
-
-      - name: Verify twins are byte-identical
+      - name: Guard - reject hand-edits to derived files
+        if: github.event_name == 'push'
         run: |
           set -e
-          cmp Blueprint/BLUEPRINT.md   Blueprint/BLUEPRINT.txt
-          cmp Blueprint/PROCESSES.md   Blueprint/PROCESSES.txt
-          cmp Blueprint/STATUS.yaml    Blueprint/STATUS.txt
-          cmp Blueprint/REFERENCES.yaml Blueprint/REFERENCES.txt
-          cmp Blueprint/COMPILED.md    Blueprint/COMPILED.txt
-          echo "all twins byte-identical"
+          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} || true)
+          echo "changed in this push:"; echo "$CHANGED"
+          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(CORE|PROCESSES|STATUS|REFERENCES)\.(txt|md|yaml)$' || true)
+          if [ -n "$BAD" ]; then
+            echo ""
+            echo "REJECTED - these are DERIVED files and were edited by hand:"
+            echo "$BAD"
+            echo ""
+            echo "Edit Blueprint/BLUEPRINT.txt instead. These are regenerated"
+            echo "from it; a change here would be silently overwritten."
+            exit 1
+          fi
+          echo "guard passed"
 
-      - name: Install pandoc
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y pandoc librsvg2-bin
-
-      - name: Build BLUEPRINT.docx
+      - name: Guard - no line may carry two dollar signs
         run: |
           python3 - <<'EOF'
-          import re, subprocess, os
+          import sys
+          bad = [(i + 1, l) for i, l in
+                 enumerate(open("Blueprint/BLUEPRINT.txt",
+                                encoding="utf-8").read().split("\n"))
+                 if l.count("$") > 1]
+          if bad:
+              for n, l in bad:
+                  print("line %d: %s" % (n, l[:120]))
+              sys.exit("FATAL: two or more '$' on one line. A markdown-to-docx "
+                       "converter reads $...$ as inline maths and silently "
+                       "deletes the text between them. This removed 'Aus$, S$' "
+                       "and the default-currency clause from the published "
+                       "volume before 270726. Put one form per line.")
+          print("dollar-pairing guard: PASS")
+          EOF
 
-          # Builds the published volume from COMPILED.md via a scratch copy.
-          # COMPILED.md is NEVER modified here — the twins check depends on
-          # it staying byte-identical to COMPILED.txt.
+      - name: Split into parts, verify the split is invertible
+        run: |
+          python3 - <<'EOF'
+          import re, sys
 
-          src = open("Blueprint/COMPILED.md", encoding="utf-8").read()
+          SRC = "Blueprint/BLUEPRINT.txt"
+          src = open(SRC, encoding="utf-8").read()
 
-          # Drop the compile header block (first 5 lines) — the volume
-          # gets its own front matter below.
-          body = "\n".join(src.split("\n")[5:])
+          pat = re.compile(r'\n={60}\n# PART: (\w+)\n={60}\n')
+          hits = list(pat.finditer(src))
+          names = [m.group(1) for m in hits]
+          expect = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
+          if names != expect:
+              sys.exit("FATAL: expected part banners %s, found %s. The parts "
+                       "are cut on these and the Word build keys its component "
+                       "openings and register off them. Refusing to build."
+                       % (expect, names))
 
-          # Part dividers: the ==== rules the compile step generates.
-          # Convert '==== / # PART: NAME / ====' to a bare page break.
-          # Each component already carries its own H1.
-          body = re.sub(
-              r"={10,}\n# PART: [A-Z]+\n={10,}\n",
-              "\\\\newpage\n",
-              body,
-          )
+          preamble = src[:hits[0].start()]
+          parts = {}
+          for i, m in enumerate(hits):
+              end = hits[i + 1].start() if i + 1 < len(hits) else len(src)
+              parts[m.group(1)] = src[m.end():end]
 
-          # Any surviving ==== rules are deleted outright. NOT converted
-          # to '---': in Markdown that is setext syntax and would silently
-          # promote the preceding line to a heading.
-          body = re.sub(r"^={10,}$\n?", "", body, flags=re.M)
+          out = {k: "Blueprint/%s.txt" % k for k in expect}
+          for k in expect:
+              body = parts[k].lstrip("\n").rstrip("\n") + "\n"
+              open(out[k], "w", encoding="utf-8", newline="").write(body)
+              print("part: %-11s -> %-27s %6d chars" % (k, out[k], len(body)))
 
-          # Strip Google-Docs over-escaping. Deliberately narrow: does not
-          # touch \* or \\ , which can be load-bearing.
-          body = re.sub(r"\\([+<>_\[\]])", r"\1", body)
+          # ---- INVERTIBILITY GUARD ------------------------------------------
+          SEP = "\n" + "=" * 60 + "\n# PART: %s\n" + "=" * 60 + "\n"
+          rebuilt = preamble
+          for k in expect:
+              body = open(out[k], encoding="utf-8", newline="").read()
+              orig = parts[k]
+              lead  = orig[:len(orig) - len(orig.lstrip("\n"))]
+              trail = orig[len(orig.rstrip("\n")):]
+              rebuilt += (SEP % k) + lead + body.rstrip("\n") + trail
+          if rebuilt != src:
+              sys.exit("FATAL: split is not invertible. Refusing to publish.")
+          print("invertibility guard: PASS (parts recompile byte-for-byte)")
 
-          front = (
-              "---\n"
-              'title: "The Bangkok Post Blueprint 2026"\n'
-              'subtitle: "A deterministic, AI-first reimagining of '
-              'newspaper sub-editing"\n'
-              "---\n\n"
-              "# The Bangkok Post Blueprint 2026\n\n"
-              "**A deterministic, AI-first reimagining of "
-              "newspaper sub-editing**\n\n"
-              "*This is why we have style…*\n\n"
-              "![](qr-code.svg){width=3.5cm}\n\n"
-              "\\newpage\n\n"
-          )
+          # ---- compatibility shims ------------------------------------------
+          for s, d in [("Blueprint/BLUEPRINT.txt",  "Blueprint/COMPILED.md"),
+                       ("Blueprint/BLUEPRINT.txt",  "Blueprint/COMPILED.txt"),
+                       ("Blueprint/STATUS.txt",     "Blueprint/STATUS.yaml"),
+                       ("Blueprint/REFERENCES.txt", "Blueprint/REFERENCES.yaml")]:
+              open(d, "w", encoding="utf-8").write(open(s, encoding="utf-8").read())
+              print("shim: %s -> %s" % (s, d))
+          EOF
 
-          open("/tmp/volume.md", "w", encoding="utf-8").write(front + body)
+      - name: Verify shims are byte-identical to source
+        run: |
+          set -e
+          cmp Blueprint/BLUEPRINT.txt  Blueprint/COMPILED.md
+          cmp Blueprint/BLUEPRINT.txt  Blueprint/COMPILED.txt
+          cmp Blueprint/STATUS.txt     Blueprint/STATUS.yaml
+          cmp Blueprint/REFERENCES.txt Blueprint/REFERENCES.yaml
+          echo "all shims byte-identical"
 
-          args = [
-              "pandoc", "/tmp/volume.md",
-              "-o", "Blueprint/BLUEPRINT.docx",
-              "--resource-path=Blueprint",
-              "--toc", "--toc-depth=3",
+      - name: Install pandoc 3 and python-docx
+        run: |
+          # The converter parses the pandoc JSON AST. The Table AST changed
+          # shape at pandoc 2.10 / api 1.21; Ubuntu's apt ships 2.9.2.1, which
+          # crashes tools/build_bkp_compendium.py with KeyError in table_rows.
+          # Pin a modern pandoc - do not replace this with apt-get.
+          python3 -m pip install --quiet pypandoc_binary python-docx
+          python3 - <<'PYV'
+          import pypandoc, subprocess, sys
+          p = pypandoc.get_pandoc_path()
+          v = subprocess.check_output([p, "--version"], text=True).split("\n")[0]
+          print("pandoc:", p, "|", v)
+          if int(v.split()[1].split(".")[0]) < 3:
+              sys.exit("FATAL: pandoc %s too old; converter needs >= 3" % v)
+          open("/tmp/pandoc_path", "w").write(p)
+          PYV
+
+      - name: Guard - markdown structure has not regressed
+        run: |
+          python3 - <<'EOF'
+          # The extension no longer signals that the syntax matters, so this
+          # does instead. It compares the block profile of the incoming source
+          # against the profile recorded by the last successful build. A
+          # heading typed as bare text keeps every word - the coverage audit
+          # stays green - but the Header count drops. That is what this catches.
+          import json, subprocess, sys, os, tempfile, collections
+
+          pandoc = open("/tmp/pandoc_path").read().strip()
+          with tempfile.TemporaryDirectory() as tmp:
+              ast_path = os.path.join(tmp, "ast.json")
+              subprocess.run([pandoc, "-f", "gfm", "-t", "json",
+                              "Blueprint/BLUEPRINT.txt", "-o", ast_path],
+                             check=True)
+              ast = json.load(open(ast_path, encoding="utf-8"))
+
+          now = collections.Counter(b["t"] for b in ast["blocks"])
+          print("block profile:", dict(sorted(now.items())))
+
+          prev_path = "Blueprint/BLUEPRINT.manifest.json"
+          if not os.path.exists(prev_path):
+              print("no previous manifest - baseline established, skipping")
+              sys.exit(0)
+          prev = json.load(open(prev_path, encoding="utf-8")).get("source_block_types")
+          if not prev:
+              print("previous manifest carries no profile - skipping")
+              sys.exit(0)
+          print("previous profile:", dict(sorted(prev.items())))
+
+          # Structural block types whose loss means markup was lost, not content.
+          fail = []
+          for kind in ("Header", "Table", "BulletList", "OrderedList", "CodeBlock"):
+              was, is_ = prev.get(kind, 0), now.get(kind, 0)
+              if was and is_ < was * 0.9:
+                  fail.append("%s: %d -> %d" % (kind, was, is_))
+          if fail:
+              print("")
+              for f in fail:
+                  print("  DROPPED:", f)
+              sys.exit("FATAL: markdown structure regressed by more than 10%. "
+                       "Content may be intact while the markup that makes it "
+                       "headings, tables or lists is gone - the coverage audit "
+                       "cannot see this. Check the edit for headings typed as "
+                       "bare text. If the drop is deliberate, rerun once to "
+                       "reset the baseline.")
+          print("structure guard: PASS")
+          EOF
+
+      - name: Build the style guide
+        run: |
+          set -e
+          # Pandoc is a PARSER only (-f gfm -t json). python-docx and the OOXML
+          # helpers in tools/bkp_docx_design.py construct the Word file.
+          python3 tools/build_bkp_compendium.py \
+            --source Blueprint/BLUEPRINT.txt \
+            --reference compare/the_bangkok_post_blueprint_compendium_final.docx \
+            --output Blueprint/BLUEPRINT.docx \
+            --pandoc "$(cat /tmp/pandoc_path)" \
+            --manifest Blueprint/BLUEPRINT.manifest.json
+          ls -la Blueprint/BLUEPRINT.docx
+
+      - name: Content coverage audit - build fails unless every unit matched
+        run: |
+          set -e
+          python3 tools/audit_bkp_compendium.py \
+            --source Blueprint/BLUEPRINT.txt \
+            --docx Blueprint/BLUEPRINT.docx \
+            --pandoc "$(cat /tmp/pandoc_path)" | tee /tmp/audit.json
+          python3 - <<'EOF'
+          import json, re, sys
+
+          # Units that are DELIBERATELY not printed in the volume (270726 design
+          # ruling). Declared explicitly so the gate stays strict: anything
+          # missing that is NOT on this list still fails the build.
+          EXPECTED_ABSENT = [
+              # cover no longer prints the source title or the slug/components
+              # line; the slug goes to Word document properties instead
+              r"^THE BANGKOK POST BLUEPRINT",
+              r"^270726_blueprint.*Components:",
+              # the "PART: X" label is gone - the component title states it and
+              # the register strip shows position
+              r"^PART: (CORE|PROCESSES|STATUS|REFERENCES)$",
           ]
-          if os.path.exists("Blueprint/reference.docx"):
-              args.append("--reference-doc=Blueprint/reference.docx")
-              print("using reference.docx")
-          else:
-              print("no reference.docx — building unstyled")
 
-          subprocess.run(args, check=True)
-          print("built Blueprint/BLUEPRINT.docx")
+          d = json.load(open("/tmp/audit.json"))
+          missing = d.get("missing_units", [])
+          unexplained = [m for m in missing
+                         if not any(re.search(p, m) for p in EXPECTED_ABSENT)]
+          for m in missing:
+              print("  absent (declared): %s" % m[:90] if m not in unexplained
+                    else "  ABSENT (UNEXPLAINED): %s" % m[:90])
+          if unexplained:
+              sys.exit("FATAL: %d unit(s) missing from the volume that are not "
+                       "declared design removals. Content has been lost."
+                       % len(unexplained))
+          print("coverage audit: PASS - %d/%d units matched, %d declared absent"
+                % (d["matched_units"], d["source_units"], len(missing)))
           EOF
 
       - name: Commit if changed
         run: |
           git config user.name "compile-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add Blueprint/COMPILED.md Blueprint/COMPILED.txt \
-                  Blueprint/BLUEPRINT.txt Blueprint/PROCESSES.txt \
+          git add Blueprint/CORE.txt Blueprint/PROCESSES.txt \
                   Blueprint/STATUS.txt Blueprint/REFERENCES.txt \
-                  Blueprint/BLUEPRINT.docx
-          git diff --cached --quiet || git commit -m "Auto-rebuild COMPILED set, .txt twins and BLUEPRINT.docx"
+                  Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.manifest.json \
+                  Blueprint/COMPILED.md Blueprint/COMPILED.txt \
+                  Blueprint/STATUS.yaml Blueprint/REFERENCES.yaml
+          git diff --cached --quiet || git commit -m "Split BLUEPRINT into parts, rebuild style guide"
           git push
+
+# ---------------------------------------------------------------------------
+# NOT AUTOMATED - operator gates before the volume is distributed:
+#   1. Word on Windows is the authoritative renderer. Update fields,
+#      repaginate, save, export QA PDF, render pages to PNG, inspect.
+#   2. Accessibility audit, target high: 0 / medium: 0.
+# Coverage passing is not the same as the document being right.
+# ---------------------------------------------------------------------------

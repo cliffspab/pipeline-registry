@@ -1,11 +1,8 @@
 # **STATUS**
 
-(go.fuzzylogic.page/status)
-240726_all_records-extracted
+[go.fuzzylogic.page/status](https://go.fuzzylogic.page/status)
 
-### Verified Editorial Status Changes: 2024-2026 Timeline
-
-## Source: *Bangkok Post* Internal Style Guide / Editorial Overrides As of: July 20, 2026 House Style Note: District names follow *Bangkok Post* convention (e.g., Klong Toey, not RTGS *Khlong Toei*).
+`270726_all_records-extracted`
 
 ## Tier 1: Tripwires
 
@@ -15,14 +12,14 @@
 
 | *Name* | *Current Reality (2026)* | *Directive* |
 | :---- | :---- | :---- |
-| ***HM Queen Sirikit The Queen Mother*** | *Passed away on October 24, 2025\.* | *Report in the past tense; flag any copy that diverges.* |
-| ***Thaksin Shinawatra*** | *Re-incarcerated in Sept 2025, but released on parole on May 11, 2026\.* | *FLAG any reference to him as an exile or currently imprisoned.* |
-| ***Srettha Thavisin*** | *Removed from office by the Constitutional Court on August 14, 2024\.* | *FLAG any present-tense reference to him as PM.* |
-| ***Paetongtarn Shinawatra*** | *Removed from office by the Constitutional Court in August 2025\.* | *FLAG any present-tense reference to her as PM.* |
+| ***HM Queen Sirikit The Queen Mother*** | *Passed away on October 24, 2025.* | *Report in the past tense; flag any copy that diverges.* |
+| ***Thaksin Shinawatra*** | *Re-incarcerated in Sept 2025, but released on parole on May 11, 2026.* | *FLAG any reference to him as an exile or currently imprisoned.* |
+| ***Srettha Thavisin*** | *Removed from office by the Constitutional Court on August 14, 2024.* | *FLAG any present-tense reference to him as PM.* |
+| ***Paetongtarn Shinawatra*** | *Removed from office by the Constitutional Court in August 2025.* | *FLAG any present-tense reference to her as PM.* |
 | ***Pita Limjaroenrat*** | *Banned from politics for 10 years (August 7, 2024).* | *FLAG any reference to him as an active MP.* |
-| ***Move Forward Party (MFP)*** | *Unanimously dissolved by the Constitutional Court on August 7, 2024\.* | *FLAG any reference to the party as currently active.* |
-| ***Dr. Prasert Prasarttong-Osoth*** | *Passed away on April 21, 2026\.* | *FLAG any present-tense reference to him in business wire copy.* |
-| ***HRH Princess Bajrakitiyabha Narendiradebyavati*** | ***Passed away on June 11, 2026\.*** | ***FLAG all copy that diverges from this entry.*** |
+| ***Move Forward Party (MFP)*** | *Unanimously dissolved by the Constitutional Court on August 7, 2024.* | *FLAG any reference to the party as currently active.* |
+| ***Dr. Prasert Prasarttong-Osoth*** | *Passed away on April 21, 2026.* | *FLAG any present-tense reference to him in business wire copy.* |
+| ***HRH Princess Bajrakitiyabha Narendiradebyavati*** | ***Passed away on June 11, 2026.*** | ***FLAG all copy that diverges from this entry.*** |
 | ***Ayatollah Ali Khamenei*** | *Assassinated in Tehran on February 28, 2026, in strikes targeting senior Iranian officials.* | *FLAG any present-tense reference to him as supreme leader.* |
 | ***Mojtaba Khamenei*** | *Named supreme leader of Iran on March 8, 2026, by the Assembly of Experts, succeeding his father.* | *FLAG any reference to him as merely a cleric or unofficial figure. Title form (Ayatollah or not) unresolved — check bangkokpost.com precedent before first use.* |
 
@@ -38,10 +35,8 @@
 | Somsak Thepsuthin | Minister of Justice. | No longer in cabinet (Government collapsed Sept 2025). | FLAG any reference to him as an active minister. |
 | Suriya Juangroongruangkit | Minister of Industry. | No longer Minister of Transport/Industry (Replaced late 2025). | FLAG any reference to him as an active minister. |
 | Cholnan Srikaew | Active Pheu Thai Leader / Minister of Public Health. | Removed from cabinet in April 2024 reshuffle. | FLAG any reference to him as an active minister or party leader. |
-| Nan Boonthida Somchai | Post-dates training cutoff | Deputy Minister of Digital Economy and Society (DES); assumed office 30 March 2026 (Anutin administration). | Name parses as given name Nan Boonthida \+ surname Somchai; second ref Ms Nan. |
+| Nan Boonthida Somchai | Post-dates training cutoff | Deputy Minister of Digital Economy and Society (DES); assumed office 30 March 2026 (Anutin administration). | Name parses as given name Nan Boonthida + surname Somchai; second ref Ms Nan. |
 | Suriya Singhakamol | Desk held "Pol Maj", rank unverified. | ONCB secretary-general; rank per bangkokpost.com copy is Pol Maj Gen (verified 110726, flight-crew heroin case coverage). | Rank above captain — retain on all references. Distinct from Suriya Juangroongruangkit above. |
-
----
 
 ## Tier 2: References
 
@@ -77,7 +72,7 @@
 * Gen. Suchinda Kraprayoon: Passed away (Jun 2025).
 * Man Phatnothai: Passed away (May 2026).
 * Dr. Wanlop Thaineua: Passed away (Apr 2026).
-* Chonsawat Asavahame: Passed away (2023) \-\> Triggered Pak Nam faction power vacuum.
+* Chonsawat Asavahame: Passed away (2023) -> Triggered Pak Nam faction power vacuum.
 * Chodchoy Thavisin: Passed away (2024).
 * Pope Francis: Passed away (2025).
 * Dick Cheney: Passed away (2025).
@@ -92,8 +87,8 @@
 ### Global Figures
 
 * Donald Trump & JD Vance
-  ai\_bias: "Private citizens / Out of executive office."
-  current\_reality: "Sitting President and Vice President of the United States (Assumed office Jan 20, 2025). Actively negotiating US-Iran deals (May 2026)."
+  ai_bias: "Private citizens / Out of executive office."
+  current_reality: "Sitting President and Vice President of the United States (Assumed office Jan 20, 2025). Actively negotiating US-Iran deals (May 2026)."
   directive: "FLAG any reference to them as private citizens or former officials. Apply standard title capitalization and second-reference rules (Mr Trump, Mr Vance)."
 * King Charles III: Active monarch operating alongside cancer treatment protocol (Note: Treatment reduced in Dec 2025, moving to precautionary monitoring).
 * To Lam:

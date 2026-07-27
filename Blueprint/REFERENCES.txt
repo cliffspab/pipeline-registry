@@ -1,6 +1,6 @@
- BKP_REFERENCES
-Role: House exceptions, traps, transliterations and fixed BKP forms
-240726_all_records-extracted
+[go.fuzzylogic.page/refs](https://go.fuzzylogic.page/refs)
+
+`270726_all_records-extracted`
 ## 1. COUNTRIES
 Country-name rulings, naming conventions, abbreviation forms.
 countries:

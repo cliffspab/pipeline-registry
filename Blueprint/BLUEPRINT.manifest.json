@@ -1,0 +1,26 @@
+{
+  "source": "/sessions/epic-optimistic-mayer/mnt/Documents--BANGKOK POST DESK EDITOR/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.txt",
+  "output": "/sessions/epic-optimistic-mayer/mnt/Documents--BANGKOK POST DESK EDITOR/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.docx",
+  "pandoc_api_version": [
+    1,
+    23,
+    1,
+    1
+  ],
+  "source_blocks": 273,
+  "source_block_types": {
+    "BulletList": 28,
+    "CodeBlock": 2,
+    "Header": 79,
+    "OrderedList": 5,
+    "Para": 157,
+    "Table": 2
+  },
+  "suppressed_structural_separator_paragraphs": 8,
+  "design_components": [
+    "CORE",
+    "PROCESSES",
+    "STATUS",
+    "REFERENCES"
+  ]
+}
