@@ -166,6 +166,7 @@ def configure_full_styles(doc):
     doc.styles["BKP Cover Display"].paragraph_format.space_after = Pt(0)
     doc.styles["BKP Cover Display"].paragraph_format.keep_with_next = True
     doc.styles["BKP Cover Year"].paragraph_format.space_before = Pt(8)
+    doc.styles["BKP Cover Year"].paragraph_format.keep_with_next = True
     doc.styles["BKP Cover Year"].paragraph_format.space_after = Pt(18)
     doc.styles["BKP Cover Tagline"].paragraph_format.space_before = Pt(16)
     doc.styles["BKP Cover Meta"].paragraph_format.space_after = Pt(3)
@@ -301,12 +302,16 @@ def add_register(doc, active):
 
 def add_cover(doc, source_title, source_meta):
     p = doc.add_paragraph("A DETERMINISTIC, AI-FIRST REIMAGINING OF\nNEWSPAPER SUB-EDITING:", style="BKP Cover Kicker")
-    p.paragraph_format.space_before = Pt(55)
+    p.paragraph_format.space_before = Pt(24)
     for line in ("THE", "BANGKOK", "POST", "BLUEPRINT"):
         doc.add_paragraph(line, style="BKP Cover Display")
     doc.add_paragraph("2026", style="BKP Cover Year")
     rule = doc.add_paragraph()
     set_paragraph_bottom_rule(rule, 34, 4)
+    # 310726: the rule and tagline were free-floating, so on real Arial Black
+    # metrics they broke to a second page and the tagline sat alone. Bound to
+    # the display block; the 55pt lead padding was cut to Pt(24) to pay for it.
+    rule.paragraph_format.keep_with_next = True
     doc.add_paragraph("This is why we have style...", style="BKP Cover Tagline")
     # 270726: source title and the slug/components line no longer print on the
     # cover. The slug still identifies the build - it is written to the Word
@@ -780,6 +785,11 @@ def is_axiom_candidate(blocks, index, last_heading_level):
         return False
     text = block_text(block).strip()
     if not (4 <= len(text) <= 95 and text.endswith((".", ":", "—"))):
+        return False
+    # Register entries open with a bold key ("**Niger** — Nigerien, not Nigerian.").
+    # They are lookup rows, not doctrine: AXIOM is reserved for prose that earns it.
+    content = block.get("c") or []
+    if content and content[0].get("t") == "Strong":
         return False
     return blocks[index + 1]["t"] in ("Para", "BulletList", "OrderedList")
 

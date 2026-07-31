@@ -259,7 +259,9 @@ jobs:
               # cover no longer prints the source title or the slug/components
               # line; the slug goes to Word document properties instead
               r"^THE BANGKOK POST BLUEPRINT",
-              r"^270726_blueprint.*Components:",
+              # 310726: was pinned to the literal 270726 slug, so the gate
+              # failed the first time the edition moved. Matches any stamp.
+              r"^\d{6}_[\w.-]+\s+Components:",
               # the "PART: X" label is gone - the component title states it and
               # the register strip shows position
               r"^PART: (CORE|PROCESSES|STATUS|REFERENCES)$",

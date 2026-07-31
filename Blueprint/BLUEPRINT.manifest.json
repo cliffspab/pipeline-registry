@@ -1,20 +1,18 @@
 {
-  "source": "/sessions/epic-optimistic-mayer/mnt/Documents--BANGKOK POST DESK EDITOR/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.txt",
-  "output": "/sessions/epic-optimistic-mayer/mnt/Documents--BANGKOK POST DESK EDITOR/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.docx",
+  "source": "/sessions/adoring-affectionate-cannon/mnt/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.txt",
+  "output": "/sessions/adoring-affectionate-cannon/mnt/outputs/build.docx",
   "pandoc_api_version": [
     1,
     23,
-    1,
     1
   ],
-  "source_blocks": 273,
+  "source_blocks": 523,
   "source_block_types": {
-    "BulletList": 28,
+    "BulletList": 22,
     "CodeBlock": 2,
-    "Header": 79,
+    "Header": 107,
     "OrderedList": 5,
-    "Para": 157,
-    "Table": 2
+    "Para": 387
   },
   "suppressed_structural_separator_paragraphs": 8,
   "design_components": [

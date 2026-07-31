@@ -9,6 +9,123 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-07-31 | DECISIONS-OPEN.yaml + VERSION_HISTORY.md | MOVED into the clone
+  from the project root, so both ledgers now ride every push and a cold chat
+  can read them. Scrubbed first, the repo being public:
+  * REMOVED a live pCloud Public Folder access path from ARC-14 — a
+    credential-shaped URL that would have been published permanently in the
+    commit history. Operator holds it offline.
+  * OTH-12 incident detail generalised: local drive paths, backup-software
+    name and disk-image timestamps out; the finding, root cause and the
+    lesson (block-level restores preserve pre-image stamps) all retained.
+  * Six verbatim operator quotes replaced with neutral summaries of the same
+    ruling across VER-04, VER-05, ARC-15 and OTH-13. No ruling, rationale or
+    date altered — only the transcript voice.
+  YAML re-parsed clean, 13 entries. Op-ruled 310726.
+
+- 2026-07-31 | .github/workflows/compile.yml | FIX two CI gates that would have
+  failed this push and published nothing. (a) The coverage audit's
+  EXPECTED_ABSENT allowlist was pinned to the literal slug 270726_blueprint, so
+  the first edition bump after it was written turned a declared absence into an
+  unexplained one and a FATAL. Now matches any DDMMYY_slug stamp. (b) The
+  structure guard compares the block profile against
+  Blueprint/BLUEPRINT.manifest.json; the ruled section 8 conversion legitimately
+  takes Table 2 -> 0 and BulletList 28 -> 22, which the guard cannot distinguish
+  from markup loss. Manifest regenerated from the ruled format so it baselines
+  the new shape. Both gates re-run locally against the workflow's own logic:
+  split invertible PASS, structure PASS, coverage PASS 489/495 with 6 declared
+  absent. Desk fix under standing "file management is your call".
+
+- 2026-07-31 | Blueprint/BLUEPRINT.txt | LANGUAGE PASS. "Protocol" was left
+  orphaned by the heading rename — nothing in the document is called one any
+  more — so "Rules of the Protocol" -> "The rules", "DCX fit (Spatial Headline
+  Protocol)" -> "DCX fit", and the Authority Hierarchy line drops it.
+  "Structural exemplar" -> plain "kept because it teaches the rule".
+  "Capital / structural rulings" -> "Capitals and country structure".
+  Proximity Alert procedure in PROCESSES cut from 1,130 chars to three
+  paragraphs: it stated flag-don't-change four times and repeated CORE's
+  identity-field sentence verbatim, against ARC-13. All flourishes retained —
+  "an absent alert is not an all-clear; the eye stays open", "the core concern
+  of all news", "proximity is observation, not action". Op-ruled 310726.
+- 2026-07-31 | tools/build_bkp_compendium.py | FIX cover pagination: the rule
+  and tagline were unbound, so on real Arial Black metrics they broke to a
+  second page and "This is why we have style..." sat alone. keep_with_next set
+  on the Year style and the rule paragraph; cover lead padding cut 55pt -> 24pt
+  to pay for the binding. NOT VERIFIABLE IN THE BUILD SANDBOX — Arial Black is
+  absent there and substitutes shorter, so the fault never reproduced locally.
+  Needs an operator check in Word on Windows.
+
+- 2026-07-31 | Blueprint/BLUEPRINT.txt | HEADINGS, handoff section 7 applied
+  properly (the earlier 310726 entry did the broken pointer only and skipped
+  the test). Test run across the document: a heading string occurring once is
+  pointed at by nothing and goes plain. Renamed on that basis — Operating
+  Doctrine & Tone -> SOLVE THE PROBLEM; Authority Hierarchy -> Authority;
+  Retrieval Protocol -> Retrieval; Proximity Alert -> Proximity; Verification
+  Protocol -> Verification; Editing Scope, Quotes & Legality -> Editing.
+  Retained precise strings where the text does point at them: page-ready box,
+  Proximity Alert (in body), overspill, DCX, Route A/B, STYLE LOG, STATE LOG.
+  Section numbers dropped from PROCESSES and REFERENCES headings, which
+  removes the broken-pointer class that produced "Part 1 rules apply"; that
+  pointer now reads CONVERSIONS, the name handoff section 6 assumes.
+  THAI GEOGRAPHY -> THAI PLACES. PR subsections -> Minimal edit / RETAIN.
+  Tier 1: Tripwires -> Tripwires; Tier 2: References -> Second tier.
+  Part sub-lines added per the WIP: CORE / what we do, PROCESSES / how we do
+  it, STATUS / people in the news, REFS / the knowledge base. REFS part
+  opener given the H1 and sub-line the other three already had.
+  Source: operator's own heading scheme in BLUEPRINTwip.docx. Op-ruled 310726.
+
+- 2026-07-31 | Blueprint/BLUEPRINT.txt | HANDOFF SWEEP, sections 1-8 of
+  310726_blueprint-review-handoff.md. Op-ruled 310726. Edition stamp
+  310726_com_hedges-rule-home -> 310726_all_handoff-sweep (quadrant `all`).
+  * CORE Verification Protocol: the Operator-first numbered steps and the
+    Rules of the Protocol bullets replaced by one 4-rung resolution ladder
+    (hazard / operator ruling / STATUS before memory / identity) with two
+    trailing duties outside the numbering — "a flag never includes a silent
+    edit" (op wording, 310726) and "record without exception".
+  * CORE: risk tiered. Identity = flag, don't alter. Hazard = cut and flag.
+    Desk has no authority to decide and absolute authority to stop.
+  * CORE: search posture demoted from rule to setting, carried in the
+    per-model prompt. Displaced: bangkokpost.com site-search method to the
+    SEARCHQ section; Apex ordering to STATUS; training-data note parked on
+    DECISIONS-OPEN ARC-06 pending a per-model deployment prompt.
+  * CORE Output Format: the fake hold closed. "Held or anomaly notes precede
+    the box" -> "Queries precede the box. A HOLD replaces it." Query and hold
+    separated as two states; a HOLD suppresses the box.
+  * PROCESSES Spatial Mechanics: "in-head count" (4 occurrences) replaced by
+    verified/unverified and "manual tallying" (op wording, 310726). New
+    "Scale sets the method" paragraph scopes the prohibition to body length,
+    resolving the apparent DCX +/-2 contradiction.
+  * PROCESSES: CONVERSIONS opening line cut to "Substitutions applied
+    wherever the element appears in copy." PR pointer "Part 1 rules apply"
+    -> "HOUSE CONVENTIONS rules apply".
+  * STATUS + REFERENCES: tables and YAML converted to the key-ruling list
+    shape, 168 entries, 21 group dividers to H3. AI Bias column dropped;
+    provenance retained inside the ruling where it earns it (Suriya
+    Singhakamol). STATUS honorific full stops and date forms brought to
+    house. Volatility split written down at the head of STATUS.
+- 2026-07-31 | tools/build_bkp_compendium.py | FIX: register entries opening
+  with a bold key no longer qualify as AXIOM candidates. The H3 conversion
+  above would otherwise have promoted the first entry of all 21 REFERENCES
+  groups to an AXIOM bar. Holds AXIOM at 8, its pre-sweep level. Desk fix
+  under standing "file management is your call".
+
+- 2026-07-31 | Blueprint/BLUEPRINT.txt (CORE) | ADD OUT-07 "Hedges are not
+  length candidates" as a subsection under Legality & Quotes. A hedge in
+  filed copy is a liability position, not a length candidate; the overspill
+  recast may not remove it. Preserve as filed, flag the claim for desk
+  sourcing, find the characters elsewhere. Extends the existing "Retain
+  hedges, eg allegedly" bullet from bare instruction to reasoned rule on the
+  asymmetric-failure argument. Op-ruled 310726.
+- 2026-07-31 | Blueprint/BLUEPRINT.txt (CORE) | ADD ARC-13 "One rule, one
+  home" as a subsection closing the Authority Hierarchy. Where a rule and its
+  exception straddle PROCESSES and REFERENCES, the rule is stated once in its
+  sectional home; the register entry carries entity + exception + pointer,
+  never a second statement that can drift. Op-ruled 310726.
+- 2026-07-31 | Blueprint/BLUEPRINT.txt | VERSION: master stamp and all four
+  part stamps moved 270726_all_records-extracted -> 310726_com_hedges-rule-home
+  per the shared-edition scheme (240726). Quadrant code `com` — both changes
+  land in CORE. Mechanical consequence of the two lines above.
+
 - 2026-07-24 | BLUEPRINT.md + PROCESSES.md + STATUS.yaml + REFERENCES.yaml |
   VERSION SCHEME: the four component stamps unified to a single volume
   string. Previously each carried its own quadrant stamp (110726_com_,
