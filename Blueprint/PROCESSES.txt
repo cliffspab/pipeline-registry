@@ -1,12 +1,14 @@
 # PROCESSES
 
+how we do it
+
 [go.fuzzylogic.page/pro](https://go.fuzzylogic.page/pro)
 
-`270726_all_records-extracted`
+`310726_all_handoff-sweep`
 
-## 1. HOUSE CONVENTIONS
+## CONVERSIONS
 
-Presentational substitutions applied wherever the relevant element appears in copy.
+Substitutions applied wherever the element appears in copy.
 
 ### Numbers
 
@@ -123,11 +125,15 @@ Convicted criminals: honorific stripped, police and military ranks and royal tit
 
 Celebrities, sportspeople, authors (non-academic), journalists, artists, actors, musicians and filmmakers carry no honorific.
 
-#### Proximity Alert - flag only -names only
+#### Proximity Alert — flag only, names only
 
 **A name sits close to a held form but differs → flag it, change nothing. The operator rules.**
 
-A Proximity Alert fires when an incoming personal name sits close to a form the desk already holds — a shared surname, a familiar given-name shape, a known transliteration — but diverges from it. Raise it as: "Proximity Alert: [copy form] sits near [held form] — for operator deviance check." Proximity is observation, not action. The alert records a pattern in the copy's nomenclature and hands it up; it remains a momentary note rather than a property pinned to the entity. The deviance may prove a newfound correct form, a newfound error, or a new form entirely — that call is the operator's. A proximity that proves out graduates into a rule or a listed entity; one that doesn't, lapses with the alert. Names are an identity field, and the desk does not originate a change to one. The copy may be wrong, or the held form may have drifted: the alert opens the question, an explicit operator ruling closes it, and only then is the form changed and logged. It catches rogue copy early and widens the desk's eye over the core concern of all news — the leading protagonists. An absent alert is not an all-clear; the eye stays open.
+A Proximity Alert fires when an incoming personal name sits close to a form the desk already holds — a shared surname, a familiar given-name shape, a known transliteration — but diverges from it. Raise it as: "Proximity Alert: [copy form] sits near [held form] — for operator deviance check."
+
+Proximity is observation, not action. The alert is a note on this copy, not a property pinned to the name: one that proves out graduates into a rule or a listed entity, one that doesn't lapses with the alert. The copy may be wrong or the held form may have drifted — the alert opens that question, an operator ruling closes it, and only then is the form changed and logged.
+
+It catches rogue copy early and widens the desk's eye over the core concern of all news — the leading protagonists. An absent alert is not an all-clear; the eye stays open.
 
 #### Ranks and titles
 
@@ -159,11 +165,11 @@ MILF stays all caps (Moro Islamic Liberation Front) — house ruling, avoids sla
 
 UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus appear in heads and decks. PNG and DRC appear in heads, or in body after the full first reference.
 
-## 2. SPATIAL MECHANICS
+## SPATIAL MECHANICS
 
 The rules in this part address one flaw: the model's innate counting is unreliable. There are two valid answers to that flaw, and this part uses both. Where the operation suits it, design around counting entirely — substitution whose volume is preserved by construction ("1-in / 1-out" and "swap heavy for lean" are the operations themselves, not shorthand for "preserve length" or "make it narrower"). Where the operation needs a real number, hand the count to an external tool that does it deterministically. Bringing in Python to count is not a departure from this part's logic — it is the same flaw corrected by the same principle, with an external mechanism instead of an avoidance design.
 
-So: the body-text footprint change (Overspill below) is counted with a verified character tool **where the model can run one** — and falls back to 1-in/1-out substitution where it cannot. The DCX headline protocol stays on substitution and does no counting. All routes honour the rule that the model never trusts its own *in-head* count.
+So: the body-text footprint change (Overspill below) is counted with a verified character tool **where the model can run one** — and falls back to 1-in/1-out substitution where it cannot. The DCX headline protocol stays on substitution and does no counting. **Scale sets the method.** An unverified figure is reliable at headline length and worthless at body length — error grows with the string. A head or deck is short enough that an unverified figure lands inside a two-character band, so DCX needs no tool. A body is not, and takes Route A or Route B. The rule is not where a count comes from; it is that no unverified figure is ever asserted for a story.
 
 **Route depends on the actor.** Not every model can execute code: a Python `len()` count is exact and preferred, but Gemini cannot run Python and other models may not fire it up. The overspill procedure therefore specifies BOTH paths — Option A (verified count) and Option B (1-in/1-out substitution) — and the model or operator takes whichever the situation allows. Option B is not deprecated; for some actors it is the only path.
 
@@ -179,9 +185,9 @@ So: the body-text footprint change (Overspill below) is counted with a verified 
 
 ### Overspill (body-text footprint change)
 
-A footprint change to story BODY targets a character figure, reached by ONE OF TWO ROUTES depending on what the actor can do (see Route A / Route B below). Either way the model never trusts its own in-head count — the historical root of overspill error. (Headlines are NOT covered here — they stay on the DCX spatial protocol below.)
+A footprint change to story BODY targets a character figure, reached by ONE OF TWO ROUTES depending on what the actor can do (see Route A / Route B below). Either way the desk never asserts a manually tallied figure for a body — the historical root of overspill error. (Headlines are NOT covered here — they stay on the DCX spatial protocol below.)
 
-**Unit:** characters with spaces — the .dcx-native measure (probe-confirmed: .dcx counts the space). Under Route A this is `len(text)`; under Route B it is approached by substitution, never by in-head tallying.
+**Unit:** characters with spaces — the .dcx-native measure (probe-confirmed: .dcx counts the space). Under Route A this is `len(text)`; under Route B it is approached by substitution, never by manual tallying.
 
 **Input (preferred): the .dcx pair** — "story = X chars, box = Y chars". The spill is `X - Y`, exact, from verified figures; the proportion is built on these, never on the model's own baseline count. (Fallback input: a signed spill — +N remove, -N add.)
 
@@ -221,15 +227,17 @@ The equal-standing fallback — and the ONLY path for models that can't run code
 2. Hold the footprint by **substitution, not tallying**: swap heavy phrasing for lean, trade a long construction for a short one, so volume is preserved or reduced *by construction* rather than measured. To cut a line, trim a paragraph with a short final line (the cut that removes a physical line); to grow, the reverse.
 3. The operator carries the exact figure — Route B lands *close*, and the operator squeezes the last char or two on paste. The model does NOT assert a precise count it cannot verify; it states what it changed, not a number.
 
-**Choosing the route:** run Route A if you can execute a counter; otherwise Route B. Either is house-valid. The failure mode to avoid is a non-coding model pretending to a precise count by tallying in its head — that is the original error both routes exist to prevent.
+**Choosing the route:** run Route A if you can execute a counter; otherwise Route B. Either is house-valid. The failure mode to avoid is a non-coding model asserting a precise count reached by manual tallying — that is the original error both routes exist to prevent.
 
 **Story priority.** Prioritise telling the headline story properly over maintaining multiple narratives. The minimum deliverable is one relatively complete news story told to the fullest the space allows. Better to drop a story and tell the survivor(s) well — the dropped one can run online — than run two stories badly under one head. Where a whole story is dropped, record it in the Style Log in one sentence (what it was). Log trims and the drop decision.
 
 News-value ranking is the desk's call, made on editorial worth alone and without reference to where any fold falls. A design-imposed boundary is a spatial fact, never a value bar.
 
-### DCX fit (Spatial Headline Protocol)
+### DCX fit
 
-*This protocol ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines — short by default. Michael's standing preference: short, sharp heads. Between candidates that both say the thing, the shorter is first choice; length is never padded for its own sake. Where a DCX budget is supplied, the budget still governs fit.*
+*This ONLY triggers when the user supplies a budget in DCX units (e.g., "Budget: DCX34"). Otherwise, write sharp, active sentence-case headlines — short by default. Michael's standing preference: short, sharp heads. Between candidates that both say the thing, the shorter is first choice; length is never padded for its own sake. Where a DCX budget is supplied, the budget still governs fit.*
+
+The desk may *aim* at ±2 but does not assert the figure: the DCX field is the real counter and the operator confirms on paste. Desk aims, field measures, operator confirms.
 
 **The budget figure:** a DCX/BKP budget number is a TOTAL across however many lines, never per-line. The field may not populate correctly until text is pasted — a quoted figure can rise on paste (deck 23 -> 35) — so confirm against the rendered figure before treating it as binding.
 
@@ -241,22 +249,22 @@ News-value ranking is the desk's call, made on editorial worth alone and without
    * **Overset:** Swap 1.0/1.5 unit glyphs for 0.5 unit glyphs to reduce the total spatial score.
    * **Underset:** Swap 0.5 unit glyphs for heavier glyphs to widen the physical footprint.
 
-## 3. PR HANDLING
+## PR HANDLING
 
 PR copy is a minimum-intervention style pass — a basic read-through with house conventions applied where the structure permits. The frame is spellcheck-plus-style, not editing.
 
-### What changes
+### Minimal edit
 
 * Spelling: US to UK  
 * Place names: client spellings to BKP forms (per REFERENCE)  
 * Honorifics: house conventions applied  
 * Punctuation: house style (Oxford comma removed)  
-* Currency, dates and numbers: Part 1 rules apply  
+* Currency, dates and numbers: CONVERSIONS rules apply  
 * Plain errors of grammar and punctuation: corrected  
 * Headline and deck: PR copy carries a [Head] line (max 90 characters) and a [Deck] line (max 120 characters), literal bracket prefixes, BKP sentence case, placed ahead of the body
 * Captions: where pictures carry them, corrected — the caption gets the same pass as the body
 
-### What stays
+### RETAIN
 
 * Structure, order, layout: untouched  
 * Bold, italics, capitalisation, line breaks: as filed  

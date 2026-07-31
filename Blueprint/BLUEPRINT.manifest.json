@@ -1,9 +1,10 @@
 {
-  "source": "/sessions/adoring-affectionate-cannon/mnt/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.txt",
-  "output": "/sessions/adoring-affectionate-cannon/mnt/outputs/build.docx",
+  "source": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.txt",
+  "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
     23,
+    1,
     1
   ],
   "source_blocks": 523,
