@@ -1,10 +1,10 @@
+<!-- PART: 010826_all_core-prune-seam PROCESSES -->
+
+go.fuzzylogic.page/pro
+
 # PROCESSES
 
 how we do it
-
-[go.fuzzylogic.page/pro](https://go.fuzzylogic.page/pro)
-
-`310726_all_handoff-sweep`
 
 ## CONVERSIONS
 

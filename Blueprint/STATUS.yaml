@@ -1,10 +1,10 @@
+<!-- PART: 010826_all_core-prune-seam STATUS -->
+
+go.fuzzylogic.page/status
+
 # STATUS
 
 people in the news
-
-[go.fuzzylogic.page/status](https://go.fuzzylogic.page/status)
-
-`310726_all_handoff-sweep`
 
 ## What belongs here
 
@@ -14,7 +14,7 @@ Entries take the form **key — ruling**, with the directive verb in caps where 
 
 ## Tripwires
 
-Apex sits at the top of this register; lower tiers follow. Scan on the first required status check and retain it for the edit — a listed entity takes the register, with no search.
+Apex sits at the top of this register. Scan on the first required status check and retain it for the edit — a listed entity takes the register, with no search.
 
 ### Apex Figures
 
