@@ -138,6 +138,7 @@ def configure_full_styles(doc):
         "BKP Cover Display": ("Arial Black", 66, True, False),
         "BKP Cover Year": ("Arial Black", 60, True, False),
         "BKP Cover Tagline": ("Arial", 14, True, True),
+        "BKP Part Stamp": ("Arial", 10, False, False),
         "BKP Cover Meta": ("Arial", 10, False, False),
         "BKP Register": ("Arial Black", 7.6, True, False),
         "BKP Part Label": ("Arial Black", 8.5, True, False),
@@ -169,6 +170,9 @@ def configure_full_styles(doc):
     doc.styles["BKP Cover Year"].paragraph_format.keep_with_next = True
     doc.styles["BKP Cover Year"].paragraph_format.space_after = Pt(18)
     doc.styles["BKP Cover Tagline"].paragraph_format.space_before = Pt(16)
+    doc.styles["BKP Part Stamp"].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    doc.styles["BKP Part Stamp"].paragraph_format.space_before = Pt(2)
+    doc.styles["BKP Part Stamp"].paragraph_format.space_after = Pt(10)
     doc.styles["BKP Cover Meta"].paragraph_format.space_after = Pt(3)
     doc.styles["BKP Register"].paragraph_format.space_after = Pt(0)
     doc.styles["BKP Part Label"].paragraph_format.space_before = Pt(10)
@@ -777,6 +781,41 @@ def render_list(doc, block, decimal_num_id, bullet_num_id, level=0):
                 add_code_block(doc, child["c"][1])
 
 
+# Component title as it appears in the source H1 -> canonical component name.
+# REFS is the display head; REFERENCES is the component and register name.
+COMPONENT_TITLES = {"CORE": "CORE", "PROCESSES": "PROCESSES",
+                    "STATUS": "STATUS", "REFS": "REFERENCES",
+                    "REFERENCES": "REFERENCES"}
+
+PART_SEAM_RE = re.compile(r"<!--\s*PART:\s*(\S+)\s+(\w+)\s*-->")
+
+# The version/shortlink pair under each part title. Right-aligned in the
+# volume per operator ruling 010826; plain text keeps it left, where column
+# padding would break on any reflow.
+PART_STAMP_RE = re.compile(r"^go\.fuzzylogic\.page/\w+\s*$")
+
+
+def set_first_page_stamp(section, text):
+    """Full edition stamp as the opening page's running head.
+
+    010826: the stamp was a body paragraph at the top of each part, which
+    LOOKED like a header in Word while the real first-page header sat empty.
+    Putting it where it belongs means the header band carries the same kind of
+    thing on every page of a part - full stamp on the opening page, compact
+    "/core 7" thereafter - so the eye tracks one position instead of two.
+    """
+    header = section.first_page_header
+    header.is_linked_to_previous = False
+    p = header.paragraphs[0]
+    clear_paragraph(p)
+    p.style = "BKP Footer"
+    p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    r = p.add_run(text)
+    r.font.color.rgb = RGBColor(0xA8, 0xA8, 0xA8)
+    r.font.size = Pt(10)
+    set_paragraph_bottom_rule(p, 6, 2)
+
+
 def is_axiom_candidate(blocks, index, last_heading_level):
     if last_heading_level != 3 or index + 1 >= len(blocks):
         return False
@@ -852,9 +891,9 @@ def build(source, reference, output, pandoc, manifest, component=None):
             if lvl != 1:
                 continue
             txt = inlines_text(inl).strip().upper()
-            if not txt.startswith("PART:"):
+            if txt not in COMPONENT_TITLES:
                 continue
-            name = txt.split(":", 1)[1].strip()
+            name = COMPONENT_TITLES[txt]
             if name == component:
                 start = i
             elif start is not None:
@@ -880,8 +919,18 @@ def build(source, reference, output, pandoc, manifest, component=None):
     except Exception:
         pass
 
+    # 010826: was a hard 2 - title block, slug block, then body. Splitting the
+    # slug and the Components line onto separate source lines made them two
+    # blocks, so Components fell through and printed under the cover tagline.
+    # The front matter is cover material by definition: everything before the
+    # first part seam belongs to add_cover, however many paragraphs it runs to.
     start_index = 2
+    for _i, _b in enumerate(blocks):
+        if _b["t"] == "RawBlock" and PART_SEAM_RE.search((_b["c"][1] or "")):
+            start_index = _i
+            break
     part_number = 0
+    current_edition = ""
     current_component = None
     skip_duplicate_component_heading = False
     last_heading_level = None
@@ -896,20 +945,38 @@ def build(source, reference, output, pandoc, manifest, component=None):
         if kind == "Para" and SEPARATOR_RE.fullmatch(block_text(block).strip()):
             skipped_separators += 1
             continue
+        if kind == "Para" and PART_STAMP_RE.match(block_text(block).strip()):
+            # Lifted into the opening page's running head, not printed in the
+            # body. The source keeps the line: it is the component's identity
+            # when the .txt is read on its own, and the edition guard's anchor.
+            set_first_page_stamp(doc.sections[-1],
+                                 "%s | %s" % (current_edition, block_text(block).strip()))
+            last_heading_level = None
+            continue
+        # 010826: the part opens on the SEAM, not on the title. The seam is
+        # the boundary; keying off the title stranded anything between the two
+        # - the version/shortlink line now sits there - on the previous part's
+        # last page. pandoc emits the HTML comment as RawBlock.
+        if kind == "RawBlock":
+            fmt, raw = block["c"]
+            m = PART_SEAM_RE.search(raw or "")
+            if m:
+                current_edition = m.group(1)
+                current_component = COMPONENT_TITLES[m.group(2).upper()]
+                part_number += 1
+                add_part_opening(doc, current_component, part_number)
+                last_heading_level = None
+                continue
+            continue
         if kind == "Header":
             level, _, inlines = block["c"]
             text = inlines_text(inlines).strip()
-            if level == 1 and text.upper().startswith("PART:"):
-                current_component = text.split(":", 1)[1].strip().upper()
-                part_number += 1
-                add_part_opening(doc, current_component, part_number)
-                skip_duplicate_component_heading = True
+            # The component title is an ordinary H1 now: the seam above it has
+            # already opened the part, and add_part_opening prints the name, so
+            # printing it again would duplicate it.
+            if level == 1 and text.upper() in COMPONENT_TITLES:
                 last_heading_level = 1
                 continue
-            if level == 1 and skip_duplicate_component_heading and text.upper() == current_component:
-                skip_duplicate_component_heading = False
-                continue
-            skip_duplicate_component_heading = False
             if level == 3 and text.startswith("Verified Editorial Status Changes:"):
                 doc.add_paragraph(text, style="BKP Status Subtitle")
                 last_heading_level = None

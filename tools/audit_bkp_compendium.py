@@ -95,10 +95,18 @@ def parse_markdown(pandoc, source):
 
 
 def docx_text(docx):
+    # 010826: was document.xml only. Anything the build puts in a running head
+    # or footer was invisible to the gate, so relocating content out of the
+    # body read as content loss - which is precisely what this audit exists to
+    # distinguish from. Headers and footers are part of the volume; read them.
     with ZipFile(docx) as archive:
-        root = etree.fromstring(archive.read("word/document.xml"))
+        names = [n for n in archive.namelist()
+                 if n == "word/document.xml"
+                 or (n.startswith("word/header") or n.startswith("word/footer"))
+                 and n.endswith(".xml")]
+        roots = [etree.fromstring(archive.read(n)) for n in sorted(names)]
     paragraphs = []
-    for paragraph in root.xpath("//w:p", namespaces=NS):
+    for paragraph in [p for r in roots for p in r.xpath("//w:p", namespaces=NS)]:
         parts = []
         for node in paragraph.iter():
             if node.tag == f"{{{NS['w']}}}t" and node.text:

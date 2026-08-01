@@ -14,10 +14,57 @@
 #     VERSION_HISTORY.md, and closed entries are pruned from this file.
 #     History lives in the log and the archived batch files, not here.
 #
-# next-keys: LEN-14 NAM-15 ARC-17 OUT-08 VER-06 STA-04 OTH-14
+# next-keys: LEN-14 NAM-15 ARC-17 OUT-08 VER-07 STA-04 OTH-15
 # carried-over open threads from the 2026-07-02 register sweep below.
 
 decisions:
+
+  - key: OTH-14
+    title: "REFERENCES taxonomy: countries sits beside places despite being a subset"
+    status-thread: BACK BURNER — operator parked it 2026-08-01
+    open-question: >
+      REFERENCES runs six sections at one level: COUNTRIES, FOREIGN PLACES,
+      FOREIGN PEOPLE, THAI PLACES, ORGANISATIONS, VOCABULARY & SPELLING.
+      Countries are places, so the first cannot sit beside the second — a
+      category error rather than a naming problem, and no rename fixes it while
+      they rank equally. FOREIGN PLACES and THAI PLACES are also separated by
+      FOREIGN PEOPLE. Operator diagnosis 010826: "people, places, countries and
+      language has a clear offness to it."
+      PROPOSAL: PEOPLE / PLACES (Countries and nationalities, Abroad, Thailand)
+      / ORGANISATIONS / LANGUAGE. Four, because an organisation is not a person,
+      a place or a word. Countries demotes to the top layer of places, which is
+      also why capitals kept leaking into it and making it read as a competing
+      places section.
+      COST: a content move across the whole of REFERENCES, mechanical but wide.
+    type: STRUCTURE (candidate)
+    dates: [2026-08-01]
+    verdict: PENDING
+
+  - key: VER-06
+    title: "Content sweep: mandatory pre-edit pass, and a post-edit adversarial re-read"
+    status-thread: DISCUSS — raised 2026-08-01, parked by the operator for a later shift
+    open-question: >
+      (a) PRE-EDIT SWEEP. The 010826 ruling that a direct register
+      contradiction halts the work before the edit begins needs a step to
+      happen in. Nothing in CORE says a read-through can end the work:
+      Editing opens straight into scope and footprint, and every rule after
+      assumes an edit is underway, so the hold is only reachable from inside
+      a job already in progress. A mandatory sweep is what makes the halt
+      executable rather than aspirational.
+      (b) POST-EDIT DUE DILIGENCE. Separate instrument, different catch: not
+      what should have stopped the work, but what the intervention itself
+      introduced or missed. Operator field test on Gemini, 010826, found
+      genuine misses on a second pass.
+      FIELD NOTE — the second pass only worked at hype-max register
+      ("ruthlessly impartial reappraisal", "strictly adhered"). A model asked
+      to CHECK its own output tends to confirm it; asked to find what is
+      wrong with it, it works against its own frame. If this is adopted, the
+      step belongs in CORE and the intensity belongs in the per-model
+      deployment prompt — the same division applied to the training-data note
+      parked on ARC-06.
+    type: PROCESS (candidate)
+    dates: [2026-08-01]
+    verdict: PENDING
 
   - key: NAM-09
     title: "Mandatory bkp site-search for names, on a recency/volume metric"

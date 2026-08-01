@@ -9,6 +9,201 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-08-01 | Blueprint/BLUEPRINT.txt | VERSION: 310726_all_handoff-sweep ->
+  010826_all_core-prune-seam across the front matter and all four part seams.
+  Quadrant `all` — CORE pruned, STATUS tripwires intro amended, REFERENCES
+  place names corrected, tooling changed. Caught on the pre-push check: the
+  day's work was about to publish under yesterday's stamp, which is the exact
+  staleness the slug exists to detect and which the new edition guard cannot
+  catch, since it only tests that the four agree with each other.
+
+- 2026-08-01 | PROVENANCE, for the record | The REFERENCES inconsistencies are
+  not drift and nothing has been editing the file. Pickaxe on the repo history:
+  commit 07a9ad5, 10 June 2026, the first upload of docs/ref/REFERENCES.md,
+  contains the master rule "Klong (not Khlong)" AND all nine Khlong district
+  entries in the same commit. Ekaterinberg and Sri Muang Mai likewise. The
+  contradiction arrived with the file and survived all 43 commits since.
+  Shape of it: the province lists are complete official district rosters, and
+  official Thai romanisation gives Khlong / Sri / Ko, while the master rules
+  are BKP house and give Klong / Si / Koh. Two sources merged, house rules
+  never run over the imported data. The misspellings trace to the 2018 guide
+  the file names as its own ancestor. The 310726/010826 corrections are the
+  first enforcement of the register's rule against the register's data.
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt | PLACE NAMES, 20 corrections applied.
+  Op-ruled 010826: the operator has not touched this content, so the forms are
+  errors rather than deliberate house choices. (Applied 310726, reverted the
+  same day on a misreading of "i changed them", now reinstated.)
+  * Khlong -> Klong, 9 district/road entries: Khuean, Khlung, Lan, Thom, Luang,
+    Hoi Khong, Yai, Hat, and Nuea Khlong. Per the transliteration master rule
+    "Klong (not Khlong)", restated in third_party_spellings as applying to
+    district and road names. GUARDED: the master rule's own counter-example
+    ("NOT Khlong Toei") and the institutional name Khlong Prem Prachakon are
+    untouched — a naive sweep rewrites the counter-example into nonsense, which
+    it did on the first attempt 310726.
+  * Sri -> Si, 3: Sri Muang Mai, Sri Sakhon, Sri That. The section header
+    claims RTGS, which gives Si, and Si Sa Ket / Si Racha / Si Satchanalai
+    already follow it.
+  * Ko -> Koh, 1: Ko Kha, Lampang — the lone Ko against eight Koh.
+  * Misspellings, 4: Ekaterinberg -> Ekaterinburg; Eyjafjallajokul ->
+    Eyjafjallajokull; Ban Dan Lan Naik -> Ban Dan Lan Hoi; Non Kunn -> Non Khun.
+  * Duplicates, 3: Roi Et carried Jung Han and Changhan as one district, merged
+    to Chang Han; Mukdahan carried Camcha-i and Khamcha-i, kept Khamcha-i;
+    Khaen Dong was filed under both Nakhon Phanom and Buri Ram, removed from
+    Nakhon Phanom. NOT BACKFILLED: Nakhon Phanom now lists 11 districts and the
+    missing 12th is not supplied from desk memory — flagged for the operator.
+  * United Kingdom entry retained as corrected 310726: the UK includes Northern
+    Ireland; Great Britain is the term that excludes it. The filed text had it
+    inverted.
+- 2026-08-01 | DECISIONS-OPEN.yaml | ADD OTH-14, REFERENCES taxonomy — countries
+  ranks beside places despite being a subset. Operator parked it 010826.
+  next-keys -> OTH-15. PENDING.
+
+- 2026-08-01 | tools/build_bkp_compendium.py + compile.yml | COVER: nothing
+  below the tagline (op-ruled 010826). The Components line was printing under
+  "This is why we have style..." because start_index was a hard 2 — title
+  block, slug block, body — and splitting the slug from the Components line
+  onto separate source lines made them two blocks rather than one. Front
+  matter is cover material by definition, so the body now starts at the first
+  part seam however many paragraphs the preamble runs to. Components stays in
+  the source for anyone reading raw text; declared absent in the volume.
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt | CORE PRUNE, operator rulings 010826.
+  * AUTHORITY + RETRIEVAL merged into one list; the Retrieval section is gone.
+    CORE moves from 4th to 1st: it is the frame in which the register has
+    authority at all, not a competitor to it on matters of fact, so "higher
+    overrides lower" is now simply true where before it was strained. RAG
+    triggers fold into the items they gate, as `Trigger:` on 2 and 3. The
+    preamble sentence gating them was dropped rather than reworded — `Trigger:`
+    already states it at the point of use, and a positional pointer ("query 2
+    and 3") is the class of reference that rots on reorder.
+  * THE RULES + THE TWO RISKS collapsed. Cut: the rung-order gloss, the
+    hazard-is-a-property-not-a-state paragraph, and "no authority to decide,
+    absolute authority to stop" — justification, not instruction, and defending
+    against a failure the architecture already prevents (nothing reaches the
+    register except through the operator).
+  * "A flag never includes a silent edit" cut. Op ruling: a flag is a bookmark
+    to a point, query or problem; a flag that includes a silent edit is
+    oxymoronic, and the two risk bullets already state the action in each case.
+    No definition of "flag" added — the ordinary sense is the operative one,
+    and the ambiguity that would need defining lives in the action, which is
+    already specified.
+  * "Record without exception" -> "Record checks without exception", scoped to
+    the checks above it. The old line told the desk to write to STATUS, which a
+    processor on a raw link cannot do; STATE LOG already carries the register
+    field, so this was a second statement of a rule with a sectional home.
+  * London/Google/Tuesday preserved as the opening line of The rules.
+  * NEW: a direct contradiction with a STATUS TRIPWIRE halts the work BEFORE
+    the edit begins; the return is the finding, not copy. Replaces "flagged
+    for operator guidance — not returned as edited and ready".
+    SCOPE, op-ruled 010826: tripwires only. Four drafts were wrong before this
+    one, each caught by the operator pre-push. (1) Halted on any register
+    divergence — would have stopped a shift on a stale title and made dead
+    letters of 20 FLAG directives. (2) Fixed the rule, then appended 60 words
+    explaining the fix: the desk showing its working, not instructing an
+    editor. (3) Read "contradiction in the copy" as copy-against-itself; it
+    means a contradiction found in the copy. (4) Scoped to "STATUS or
+    REFERENCES", which would have halted on every house-form error — Nigerian
+    for Nigerien, Khlong for Klong — since those are direct contradictions
+    with REFERENCES too. Tripwires alone carry the halt; everything else is
+    the style pass.
+    CONSEQUENT: the tier distinction is now load-bearing, so "Tripwires" is a
+    heading the text points at and keeps its precise string — the section 7
+    test applied in reverse. Stale "lower tiers follow" cleared from the
+    Tripwires intro, tier labels having been dropped 310726.
+  * STYLE LOG exemplar replaced. "Srettha Thavisin | Register hit; title
+    corrected to former prime minister" was never a register hit: it describes
+    the desk doubting correct copy on the strength of its training data and
+    STATUS settling the doubt — a training-data resolution passed off as a
+    factual correction, and under the new rule it would read as a halt case.
+    Now "Niger | Demonym corrected to Nigerien per REFERENCES", which is an
+    actual style-pass action.
+  Source 1159 -> 1136 lines. Gates: split PASS, invertibility PASS
+  byte-for-byte, edition PASS, structure PASS, coverage PASS 478/479.
+- 2026-08-01 | DECISIONS-OPEN.yaml | ADD VER-06, content sweep — mandatory
+  pre-edit pass (required to make the halt-before-edit rule executable) and a
+  post-edit adversarial re-read. Operator field test on Gemini 010826. Field
+  note: the second pass only fired at hype-max register; step belongs in CORE,
+  intensity in the per-model prompt. next-keys bumped to VER-07. PENDING.
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt + compile.yml + build_bkp_compendium.py |
+  EDITION MOVED INTO THE SEAM. <!-- PART: <edition> <NAME> -->, leaving the
+  shortlink as the only visible line above each part title. Machine identity
+  sits machine-side; the reader gets one line. Op-ruled 010826.
+  VER-05 check before adopting: the slug is now invisible in GitHub's RENDERED
+  markdown view. It is unaffected everywhere the register is actually read —
+  every shortlink resolves to raw.githubusercontent served as text/plain, so
+  the comment is on screen; the volume carries it in the running head.
+  REGRESSION CAUGHT PRE-PUSH: cutting the parts after the seam left every
+  component file with no edition stamp at all — a slug readback against a
+  standalone CORE.txt would have returned nothing, which is the single check
+  VER-05 exists to make. The seam now travels WITH its part, so each component
+  opens by naming its own edition and section. Reassembly became plain
+  concatenation as a side effect; invertibility still byte-for-byte.
+  Edition guard now also checks the four seams against the front-matter stamp.
+  Gates: split PASS, invertibility PASS byte-for-byte, edition PASS, structure
+  PASS, coverage PASS 483/484.
+
+- 2026-08-01 | build_bkp_compendium.py + audit_bkp_compendium.py | STAMP TO THE
+  RUNNING HEAD. Operator observed the stamp line reading as a header in Word.
+  It was a body paragraph sitting where a header would be, while the real
+  first-page header was empty (blank_first=True). Now written into each
+  section's first-page header, so the band carries the full stamp on a part's
+  opening page and the compact "/core 7" on every page after — one position
+  for the eye instead of two. The source keeps the line: it is the component's
+  identity when the .txt is read alone, and the edition guard's anchor.
+  CONSEQUENT AUDIT FIX: the coverage gate read word/document.xml only, so
+  anything in a header or footer was invisible to it and relocating content out
+  of the body registered as content loss — exactly the distinction the audit
+  exists to make. It now reads header and footer parts too. Caught by the gate
+  failing 478/484 on this change; back to 483/484 with one declared absence.
+  NOTE: the audit matches by substring, so the bare front-matter slug now
+  passes on the strength of the header stamp containing it. Pre-existing
+  looseness, not introduced here, but it means that one line is unverified.
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt + compile.yml + build_bkp_compendium.py |
+  SEAM AND PART OPENING. The banner was three lines — a 60-char rule, a
+  "# PART: X" heading, another rule. It printed as literal text in every
+  plain-text lane (operator hit it reading /full) and stood a second H1 above
+  each component title. Replaced by one HTML comment, <!-- PART: X -->:
+  invisible in any markdown render, greppable, impossible to write by accident,
+  and free of the setext hazard that stopped the rules ever becoming "---".
+  Marker choice left to the desk; layout ruled by the operator 010826.
+  * Part opening is now: seam, then <slug> | <shortlink> on one line, then the
+    title H1, then the sub-line. Operator layout.
+  * Shortlink is plain text, not a markdown link (op-ruled 010826). Costs
+    clickability in the volume and on GitHub; accepted.
+  * Word section now opens on the SEAM, not on the title H1. Keying off the
+    title stranded anything between the two — the stamp line now sits there —
+    on the previous part's last page.
+  * New BKP Part Stamp style: Arial 8.5, right-aligned, per operator sketch.
+    Plain text keeps the line left, where column padding breaks on reflow.
+  * skip_duplicate_component_heading retired — a flag whose only purpose was
+    swallowing the second heading the banner created.
+  * "### Orientation" folded away: SOLVE THE PROBLEM carries the axiom as its
+    heading instead of repeating it as a bar beneath.
+  * Coverage allowlist trimmed 3 declared absences to 1; the other two
+    described a document that no longer exists.
+  NEW EDITION GUARD: the four component stamps must agree. The shared-edition
+  scheme was ruled 240726 and nothing has ever checked it — a part left on an
+  old slug passed every gate and would surface only as a slug readback
+  disagreeing with itself. Now fails the build. Cheap only because the merged
+  stamp line gives it one predictable place to look.
+  Gates: split PASS, invertibility PASS byte-for-byte, edition PASS, structure
+  PASS, coverage PASS 483/484. Source down 23 lines, volume 33pp -> 32pp,
+  AXIOMs 8 -> 6 ("Format follows the request" fell out on its own — it only
+  ever qualified because the ==== rule beneath it was a paragraph).
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt | DEFECT FIX from the 310726 sweep.
+  The section 1 restructure replaced the numbered Operator-first steps but
+  left the "### Operator-first / Resolve checks in this order. Higher steps
+  come first." heading and lead line standing above them. It headed nothing:
+  "The rules" ladder followed immediately with its own intro line. Removed.
+  Also "BKP THAI GEOGRAPHY INDEX" still sat under the renamed THAI PLACES
+  heading; now reads "The BKP index of Thai places." Found by a stub scan
+  against the served CORE.txt, not by the CI gates — coverage and structure
+  both pass a dangling heading, since no content is lost by one.
+
 - 2026-07-31 | DECISIONS-OPEN.yaml + VERSION_HISTORY.md | MOVED into the clone
   from the project root, so both ledgers now ride every push and a cold chat
   can read them. Scrubbed first, the repo being public:

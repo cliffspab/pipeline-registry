@@ -109,9 +109,19 @@ jobs:
           SRC = "Blueprint/BLUEPRINT.txt"
           src = open(SRC, encoding="utf-8").read()
 
-          pat = re.compile(r'\n={60}\n# PART: (\w+)\n={60}\n')
+          # 010826: seam was a three-line ==== / # PART: X / ==== banner. It
+          # printed as literal text in every plain-text lane, and put a second
+          # heading above each component title. Now a single HTML comment:
+          # invisible in any markdown render, impossible to write by accident,
+          # no setext hazard.
+          # 010826b: the seam now carries the edition as well as the name,
+          # so the version identity is machine-side and the reader is left
+          # one visible line. Raw text still shows it - every shortlink
+          # serves text/plain - so VER-05 slug readback is unaffected.
+          pat = re.compile(r'\n<!-- PART: (\S+) (\w+) -->\n')
           hits = list(pat.finditer(src))
-          names = [m.group(1) for m in hits]
+          names = [m.group(2) for m in hits]
+          seam_stamps = [m.group(1) for m in hits]
           expect = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
           if names != expect:
               sys.exit("FATAL: expected part banners %s, found %s. The parts "
@@ -123,7 +133,10 @@ jobs:
           parts = {}
           for i, m in enumerate(hits):
               end = hits[i + 1].start() if i + 1 < len(hits) else len(src)
-              parts[m.group(1)] = src[m.end():end]
+              # 010826b: the seam travels with its part. Cutting after it
+              # left each component with no edition stamp at all, so a
+              # slug readback against a standalone part returned nothing.
+              parts[m.group(2)] = src[m.start():end]
 
           out = {k: "Blueprint/%s.txt" % k for k in expect}
           for k in expect:
@@ -132,17 +145,36 @@ jobs:
               print("part: %-11s -> %-27s %6d chars" % (k, out[k], len(body)))
 
           # ---- INVERTIBILITY GUARD ------------------------------------------
-          SEP = "\n" + "=" * 60 + "\n# PART: %s\n" + "=" * 60 + "\n"
+          # Parts now carry their own seam, so reassembly is plain concatenation.
           rebuilt = preamble
           for k in expect:
               body = open(out[k], encoding="utf-8", newline="").read()
               orig = parts[k]
               lead  = orig[:len(orig) - len(orig.lstrip("\n"))]
               trail = orig[len(orig.rstrip("\n")):]
-              rebuilt += (SEP % k) + lead + body.rstrip("\n") + trail
+              rebuilt += lead + body.rstrip("\n") + trail
           if rebuilt != src:
               sys.exit("FATAL: split is not invertible. Refusing to publish.")
           print("invertibility guard: PASS (parts recompile byte-for-byte)")
+
+          # ---- EDITION GUARD ------------------------------------------------
+          # The shared-edition scheme (240726) says the four stamps move
+          # together. Nothing checked it until now: a part left on an old slug
+          # passed every gate and only showed up as a slug readback that
+          # disagreed with itself, weeks later.
+          import collections as _c
+          stamps = dict(zip(expect, seam_stamps))
+          fm = re.search(r'^(\S+)$', preamble.split("\n\n")[1].strip(), re.M)
+          if fm and fm.group(1) not in stamps.values():
+              sys.exit("FATAL: front matter is at %s, the parts at %s."
+                       % (fm.group(1), sorted(set(stamps.values()))))
+          if len(set(stamps.values())) != 1:
+              for k, v in stamps.items():
+                  print("  %-11s %s" % (k, v))
+              sys.exit("FATAL: the four parts do not agree on the edition. The "
+                       "shared-edition scheme requires one stamp across all "
+                       "four; a skewed set ships silently. Refusing to build.")
+          print("edition guard: PASS (all four at %s)" % list(stamps.values())[0])
 
           # ---- compatibility shims ------------------------------------------
           for s, d in [("Blueprint/BLUEPRINT.txt",  "Blueprint/COMPILED.md"),
@@ -256,15 +288,16 @@ jobs:
           # ruling). Declared explicitly so the gate stays strict: anything
           # missing that is NOT on this list still fails the build.
           EXPECTED_ABSENT = [
-              # cover no longer prints the source title or the slug/components
-              # line; the slug goes to Word document properties instead
+              # cover does not print the source title; the slug goes to Word
+              # document properties instead
               r"^THE BANGKOK POST BLUEPRINT",
-              # 310726: was pinned to the literal 270726 slug, so the gate
-              # failed the first time the edition moved. Matches any stamp.
-              r"^\d{6}_[\w.-]+\s+Components:",
-              # the "PART: X" label is gone - the component title states it and
-              # the register strip shows position
-              r"^PART: (CORE|PROCESSES|STATUS|REFERENCES)$",
+              # 010826: front matter is cover material and does not print below
+              # the cover tagline (op-ruled). The slug goes to Word document
+              # properties; the components line stays in the source for anyone
+              # reading the raw text and is suppressed in the volume.
+              r"^Components: CORE \+ PROCESSES",
+              # The PART entry is retired: the seam is an HTML comment, which
+              # pandoc emits as RawBlock and the audit never counts as a unit.
           ]
 
           d = json.load(open("/tmp/audit.json"))
