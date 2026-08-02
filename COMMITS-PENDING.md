@@ -9,6 +9,101 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-08-01 | Blueprint/BLUEPRINT.txt + DECISIONS-OPEN.yaml | FOUR PARKED
+  ITEMS RULED, op 010826.
+  * REFERENCES / THAI PLACES: "A name not listed here stands as the reporter
+    filed it: apply the global rules and nothing else." The opening line "Use
+    RTGS transliteration" read as standing permission to romanise, while every
+    rule beneath it is an RTGS OVERRIDE — so a model meeting an unlisted
+    district could "correct" the reporter from training data. Same fault found
+    inside the register on 310726. From the third-party audit, OTH-15 (a).
+  * PROCESSES / Proximity Alert: "Raise it as a query above the box, where the
+    operator sees it before lifting. The Style Log and State Log carry it under
+    their existing headings." Op ruling: box and Style Log by editorial need,
+    State Log by protocol. Only the box placement is new — the two logs already
+    claim it under "unresolved reference issues" and "Flags or anomalies", so
+    they are pointed at, not restated. OTH-15 (b).
+  * CORE / The rules: SCOPE OF THE HALT WIDENED, superseding the 310726
+    tripwires-only ruling. Now "A direct contradiction between FILED COPY and
+    STATUS halts the work before the edit begins." Op ruling: halt on source
+    copy against reference fact, at either tier; do NOT halt on AI knowledge
+    against copy. Naming the two parties carries the scope without explanation
+    — training data is not filed copy, so it is excluded by the wording rather
+    than by a paragraph about it. The tier distinction no longer gates the
+    halt; it remains a priority order for scanning.
+  * ARC-17 PRUNED, ruled no action: RECORDS-AND-CONSOLIDATION is operational
+    structure, not doctrine. It needs no pointer and no shortlink, and it is
+    not secret — it governs operator and custody, not processors. The desk's
+    breach of it on 010826 was a custody failure, not a reachability problem.
+  Gates: split PASS, invertibility PASS byte-for-byte, edition PASS, structure
+  PASS, coverage PASS 482/484.
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt | STATUS ENTRIES CLEARED. Operator
+  verified four of the five moved from the REFS title-retention block and
+  supplied firmer dates than the desk had; applied verbatim.
+  * King Jigme Khesar Namgyel Wangchuck — reigning since 2006, crowned 2008.
+  * Catherine, Princess of Wales — from 9 Sept 2022, on the accession of King
+    Charles III. (Desk had "Sept 2022".)
+  * Prince William, Prince of Wales — from 9 Sept 2022, letters patent Feb
+    2023; Duke of Cambridge 2011-2022. The two-stage date is the operator's
+    correction: announced then formalised.
+  * Pope Emeritus Benedict XVI — died 31 Dec 2022 aged 95, resigned 2013.
+  * LI KEQIANG — died 27 Oct 2023, operator-confirmed. Added to Mortalities,
+    which closes the REFERENCES/PROCESSES conflict flagged earlier the same
+    day: the REFS entry read "second reference Mr Li" while PROCESSES strips
+    honorifics from the deceased. REFS entry amended to "Chinese convention,
+    surname first. Deceased; no honorific — see STATUS" — it keeps him as a
+    surname-first exemplar and stops instructing a form the house forbids.
+    Xi Jinping carries the live exemplar, so nothing is lost by his demotion.
+  * King Salman bin Abdulaziz al-Saud — king of Saudi Arabia, from 23 Jan
+    2015, on the death of King Abdullah. Operator-confirmed in a second pass
+    after it was flagged as missing from the first. The REFS short form
+    ("King Salman" usually suffices) confirmed as standard international
+    usage, so the split holds: short form in REFERENCES, reign in STATUS.
+  ALL FIVE MOVED ENTRIES ARE NOW OPERATOR-CLEARED. The block that produced
+  them had gone unchecked since at least June 2026 and carried two facts that
+  expired in 2022.
+  Gates: split PASS, invertibility PASS byte-for-byte, edition PASS, structure
+  PASS, coverage PASS 481/483.
+
+- 2026-08-01 | Blueprint/BLUEPRINT.txt | AUTHORITY REORDER + TITLE-RETENTION
+  BLOCK REFILED. Op-ruled 010826, prompted by a third-party audit of the set.
+  * AUTHORITY: STATUS moves above REFERENCES — 1 CORE, 2 STATUS, 3 REFERENCES,
+    4 PROCESSES. STATUS carries what is true today and now wins a collision on
+    title, office or life-status. REFERENCES gains "Governs form, not current
+    status"; STATUS loses "ranks alongside REFERENCES", which the new order
+    contradicts.
+  * The REFS "Title retention" block was a status section filed in the register
+    that does not expire. Every entry was person + current title, the same
+    shape as a STATUS entry. Two had already rotted: Pope Emeritus Benedict XVI
+    died Dec 2022, and Catherine ceased to be Duchess of Cambridge in Sept 2022
+    — the entry read "Not Princess", banning the form that had become correct.
+  * Worse, the rule the block existed to demonstrate is already in PROCESSES
+    ("Higher ranks are retained on all references: ... royal titles ..."), and
+    the REFS restatement was parenthetical, buried inside the entry for the one
+    man in the block who had died. A rule hiding inside an example of itself.
+  * RESOLVED per One rule, one home: rule stays in PROCESSES; REFS keeps three
+    short-form conventions ("King Salman" usually suffices, etc), which do not
+    expire on a death; the status facts move to STATUS. The Khamenei REFS entry
+    is dropped entirely — he is in STATUS and the retention rule is in
+    PROCESSES, so it carried nothing of its own. Prince William and Catherine
+    do not survive as REFS entries.
+  * ADDED TO STATUS Global Figures: King Salman, King Jigme Khesar, Catherine
+    Princess of Wales (FLAG Duchess of Cambridge), Prince William Prince of
+    Wales. ADDED TO Mortalities: Pope Emeritus Benedict XVI, died 31 Dec 2022.
+    DESK-SUPPLIED FROM TRAINING, NOT OPERATOR-CLEARED. STATUS states that all
+    facts are operator-cleared before publication; these five are not. They
+    correct entries that were demonstrably wrong, but the dates and forms need
+    the operator's eye before they carry authority.
+  * STILL OPEN, not acted on: Li Keqiang (d. Oct 2023) carries "second
+    reference Mr Li" in REFS while PROCESSES strips honorifics from the
+    deceased — REFS and PROCESSES give opposite instructions on the same name,
+    and he is in neither STATUS tier. The general fault: nothing audits REFS
+    against the volatility test, so an entry stays authoritative until a human
+    happens to read it.
+  Gates: split PASS, invertibility PASS byte-for-byte, edition PASS, structure
+  PASS, coverage PASS 480/482.
+
 - 2026-08-01 | Blueprint/BLUEPRINT.txt | VERSION: 310726_all_handoff-sweep ->
   010826_all_core-prune-seam across the front matter and all four part seams.
   Quadrant `all` — CORE pruned, STATUS tripwires intro amended, REFERENCES

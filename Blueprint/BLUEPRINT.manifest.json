@@ -1,19 +1,18 @@
 {
-  "source": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.txt",
-  "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
+  "source": "/sessions/adoring-affectionate-cannon/mnt/Project_Space/pipeline-registry/Blueprint/BLUEPRINT.txt",
+  "output": "/sessions/adoring-affectionate-cannon/mnt/outputs/build.docx",
   "pandoc_api_version": [
     1,
     23,
-    1,
     1
   ],
-  "source_blocks": 500,
+  "source_blocks": 504,
   "source_block_types": {
     "BulletList": 20,
     "CodeBlock": 2,
     "Header": 98,
     "OrderedList": 4,
-    "Para": 372,
+    "Para": 376,
     "RawBlock": 4
   },
   "suppressed_structural_separator_paragraphs": 0,

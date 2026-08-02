@@ -14,10 +14,105 @@
 #     VERSION_HISTORY.md, and closed entries are pruned from this file.
 #     History lives in the log and the archived batch files, not here.
 #
-# next-keys: LEN-14 NAM-15 ARC-17 OUT-08 VER-07 STA-04 OTH-15
+# next-keys: LEN-14 NAM-15 ARC-18 OUT-08 VER-08 STA-04 OTH-16
 # carried-over open threads from the 2026-07-02 register sweep below.
 
 decisions:
+
+  - key: VER-07
+    title: "The desk's web fetch serves arbitrarily stale cached content and cannot verify anything time-sensitive"
+    status-thread: >
+      MEASURED 2026-08-01, not inferred. Raise to a ruling: this changes what
+      the SEARCHQ relay is for and what the desk may claim to have checked.
+    open-question: >
+      Three fetches, three sites, three vintages, every one served cleanly with
+      no error and no staleness signal:
+        en.wikipedia.org/wiki/Main_Page   dated 12 Jun 2026   7 weeks stale
+        bangkokpost.com                   dated 2 Apr 2025    16 months stale
+        www.bangkokpost.com/thailand      Nov 2022 content    3.7 years stale
+      raw.githubusercontent.com served current content throughout the same
+      session, so the register lane appears to refresh; general web does not.
+      Cache-busting with ?v= returns empty rather than fresh on the general
+      web, so there is no desk-side mitigation.
+      THE DANGEROUS CASE IS THE RECENT ONE. A page from 2022 announces itself.
+      A page from seven weeks ago does not: it postdates the model's reliable
+      knowledge, so it reads as news and feels current. That is the failure
+      that ships.
+      CONSEQUENCE FOR CORE: "A bangkokpost.com site search is the preferred
+      method for a name or usage item" cannot be executed reliably by this
+      desk. Not "should not" — cannot. The tool answers fluently with content
+      of unknown age and nothing in the response distinguishes it from today.
+      CONSEQUENCE FOR SEARCHQ: the relay is not an economy measure. It is the
+      only route to a current answer, because the relay destinations are
+      looking at today and this desk demonstrably is not. The Blueprint frames
+      it as saving desk usage; that framing is wrong and should be corrected.
+      CONSEQUENCE FOR VER-05: "the operator's browser is the only ground-truth
+      fetch instrument" is literal engineering fact, not a caution about
+      diligence.
+      PROPOSED: CORE states that the desk does not verify currency by fetch;
+      any question turning on what is true or current usage today goes to the
+      operator or to SEARCHQ. Separately, the Bangkok Post site was
+      unreachable from the operator's machine on 010826 (ERR_NAME_NOT_RESOLVED
+      on www, coinciding with a suspected paywall migration), so the preferred
+      method may also be failing at source. If a commercial decision at the
+      paper can switch off the register's named verification route, the
+      document needs a stated fallback.
+    type: STANDING-RULE (candidate)
+    dates: [2026-08-01]
+    verdict: PENDING
+
+  - key: OTH-15
+    title: "Third-party audit triage (010826): two accepted, two rejected against ruled doctrine, one half-right"
+    status-thread: >
+      Operator supplied an unsolicited audit of the full set, 010826, "almost
+      by mistake". Logged in the shape of OTH-13 so the rejections are on
+      record and the next reviewer does not re-raise them.
+    ruling: >
+      ACCEPT as candidates:
+      (a) UNLISTED ENTITIES. THAI PLACES opens "Use RTGS transliteration",
+      which reads as a licence to romanise an unlisted name from training
+      data. The house rules beneath it are RTGS OVERRIDES (Muang not Mueang,
+      Klong not Khlong), so the top line invites the behaviour they exist to
+      prevent. Not theoretical: it is the same fault found inside the register
+      itself on 310726, where RTGS forms sat beside house forms unreconciled.
+      Proposed: an unlisted name stands as filed; apply only the global master
+      rules.
+      (b) PROXIMITY ALERT HAS NO HOME. The wording is dictated, the placement
+      is not. Three plausible destinations exist and nothing rules between
+      them: STYLE LOG "unresolved reference issues", STATE LOG "Flags or
+      anomalies held for the operator", or a query above the box. Pick ONE
+      primary placement — the audit proposed two, which is the duplication
+      being cut everywhere else.
+      HALF-RIGHT, acted on 010826 by a different route:
+      (c) AUTHORITY CLASH. The audit proposed reordering STATUS above
+      REFERENCES to stop a stale REFS entry overriding a volatile STATUS fact.
+      The reorder was ruled and applied — but the fix it proposed would have
+      left the actual fault untouched. The collision was not hierarchical: it
+      was that the REFS title-retention block held current-title facts that had
+      rotted (Benedict d.2022, Catherine's title changed 2022). Refiled per the
+      volatility test rather than reordered around.
+      REJECT:
+      (d) QUOTE FIREWALL — a global rule exempting quotes from house style.
+      This is precisely the construction ruled against in handoff section 6:
+      "A top-level exception would be reachable by every rule including those
+      that never wanted it, and would invite the argument about what counts as
+      a quote at the level where no rule can answer." Each rule fences its own
+      element and carries its own carve-out; the times rule already preserves
+      quoted speech. Would be a fourth statement of a rule stated three times.
+      (e) OVERSPILL PARALYSIS — the claim that `hold` plus bloated copy leaves
+      the desk stuck. It does not: 1-in/1-out substitution IS the mechanism,
+      and the clause already says "where a fix shifts width, absorb it in the
+      swap". The audit missed it. Residual worth noting: the "what fills the
+      freed space" principle is stated only for sub-heads and never
+      generalised.
+    rationale: >
+      Same pattern as OTH-13: a capable outside read finds two real things,
+      misreads ruled doctrine on two, and gets one half-right for sound
+      reasons. The value is in the two finds; the cost is that rejections
+      recur unless written down.
+    type: TRIAGE (candidate)
+    dates: [2026-08-01]
+    verdict: PENDING
 
   - key: OTH-14
     title: "REFERENCES taxonomy: countries sits beside places despite being a subset"

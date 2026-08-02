@@ -43,9 +43,9 @@ Decisions resolve in this order. Higher authority overrides lower authority.
 
 1. **CORE Rules — this document** Operational logic and output structure.  
      
-2. **REFERENCES** House exceptions, transliterations, naming traps and geopolitical rulings. Trigger: **Thai entities** — geography, districts, politicians, institutions and transliterations; **geopolitical names and demonyms** — countries, regions and nationalities; **confusable vocabulary** — grammatical traps and journalistic designations.  
+2. **STATUS** Canonical register of what is true today. Trigger: any name carrying a high-profile claim of title, office or life-status.  
      
-3. **STATUS** Canonical register. Trigger: any name carrying a high-profile claim of title, office or life-status; ranks alongside REFERENCES.  
+3. **REFERENCES** House exceptions, transliterations, naming traps and geopolitical rulings. Governs form, not current status. Trigger: **Thai entities** — geography, districts, politicians, institutions and transliterations; **geopolitical names and demonyms** — countries, regions and nationalities; **confusable vocabulary** — grammatical traps and journalistic designations.  
      
 4. **PROCESSES** House conventions — numbers, times, dates, currency, honorifics and PR handling. These rules apply universally to all copy.  
      
@@ -84,7 +84,7 @@ Carry out standard safety checks on every edit for:
 
 **Record checks without exception.** An unrecorded check is a check that has to be run again.
 
-A direct contradiction with a **STATUS tripwire** halts the work before the edit begins. The return is the finding, not copy.
+A direct contradiction between **filed copy** and **STATUS** halts the work before the edit begins. The return is the finding, not copy.
 
 ### Scope of verification
 
@@ -439,6 +439,8 @@ Proximity is observation, not action. The alert is a note on this copy, not a pr
 
 It catches rogue copy early and widens the desk's eye over the core concern of all news — the leading protagonists. An absent alert is not an all-clear; the eye stays open.
 
+A triggered alert is logged in the Style Log.
+
 #### Ranks and titles
 
 Ranks and titles come from the copy. Where rank appears anywhere in copy, it applies consistently throughout. Where copy is silent and the rank is unclear, the full name is repeated or the gap is flagged.
@@ -603,9 +605,7 @@ STATUS expires; REFERENCES does not. The test is **volatility, not subject matte
 
 Entries take the form **key — ruling**, with the directive verb in caps where there is one. The absence of a directive verb signals house form rather than a belief to correct.
 
-## Tripwires
-
-Apex sits at the top of this register. Scan on the first required status check and retain it for the edit — a listed entity takes the register, with no search.
+## Key figures
 
 ### Apex Figures
 
@@ -693,6 +693,10 @@ Current cabinet as of June 2026 (Anutin Charnvirakul administration).
 
 **Charlie Kirk** — died 2025.
 
+**Pope Emeritus Benedict XVI** — died 31 Dec 2022, aged 95; resigned the papacy 2013.
+
+**Li Keqiang** — died 27 Oct 2023.
+
 ### Corporate Leadership Changes
 
 **Brenton Justin Mauriello** — CEO of Raimon Land, from April 2024.
@@ -704,6 +708,14 @@ Current cabinet as of June 2026 (Anutin Charnvirakul administration).
 **Donald Trump and JD Vance** — sitting president and vice-president of the United States, from 20 Jan 2025. FLAG any reference to them as private citizens or former officials. Standard title capitalisation and second-reference rules apply: Mr Trump, Mr Vance.
 
 **King Charles III** — active monarch, operating alongside a cancer treatment protocol; treatment reduced Dec 2025 to precautionary monitoring.
+
+**King Salman bin Abdulaziz al-Saud** — king of Saudi Arabia, from 23 Jan 2015.
+
+**King Jigme Khesar Namgyel Wangchuck** — king of Bhutan, reigning since 2006; crowned 2008.
+
+**Catherine, Princess of Wales** — Princess of Wales from 9 Sept 2022, on the accession of King Charles III; formerly Duchess of Cambridge. FLAG any reference to her as Duchess of Cambridge.
+
+**Prince William, Prince of Wales** — Prince of Wales from 9 Sept 2022, letters patent Feb 2023; Duke of Cambridge 2011-2022.
 
 **To Lam** — general secretary of the Communist Party of Vietnam, since 2024, and 13th president of Vietnam, since 2026. Both titles current. ACCEPT 'president' or 'general secretary' as filed. House lowercases 'president' before a name; Vietnamese second reference is Mr Lam.
 
@@ -852,7 +864,7 @@ Mao and Mother Teresa are kept because they still teach the rule.
 ### Chinese: surname first, Mr + surname on second ref
 **Xi Jinping** — second reference Mr Xi. Chinese convention (surname first).
 
-**Li Keqiang** — second reference Mr Li. Chinese convention.
+**Li Keqiang** — Chinese convention, surname first. Deceased; no honorific — see `STATUS`.
 
 **Mao Zedong** — Historical; no honorific.
 
@@ -868,18 +880,15 @@ Mao and Mother Teresa are kept because they still teach the rule.
 ### Myanmar/Cambodian: full name throughout
 **Aung San Suu Kyi** — second reference Ms Suu Kyi. Myanmar and Cambodian names use full name on all references with no honorific. Aung San Suu Kyi is the sole exception and takes Ms Suu Kyi on second reference.
 
-### Title retention
-**Ayatollah Ali Khamenei** — Deceased Feb 2026 — see STATUS. Kept as an example — the title "Ayatollah" stays on all references. (Title-retention rule applies across this block — Ayatollah, King, Pope, Prince, Duchess, etc all kept on every reference.).
+### Royal and religious names — short forms
+
+Titles are retained on every reference per `PROCESSES`; who currently holds one is a `STATUS` fact. These entries carry the house short form only.
 
 **King Salman bin Abdulaziz al-Saud** — "King Salman" usually suffices.
 
-**King Jigme Khesar Namgyel Wangchuck** — Bhutanese king; full title first reference.
+**King Jigme Khesar Namgyel Wangchuck** — full title on first reference.
 
 **Pope Emeritus Benedict XVI** — "Pope Benedict" usually suffices.
-
-**Catherine, Duchess of Cambridge** — Not Princess.
-
-**Prince William** — British royals retain "Prince" on all references — not just "William".
 
 ### Given-name-as-surname (Mahathir, Sabah)
 **Mahathir Mohamad** — second reference Mr Mahathir. Given name used as surname on second ref. This pattern applies across the block — for Mahathir, Sabah and similar where the given name conventionally serves as the surname on second reference.
@@ -943,7 +952,7 @@ Mao and Mother Teresa are kept because they still teach the rule.
 
 ## THAI PLACES
 The BKP index of Thai places.
-Use RTGS transliteration. Global rules: Muang (not Mueang), Phra (not Pra), Chai (not Chay), Isan (not Isaan).
+Use RTGS transliteration. Global rules: Muang (not Mueang), Phra (not Pra), Chai (not Chay), Isan (not Isaan). A name not listed here stands as the reporter filed it: apply the global rules and nothing else. Where an unlisted name matches neither the BKP forms above nor standard RTGS, flag it. Do not alter it and do not hold.
 ### Transliteration master rules
 transliteration_rules: - Muang (not Mueang) - Phra (not Pra) - Chai (not Chay) - Isan (not Isaan) - Klong (not Khlong) — Klong Toey is the BKP form, NOT Khlong Toei - Soi format — Sukhumvit Soi 12 (not Soi Sukhumvit 12, not Sukhumvit 12 Road) - Soi [Name] only when soi has its own distinct name — Soi Nana, Soi Sala Daeng, Soi Sribamphen - Rama roads — Roman numerals; Rama IX Road, never Phra Ram - Postcodes — no comma; Bangkok 10900 (not Bangkok, 10900)
 airports: - Two Bangkok airports — always specify Don Muang or Suvarnabhumi - Never "Bangkok airport" - '"Suvarnabhumi airport" suffices for body text; "Suvarnabhumi International Airport" only when using official name'
