@@ -135,6 +135,8 @@ Proximity is observation, not action. The alert is a note on this copy, not a pr
 
 It catches rogue copy early and widens the desk's eye over the core concern of all news — the leading protagonists. An absent alert is not an all-clear; the eye stays open.
 
+A triggered alert is logged in the Style Log.
+
 #### Ranks and titles
 
 Ranks and titles come from the copy. Where rank appears anywhere in copy, it applies consistently throughout. Where copy is silent and the rank is unclear, the full name is repeated or the gap is flagged.

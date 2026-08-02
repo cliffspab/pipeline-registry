@@ -12,9 +12,7 @@ STATUS expires; REFERENCES does not. The test is **volatility, not subject matte
 
 Entries take the form **key — ruling**, with the directive verb in caps where there is one. The absence of a directive verb signals house form rather than a belief to correct.
 
-## Tripwires
-
-Apex sits at the top of this register. Scan on the first required status check and retain it for the edit — a listed entity takes the register, with no search.
+## Key figures
 
 ### Apex Figures
 
@@ -102,6 +100,10 @@ Current cabinet as of June 2026 (Anutin Charnvirakul administration).
 
 **Charlie Kirk** — died 2025.
 
+**Pope Emeritus Benedict XVI** — died 31 Dec 2022, aged 95; resigned the papacy 2013.
+
+**Li Keqiang** — died 27 Oct 2023.
+
 ### Corporate Leadership Changes
 
 **Brenton Justin Mauriello** — CEO of Raimon Land, from April 2024.
@@ -113,5 +115,13 @@ Current cabinet as of June 2026 (Anutin Charnvirakul administration).
 **Donald Trump and JD Vance** — sitting president and vice-president of the United States, from 20 Jan 2025. FLAG any reference to them as private citizens or former officials. Standard title capitalisation and second-reference rules apply: Mr Trump, Mr Vance.
 
 **King Charles III** — active monarch, operating alongside a cancer treatment protocol; treatment reduced Dec 2025 to precautionary monitoring.
+
+**King Salman bin Abdulaziz al-Saud** — king of Saudi Arabia, from 23 Jan 2015.
+
+**King Jigme Khesar Namgyel Wangchuck** — king of Bhutan, reigning since 2006; crowned 2008.
+
+**Catherine, Princess of Wales** — Princess of Wales from 9 Sept 2022, on the accession of King Charles III; formerly Duchess of Cambridge. FLAG any reference to her as Duchess of Cambridge.
+
+**Prince William, Prince of Wales** — Prince of Wales from 9 Sept 2022, letters patent Feb 2023; Duke of Cambridge 2011-2022.
 
 **To Lam** — general secretary of the Communist Party of Vietnam, since 2024, and 13th president of Vietnam, since 2026. Both titles current. ACCEPT 'president' or 'general secretary' as filed. House lowercases 'president' before a name; Vietnamese second reference is Mr Lam.

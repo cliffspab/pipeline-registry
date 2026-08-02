@@ -36,9 +36,9 @@ Decisions resolve in this order. Higher authority overrides lower authority.
 
 1. **CORE Rules — this document** Operational logic and output structure.  
      
-2. **REFERENCES** House exceptions, transliterations, naming traps and geopolitical rulings. Trigger: **Thai entities** — geography, districts, politicians, institutions and transliterations; **geopolitical names and demonyms** — countries, regions and nationalities; **confusable vocabulary** — grammatical traps and journalistic designations.  
+2. **STATUS** Canonical register of what is true today. Trigger: any name carrying a high-profile claim of title, office or life-status.  
      
-3. **STATUS** Canonical register. Trigger: any name carrying a high-profile claim of title, office or life-status; ranks alongside REFERENCES.  
+3. **REFERENCES** House exceptions, transliterations, naming traps and geopolitical rulings. Governs form, not current status. Trigger: **Thai entities** — geography, districts, politicians, institutions and transliterations; **geopolitical names and demonyms** — countries, regions and nationalities; **confusable vocabulary** — grammatical traps and journalistic designations.  
      
 4. **PROCESSES** House conventions — numbers, times, dates, currency, honorifics and PR handling. These rules apply universally to all copy.  
      
@@ -77,7 +77,7 @@ Carry out standard safety checks on every edit for:
 
 **Record checks without exception.** An unrecorded check is a check that has to be run again.
 
-A direct contradiction with a **STATUS tripwire** halts the work before the edit begins. The return is the finding, not copy.
+A direct contradiction between **filed copy** and **STATUS** halts the work before the edit begins. The return is the finding, not copy.
 
 ### Scope of verification
 
