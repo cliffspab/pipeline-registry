@@ -9,6 +9,31 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-08-09 | Blueprint/BLUEPRINT.txt | REGISTER PART OPENING. Op-ruled 090826.
+  VERSION: 070826_all_rebuild -> 090826_reg_part-opening, front matter and both
+  seams. Quadrant `reg` — the substantive change is in REGISTER; CORE's stamp
+  moves mechanically.
+  * THE FAULT: CORE opened with shortlink, H1 and sub-line above its content.
+    REGISTER's equivalents were INSIDE the yaml fence as comments, so they
+    rendered as code and part 2 had no heading at all. The seam is an HTML
+    comment and renders as nothing, so what a reader saw was the end of the
+    state log, a void, then a code block starting cold.
+  * FIXED by giving REGISTER the same opening ABOVE the fence — shortlink,
+    `# REGISTER`, then "the lookups". The lines stay inside the fence as well:
+    outside serves the rendered volume, inside serves REGISTER.txt read standalone,
+    the same way CORE.txt carries its own seam and shortlink when read alone.
+  * WHITESPACE: the two blank lines before each seam cut to one. Both seams, so
+    the parts stay symmetrical.
+  * SAFE BY CONSTRUCTION, verified before editing: guard_invertible reassembles
+    from RAW slices (preamble + concat of parts), so anything added between seam
+    and fence round-trips; and register_yaml reads only the fence body, so
+    REGISTER.yaml is untouched by content above it. Confirmed after the build —
+    CORE.txt and REGISTER.txt diff clean against the sealed 070826 edition once
+    the tag string is normalised. Nothing but the stamp changed in either part.
+  * Headings go UP by one, so the structure guard passes; it only fails on a drop.
+  Gates: dollar-pairing PASS, edition PASS, invertibility PASS byte-for-byte,
+  register parse PASS (apex 10, cabinet 8, provinces 77).
+
 - 2026-08-09 | push.bat + bootstrap/ | MIRROR THE BOOTSTRAP SET INTO THE CLONE.
   Op-raised 090826. CLAUDE.md, shift.py and build.py live at the Project_Space
   root and were in no backup: the folder is the single copy, on one machine, of

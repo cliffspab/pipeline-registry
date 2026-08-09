@@ -175,8 +175,9 @@ marks the only file a human may change.
 # Paths are relative to Project_Space. Read with the prose above; neither is
 # complete alone.
 
-build: 070826_all_rebuild
-pushed: 2026-08-09     # commit 8a4d4ff, verified live by git ls-remote
+build: 090826_reg_part-opening
+previous: 070826_all_rebuild    # pushed 090826, commit 8a4d4ff + bot c7bca93
+pushed: false                   # 090826_reg_part-opening is not pushed
 serving:
   status: LIVE — the whole chain, verified 090826 by contents API against local sizes
   bot_commit: c7bca93        # compile-bot, the derived parts
@@ -244,7 +245,8 @@ shift_folder:
 editions:
   path: Editions/
   purpose: sealed builds, every format, outside the clone. Artifacts of record.
-  current: Editions/070826_all_rebuild/
+  current: Editions/090826_reg_part-opening/
+  sealed: [070826_all_rebuild, 090826_reg_part-opening]
   contents: [BLUEPRINT.txt, CORE.txt, REGISTER.yaml, REGISTER.txt, BLUEPRINT.pdf,
              BLUEPRINT_candidate.docx, BLUEPRINT_candidate.pdf, build.py,
              070826_handoff_pull-integrity.md]

@@ -9,6 +9,47 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 ---
 
 
+## 2026-08-09 — REGISTER PART OPENING; 090826_reg_part-opening
+
+Operator observed the gap at the CORE/REGISTER split and ruled the headings be
+made to render as intended. Stamp `070826_all_rebuild` ->
+`090826_reg_part-opening`, front matter and both seams. Quadrant `reg`.
+
+**Event.** CORE opened with a shortlink line, an H1 and a sub-line above its
+content. REGISTER carried the same three lines INSIDE its yaml fence, as
+comments — so they rendered as code and part 2 had no heading in the volume at
+all. The seam itself is an HTML comment and renders as nothing, so a reader saw
+the end of the state log, a void, then a code block beginning cold. The gap the
+operator reported was the symptom; the missing part opening was the cause.
+
+**Applied.** REGISTER given the same opening above the fence: shortlink,
+`# REGISTER`, sub-line "the lookups". The lines remain inside the fence too —
+outside serves the rendered volume, inside serves `REGISTER.txt` read standalone,
+which is the same arrangement by which `CORE.txt` carries its own seam and
+shortlink when read alone. The two blank lines before each seam cut to one, both
+seams, so the parts stay symmetrical.
+
+**Evidence.** Checked BEFORE editing rather than after: `guard_invertible`
+reassembles from raw slices — `preamble + "".join(parts)` — so any content added
+between a seam and a fence round-trips by construction, and `register_yaml` reads
+only the fence body, so `REGISTER.yaml` cannot be affected by lines above it.
+Confirmed after the build: `CORE.txt` and `REGISTER.txt` diff clean against the
+sealed `070826` edition once the tag string is normalised — nothing but the stamp
+changed in either part. Byte counts moved 27,557 -> 27,562 and 36,301 -> 36,306,
+exactly the five characters the longer tag adds. All four guards pass: dollar
+pairing per paragraph, edition, invertibility byte-for-byte, register parse
+(apex 10, cabinet 8, provinces 77). Heading count rises by one, so the structure
+guard is not engaged — it fails only on a drop.
+
+**A near-miss worth recording.** `build.py` reports CHARACTERS; the sizes the
+desk had been carrying all session were BYTES from `stat`. The derived parts
+appeared to lose 174 and 52 units and were briefly read as content loss. The
+document is full of em-dashes, £, € and ¥, all multi-byte in UTF-8. Compare like
+with like, and diff before concluding.
+
+**Verdict.** Ruled, built, sealed to `Editions/090826_reg_part-opening/`, shift
+folder re-cut, source copied to the clone. Not pushed.
+
 ## 2026-08-09 — CORPUS / DEPLOYMENT SUBSET DISTINCTION RULED
 
 Operator ruled the distinction and the standing subset. `RECORDS-AND-
