@@ -9,6 +9,85 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-08-09 | Blueprint/BLUEPRINT.txt | THE REBUILD WRITTEN INTO THE CLONE.
+  070826_all_rebuild replaces 010826_all_core-prune-seam. The rebuild had lived
+  only at the Project_Space root since 070826; the clone and every shortlink
+  still served the four-part build, and the tags gave no sign of it, a four-part
+  set agreeing with itself passing the edition guard.
+  * ONLY THE SOURCE IS COPIED. CORE.txt, REGISTER.yaml, REGISTER.txt, the docx
+    and the manifest are derived and committed by compile.yml. Copying any of
+    them by hand trips the guard at the head of the workflow and the push is
+    REJECTED. This is the one thing to get right about pushing this repo.
+  * compile.yml, tools/build_bkp_compendium.py and tools/bkp_docx_design.py were
+    already updated locally on 080826 and ride this push with the source.
+  * EXPECTED ON FIRST PUSH: the structure guard FAILS. Headings drop 98 -> 54
+    because forty-odd register headings became one fenced block. By design —
+    its own message says to rerun once to reset the baseline. A 45% structural
+    drop should stop the line and have a human wave it through.
+- 2026-08-09 | Blueprint/index.txt + index.yaml | REWRITTEN for two parts.
+  Both still listed processes/status/references and had no core or reg entry —
+  the .md -> .txt repair of 070826 fixed the extensions and left the four-part
+  shape. Now: blueprint, core, reg. status/refs/full moved under a `shims` key
+  and marked do-not-deploy; pro dropped, PROCESSES no longer being produced.
+  Deployment subset named in a comment. Parses; twins byte-identical.
+- 2026-08-09 | Blueprint/prompts/system.md + instructions.md | FILLED. Both had
+  been zero bytes since 26 June and are named in handoff 070826 §5 as where pull
+  integrity goes.
+  * system.md — handoff §7 verbatim. The bad-pull test, the two further
+    conditions that read as one, and the rule that an operator-supplied figure is
+    cited as theirs and not restated as a desk verification.
+  * instructions.md — what to pull and why: the two parts in text format,
+    confirmed latest only; the shortlink table; shims marked do-not-deploy;
+    artifacts of record never deploy; per-model prompt production, with the
+    Route A / Route B capability caution carried over.
+  Assembled from ruled material. No new doctrine.
+- 2026-08-09 | RECORDS-AND-CONSOLIDATION.md | SUBSET CORRECTED TO TEXT FORMAT.
+  Op-ruled 090826. The desk had written CORE.txt + REGISTER.yaml; the ruling is
+  the two parts in text format, CORE.txt + REGISTER.txt. Bytes are identical and
+  the extension is inert, but .yaml is the authoring form and .txt is what
+  travels, and the subset names what travels. Section head now also states the
+  document's shape — two parts, CORE markdown, REGISTER YAML, both delivered as
+  .txt, syntax load-bearing and extension inert.
+
+- 2026-08-09 | RECORDS-AND-CONSOLIDATION.md | CORPUS / DEPLOYMENT SUBSET, new
+  section at the head. Op-ruled 090826. Stamp 240726_all_records-extracted ->
+  090826_all_corpus-deployment-split.
+  * The corpus is everything held; the deployment subset is what a processor
+    receives to work a shift. A file is corpus by being held, and enters the
+    subset by being needed at the point of edit. The corpus is listed in five
+    classes — source, derived governance, artifacts of record, administration,
+    machinery — of which only derived governance deploys.
+  * ARTIFACTS OF RECORD DO NOT DEPLOY. The PDF and the volume fix a build in
+    amber and carry no seam a processor can check; they are the least current
+    thing in the corpus the moment the source moves.
+  * STANDING SUBSET: CORE.txt + REGISTER.yaml, confirmed latest only.
+    BLUEPRINT.txt substitutes for the pair where a destination takes one file.
+  * CONFIRMED LATEST defined as a checked tag, not a filename or a modification
+    date. Carries handoff 070826 §0 into procedure: clone and remote go stale in
+    opposite directions, and a matching tag proves structural agreement only.
+  * Prompted by the 090826 isolation of the 070826_all_rebuild set. Eight files
+    were named as the deployment; two are read by a processor editing copy.
+    Nothing in the corpus distinguished the holding from the working set.
+- 2026-08-09 | RECORDS-AND-CONSOLIDATION.md | TWO STALE LINES, consequential on
+  the 070826 CORE + REGISTER ruling, not separate rulings.
+  * Clone-write protocol named STATUS, PROCESSES, BLUEPRINT or REFERENCES; now
+    names BLUEPRINT as the only file edited, CORE and REGISTER deriving from it.
+  * Close-out bullet lost its short file. STATUS was the one small enough to
+    reprint whole; the merge leaves BLUEPRINT, CORE and REGISTER all large, so
+    patches are the only form. FLAGGED: the large/short threshold no longer
+    discriminates and the bullet now states a flat rule. If the operator wants
+    the distinction kept, it needs a size or a ruling.
+  * Per-model deployment sentence moved into the new section — it draws on the
+    subset, which now has a definition to draw on.
+- 2026-08-09 | VERSION_HISTORY.md | ENTRY for the above, newest first, with the
+  090826 guard run recorded: edition PASS both seams against front matter,
+  invertibility PASS (CORE verbatim substring; register lifts and reconciles
+  below the seam line), register parse PASS (status + references), dollar
+  pairing PASS per paragraph (two signs, no paragraph holding both). REGISTER
+  pair byte-identical, md5 9954d821. NOT A BUILD — no compile was run and no
+  stamp on the governance files changed; the guards were run by hand against
+  the isolated set.
+
 - 2026-08-01 | Blueprint/BLUEPRINT.txt + DECISIONS-OPEN.yaml | FOUR PARKED
   ITEMS RULED, op 010826.
   * REFERENCES / THAI PLACES: "A name not listed here stands as the reporter

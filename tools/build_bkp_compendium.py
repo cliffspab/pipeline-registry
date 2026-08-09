@@ -41,7 +41,9 @@ from bkp_docx_design import (
 )
 
 
-COMPONENTS = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
+# 080826: four parts became two. PROCESSES is a section inside CORE;
+# STATUS and REFERENCES are branches of REGISTER.
+COMPONENTS = ["CORE", "REGISTER"]
 
 # Running-head short forms - the shortlink slugs, so the page head reads the
 # same way the operator addresses the section.
@@ -52,22 +54,16 @@ COMPONENTS = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
 # reaches back into canon.
 COMPONENT_DISPLAY = {
     "CORE": "CORE",
-    "PROCESSES": "PROCESSES",
-    "STATUS": "STATUS",
-    "REFERENCES": "REFS",
+    "REGISTER": "REGISTER",
 }
 
 COMPONENT_SHORTFORM = {
     "CORE": "/core",
-    "PROCESSES": "/pro",
-    "STATUS": "/status",
-    "REFERENCES": "/refs",
+    "REGISTER": "/reg",
 }
 COMPONENT_DESCRIPTIONS = {
-    "CORE": "Doctrine, authority, verification and output",
-    "PROCESSES": "House conventions and spatial mechanics",
-    "STATUS": "Current editorial tripwires and office-holders",
-    "REFERENCES": "Canonical forms, names and exceptions",
+    "CORE": "Doctrine, authority, conventions, editing and output",
+    "REGISTER": "Current tripwires, canonical forms and exceptions",
 }
 SEPARATOR_RE = re.compile(r"^={20,}$")
 
@@ -274,8 +270,12 @@ def configure_header_footer(section, label, blank_first=False):
 
 
 def add_register(doc, active):
-    table = doc.add_table(rows=1, cols=4)
-    widths = [2340, 2340, 2340, 2340]
+    # 080826: the grid derives from COMPONENTS rather than assuming four
+    # cells. 9360 twips is the text width; it divides evenly by two and by
+    # four, so a part-count change no longer needs this edited.
+    cols = len(COMPONENTS)
+    table = doc.add_table(rows=1, cols=cols)
+    widths = [9360 // cols] * cols
     set_repeat_table_layout(table, widths)
     for idx, name in enumerate(COMPONENTS):
         cell = table.cell(0, idx)
@@ -783,9 +783,7 @@ def render_list(doc, block, decimal_num_id, bullet_num_id, level=0):
 
 # Component title as it appears in the source H1 -> canonical component name.
 # REFS is the display head; REFERENCES is the component and register name.
-COMPONENT_TITLES = {"CORE": "CORE", "PROCESSES": "PROCESSES",
-                    "STATUS": "STATUS", "REFS": "REFERENCES",
-                    "REFERENCES": "REFERENCES"}
+COMPONENT_TITLES = {"CORE": "CORE", "REGISTER": "REGISTER"}
 
 PART_SEAM_RE = re.compile(r"<!--\s*PART:\s*(\S+)\s+(\w+)\s*-->")
 
@@ -1060,7 +1058,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
         elif pg_num is not None:
             section._sectPr.remove(pg_num)
     doc.core_properties.title = "BKP Pipeline - Compiled Governance Set"
-    doc.core_properties.subject = "CORE + PROCESSES + STATUS + REFERENCES"
+    doc.core_properties.subject = " + ".join(COMPONENTS)
     doc.core_properties.author = "Bangkok Post Desk Editor project"
     doc.core_properties.comments = "Mechanically generated from COMPILED.md"
     # Page numbering restarts in every part except the cover. Done as a

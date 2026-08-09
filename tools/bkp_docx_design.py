@@ -330,9 +330,13 @@ def add_metadata(doc, label, value):
 
 
 def add_register(doc):
-    table = doc.add_table(rows=1, cols=4)
-    set_repeat_table_layout(table, [2340, 2340, 2340, 2340])
-    labels = [("01", "BLUEPRINT"), ("02", "PROCESSES"), ("03", "STATUS"), ("04", "REFERENCES")]
+    # 080826: four cells became two. PROCESSES is a section inside CORE;
+    # STATUS and REFERENCES are branches of REGISTER. 9360 twips is the text
+    # width and divides evenly, so the grid follows the label count.
+    labels = [("01", "BLUEPRINT"), ("02", "REGISTER")]
+    cols = len(labels)
+    table = doc.add_table(rows=1, cols=cols)
+    set_repeat_table_layout(table, [9360 // cols] * cols)
     for idx, (num, name) in enumerate(labels):
         cell = table.cell(0, idx)
         cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
@@ -404,7 +408,7 @@ def build():
     set_paragraph_bottom_rule(h1, 30, 6)
     add_metadata(doc, "Status", "Live")
     add_metadata(doc, "Architecture", "Governed discretion / Lean RAG retrieval / Operator-first verification")
-    add_metadata(doc, "Companions", "PROCESSES, STATUS, REFERENCES")
+    add_metadata(doc, "Companions", "CORE, REGISTER")
 
     h2 = doc.add_paragraph("OPERATING DOCTRINE & TONE", style="Heading 2")
     set_paragraph_bottom_rule(h2, 14, 4)

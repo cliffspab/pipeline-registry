@@ -9,6 +9,99 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 ---
 
 
+## 2026-08-09 — CORPUS / DEPLOYMENT SUBSET DISTINCTION RULED
+
+Operator ruled the distinction and the standing subset. `RECORDS-AND-
+CONSOLIDATION.md` bumped `240726_all_records-extracted` ->
+`090826_all_corpus-deployment-split`, new section added at the head.
+
+**Event.** The `070826_all_rebuild` set was isolated into a deployment folder
+for a working test shift. Eight files were named as the thing to deploy — the
+source, the two derived parts, the artifact of record, the compendium pair and
+the handoff. Only two of them are read by a processor editing copy. The rest
+are custody, machinery or a build fixed in amber. Nothing in the corpus had
+ever said which was which, so "the Blueprint" named both the whole holding and
+the working set, and a deployment could take either.
+
+**Ruled.**
+
+- The corpus is everything the desk holds. The deployment subset is what a
+  processor receives to work a shift. A file is corpus by being held; it enters
+  the subset by being needed at the point of edit.
+- **Artifacts of record do not deploy.** The PDF and the volume exist to be
+  read by a human and to fix a build in amber. They are the least current thing
+  in the corpus the moment the source moves, and they carry no seam a processor
+  can check.
+- **Standing subset: the two parts, most recent version, in text format —
+  `CORE.txt` + `REGISTER.txt`. Nothing else.** `BLUEPRINT.txt` substitutes for
+  the pair where a destination takes one file. CORRECTED LATER THE SAME DAY: the
+  desk first wrote the subset as `CORE.txt` + `REGISTER.yaml`. The operator ruled
+  text format. The extension is inert and the bytes are identical, but `.yaml` is
+  the authoring form and `.txt` is the delivered one, and the subset names what
+  travels.
+- **Confirmed latest** is a checked tag, not a filename or a modification date —
+  clone and remote go stale in opposite directions, and a matching tag proves
+  structural agreement and nothing about content.
+
+**Consequential edits, same file.** Two lines still named the four-part set,
+retired by the CORE + REGISTER ruling of 070826. The clone-write protocol now
+names `BLUEPRINT` as the only file edited. The close-out bullet loses its short
+file: `STATUS` was the one small enough to reprint whole, and the merge leaves
+`BLUEPRINT`, `CORE` and `REGISTER` all large, so patches are now the only form.
+The per-model deployment sentence moved into the new section, where the subset
+it draws from is defined.
+
+**Evidence.** Guards re-run against the isolated set on 090826, all passing:
+edition — both seams and the front matter read `070826_all_rebuild`;
+invertibility — `CORE.txt` is a verbatim substring of the source, and the
+register lifts out of its fence and reconciles against `REGISTER.yaml` line for
+line below the seam line, the documented HTML-comment / YAML-comment swap being
+the only difference; register parse — two top-level keys, `status` and
+`references`; dollar-pairing per paragraph — two `$` in the document, no
+paragraph holding both. `REGISTER.txt` and `REGISTER.yaml` byte-identical,
+md5 `9954d821…`. All eight copies checksum-matched to source.
+
+**Verdict.** Ruled and applied to the clone. Not pushed. The subset itself
+cannot ship as confirmed-latest until the push lands — the shortlinks still
+serve `010826`, so a cache-busted fetch today returns the four-part build, not
+this one. For today's shift the subset is taken from the local set.
+
+**Same session, desk decision under standing "file management is your call".**
+`Project_Space\CLAUDE.md` created — durable routing, read on entry to the folder.
+Establishes which of the two roles an agent is in (desk, governed by the subset;
+custody, governed by RECORDS-AND-CONSOLIDATION), maps every location and its
+purpose, and carries the six standing traps. Placed at the Project_Space root,
+outside the clone, so it never rides a push and the compile job cannot see it.
+It holds no rule not stated in the document it points at; where the two disagree,
+RECORDS wins. FINDING RECORDED THERE: `pipeline-registry\Blueprint\` is still the
+four-part `010826` shape — the 070826 rebuild has never been written into the
+clone, so an agent reading the clone or resolving any shortlink gets the old
+build while the root carries the new one.
+
+**DELETION SWEEP, same day.** The shift folder `The Blueprint 2/` was cut to the
+subset, the operator confirmed the content taken, and it was retired. No content
+lost: both files verified identical to the root pair and to the sealed edition
+before the move. Consequent ruling — **the shift folder is cut as a matter of
+course on every build, under the standing name `Shift/`, and deleted on
+confirmation.** It is a copy and never a source, so its deletion can never lose
+anything, which is what makes cutting one routine rather than a decision.
+
+**FALSE TRAP RECORDED AND WITHDRAWN, same day.** The desk found the shift folder
+empty after the move and concluded that `mv` on a directory deletes its contents
+on this mount, writing that into the bootstrap traps as established fact. It was
+wrong. The operator had taken the two files out and placed them for use, which is
+what the folder exists for. Withdrawn from the traps and replaced with the
+failure it actually demonstrates: do not infer a system fault from an operator's
+own action. A false trap is worse than no trap — the next session inherits it as
+settled and has no way to falsify it. `rm` remains blocked on this mount; `mv`
+works, unqualified.
+
+**Open, unchanged from handoff 070826 §5.** Pull integrity still has no home;
+`Blueprint/prompts/system.md` and `prompts/instructions.md` remain zero bytes,
+so the conditions travel only as prose in the handoff. No rule-loss diff has
+been run, old build against new. `index.txt` / `index.yaml` repaired locally
+and not pushed.
+
 ## 2026-07-31 — SWEEP: OUT-07, ARC-13 ruled and deployed
 
 Operator swept the open ledger for simple drop-ins. Two ruled and executed

@@ -6,12 +6,16 @@ name: Split BLUEPRINT into parts and build the style guide
 # ONE file is edited:
 #   Blueprint/BLUEPRINT.txt
 #
-# FIVE are derived from it on push, and never touched by hand:
+# FOUR are derived from it on push, and never touched by hand:
 #   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
-#   Blueprint/CORE.txt         )
-#   Blueprint/PROCESSES.txt    )  part delivery for machine consumers:
-#   Blueprint/STATUS.txt       )  /core /pro /status /refs
-#   Blueprint/REFERENCES.txt   )
+#   Blueprint/CORE.txt         )  part delivery for machine consumers:
+#   Blueprint/REGISTER.yaml    )  /core /reg
+#   Blueprint/REGISTER.txt     )
+#
+# 070826: PROCESSES merged into CORE as a section; STATUS and REFERENCES
+# merged as REGISTER, two branches. Four parts became two. The register
+# travels inside BLUEPRINT in a ```yaml fence and is lifted out of it
+# verbatim - the bytes between fence and seam are the register exactly.
 #
 # ---------------------------------------------------------------------------
 # THE CONTENT IS MARKDOWN. THE EXTENSION IS NOT.
@@ -70,7 +74,7 @@ jobs:
           set -e
           CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} || true)
           echo "changed in this push:"; echo "$CHANGED"
-          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(CORE|PROCESSES|STATUS|REFERENCES)\.(txt|md|yaml)$' || true)
+          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(CORE|REGISTER)\.(txt|md|yaml)$' || true)
           if [ -n "$BAD" ]; then
             echo ""
             echo "REJECTED - these are DERIVED files and were edited by hand:"
@@ -82,29 +86,42 @@ jobs:
           fi
           echo "guard passed"
 
-      - name: Guard - no line may carry two dollar signs
+      - name: Guard - no paragraph may carry two dollar signs
         run: |
           python3 - <<'EOF'
           import sys
-          bad = [(i + 1, l) for i, l in
-                 enumerate(open("Blueprint/BLUEPRINT.txt",
-                                encoding="utf-8").read().split("\n"))
-                 if l.count("$") > 1]
+          src = open("Blueprint/BLUEPRINT.txt", encoding="utf-8").read()
+          # 070826: counted per PARAGRAPH, not per line. Markdown merges
+          # consecutive lines before the converter sees them, so two lines
+          # carrying one sign each pair up exactly as one line with two
+          # would. The per-line count passed that and the text still went.
+          bad, line_no = [], 1
+          for para in src.split("\n\n"):
+              if para.count("$") > 1:
+                  bad.append((line_no, para.count("$"), para))
+              line_no += para.count("\n") + 2
           if bad:
-              for n, l in bad:
-                  print("line %d: %s" % (n, l[:120]))
-              sys.exit("FATAL: two or more '$' on one line. A markdown-to-docx "
+              for ln, count, para in bad:
+                  print("paragraph at line %d: %d signs" % (ln, count))
+                  for l in para.split("\n"):
+                      if "$" in l:
+                          print("    %s" % l[:110])
+              sys.exit("FATAL: two or more '$' in one paragraph. A markdown-to-docx "
                        "converter reads $...$ as inline maths and silently "
                        "deletes the text between them. This removed 'Aus$, S$' "
                        "and the default-currency clause from the published "
-                       "volume before 270726. Put one form per line.")
-          print("dollar-pairing guard: PASS")
+                       "volume before 270726. Separate the forms, or drop the "
+                       "sign - a list of prefixes carries the rule without it.")
+          print("dollar-pairing guard: PASS (per paragraph)")
           EOF
 
       - name: Split into parts, verify the split is invertible
         run: |
+          # the split now parses the register, and this step runs before the
+          # pandoc/python-docx install below
+          python3 -m pip install --quiet pyyaml
           python3 - <<'EOF'
-          import re, sys
+          import re, sys, yaml
 
           SRC = "Blueprint/BLUEPRINT.txt"
           src = open(SRC, encoding="utf-8").read()
@@ -114,15 +131,18 @@ jobs:
           # heading above each component title. Now a single HTML comment:
           # invisible in any markdown render, impossible to write by accident,
           # no setext hazard.
-          # 010826b: the seam now carries the edition as well as the name,
-          # so the version identity is machine-side and the reader is left
-          # one visible line. Raw text still shows it - every shortlink
-          # serves text/plain - so VER-05 slug readback is unaffected.
+          # 010826b: the seam carries the edition as well as the name, so the
+          # version identity is machine-side and the reader is left one visible
+          # line. Raw text still shows it - every shortlink serves text/plain -
+          # so VER-05 slug readback is unaffected.
+          # 080826: four parts became two. PROCESSES is a section inside CORE;
+          # STATUS and REFERENCES are branches of REGISTER. REGISTER travels
+          # inside a ```yaml fence and is lifted out of it verbatim.
           pat = re.compile(r'\n<!-- PART: (\S+) (\w+) -->\n')
           hits = list(pat.finditer(src))
           names = [m.group(2) for m in hits]
           seam_stamps = [m.group(1) for m in hits]
-          expect = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
+          expect = ["CORE", "REGISTER"]
           if names != expect:
               sys.exit("FATAL: expected part banners %s, found %s. The parts "
                        "are cut on these and the Word build keys its component "
@@ -133,36 +153,75 @@ jobs:
           parts = {}
           for i, m in enumerate(hits):
               end = hits[i + 1].start() if i + 1 < len(hits) else len(src)
-              # 010826b: the seam travels with its part. Cutting after it
-              # left each component with no edition stamp at all, so a
-              # slug readback against a standalone part returned nothing.
+              # 010826b: the seam travels with its part. Cutting after it left
+              # each component with no edition stamp at all, so a slug readback
+              # against a standalone part returned nothing.
               parts[m.group(2)] = src[m.start():end]
 
-          out = {k: "Blueprint/%s.txt" % k for k in expect}
-          for k in expect:
-              body = parts[k].lstrip("\n").rstrip("\n") + "\n"
-              open(out[k], "w", encoding="utf-8", newline="").write(body)
-              print("part: %-11s -> %-27s %6d chars" % (k, out[k], len(body)))
+          tag = seam_stamps[0]
+
+          # ---- CORE: verbatim slice -----------------------------------------
+          core_body = parts["CORE"].lstrip("\n").rstrip("\n") + "\n"
+          open("Blueprint/CORE.txt", "w", encoding="utf-8", newline="").write(core_body)
+          print("part: %-11s -> %-27s %6d chars" % ("CORE", "Blueprint/CORE.txt", len(core_body)))
+
+          # ---- REGISTER: lift out of the fence ------------------------------
+          # The shipped register carries "# PART:" because an HTML comment will
+          # not parse as YAML; BLUEPRINT carries "<!-- PART: -->" because "#"
+          # is an H1 in markdown. That one line is the only difference. The
+          # fence is not optional: unfenced, every "#" comment in the register
+          # becomes a markdown heading and the indentation carrying the
+          # structure is lost to paragraph merging.
+          fence = re.search(r'```yaml\n(.*?)\n```', parts["REGISTER"], re.S)
+          if not fence:
+              sys.exit("FATAL: no ```yaml fence in the REGISTER part. The "
+                       "register travels fenced; without it the block is not "
+                       "recoverable as YAML. Refusing to build.")
+          reg_body = fence.group(1)
+
+          try:
+              parsed = yaml.safe_load(reg_body)
+          except yaml.YAMLError as e:
+              sys.exit("FATAL: the register does not parse as YAML:\n%s" % e)
+          for branch in ("status", "references"):
+              if branch not in parsed:
+                  sys.exit("FATAL: the register is missing the '%s' branch." % branch)
+          print("register parse: PASS (apex %d, cabinet %d, provinces %d)"
+                % (len(parsed["status"]["apex"]),
+                   len(parsed["status"]["cabinet"]["members"]),
+                   len(parsed["references"]["thai_places"]["provinces"])))
+
+          reg_text = "# PART: %s REGISTER\n%s\n" % (tag, reg_body)
+          for d in ("Blueprint/REGISTER.yaml", "Blueprint/REGISTER.txt"):
+              open(d, "w", encoding="utf-8", newline="").write(reg_text)
+              print("part: %-11s -> %-27s %6d chars" % ("REGISTER", d, len(reg_text)))
 
           # ---- INVERTIBILITY GUARD ------------------------------------------
-          # Parts now carry their own seam, so reassembly is plain concatenation.
-          rebuilt = preamble
-          for k in expect:
-              body = open(out[k], encoding="utf-8", newline="").read()
-              orig = parts[k]
-              lead  = orig[:len(orig) - len(orig.lstrip("\n"))]
-              trail = orig[len(orig.rstrip("\n")):]
-              rebuilt += lead + body.rstrip("\n") + trail
+          # CORE is a verbatim slice and reassembles by concatenation. REGISTER
+          # is transformed on the way out - seam swapped, fence stripped - so it
+          # is reassembled by reversing both and compared against the original
+          # slice. Anything the transform loses shows up here.
+          core_file = open("Blueprint/CORE.txt", encoding="utf-8", newline="").read()
+          orig = parts["CORE"]
+          lead  = orig[:len(orig) - len(orig.lstrip("\n"))]
+          trail = orig[len(orig.rstrip("\n")):]
+          rebuilt = preamble + lead + core_file.rstrip("\n") + trail
+
+          reg_file = open("Blueprint/REGISTER.yaml", encoding="utf-8", newline="").read()
+          recovered = reg_file.split("\n", 1)[1].rstrip("\n")
+          orig = parts["REGISTER"]
+          rebuilt += (orig[:fence.start()] + "```yaml\n" + recovered + "\n```"
+                      + orig[fence.end():])
+
           if rebuilt != src:
               sys.exit("FATAL: split is not invertible. Refusing to publish.")
           print("invertibility guard: PASS (parts recompile byte-for-byte)")
 
           # ---- EDITION GUARD ------------------------------------------------
-          # The shared-edition scheme (240726) says the four stamps move
-          # together. Nothing checked it until now: a part left on an old slug
-          # passed every gate and only showed up as a slug readback that
-          # disagreed with itself, weeks later.
-          import collections as _c
+          # The shared-edition scheme (240726) says the stamps move together.
+          # Nothing checked it until 010826b: a part left on an old slug passed
+          # every gate and only showed up as a slug readback that disagreed
+          # with itself, weeks later.
           stamps = dict(zip(expect, seam_stamps))
           fm = re.search(r'^(\S+)$', preamble.split("\n\n")[1].strip(), re.M)
           if fm and fm.group(1) not in stamps.values():
@@ -171,16 +230,23 @@ jobs:
           if len(set(stamps.values())) != 1:
               for k, v in stamps.items():
                   print("  %-11s %s" % (k, v))
-              sys.exit("FATAL: the four parts do not agree on the edition. The "
-                       "shared-edition scheme requires one stamp across all "
-                       "four; a skewed set ships silently. Refusing to build.")
-          print("edition guard: PASS (all four at %s)" % list(stamps.values())[0])
+              sys.exit("FATAL: the parts do not agree on the edition. The "
+                       "shared-edition scheme requires one stamp across all of "
+                       "them; a skewed set ships silently. Refusing to build.")
+          print("edition guard: PASS (all parts at %s)" % tag)
 
           # ---- compatibility shims ------------------------------------------
-          for s, d in [("Blueprint/BLUEPRINT.txt",  "Blueprint/COMPILED.md"),
-                       ("Blueprint/BLUEPRINT.txt",  "Blueprint/COMPILED.txt"),
-                       ("Blueprint/STATUS.txt",     "Blueprint/STATUS.yaml"),
-                       ("Blueprint/REFERENCES.txt", "Blueprint/REFERENCES.yaml")]:
+          # Retiring shortlinks. /status and /refs resolved to STATUS.yaml and
+          # REFERENCES.yaml, which are no longer parts - both now serve the
+          # register so the addresses return something correct rather than a
+          # file frozen at the last four-part build. Delete this block once the
+          # shortlinks are repointed at /reg.
+          for s, d in [("Blueprint/BLUEPRINT.txt",   "Blueprint/COMPILED.md"),
+                       ("Blueprint/BLUEPRINT.txt",   "Blueprint/COMPILED.txt"),
+                       ("Blueprint/REGISTER.yaml",   "Blueprint/STATUS.yaml"),
+                       ("Blueprint/REGISTER.yaml",   "Blueprint/REFERENCES.yaml"),
+                       ("Blueprint/REGISTER.yaml",   "Blueprint/STATUS.txt"),
+                       ("Blueprint/REGISTER.yaml",   "Blueprint/REFERENCES.txt")]:
               open(d, "w", encoding="utf-8").write(open(s, encoding="utf-8").read())
               print("shim: %s -> %s" % (s, d))
           EOF
@@ -188,10 +254,13 @@ jobs:
       - name: Verify shims are byte-identical to source
         run: |
           set -e
-          cmp Blueprint/BLUEPRINT.txt  Blueprint/COMPILED.md
-          cmp Blueprint/BLUEPRINT.txt  Blueprint/COMPILED.txt
-          cmp Blueprint/STATUS.txt     Blueprint/STATUS.yaml
-          cmp Blueprint/REFERENCES.txt Blueprint/REFERENCES.yaml
+          cmp Blueprint/BLUEPRINT.txt Blueprint/COMPILED.md
+          cmp Blueprint/BLUEPRINT.txt Blueprint/COMPILED.txt
+          cmp Blueprint/REGISTER.yaml Blueprint/REGISTER.txt
+          cmp Blueprint/REGISTER.yaml Blueprint/STATUS.yaml
+          cmp Blueprint/REGISTER.yaml Blueprint/REFERENCES.yaml
+          cmp Blueprint/REGISTER.yaml Blueprint/STATUS.txt
+          cmp Blueprint/REGISTER.yaml Blueprint/REFERENCES.txt
           echo "all shims byte-identical"
 
       - name: Install pandoc 3 and python-docx
@@ -295,7 +364,7 @@ jobs:
               # the cover tagline (op-ruled). The slug goes to Word document
               # properties; the components line stays in the source for anyone
               # reading the raw text and is suppressed in the volume.
-              r"^Components: CORE \+ PROCESSES",
+              r"^Components: CORE \+ REGISTER",
               # The PART entry is retired: the seam is an HTML comment, which
               # pandoc emits as RawBlock and the audit never counts as a unit.
           ]
@@ -319,11 +388,15 @@ jobs:
         run: |
           git config user.name "compile-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add Blueprint/CORE.txt Blueprint/PROCESSES.txt \
-                  Blueprint/STATUS.txt Blueprint/REFERENCES.txt \
+          # PROCESSES is a section inside CORE from 080826; the file is no
+          # longer produced and would otherwise sit at /pro frozen at 010826
+          git rm -q --ignore-unmatch Blueprint/PROCESSES.txt
+          git add Blueprint/CORE.txt \
+                  Blueprint/REGISTER.yaml Blueprint/REGISTER.txt \
                   Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.manifest.json \
                   Blueprint/COMPILED.md Blueprint/COMPILED.txt \
-                  Blueprint/STATUS.yaml Blueprint/REFERENCES.yaml
+                  Blueprint/STATUS.yaml Blueprint/REFERENCES.yaml \
+                  Blueprint/STATUS.txt Blueprint/REFERENCES.txt
           git diff --cached --quiet || git commit -m "Split BLUEPRINT into parts, rebuild style guide"
           git push
 
