@@ -9,6 +9,29 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+None.
+
+## Pushed — cleared 2026-08-09
+
+Every line below rode the 2026-08-09 push. Verified live the same session:
+`git ls-remote origin refs/heads/main` returns `8a4d4ff`, matching local HEAD —
+a live query, not a cached surface. Cache-busted fetches confirm the content:
+`Blueprint/index.txt` serves the two-part map with `core` and `reg`, and
+`Blueprint/prompts/system.md` serves the pull-integrity text against the empty
+file it had been since 26 June.
+
+The push was rejected twice before it landed, both times non-fast-forward, and
+`push.bat` reported `[FAIL] ... Nothing was published` each time — accurate, and
+each time the desk confirmed it against `ls-remote` rather than assuming either
+outcome. The rebase step added below is what carried it.
+
+NOT YET SERVING: `Blueprint/CORE.txt` on the remote is still the 010826 derived
+file, and `REGISTER.yaml` / `REGISTER.txt` do not exist there at all. They are
+written by the compile job, which stops at the structure guard by design. Until
+that is waved through and the job runs to completion, `/core` serves the old part
+and `/reg` is a dead path. The shift folder is cut from the local parts and is
+unaffected.
+
 - 2026-08-09 | push.bat | FETCH AND REBASE BEFORE PUSHING. The 090826 push was
   REJECTED, non-fast-forward: the remote held compile-bot commits the clone did
   not have. Nothing was published; commit 41cc572 was created locally and stayed
