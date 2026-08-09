@@ -9,7 +9,20 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
-None.
+- 2026-08-09 | push.bat + bootstrap/ | MIRROR THE BOOTSTRAP SET INTO THE CLONE.
+  Op-raised 090826. CLAUDE.md, shift.py and build.py live at the Project_Space
+  root and were in no backup: the folder is the single copy, on one machine, of
+  the document that orientates every future session.
+  * They cannot move into the clone proper. CLAUDE.md must sit at the root to be
+    read on entry, and none of the three may go in Blueprint\ or the compile job
+    would treat them as components.
+  * push.bat now copies all three into bootstrap\ before staging, so they ride
+    every push. ONE DIRECTION, root -> clone, overwriting. The root copies are
+    the source and the only ones edited; the clone copies are a backup and are
+    never a source — the same rule that governs the shift folder.
+  * Restore is a copy of the three files from bootstrap\ up into Project_Space.
+  * Drift is detectable: the copies are byte-identical by construction, so any
+    difference means someone edited the wrong one.
 
 ## Pushed — cleared 2026-08-09 (second batch)
 

@@ -15,6 +15,28 @@ if exist ".git\index.lock" (
   )
 )
 
+REM --- mirror the bootstrap set into the clone so the push backs it up -------
+REM These three live at the Project_Space root and are NOT part of the published
+REM volume. CLAUDE.md must sit at the root to be read on entry, and none of them
+REM may go in Blueprint\ or the compile job would treat them as components. That
+REM leaves them on one machine, unbacked. This mirrors them into bootstrap\ so
+REM they ride every push.
+REM
+REM ONE DIRECTION ONLY: root -> clone, overwriting. The root copy is the source;
+REM the clone copy is a backup and is never edited. To restore, copy the three
+REM files from bootstrap\ up into Project_Space.
+echo.
+echo === mirroring bootstrap set ===
+if not exist "bootstrap" mkdir "bootstrap"
+for %%F in (CLAUDE.md shift.py build.py) do (
+  if exist "..\%%F" (
+    copy /Y "..\%%F" "bootstrap\%%F" >nul
+    echo   mirrored %%F
+  ) else (
+    echo   [WARN] ..\%%F not found - NOT mirrored
+  )
+)
+
 echo.
 echo === staging changes ===
 git add -A || (echo [FAIL] git add failed & pause & exit /b 1)
