@@ -96,6 +96,25 @@ own action. A false trap is worse than no trap — the next session inherits it 
 settled and has no way to falsify it. `rm` remains blocked on this mount; `mv`
 works, unqualified.
 
+**PUSH REJECTED, same day — non-fast-forward.** The operator ran `push.bat`;
+commit 41cc572 was created and the push refused, the remote holding compile-bot
+commits the clone did not have. Nothing published. Cause is structural:
+`compile.yml` commits the derived parts to `main` itself, so the clone is behind
+after every build it triggers, and `push.bat` had no integration step. Recorded
+in handoff 070826 §0 as an observation on 080826 and never fixed. `push.bat` now
+fetches and rebases onto `origin/main` before pushing, and aborts on conflict
+rather than resolving one — derived files being the likely site, and a
+hand-resolved derived file being exactly what the CI guard rejects.
+
+**Detection worked.** Three cache-busted fetches with distinct busters —
+`index.txt`, `index.yaml`, `prompts/system.md` — all returned the pre-push state,
+`system.md` empty against 605 bytes local. The desk reported the divergence and
+sought a second signal rather than declaring a repository fault on it, and the
+operator's `push.bat` output settled the cause in one step. This is the §0
+procedure behaving as designed, and the corrective against the 070826 incident
+recorded at §8, where a stale read was held live for hours as a finding about the
+repository.
+
 **Open, unchanged from handoff 070826 §5.** Pull integrity still has no home;
 `Blueprint/prompts/system.md` and `prompts/instructions.md` remain zero bytes,
 so the conditions travel only as prose in the handoff. No rule-loss diff has

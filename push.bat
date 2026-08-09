@@ -29,6 +29,30 @@ if %errorlevel%==0 (
   echo [ok] commit created.
 )
 
+REM --- integrate the compile-bot's commits BEFORE pushing ---------------------
+REM compile.yml derives CORE/REGISTER/docx/manifest and commits them to main on
+REM every build, so the clone is behind after every build it triggers. Pushing
+REM without integrating that is rejected as a non-fast-forward, which is what
+REM happened on 090826. Rebase keeps the desk's commit on top of the bot's.
+REM
+REM A conflict here is NOT auto-resolved. Derived files are the likely site and
+REM taking the wrong side by hand is exactly what the CI hand-edit guard exists
+REM to catch. Abort and let a human look.
+echo.
+echo === integrating remote work ===
+git fetch origin || (echo [FAIL] fetch failed & pause & exit /b 1)
+git rebase origin/main
+if errorlevel 1 (
+  echo.
+  echo [ABORT] rebase hit a conflict. Nothing has been pushed.
+  echo         Derived files ^(Blueprint\CORE.txt, REGISTER.*^) are regenerated
+  echo         by CI - if the conflict is one of those, take origin's copy.
+  echo         Resolve, then re-run this script. To back out entirely:
+  echo             git rebase --abort
+  pause & exit /b 1
+)
+echo [ok] local is on top of origin/main.
+
 echo.
 echo === pushing ===
 git push

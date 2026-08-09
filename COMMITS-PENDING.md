@@ -9,6 +9,28 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+- 2026-08-09 | push.bat | FETCH AND REBASE BEFORE PUSHING. The 090826 push was
+  REJECTED, non-fast-forward: the remote held compile-bot commits the clone did
+  not have. Nothing was published; commit 41cc572 was created locally and stayed
+  there.
+  * STRUCTURAL, not a one-off. compile.yml derives CORE/REGISTER/docx/manifest
+    and commits them to main itself, so the clone is behind after EVERY build it
+    triggers. push.bat staged, committed and pushed with no integration step,
+    which cannot succeed the first time after any CI run. Noted in handoff 070826
+    §0 as "the clone was behind by one compile-bot build on 080826" — observed
+    then, never fixed.
+  * Now: fetch, rebase onto origin/main, then push. The desk's commit lands on
+    top of the bot's.
+  * ABORTS ON CONFLICT, does not resolve one. Derived files are the likely site
+    and taking the wrong side by hand is what the CI hand-edit guard exists to
+    catch. The abort message says to take origin's copy where the conflict is a
+    derived file, and gives `git rebase --abort` to back out.
+  * DETECTION NOTE: three cache-busted fetches — index.txt, index.yaml and
+    prompts/system.md, distinct busters — all returned the pre-push state, and
+    system.md returned empty. The served surface was read correctly. The desk did
+    not declare a repository fault on it; the operator's push.bat output settled
+    the cause in one step, which is the §0 procedure working as written.
+
 - 2026-08-09 | Blueprint/BLUEPRINT.txt | THE REBUILD WRITTEN INTO THE CLONE.
   070826_all_rebuild replaces 010826_all_core-prune-seam. The rebuild had lived
   only at the Project_Space root since 070826; the clone and every shortlink
