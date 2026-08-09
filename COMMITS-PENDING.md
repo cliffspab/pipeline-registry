@@ -9,6 +9,19 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
+None.
+
+## Pushed — cleared 2026-08-09 (second batch)
+
+Rode commit 8071955. The workflow was then dispatched by hand and ran to
+completion: compile-bot c7bca93 carries the derived parts. Verified live by
+contents API against local sizes — CORE.txt 27557, REGISTER.txt and
+REGISTER.yaml 36301, BLUEPRINT.txt 64094, all byte-for-byte the local files;
+PROCESSES.txt gone; STATUS.* and REFERENCES.* sharing one blob sha with
+REGISTER.yaml and COMPILED.* with BLUEPRINT.txt, so the shims are genuine copies
+and not stale files. Manifest rebaselined at Header 54, components CORE +
+REGISTER. /core and /reg now serve 070826_all_rebuild.
+
 - 2026-08-09 | Blueprint/BLUEPRINT.manifest.json | REMOVED so the structure guard
   can rebaseline. The 98 -> 54 heading drop is the ruled, by-design failure from
   handoff 070826 §3; this is the operator waving it through.
