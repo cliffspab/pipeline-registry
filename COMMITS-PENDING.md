@@ -9,7 +9,25 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
-None.
+- 2026-08-09 | Blueprint/BLUEPRINT.manifest.json | REMOVED so the structure guard
+  can rebaseline. The 98 -> 54 heading drop is the ruled, by-design failure from
+  handoff 070826 §3; this is the operator waving it through.
+  * THE GUARD'S OWN ADVICE IS WRONG AND THE HANDOFF REPEATED IT. Its FATAL says
+    "if the drop is deliberate, rerun once to reset the baseline". Rerunning
+    cannot reset anything: the manifest is rewritten only by the BUILD step,
+    which runs AFTER the guard, so a failing guard stops the job before the step
+    that would update the baseline. It fails identically on every rerun, forever.
+    Carried untested since 070826.
+  * The guard's real escape hatch is absence — "no previous manifest, baseline
+    established, skipping". It is the ONLY reader of the file; the builder writes
+    it as an output and the audit does not touch it. Removing it lets the job run
+    to completion and commit a manifest carrying the two-part profile.
+  * NOT A TRIGGER PATH. The workflow fires on Blueprint/BLUEPRINT.txt and
+    compile.yml only, so this push will not start it. It must be started by hand
+    from the Actions tab, workflow_dispatch.
+  * FOLLOW-UP CANDIDATE, not actioned: the FATAL message should be corrected to
+    say what actually works, or the guard given a dispatch input to wave a drop
+    through without deleting a tracked file.
 
 ## Pushed — cleared 2026-08-09
 
