@@ -1,4 +1,4 @@
-<!-- PART: 070826_all_rebuild CORE -->
+<!-- PART: 090826_reg_part-opening CORE -->
 
 go.fuzzylogic.page/core
 

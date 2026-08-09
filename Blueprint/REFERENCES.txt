@@ -1,4 +1,4 @@
-# PART: 070826_all_rebuild REGISTER
+# PART: 090826_reg_part-opening REGISTER
 # go.fuzzylogic.page/reg
 #
 # REGISTER

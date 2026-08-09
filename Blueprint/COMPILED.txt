@@ -1,11 +1,10 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-070826_all_rebuild
+090826_reg_part-opening
 
 Components: CORE + REGISTER. Assembled from them on every build. The parts are the edit surface: CORE in markdown, REGISTER in YAML.
 
-
-<!-- PART: 070826_all_rebuild CORE -->
+<!-- PART: 090826_reg_part-opening CORE -->
 
 go.fuzzylogic.page/core
 
@@ -530,8 +529,13 @@ Unresolved:
 
 </state_log>
 
+<!-- PART: 090826_reg_part-opening REGISTER -->
 
-<!-- PART: 070826_all_rebuild REGISTER -->
+go.fuzzylogic.page/reg
+
+# REGISTER
+
+the lookups
 
 ```yaml
 # go.fuzzylogic.page/reg
