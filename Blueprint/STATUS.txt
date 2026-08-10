@@ -1,7 +1,7 @@
-# PART: 100826_reg_exemplar-sweep REGISTER
+# PART: 110826_all_guide-directory DIRECTORY
 # go.fuzzylogic.page/reg
 #
-# REGISTER
+# DIRECTORY
 # the lookups
 #
 # Two branches. STATUS expires; REFERENCES does not.
@@ -11,10 +11,6 @@
 # STATUS carries what is true today, REFERENCES carries how the desk writes it.
 
 status:
-
-  note: >
-    Apply the listed fact and flag — never silently change — filed copy that
-    diverges. All facts are operator-cleared before publication.
 
   apex:
 

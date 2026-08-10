@@ -7,18 +7,18 @@
     1,
     1
   ],
-  "source_blocks": 227,
+  "source_blocks": 226,
   "source_block_types": {
     "BulletList": 15,
     "CodeBlock": 4,
     "Header": 55,
     "OrderedList": 2,
-    "Para": 149,
+    "Para": 148,
     "RawBlock": 2
   },
   "suppressed_structural_separator_paragraphs": 0,
   "design_components": [
     "CORE",
-    "REGISTER"
+    "DIRECTORY"
   ]
 }
