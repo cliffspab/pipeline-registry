@@ -1,4 +1,4 @@
-<!-- PART: 090826_reg_part-opening CORE -->
+<!-- PART: 100826_reg_exemplar-sweep CORE -->
 
 go.fuzzylogic.page/core
 
@@ -211,18 +211,7 @@ Full name, no honorific.
 
 ##### Second reference, by convention
 
-* **Thai, Malaysian, Lao** → Mr/Ms + given name (Ms Pantipa, Mr Najib)
-* **Indonesian** → variable. Default Mr/Ms + last component (Mr Yudhoyono). Some use given name. Some go single-name (Suharto, no honorific). The Register decides per name.
-* **Chinese** → family name first throughout; second reference Mr/Ms + family name (Mr Xi)
-* **Korean** → family name first; hyphenated given name with the second component lower case (Park Geun-hye, Kim Jong-un); second reference Mr/Ms + family name
-* **Japanese** → given name + surname in our copy (English convention); second reference Mr/Ms + surname (Mr Abe)
-* **Vietnamese** → given name is the last component (Nguyen Cam Dinh → Mr Dinh). "Thi" in the name indicates female → Ms.
-* **Arabic with prefix** → full form at first reference (Bashar al-Assad), prefix drops thereafter (Mr Assad). Lower-case al-. Company names like Al Jazeera retain the cap.
-* **Icelandic** → -sson is male, -dottir is female. Surnames are patronymic, not inherited. Honorific matches gender.
-* **Myanmar, Cambodian** → full name on all references, no honorific. Sole exception: Aung San Suu Kyi → Ms Suu Kyi.
-* **All other / unknown** → western convention (John Smith → Mr Smith)
-
-Forms are not mixed within a story. Naming conventions are unchanged by location. Mr Shibahashi is Mr Shibahashi in Bangkok as in Tokyo.
+Set per language family in the REGISTER, under `nomenclature`. Where no group applies, western convention: John Smith becomes Mr Smith.
 
 ##### Honorifics — application
 
