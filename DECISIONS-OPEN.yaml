@@ -530,3 +530,35 @@ decisions:
       as the acceptance check. Calibration needs one datum the desk has and
       the model does not: how short it ran, in lines or column inches.
     verdict: PENDING
+
+  - key: NAM-10
+    title: "Cristina Kirchner has no home after shortened_names was retired"
+    status-thread: DISCUSS
+    open-question: >
+      The entry "Cristina Kirchner: Drop 'de Fernandez' from the middle" was
+      removed from references/foreign_people on 100826 when its group was
+      replaced by the Spanish paternal-surname rule. It was a fact about one
+      person, not a convention, so it does not survive as nomenclature. Whether
+      it survives at all depends on one thing the desk cannot check: do the
+      agencies actually file her as Cristina Fernandez de Kirchner? If they do,
+      the divergence is live and she is a STATUS entry with a house_form and a
+      directive, on the criterion op-ruled 100826 — a live figure whose training
+      or wire form differs from house form belongs where the FLAG directives
+      are. If they do not, she comes out altogether and nothing is lost.
+      Note also that she is absent from STATUS entirely, as is Bashar al-Assad,
+      both found in the same pass through the exemplar list. That list has not
+      been swept against STATUS and may hold more.
+    verdict: >
+      RULED 100826 — CUT. Entered at status/global first, then struck the same
+      day. The agencies do file her in full, but the entry predates the desk's
+      takeover of the guide and has drawn no feedback since; no durable fact
+      could be formed for her presence, and an inherited entry does not earn its
+      place by having been inherited.
+      The decisive ground is narrower and generalises: she was only up for
+      status because shortened_names was being retired underneath her. A
+      category going extinct is evidence about the category, not about its
+      contents. Members of a retired group are re-argued from scratch or they
+      go — they do not migrate by default, and this holds even where a good fact
+      is available. Salvage is not merit.
+      The wider point is NOT closed by this: the exemplar list has still not
+      been swept against STATUS, and Assad remains absent.

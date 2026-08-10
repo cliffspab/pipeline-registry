@@ -15,6 +15,8 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+import yaml
+
 from docx import Document
 from docx.enum.section import WD_SECTION
 from docx.enum.style import WD_STYLE_TYPE
@@ -44,6 +46,91 @@ from bkp_docx_design import (
 # 080826: four parts became two. PROCESSES is a section inside CORE;
 # STATUS and REFERENCES are branches of REGISTER.
 COMPONENTS = ["CORE", "REGISTER"]
+
+# A code block longer than this cannot be held on one page, so keep_together is
+# not applied to it. Roughly a full page of Courier New 8.8 at these margins.
+KEEP_TOGETHER_MAX_LINES = 40
+
+# The strip is the reader's map and it has always had FOUR cells. It is not the
+# same thing as COMPONENTS, which is the FILE structure: two parts, because the
+# register must travel as one fenced YAML document. The content map did not
+# merge — CORE still carries core and processes, REGISTER still carries status
+# and references. Reducing the strip to two cells on the 080826 merge threw away
+# half the map and left a two-cell indicator carrying almost no information.
+#
+# Cell width 9360/4 = 2340 twips. Position alone says which section this is:
+# CORE hard left, PROCESSES a quarter across, STATUS half, REFS flush right.
+STRIP = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
+
+# Which strip cells each part owns. The part's title sits over the first of them.
+PART_CELLS = {
+    "CORE": ("CORE", "PROCESSES"),
+    "REGISTER": ("STATUS", "REFERENCES"),
+}
+
+# The volume presents FOUR sections, one per strip cell, as it always has. The
+# file carries two parts because the register must travel as one fenced YAML
+# document; that is a transport constraint and it never described the reading
+# order. PROCESSES opens on its H2 inside CORE; STATUS and REFERENCES are the
+# register's two branches and open as the register is rendered.
+SECTION_SUBTITLE = {
+    "CORE": "what we do",
+    "PROCESSES": "how we do it",
+    "STATUS": "people in the news",
+    "REFERENCES": "the knowledge base",
+}
+
+# REFERENCES prints as REFS: at Heading 1 size, indented to the fourth cell,
+# the full word wraps. Presentation only - canon keeps the full name.
+SECTION_DISPLAY = {"REFERENCES": "REFS"}
+
+# The running head names where the text actually lives, which is the file the
+# reader would fetch. PROCESSES is inside CORE; both register branches are /reg.
+SECTION_SHORTFORM = {
+    "CORE": "/core", "PROCESSES": "/core",
+    "STATUS": "/reg", "REFERENCES": "/reg",
+}
+
+# YAML key -> the heading the original volume printed. Anything absent here is
+# title-cased from its key, so a new branch still renders rather than vanishing.
+REGISTER_HEADINGS = {
+    "apex": "APEX FIGURES",
+    "cabinet": "PORTFOLIO SWAPPERS",
+    "reversals": "POLITICAL AND LEGAL REVERSALS",
+    "mortalities": "MORTALITIES AND SUCCESSIONS",
+    "corporate": "CORPORATE LEADERSHIP CHANGES",
+    "global": "GLOBAL FIGURES",
+    "countries": "COUNTRIES",
+    "preferred_forms": "PREFERRED FORMS",
+    "demonyms": "ADJECTIVAL / DEMONYM TRAPS",
+    "structure": "CAPITALS AND COUNTRY STRUCTURE",
+    "headline_abbreviations": "HEADLINE ABBREVIATION FORMS",
+    "the_article": "THE ARTICLE",
+    "foreign_places": "FOREIGN PLACES",
+    "nomenclature": "NOMENCLATURE",
+    "thai_places": "THAI PLACES",
+    "transliteration_rules": "TRANSLITERATION MASTER RULES",
+    "airports": "AIRPORTS",
+    "third_party_spellings": "THIRD-PARTY SPELLINGS",
+    "provinces": "PROVINCES",
+    "organisations": "ORGANISATIONS",
+    "vocabulary": "VOCABULARY & SPELLING",
+    "numbers_symbols": "NUMBERS AND SYMBOLS",
+    "uk_us_traps": "UK VS US TRAPS",
+    "us_forms_acceptable": "US FORMS ACCEPTABLE",
+    "rulings": "VOCABULARY RULINGS",
+    "chinese": "CHINESE", "indonesian": "INDONESIAN",
+    "myanmar_cambodian": "MYANMAR / CAMBODIAN",
+    "given_name_as_surname": "GIVEN NAME AS SURNAME",
+    "arabic_prefix": "ARABIC AL- PREFIX", "korean": "KOREAN",
+    "vietnamese": "VIETNAMESE", "japanese": "JAPANESE",
+    "icelandic": "ICELANDIC", "spanish": "SPANISH",
+    "single_name_no_honorific": "SINGLE NAME, NO HONORIFIC",
+    "confusable": "CONFUSABLE NAMES", "spelling_traps": "SPELLING TRAPS",
+}
+
+# Composed from the listed fields, in this order, for list-of-record branches.
+RECORD_FIELDS = ["fact", "office", "ruling", "second_ref", "directive"]
 
 # Running-head short forms - the shortlink slugs, so the page head reads the
 # same way the operator addresses the section.
@@ -139,6 +226,7 @@ def configure_full_styles(doc):
         "BKP Register": ("Arial Black", 7.6, True, False),
         "BKP Part Label": ("Arial Black", 8.5, True, False),
         "BKP Metadata": ("Arial", 10, False, False),
+        "BKP Part Subtitle": ("Arial", 10.5, False, False),
         "BKP Axiom Label": ("Arial Black", 7.3, True, False),
         "BKP Axiom": ("Arial", 12.2, True, False),
         "BKP Operator Note": ("Arial", 10, False, True),
@@ -174,6 +262,14 @@ def configure_full_styles(doc):
     doc.styles["BKP Part Label"].paragraph_format.space_before = Pt(10)
     doc.styles["BKP Part Label"].paragraph_format.space_after = Pt(5)
     doc.styles["BKP Metadata"].paragraph_format.space_after = Pt(4.5)
+    # Tucked hard under the title: the Heading 1 above it already carries
+    # 12pt after, so this pulls up against it rather than floating.
+    # Body text in every respect - Arial 10.5, black, regular. It is a caption
+    # to the title, not a display line, so it takes no treatment of its own.
+    doc.styles["BKP Part Subtitle"].paragraph_format.space_before = Pt(0)
+    doc.styles["BKP Part Subtitle"].paragraph_format.space_after = Pt(14)
+    doc.styles["BKP Part Subtitle"].paragraph_format.line_spacing = 1.1
+    doc.styles["BKP Part Subtitle"].font.color.rgb = RGBColor(0x00, 0x00, 0x00)
     doc.styles["BKP Axiom Label"].paragraph_format.space_before = Pt(7)
     doc.styles["BKP Axiom Label"].paragraph_format.space_after = Pt(1)
     doc.styles["BKP Axiom Label"].paragraph_format.left_indent = Inches(0.16)
@@ -262,7 +358,11 @@ def configure_header_footer(section, label, blank_first=False):
         r.font.color.rgb = RGBColor(0xA8, 0xA8, 0xA8)
         r.font.size = Pt(10)
         add_page_field(p, bold=True, tab=False, size=Pt(10))
-        set_paragraph_bottom_rule(p, 6, 2)
+        # 090826: the rule under the running head is gone, op-ruled. It ran on
+        # every page and under the version line on part openings, where it sat
+        # between the stamp and the black block and separated two things that
+        # were not in conflict. The washed-out slug and the hard black folio
+        # already read as a head; a line under them was doing no work.
     # 270726: footer retired entirely - the folio moved into the running head.
     for footer in (section.footer, section.even_page_footer):
         footer.is_linked_to_previous = False
@@ -273,22 +373,23 @@ def add_register(doc, active):
     # 080826: the grid derives from COMPONENTS rather than assuming four
     # cells. 9360 twips is the text width; it divides evenly by two and by
     # four, so a part-count change no longer needs this edited.
-    cols = len(COMPONENTS)
+    cols = len(STRIP)
     table = doc.add_table(rows=1, cols=cols)
     widths = [9360 // cols] * cols
     set_repeat_table_layout(table, widths)
-    for idx, name in enumerate(COMPONENTS):
+    for idx, name in enumerate(STRIP):
         cell = table.cell(0, idx)
         cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
         set_cell_margins(cell, 55, 90, 55, 90)
-        if name == active:
-            set_cell_shading(cell, "000000")
         p = cell.paragraphs[0]
         p.style = doc.styles["BKP Register"]
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         if name == active:
             # 270726: the active cell renders as a solid black block with no
-            # text - the page title already names the component.
+            # text - the page title already names the component. One cell
+            # blacks at a time; the volume has four sections and each opens on
+            # its own.
+            set_cell_shading(cell, "000000")
             continue
         # Full names, caps, no slash and no ordinal. The slash form belongs to
         # pagination - it appears in the running head, where the folio needs a
@@ -300,8 +401,14 @@ def add_register(doc, active):
     repeat = OxmlElement("w:tblHeader")
     repeat.set(qn("w:val"), "true")
     row_pr.append(repeat)
+    # 090826: was an empty paragraph at body size, which cost a full line
+    # between the strip and the part title. Held as a hairline instead - the
+    # table needs something after it, but not a line's worth.
     spacer = doc.add_paragraph()
-    spacer.paragraph_format.space_after = Pt(5)
+    spacer.paragraph_format.space_before = Pt(0)
+    spacer.paragraph_format.space_after = Pt(0)
+    spacer.paragraph_format.line_spacing = Pt(4)
+    spacer.add_run().font.size = Pt(4)
 
 
 def add_cover(doc, source_title, source_meta):
@@ -390,7 +497,7 @@ def restart_page_numbering(section, start=1):
         sectPr.append(pg)
 
 
-def add_part_opening(doc, component, part_number):
+def add_part_opening(doc, component, part_number, subtitle=None):
     section = doc.add_section(WD_SECTION.NEW_PAGE)
     configure_page(section)
     # blank_first: the lead page of each part already carries the register
@@ -404,18 +511,34 @@ def add_part_opening(doc, component, part_number):
     # PROCESSES a quarter across, STATUS half, REFS flush right. Position
     # alone says which section this is, echoing the blank black cell above
     # and the running head on every page that follows. Cell width 2340 twips.
-    title = doc.add_paragraph(COMPONENT_DISPLAY.get(component, component),
-                              style="Heading 1")
-    try:
-        i = COMPONENTS.index(component)
-    except ValueError:
-        i = None
+    title = doc.add_paragraph(
+        SECTION_DISPLAY.get(component, COMPONENT_DISPLAY.get(component, component)),
+        style="Heading 1")
+    # The title sits over its own cell. 090826 — this keyed off COMPONENTS,
+    # which had become two, so REGISTER counted as the LAST cell and anchored
+    # flush right, over REFERENCES rather than over anything it owned. It now
+    # keys off the strip, which is where the cells actually are.
+    i = STRIP.index(component) if component in STRIP else None
     if i is not None:
-        if i == len(COMPONENTS) - 1:
+        if i == len(STRIP) - 1:
             # Last cell shares the right margin, so anchor to that edge.
             title.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         elif i > 0:
             title.paragraph_format.left_indent = Twips(i * 2340)
+    # STATUS and REFERENCES come out of YAML, which carries no sub-line of its
+    # own; CORE and PROCESSES take theirs from the source text as before.
+    if subtitle:
+        # 100826, op-requested: the sub-line sits UNDER ITS TITLE, not adrift at
+        # the left margin. It was a plain paragraph, so REFS anchored flush right
+        # and "the knowledge base" started three columns away from it. It now
+        # takes the title's own horizontal position - same indent, same
+        # alignment - so the two read as one block.
+        # The gap is the Heading 1's own space_after, 12pt. Zeroed on THIS
+        # title only, so the sub-line sits directly beneath the letter above.
+        title.paragraph_format.space_after = Pt(0)
+        sub = doc.add_paragraph(subtitle, style="BKP Part Subtitle")
+        sub.alignment = title.alignment
+        sub.paragraph_format.left_indent = title.paragraph_format.left_indent
     # 270726: no rule under the head. The shortlink and version line sit
     # directly beneath it, and the rule moves below that pair - see the
     # slug post-pass in build().
@@ -668,13 +791,131 @@ def add_code_block(doc, text):
     p.paragraph_format.right_indent = Inches(0.06)
     p.paragraph_format.space_before = Pt(5)
     p.paragraph_format.space_after = Pt(7)
-    p.paragraph_format.keep_together = True
     lines = text.splitlines()
+    # 090826: keep_together only where it can be honoured. The register is a
+    # single fenced block of 600+ lines - one paragraph, one break per line -
+    # and asking Word to keep that on one page cannot succeed. It responds by
+    # pushing the whole paragraph to a fresh page and splitting it there
+    # anyway, which left the REGISTER part opening as a near-empty page with
+    # the title stranded at the top. A block that cannot fit a page must be
+    # allowed to break where it falls.
+    p.paragraph_format.keep_together = len(lines) <= KEEP_TOGETHER_MAX_LINES
     for idx, line in enumerate(lines):
         if idx:
             p.add_run().add_break()
         p.add_run(line)
     set_paragraph_box(p)
+
+
+def register_heading(key):
+    return REGISTER_HEADINGS.get(key, key.replace("_", " ").upper())
+
+
+def add_entry(doc, key, value):
+    """One register entry: bold key, en-dash, ruling. The 310726 sweep put the
+    register on this shape - key + ruling - and converted the old tables to it.
+    It is reproduced here rather than reverted to tables."""
+    p = doc.add_paragraph()
+    run = p.add_run(str(key))
+    run.bold = True
+    p.add_run(" — " + str(value).strip())
+    return p
+
+
+def compose_record(record):
+    """A list-of-records branch (apex, cabinet members, reversals, global)
+    carries name plus some of fact/office/ruling/second_ref/directive. Join the
+    ones present, in a fixed order, so the entry reads as one sentence."""
+    parts = [str(record[f]).strip().rstrip(".")
+             for f in RECORD_FIELDS if record.get(f)]
+    return ". ".join(parts) + "." if parts else ""
+
+
+def render_register_node(doc, node, level):
+    """Walk a register branch and emit headings and entries.
+
+    Mapping, which is the original volume's shape:
+      dict of scalars      -> one entry per pair
+      dict of containers   -> heading at this level, then recurse
+      list of records      -> one entry per record, keyed on name
+      list of scalars      -> bullets
+    'note' and 'convention' keys are prose and print as body, not as entries.
+    """
+    heading_style = "Heading %d" % min(level, 4)
+
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key in ("note", "convention") and not isinstance(value, (dict, list)):
+                doc.add_paragraph(str(value).strip())
+                continue
+            if isinstance(value, dict):
+                doc.add_paragraph(register_heading(key), style=heading_style)
+                render_register_node(doc, value, level + 1)
+            elif isinstance(value, list):
+                if value and isinstance(value[0], dict):
+                    doc.add_paragraph(register_heading(key), style=heading_style)
+                    for record in value:
+                        add_entry(doc, record.get("name", ""), compose_record(record))
+                else:
+                    # A short scalar list reads better inline than as bullets;
+                    # a long one is a real list. Province rosters are the long
+                    # case and there are 77 of them.
+                    add_entry(doc, register_heading(key).title(),
+                              "; ".join(str(v) for v in value))
+            else:
+                add_entry(doc, key, value)
+    elif isinstance(node, list):
+        for item in node:
+            if isinstance(item, dict):
+                add_entry(doc, item.get("name", ""), compose_record(item))
+            else:
+                doc.add_paragraph(str(item), style="BKP Bullet")
+
+
+def render_register(doc, data, open_section):
+    """The register, as document structure rather than a code panel.
+
+    Until 090826 the whole register printed as one fenced code block: 618 lines
+    of YAML in a fixed-width panel, so its forty-odd headings did not exist in
+    the volume and the contents page stopped at CORE. The fence is required in
+    the SOURCE - it is what keeps the register parseable and the split
+    invertible - but it is a transport wrapper, and printing the wrapper was
+    never the intent. Parsed here and rendered as the original did.
+    """
+    before = len(doc.paragraphs)
+    for branch, title in (("status", "STATUS"), ("references", "REFERENCES")):
+        if branch not in data:
+            continue
+        open_section(title)
+        render_register_node(doc, data[branch], 2)
+
+    # The coverage audit matched the register as ONE unit - the fenced block,
+    # verbatim. Rendered as structure it no longer appears verbatim, so that
+    # unit is declared absent in compile.yml. Declaring it and stopping would
+    # leave the single largest piece of content in the corpus unguarded, so the
+    # check moves here and gets finer: every leaf value in the register must
+    # reach a paragraph. Counted, not sampled.
+    leaves = count_register_leaves(data)
+    written = len(doc.paragraphs) - before
+    if written < leaves:
+        raise SystemExit(
+            "FATAL: register render dropped content. %d leaf values in the "
+            "YAML, %d paragraphs written. Every entry must reach the page."
+            % (leaves, written))
+    print("register render: PASS - %d leaf values, %d paragraphs"
+          % (leaves, written))
+
+
+def count_register_leaves(node):
+    """Every scalar that must reach the page. Prose keys count too - they are
+    printed as body rather than as entries, but they are still content."""
+    if isinstance(node, dict):
+        return sum(count_register_leaves(v) for v in node.values())
+    if isinstance(node, list):
+        if node and isinstance(node[0], dict):
+            return len(node)          # one composed entry per record
+        return 1                      # a scalar list prints as one entry
+    return 1
 
 
 def table_rows(table_block):
@@ -857,6 +1098,108 @@ def parse_markdown(pandoc, source):
         return json.loads(ast_path.read_text(encoding="utf-8"))
 
 
+def add_contents(doc):
+    """A contents list built as ordinary paragraphs, not a Word TOC field.
+
+    CURRENTLY OFF - the call in build() is commented out. Op-ruled 100826: an
+    index without page numbers is a list, not an index. Adding numbers needs a
+    two-pass build, which is straightforward, but it is blocked on a design
+    ruling first: page numbering RESTARTS in every part (restart_page_numbering
+    below), so the folio reads "/core 2" and STATUS begins at 1 again. A
+    page-numbered index cannot address that volume without either qualifying
+    every entry by part or running the numbering continuously.
+
+    RULED 100826: qualify by part. "REFS 1" is the wanted form, so the restart
+    stays. To finish it:
+      1. Uncomment the call. Keep the entry paragraphs at the SAME line count as
+         the numbered version will have, so pass one paginates identically and
+         the numbers measured stay true - the contents fits one page at 22
+         entries.
+      2. Build, convert to PDF, and read the folio off each page: every page
+         already prints SECTION_SHORTFORM + number in its header, e.g.
+         "/core 2". Match each heading to the first page it appears on AFTER
+         the contents page.
+      3. The part for each entry is the Heading 1 above it in the entries list -
+         CORE, PROCESSES, STATUS, REFS - not the shortform, which collapses
+         PROCESSES into /core and both branches into /reg.
+      4. Rebuild with "PART n" appended to each entry, convert again.
+
+    A TOC field is populated by Word on open and cached in the file. CI has no
+    Word: it builds the volume and converts it to PDF in the same job, so the
+    field is still empty at conversion and the published PDF gets no index.
+    LibreOffice will not populate it either - tested 100826, both with the bare
+    field and with w:updateFields set. Opening the docx by hand between the two
+    steps would work and is exactly the kind of step nobody owns.
+
+    So the list is content. Real paragraphs, internal links to bookmarks on the
+    headings, no field anywhere. It converts like any other text, which means
+    the docx and the PDF carry the same index. No page numbers - they would need
+    a layout pass the builder does not have, and the volume is read on screen.
+    """
+    entries = []
+    for para in doc.paragraphs:
+        if para.style.name not in ("Heading 1", "Heading 2"):
+            continue
+        text = para.text.strip()
+        if not text:
+            continue
+        entries.append((para.style.name, text, para))
+    if not entries:
+        return
+
+    anchor = next((p for p in doc.paragraphs if p.style.name == "Heading 1"), None)
+    if anchor is None:
+        return
+
+    for index, (_, _, para) in enumerate(entries):
+        name = "_bkp_toc_%d" % index
+        start = OxmlElement("w:bookmarkStart")
+        start.set(qn("w:id"), str(9000 + index))
+        start.set(qn("w:name"), name)
+        end = OxmlElement("w:bookmarkEnd")
+        end.set(qn("w:id"), str(9000 + index))
+        para._p.insert(0, start)
+        para._p.append(end)
+
+    block = []
+    head = doc.add_paragraph("CONTENTS", style="Heading 2")
+    block.append(head._p)
+    for index, (style, text, _) in enumerate(entries):
+        p = doc.add_paragraph()
+        pf = p.paragraph_format
+        pf.left_indent = Inches(0.0 if style == "Heading 1" else 0.28)
+        pf.space_after = Pt(2)
+        link = OxmlElement("w:hyperlink")
+        link.set(qn("w:anchor"), "_bkp_toc_%d" % index)
+        run = OxmlElement("w:r")
+        rpr = OxmlElement("w:rPr")
+        if style == "Heading 1":
+            rpr.append(OxmlElement("w:b"))
+        sz = OxmlElement("w:sz")
+        sz.set(qn("w:val"), "20" if style == "Heading 1" else "18")
+        rpr.append(sz)
+        run.append(rpr)
+        t = OxmlElement("w:t")
+        t.set(qn("xml:space"), "preserve")
+        t.text = text
+        run.append(t)
+        link.append(run)
+        p._p.append(link)
+        block.append(p._p)
+
+    # The contents ends the front matter: CORE opens on a fresh page after it.
+    brk = doc.add_paragraph()
+    run = OxmlElement("w:r")
+    br = OxmlElement("w:br")
+    br.set(qn("w:type"), "page")
+    run.append(br)
+    brk._p.append(run)
+    block.append(brk._p)
+
+    for element in block:
+        anchor._p.addprevious(element)
+
+
 def build(source, reference, output, pandoc, manifest, component=None):
     ast = parse_markdown(pandoc, source)
     shutil.copy2(reference, output)
@@ -961,6 +1304,14 @@ def build(source, reference, output, pandoc, manifest, component=None):
             if m:
                 current_edition = m.group(1)
                 current_component = COMPONENT_TITLES[m.group(2).upper()]
+                # 090826: the REGISTER seam no longer opens a part. The volume
+                # has no REGISTER section - it has STATUS and REFERENCES, the
+                # two branches the register carries - and those open as the
+                # register is rendered, below. Opening here would put an empty
+                # REGISTER page in front of them.
+                if current_component == "REGISTER":
+                    last_heading_level = None
+                    continue
                 part_number += 1
                 add_part_opening(doc, current_component, part_number)
                 last_heading_level = None
@@ -974,6 +1325,14 @@ def build(source, reference, output, pandoc, manifest, component=None):
             # printing it again would duplicate it.
             if level == 1 and text.upper() in COMPONENT_TITLES:
                 last_heading_level = 1
+                continue
+            # 090826: PROCESSES is a SECTION of the file (an H2 inside CORE)
+            # and a PART of the volume. The 080826 merge collapsed both at
+            # once; only the file one had to move. It opens on its own heading.
+            if level == 2 and text.upper() == "PROCESSES":
+                part_number += 1
+                add_part_opening(doc, "PROCESSES", part_number)
+                last_heading_level = None
                 continue
             if level == 3 and text.startswith("Verified Editorial Status Changes:"):
                 doc.add_paragraph(text, style="BKP Status Subtitle")
@@ -1038,7 +1397,24 @@ def build(source, reference, output, pandoc, manifest, component=None):
             render_list(doc, block, decimal_num_id, bullet_num_id)
             last_heading_level = None
         elif kind == "CodeBlock":
-            add_code_block(doc, block["c"][1])
+            payload = block["c"][1]
+            parsed = None
+            if current_component == "REGISTER":
+                try:
+                    candidate = yaml.safe_load(payload)
+                except yaml.YAMLError:
+                    candidate = None
+                if isinstance(candidate, dict) and "status" in candidate:
+                    parsed = candidate
+            if parsed is not None:
+                def open_section(name, _n=[part_number]):
+                    _n[0] += 1
+                    add_part_opening(doc, name, _n[0],
+                                     subtitle=SECTION_SUBTITLE.get(name))
+                render_register(doc, parsed, open_section)
+                part_number += 2
+            else:
+                add_code_block(doc, payload)
             last_heading_level = None
         elif kind == "HorizontalRule":
             add_horizontal_rule(doc)
@@ -1047,6 +1423,27 @@ def build(source, reference, output, pandoc, manifest, component=None):
             add_table(doc, block)
             last_heading_level = None
 
+    # CORE and PROCESSES carry their sub-line as body text in the source, so it
+    # never reaches add_part_opening's subtitle path and stayed a plain
+    # paragraph at the left margin while STATUS and REFS were tucked under
+    # their titles. Caught 100826: "processes doesn't". Restyled here, after
+    # the body is built, by matching the known sub-lines where they follow a
+    # Heading 1 - the parse flow is left alone.
+    _subs = {v.lower() for v in SECTION_SUBTITLE.values()}
+    _paras = doc.paragraphs
+    for _i, _p in enumerate(_paras[:-1]):
+        if _p.style.name != "Heading 1":
+            continue
+        _next = _paras[_i + 1]
+        if _next.text.strip().lower() in _subs and _next.style.name != "BKP Part Subtitle":
+            _p.paragraph_format.space_after = Pt(0)
+            _next.style = doc.styles["BKP Part Subtitle"]
+            _next.alignment = _p.alignment
+            _next.paragraph_format.left_indent = _p.paragraph_format.left_indent
+
+    # add_contents(doc)  # OFF 100826 - see the docstring. Needs the folio
+    # restart ruled on first: a page-numbered index cannot address a volume
+    # whose numbering restarts in every part.
     set_update_fields(doc)
     for section_index, section in enumerate(doc.sections):
         pg_num = section._sectPr.find(qn("w:pgNumType"))

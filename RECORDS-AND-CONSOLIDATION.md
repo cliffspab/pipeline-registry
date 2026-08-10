@@ -1,6 +1,6 @@
 # RECORDS & CONSOLIDATION
 
-`090826_all_corpus-deployment-split`
+`100826_all_retiring-a-category`
 
 Repository administration for the pipeline-registry clone. Extracted from BLUEPRINT on 24 July 2026: these procedures govern how ruled changes reach the registry, not how copy is edited. Not part of the published volume.
 
@@ -46,6 +46,16 @@ Operator-approved changes to `BLUEPRINT` — the only file edited, from which `C
 Full drop-in drafts of other changed documents are produced once, at shift close or on request, not turn by turn.
 
 Between shifts, candidate rule changes, amendments and refinements collect in `DECISIONS-OPEN.yaml` — one file, keyed to the standing series (LEN/NAM/ARC/OUT/VER/STA/OTH), swept by the operator periodically. Nothing there is authoritative until ruled.
+
+### Retiring a category
+
+When a group or heading is retired, its members are re-argued from scratch or they go. They do not migrate to another branch by default. **A category going extinct is evidence about the category, not about its contents** — salvage is not merit, and the fact that an entry needs a new home is not an argument that it deserves one. This holds even where a sound fact is available for the entry: a good fact establishes that a claim is true, not that the register should carry it.
+
+Two questions decide it, in order. Would this entry be written today if it did not already exist? If not, it goes. If yes, which branch does it argue its own way into?
+
+Inherited material is the common case and gets no allowance for being inherited. An entry that predates the desk's custody, has drawn no feedback across it, and supports no durable fact is cut rather than carried. The cut is logged like any other change — a deletion sweep takes a `VERSION_HISTORY.md` entry.
+
+(Op-ruled 2026-08-10, on the removal of Cristina Kirchner: struck from `references/foreign_people/shortened_names` when that group was retired, briefly promoted to `status/global`, then cut outright once the promotion route was recognised as salvage.)
 
 At close:
 

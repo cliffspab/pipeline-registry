@@ -28,13 +28,29 @@ REM files from bootstrap\ up into Project_Space.
 echo.
 echo === mirroring bootstrap set ===
 if not exist "bootstrap" mkdir "bootstrap"
-for %%F in (CLAUDE.md shift.py build.py) do (
+REM 100826: seal.py and clear_pending.py added. push.bat CALLS both, so a repo
+REM that does not hold them carries a push script it cannot run after a restore.
+for %%F in (CLAUDE.md shift.py build.py seal.py clear_pending.py) do (
   if exist "..\%%F" (
     copy /Y "..\%%F" "bootstrap\%%F" >nul
     echo   mirrored %%F
   ) else (
     echo   [WARN] ..\%%F not found - NOT mirrored
   )
+)
+
+REM --- clear the pending list INTO the commit that carries the work -----------
+REM The protocol says lines clear on the push, in the same commit. Nothing did
+REM it, so the list filled at session rate and never emptied - 71 entries back
+REM to 4 July when this was found on 100826. Every line still pending at this
+REM point is by definition about to be pushed, so nothing needs judging: the
+REM whole block moves to COMMITS-ARCHIVE.md and rides the same commit.
+echo.
+echo === clearing the pending list ===
+python "..\clear_pending.py"
+if errorlevel 1 (
+  echo [FAIL] could not clear COMMITS-PENDING.md. Nothing staged, nothing pushed.
+  pause & exit /b 1
 )
 
 echo.
@@ -96,6 +112,18 @@ set /p RH=<"%temp%\_rh.txt"
 echo.
 if "%LH%"=="%RH%" (
   echo [CONFIRMED] local %LH% == origin/main %RH%.  Push is genuinely live.
+  echo.
+  echo === sealing the edition ===
+  REM The Word volume is built by the compile job, not locally. seal.py waits
+  REM for compile-bot to commit, rebases onto it, checks the volume carries this
+  REM build's tag, and copies the edition into Editions\<tag>\. Ctrl+C is safe -
+  REM the push is already done and seal.py can be re-run at any time.
+  python "..\seal.py"
+  if errorlevel 1 (
+    echo.
+    echo [note] edition not sealed. The push itself is fine and live.
+    echo        Re-run:  python seal.py
+  )
 ) else (
   echo [WARNING] local %LH% does NOT match origin/main %RH%.
   echo           Do not assume it published. Investigate before trusting.

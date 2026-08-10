@@ -143,6 +143,24 @@ def register_yaml(part, tag):
 # ---------- rendered artifact ----------
 
 def render_pdf(src):
+    """RETIRED 100826. The PDF is no longer rendered here.
+
+    It used to come from pandoc/xelatex straight off the markdown, in parallel
+    with the Word volume built by tools/build_bkp_compendium.py. That meant two
+    toolchains and two designs for one document: the volume had the running
+    heads, part openings and rendered register, the PDF had a LaTeX default and
+    a generated TOC. The operator's verdict on 100826 - the PDF looks terrible,
+    the docx great - is what a second design buys you.
+
+    The PDF is now a CONVERSION of the volume, made by the compile job with
+    LibreOffice and committed beside the docx. Same rule as the docx: not built
+    locally, pulled back by seal.py. Left in place rather than deleted so the
+    reason is where the code was.
+    """
+    return "  from CI — converted from the volume, pulled back by seal.py"
+
+
+def _retired_render_pdf(src):
     if not shutil.which("pandoc"):
         return "  skipped — pandoc not on PATH"
 

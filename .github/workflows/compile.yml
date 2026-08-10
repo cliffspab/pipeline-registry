@@ -343,6 +343,29 @@ jobs:
             --manifest Blueprint/BLUEPRINT.manifest.json
           ls -la Blueprint/BLUEPRINT.docx
 
+      - name: Render the volume to PDF
+        run: |
+          set -e
+          # The PDF is a CONVERSION of the volume, not a second render. Until
+          # 100826 it came from build.py via pandoc/xelatex straight off the
+          # markdown, which meant two toolchains and two designs: the docx had
+          # the running heads, part openings and rendered register, the PDF had
+          # none of them. Converting the built docx gives one design in two
+          # formats and nothing to keep in step.
+          #
+          # A Word TOC field does NOT survive this. LibreOffice passes the field
+          # through unpopulated, and setting w:updateFields does not change that
+          # - both tested 100826. Op-ruled the same day: the index may exist in
+          # the docx and not the PDF. Do not add a placeholder string to the
+          # field, or the PDF prints it verbatim.
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libreoffice-writer >/dev/null
+          soffice --headless --convert-to pdf Blueprint/BLUEPRINT.docx \
+                  --outdir Blueprint/ >/dev/null
+          test -s Blueprint/BLUEPRINT.pdf || {
+            echo "FATAL: conversion produced no PDF."; exit 1; }
+          ls -la Blueprint/BLUEPRINT.pdf
+
       - name: Content coverage audit - build fails unless every unit matched
         run: |
           set -e
@@ -367,6 +390,18 @@ jobs:
               r"^Components: CORE \+ REGISTER",
               # The PART entry is retired: the seam is an HTML comment, which
               # pandoc emits as RawBlock and the audit never counts as a unit.
+              #
+              # 090826: the register is no longer PRINTED as its fenced YAML
+              # block. It is parsed and rendered as STATUS and REFERENCES
+              # sections - headings and entries - so the raw block legitimately
+              # does not appear in the volume. This audit counts it as ONE unit,
+              # so declaring it here would leave the largest single piece of
+              # content in the corpus unguarded. It does not: the builder now
+              # runs its own register check, counting every LEAF VALUE in the
+              # YAML against the paragraphs written, and fails the build if any
+              # are dropped. That is finer than this gate ever was - per entry
+              # rather than per block. See render_register().
+              r"^# go\.fuzzylogic\.page/reg",
           ]
 
           d = json.load(open("/tmp/audit.json"))
@@ -393,7 +428,8 @@ jobs:
           git rm -q --ignore-unmatch Blueprint/PROCESSES.txt
           git add Blueprint/CORE.txt \
                   Blueprint/REGISTER.yaml Blueprint/REGISTER.txt \
-                  Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.manifest.json \
+                  Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.pdf \
+                  Blueprint/BLUEPRINT.manifest.json \
                   Blueprint/COMPILED.md Blueprint/COMPILED.txt \
                   Blueprint/STATUS.yaml Blueprint/REFERENCES.yaml \
                   Blueprint/STATUS.txt Blueprint/REFERENCES.txt

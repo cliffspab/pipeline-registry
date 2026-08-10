@@ -72,6 +72,25 @@ amber and carry no seam a processor can check.
 **Confirmed latest is a checked tag**, not a filename and not a modification
 date.
 
+## Stop words
+
+Two, and they mean different things. Neither is a complaint; both are
+instructions and both take effect immediately.
+
+**WRAP** — the usage budget is nearly gone. Stop starting things. Secure what
+exists: write the state down where a cold session will find it, name what is
+done, what is half-done and what has not begun, and say plainly what is not
+pushed. Do not begin a new edit, do not start a build, do not open a new file.
+A tidy stopping point beats a finished thought.
+
+**CHECK** — the operator believes what you are doing may be at odds with the
+task. It is a concern, not a verdict: you may be right and they may be right.
+Stop the work and say what you understood the task to be, what you are doing,
+and why. Do not defend the work and do not immediately capitulate — both waste
+the signal. Establish where the two readings diverge, then let them rule.
+
+A bare "stop" means WRAP unless the context says otherwise.
+
 ## Which job you are in
 
 Establish this before acting. Two roles, two governing documents.
@@ -121,13 +140,29 @@ whether the change is one word or a restructure.
    rejected.
 8. **Log it** — one line per change in `COMMITS-PENDING.md`, an entry in
    `VERSION_HISTORY.md`.
-9. **Operator pushes** via `push.bat`, having checked `COMMITS-PENDING.md`.
+9. **Operator pushes** via `push.bat`, having checked `COMMITS-PENDING.md`. It
+   mirrors the bootstrap set, rebases onto origin, pushes, then runs `seal.py` —
+   which waits for the compile job, pulls the Word volume back and completes the
+   edition. The docx is never built locally.
+   **Clear the lines you are pushing before the commit is made.** Nothing does
+   this for you — see trap 10.
 10. **Cut the shift folder.** `Shift\` at the root, holding exactly `CORE.txt` +
     `REGISTER.txt` copied from the confirmed-latest parts. This happens as a
     matter of course on every build, not on request. Nothing else ever goes in
     it, nothing is ever edited in it, and it is never a source.
 11. **Delete it** on operator confirmation that the content has been taken.
     Then update this bootstrap if any location or purpose moved.
+
+## Working on design
+
+Iterate on one element, not the volume. Return the single page or component
+being changed — `build_bkp_compendium.py --component`, or the affected page
+pulled out of the PDF — and hand back the full document once, at the end, when
+the element is settled. A 29-page rebuild per tweak buries the change being
+judged and spends the budget on pages nobody is looking at.
+
+Same rule in prose: answer the question asked. Do not re-explain the surrounding
+process, and do not reprint what has not changed.
 
 ## Standing traps
 
@@ -155,6 +190,19 @@ Each has fired at least once. They are why the procedure reads as it does.
    and the indentation carrying the structure is lost to paragraph merging.
 7. **CI rejects hand-edited derived files.** `Blueprint/CORE.txt` and
    `Blueprint/REGISTER.*` are regenerated; changing them by hand fails the push.
+10. **`COMMITS-PENDING.md` is never cleared, so it stops being a guard.** The
+    rule says lines clear on the push. No step does it: `push.bat` does not touch
+    the file, and the desk is a fresh session every time, so the job belongs to
+    nobody. Found 100826 holding **71 entries back to 4 July**, of which about
+    sixty were long published — the 4 July Chatichai line was still pending with
+    its change committed to the clone since 9 August. A list that is nine parts
+    changelog cannot be scanned before a push for the one thing it exists to
+    catch, a bulk file-swap eating a desk commit. The list fills at session rate
+    and empties never. Clear the lines you are pushing as part of the same
+    commit; the lineage is `VERSION_HISTORY.md`'s job, not this file's. Fixing
+    `push.bat` to do it is open — the trap is that clearing must happen before
+    the commit, so a failed push leaves lines cleared for work that never went.
+
 9. **The clone is behind after every build.** `compile.yml` derives the parts and
    commits them to `main` itself, so any build the desk triggers leaves the clone
    one commit short. A push that does not integrate that first is rejected as a
@@ -226,6 +274,15 @@ working_set:
       run: on entry to the folder, unprompted, and on every build
       guards: [parts agree on build tag, no stray file in Shift/]
       flags: [--check]
+    seal.py:
+      role: after a push — wait for CI, pull the volume back, seal the edition
+      run: called by push.bat on a confirmed push; safe to re-run by hand
+      note: >
+        The docx is NOT built locally and must not be. CI builds it and commits
+        it; pushing a local one means CI rebuilds over it and the next rebase
+        hits a binary conflict. So the volume comes back rather than going out.
+      guards: [clean tree, rebase clean, volume stamp matches the build tag]
+      flags: [--no-wait]
 
 shift_folder:
   path: Shift/
@@ -244,12 +301,17 @@ shift_folder:
 
 editions:
   path: Editions/
-  purpose: sealed builds, every format, outside the clone. Artifacts of record.
+  purpose: sealed builds, outside the clone. Artifacts of record.
   current: Editions/090826_reg_part-opening/
-  sealed: [070826_all_rebuild, 090826_reg_part-opening]
-  contents: [BLUEPRINT.txt, CORE.txt, REGISTER.yaml, REGISTER.txt, BLUEPRINT.pdf,
-             BLUEPRINT_candidate.docx, BLUEPRINT_candidate.pdf, build.py,
-             070826_handoff_pull-integrity.md]
+  sealed:
+    070826_all_rebuild: complete — parts, pdf, and the docx/pdf volume pair
+    090826_reg_part-opening: >
+      parts and pdf only. NO DOCX. build.py does not build one — it writes the
+      parts and renders BLUEPRINT.pdf. The Word volume comes from
+      tools/build_bkp_compendium.py, which runs in the compile job, so no docx
+      exists for a build until it is pushed and CI has run. Seal the volume into
+      the edition after the push, not before.
+  what_build_py_writes: [CORE.txt, REGISTER.yaml, REGISTER.txt, BLUEPRINT.pdf]
 
 custody:
   path: pipeline-registry/
@@ -317,8 +379,15 @@ custody:
           compare/BKP_conversion_design_proof.docx, NEITHER OF WHICH EXISTS.
 
 history:
+  090826_handoff_volume-render.md:
+    role: CURRENT HANDOFF. Read on resuming. Written on WRAP.
+    note: >
+      The volume renderer is built and verified but NOT pushed. Two items need
+      an operator ruling before BLUEPRINT.txt is touched — the PROCESSES section
+      boundary and the name of CORE's unnamed half — and one op-requested change
+      is outstanding, the tagline flush under the heading.
   070826_handoff_pull-integrity.md:
-    role: current handoff. Readable cold, no prior thread required.
+    role: prior handoff. Readable cold, no prior thread required.
   060826_blueprint-session/:
     role: prior session — handoff, decisions, stylistics corpus.
   _pending-delete/:

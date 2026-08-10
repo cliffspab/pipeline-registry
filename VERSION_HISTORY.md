@@ -9,6 +9,83 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 ---
 
 
+## 2026-08-10 — EXEMPLAR SWEEP OPENED; RETIRING A CATEGORY RULED; 100826_reg_exemplar-sweep
+
+First cuts of a sweep through `references/foreign_people`, and a custody rule
+extracted from the first of them. Stamp `090826_reg_part-opening` ->
+`100826_reg_exemplar-sweep`, front matter and both seams, op-ruled: today's round
+gets its own version. Quadrant `reg`. Built and sealed; NOT pushed. Five lines
+stand in `COMMITS-PENDING.md`.
+
+**Event.** Reading the register, the operator found `shortened_names` held a
+single entry — "Cristina Kirchner: Drop 'de Fernandez' from the middle" — and
+ruled it not a rule: a fact about one person, teaching no convention, under a
+heading that named a group of one. Replaced by a `spanish` group carrying the
+paternal-surname convention, exemplified by Gabriel Garcia Marquez (Mr Garcia,
+not Mr Marquez). Accents dropped per the house no-diacritics form used for
+Erdogan.
+
+Kirchner was then entered at `status/global` on the criterion ruled earlier the
+same day — a live figure whose wire form diverges from house form belongs where
+the FLAG directives are — and struck within the hour.
+
+**Evidence.** Four names were found dual-listed across both register branches by
+a parse of `REGISTER.yaml`: Li Keqiang, Pope Emeritus Benedict XVI, King Salman
+bin Abdulaziz al-Saud, King Jigme Khesar Namgyel Wangchuck. Also found: `house_form`
+already appears inside `status` three times (Phiphat, Chaichanok, Chadchart), so
+the branch split the register documents — status carries facts, references
+carries forms — is already contradicted by its own data. Separately, Bashar
+al-Assad sits in `references` as an `al-` prefix exemplar with no `status` entry
+at all, despite an office change of exactly the kind the volatility test routes
+to STATUS. The exemplar list has not been swept against STATUS and may hold more.
+
+**Verdict.** Kirchner cut outright, both entries, out of the source altogether.
+Two grounds, the second decisive and general: the entry predates the desk's
+custody and has drawn no feedback across it; and the promotion route was invalid,
+because she was only ever up for status by virtue of her old group being retired
+underneath her. A category going extinct is evidence about the category, not
+about its contents. Salvage is not merit.
+
+Ruled into `RECORDS-AND-CONSOLIDATION.md` as **Retiring a category** — members of
+a retired group are re-argued from scratch or they go, and the two questions that
+decide it. That file's stamp bumped to `100826_all_retiring-a-category`.
+
+Applied immediately to `royal_religious`, the next group down. Salman and Jigme
+hold independent status entries and survive on their own footing. Benedict did
+not, so his short form was moved to the fact rather than promoted alongside it:
+the mortalities key now reads `Pope Emeritus Benedict XVI ("Pope Benedict")`.
+The parenthetical sits inside the key deliberately — mortalities is a flat map and
+a `house_form` field would have forced the entry to nest and break the pattern of
+its own group. Benedict is single-homed.
+
+**Dual listings then taken to zero**, op-ruled: no name in both branches. The
+remaining three split for two different reasons and needed two different fixes.
+Salman and Jigme carried genuine content on each side, and their status entries
+are nested, so each took a `house_form` field — the Benedict fix without needing
+the parenthetical, since nothing had to stay flat. Li Keqiang carried nothing:
+"Surname first. Deceased; no honorific — see status branch" is a signpost, with
+surname-first already stated in the group's `convention:` line and the
+no-honorific case already carried by Mao and Deng. Deleted outright.
+`royal_religious` emptied and was retired along with its note, which existed only
+to explain a split that no longer exists. Verified by parse across both branches:
+zero.
+
+The branch note's "a name in both is not duplication" sentence now describes
+nothing and can go on the next pass.
+
+**Build.** All four guards pass — dollar pairing per paragraph, edition at
+`100826_reg_exemplar-sweep` across all parts, invertibility byte-for-byte,
+register parse at apex 10, cabinet 8, provinces 77. Source 63,941 chars; CORE
+27,385; REGISTER 36,268 both forms. Sealed to
+`Editions/100826_reg_exemplar-sweep/` — parts and pdf only. NO DOCX: the volume
+is built by CI and pulled back by `seal.py` after a push, never built locally.
+`Shift/` recut at the new build.
+
+Open and NOT closed by this entry: the exemplar list is unswept, Assad is absent
+from status, and the branch note's "a name in both is not duplication" sentence
+still describes a condition being designed out.
+
+
 ## 2026-08-09 — REGISTER PART OPENING; 090826_reg_part-opening
 
 Operator observed the gap at the CORE/REGISTER split and ruled the headings be
