@@ -45,7 +45,7 @@ from bkp_docx_design import (
 
 # 080826: four parts became two. PROCESSES is a section inside CORE;
 # STATUS and REFERENCES are branches of REGISTER.
-COMPONENTS = ["CORE", "REGISTER"]
+COMPONENTS = ["CORE", "DIRECTORY"]
 
 # A code block longer than this cannot be held on one page, so keep_together is
 # not applied to it. Roughly a full page of Courier New 8.8 at these margins.
@@ -65,7 +65,7 @@ STRIP = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
 # Which strip cells each part owns. The part's title sits over the first of them.
 PART_CELLS = {
     "CORE": ("CORE", "PROCESSES"),
-    "REGISTER": ("STATUS", "REFERENCES"),
+    "DIRECTORY": ("STATUS", "REFERENCES"),
 }
 
 # The volume presents FOUR sections, one per strip cell, as it always has. The
@@ -141,16 +141,16 @@ RECORD_FIELDS = ["fact", "office", "ruling", "second_ref", "directive"]
 # reaches back into canon.
 COMPONENT_DISPLAY = {
     "CORE": "CORE",
-    "REGISTER": "REGISTER",
+    "DIRECTORY": "DIRECTORY",
 }
 
 COMPONENT_SHORTFORM = {
     "CORE": "/core",
-    "REGISTER": "/reg",
+    "DIRECTORY": "/reg",
 }
 COMPONENT_DESCRIPTIONS = {
     "CORE": "Doctrine, authority, conventions, editing and output",
-    "REGISTER": "Current tripwires, canonical forms and exceptions",
+    "DIRECTORY": "Current tripwires, canonical forms and exceptions",
 }
 SEPARATOR_RE = re.compile(r"^={20,}$")
 
@@ -1024,7 +1024,12 @@ def render_list(doc, block, decimal_num_id, bullet_num_id, level=0):
 
 # Component title as it appears in the source H1 -> canonical component name.
 # REFS is the display head; REFERENCES is the component and register name.
-COMPONENT_TITLES = {"CORE": "CORE", "REGISTER": "REGISTER"}
+# 110826: the SEAM words are the file names (GUIDE, DIRECTORY); the values
+# are the internal component names the rest of this module keys on. The
+# volume still has four parts - CORE, PROCESSES, STATUS, REFERENCES - and
+# none of them move. This dict is also the set of source H1s to swallow,
+# since add_part_opening prints the title itself.
+COMPONENT_TITLES = {"GUIDE": "CORE", "DIRECTORY": "DIRECTORY"}
 
 PART_SEAM_RE = re.compile(r"<!--\s*PART:\s*(\S+)\s+(\w+)\s*-->")
 
@@ -1309,7 +1314,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
                 # two branches the register carries - and those open as the
                 # register is rendered, below. Opening here would put an empty
                 # REGISTER page in front of them.
-                if current_component == "REGISTER":
+                if current_component == "DIRECTORY":
                     last_heading_level = None
                     continue
                 part_number += 1
@@ -1399,7 +1404,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
         elif kind == "CodeBlock":
             payload = block["c"][1]
             parsed = None
-            if current_component == "REGISTER":
+            if current_component == "DIRECTORY":
                 try:
                     candidate = yaml.safe_load(payload)
                 except yaml.YAMLError:

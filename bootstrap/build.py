@@ -8,9 +8,9 @@ ONE file is edited:
 
 Four are derived from it and never touched by hand:
 
-    CORE.txt          the operating manual, part delivery for /core
-    REGISTER.yaml     the lookups, part delivery for /reg
-    REGISTER.txt      REGISTER.yaml under a .txt extension, byte-identical
+    GUIDE.txt         the operating manual, part delivery for /core
+    DIRECTORY.yaml    the lookups, part delivery for /reg
+    DIRECTORY.txt     DIRECTORY.yaml under a .txt extension, byte-identical
     BLUEPRINT.pdf     the rendered artifact of record
 
 The extension is inert. Nothing in the chain reads it: pandoc is told the
@@ -20,7 +20,7 @@ what makes headings headings in the rendered volume.
 
 The register travels verbatim. Between the seam and the fence the bytes are
 the register exactly, which is what makes the split reversible: cut on the
-seam, strip the fence, restore the comment seam, and REGISTER.yaml is back.
+seam, strip the fence, restore the comment seam, and DIRECTORY.yaml is back.
 The invertibility guard below checks that on every build.
 
 BLUEPRINT.pdf is downstream. Rendered, never edited.
@@ -38,7 +38,7 @@ import tempfile
 import yaml
 
 MASTER = "BLUEPRINT.txt"
-EXPECT = ["CORE", "REGISTER"]
+EXPECT = ["GUIDE", "DIRECTORY"]
 
 SEAM = re.compile(r"<!-- PART: (\S+) (\w+) -->")
 FENCE = re.compile(r"```yaml\n(.*?)\n```", re.S)
@@ -124,7 +124,7 @@ def register_yaml(part, tag):
     in markdown. That one line is the only difference between them."""
     m = FENCE.search(part)
     if not m:
-        fail("no ```yaml fence found in the REGISTER part.")
+        fail("no ```yaml fence found in the DIRECTORY part.")
     body = m.group(1)
     try:
         parsed = yaml.safe_load(body)
@@ -137,7 +137,7 @@ def register_yaml(part, tag):
           f"(apex {len(parsed['status']['apex'])}, "
           f"cabinet {len(parsed['status']['cabinet']['members'])}, "
           f"provinces {len(parsed['references']['thai_places']['provinces'])})")
-    return f"# PART: {tag} REGISTER\n{body}\n", parsed
+    return f"# PART: {tag} DIRECTORY\n{body}\n", parsed
 
 
 # ---------- rendered artifact ----------
@@ -211,17 +211,17 @@ def main():
     TAG_HOLDER[0] = tag
     guard_invertible(preamble, parts, src)
 
-    reg_text, _ = register_yaml(parts["REGISTER"], tag)
+    reg_text, _ = register_yaml(parts["DIRECTORY"], tag)
 
-    open("CORE.txt", "w", encoding="utf-8").write(parts["CORE"].rstrip("\n") + "\n")
-    open("REGISTER.yaml", "w", encoding="utf-8").write(reg_text)
-    open("REGISTER.txt", "w", encoding="utf-8").write(reg_text)
+    open("GUIDE.txt", "w", encoding="utf-8").write(parts["GUIDE"].rstrip("\n") + "\n")
+    open("DIRECTORY.yaml", "w", encoding="utf-8").write(reg_text)
+    open("DIRECTORY.txt", "w", encoding="utf-8").write(reg_text)
 
     pdf = render_pdf(src)
 
     print()
     print(f"{MASTER:<15}{len(src):>8,} chars  {src.count(chr(10)) + 1:>5,} lines   SOURCE")
-    for f in ("CORE.txt", "REGISTER.yaml", "REGISTER.txt"):
+    for f in ("GUIDE.txt", "DIRECTORY.yaml", "DIRECTORY.txt"):
         print(f"{f:<15}{len(open(f, encoding='utf-8').read()):>8,} chars"
               f"{'':>13}derived")
     print(f"{'BLUEPRINT.pdf':<15}{pdf}")

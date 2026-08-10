@@ -8,12 +8,13 @@ name: Split BLUEPRINT into parts and build the style guide
 #
 # FOUR are derived from it on push, and never touched by hand:
 #   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
-#   Blueprint/CORE.txt         )  part delivery for machine consumers:
-#   Blueprint/REGISTER.yaml    )  /core /reg
-#   Blueprint/REGISTER.txt     )
+#   Blueprint/GUIDE.txt        )  part delivery for machine consumers:
+#   Blueprint/DIRECTORY.yaml   )  /core /reg
+#   Blueprint/DIRECTORY.txt    )
 #
 # 070826: PROCESSES merged into CORE as a section; STATUS and REFERENCES
-# merged as REGISTER, two branches. Four parts became two. The register
+# merged as DIRECTORY, two branches. Four parts became two FILES; the four
+# volume PARTS - CORE, PROCESSES, STATUS, REFERENCES - are unchanged. The register
 # travels inside BLUEPRINT in a ```yaml fence and is lifted out of it
 # verbatim - the bytes between fence and seam are the register exactly.
 #
@@ -74,7 +75,7 @@ jobs:
           set -e
           CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} || true)
           echo "changed in this push:"; echo "$CHANGED"
-          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(CORE|REGISTER)\.(txt|md|yaml)$' || true)
+          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(GUIDE|DIRECTORY)\.(txt|md|yaml)$' || true)
           if [ -n "$BAD" ]; then
             echo ""
             echo "REJECTED - these are DERIVED files and were edited by hand:"
@@ -135,14 +136,14 @@ jobs:
           # version identity is machine-side and the reader is left one visible
           # line. Raw text still shows it - every shortlink serves text/plain -
           # so VER-05 slug readback is unaffected.
-          # 080826: four parts became two. PROCESSES is a section inside CORE;
-          # STATUS and REFERENCES are branches of REGISTER. REGISTER travels
+          # 080826: four parts became two files. PROCESSES is a section in CORE;
+          # STATUS and REFERENCES are branches of DIRECTORY. DIRECTORY travels
           # inside a ```yaml fence and is lifted out of it verbatim.
           pat = re.compile(r'\n<!-- PART: (\S+) (\w+) -->\n')
           hits = list(pat.finditer(src))
           names = [m.group(2) for m in hits]
           seam_stamps = [m.group(1) for m in hits]
-          expect = ["CORE", "REGISTER"]
+          expect = ["GUIDE", "DIRECTORY"]
           if names != expect:
               sys.exit("FATAL: expected part banners %s, found %s. The parts "
                        "are cut on these and the Word build keys its component "
@@ -160,21 +161,21 @@ jobs:
 
           tag = seam_stamps[0]
 
-          # ---- CORE: verbatim slice -----------------------------------------
-          core_body = parts["CORE"].lstrip("\n").rstrip("\n") + "\n"
-          open("Blueprint/CORE.txt", "w", encoding="utf-8", newline="").write(core_body)
-          print("part: %-11s -> %-27s %6d chars" % ("CORE", "Blueprint/CORE.txt", len(core_body)))
+          # ---- GUIDE: verbatim slice ----------------------------------------
+          core_body = parts["GUIDE"].lstrip("\n").rstrip("\n") + "\n"
+          open("Blueprint/GUIDE.txt", "w", encoding="utf-8", newline="").write(core_body)
+          print("part: %-11s -> %-27s %6d chars" % ("GUIDE", "Blueprint/GUIDE.txt", len(core_body)))
 
-          # ---- REGISTER: lift out of the fence ------------------------------
+          # ---- DIRECTORY: lift out of the fence -----------------------------
           # The shipped register carries "# PART:" because an HTML comment will
           # not parse as YAML; BLUEPRINT carries "<!-- PART: -->" because "#"
           # is an H1 in markdown. That one line is the only difference. The
           # fence is not optional: unfenced, every "#" comment in the register
           # becomes a markdown heading and the indentation carrying the
           # structure is lost to paragraph merging.
-          fence = re.search(r'```yaml\n(.*?)\n```', parts["REGISTER"], re.S)
+          fence = re.search(r'```yaml\n(.*?)\n```', parts["DIRECTORY"], re.S)
           if not fence:
-              sys.exit("FATAL: no ```yaml fence in the REGISTER part. The "
+              sys.exit("FATAL: no ```yaml fence in the DIRECTORY part. The "
                        "register travels fenced; without it the block is not "
                        "recoverable as YAML. Refusing to build.")
           reg_body = fence.group(1)
@@ -191,25 +192,25 @@ jobs:
                    len(parsed["status"]["cabinet"]["members"]),
                    len(parsed["references"]["thai_places"]["provinces"])))
 
-          reg_text = "# PART: %s REGISTER\n%s\n" % (tag, reg_body)
-          for d in ("Blueprint/REGISTER.yaml", "Blueprint/REGISTER.txt"):
+          reg_text = "# PART: %s DIRECTORY\n%s\n" % (tag, reg_body)
+          for d in ("Blueprint/DIRECTORY.yaml", "Blueprint/DIRECTORY.txt"):
               open(d, "w", encoding="utf-8", newline="").write(reg_text)
-              print("part: %-11s -> %-27s %6d chars" % ("REGISTER", d, len(reg_text)))
+              print("part: %-11s -> %-27s %6d chars" % ("DIRECTORY", d, len(reg_text)))
 
           # ---- INVERTIBILITY GUARD ------------------------------------------
-          # CORE is a verbatim slice and reassembles by concatenation. REGISTER
+          # GUIDE is a verbatim slice and reassembles by concatenation. DIRECTORY
           # is transformed on the way out - seam swapped, fence stripped - so it
           # is reassembled by reversing both and compared against the original
           # slice. Anything the transform loses shows up here.
-          core_file = open("Blueprint/CORE.txt", encoding="utf-8", newline="").read()
-          orig = parts["CORE"]
+          core_file = open("Blueprint/GUIDE.txt", encoding="utf-8", newline="").read()
+          orig = parts["GUIDE"]
           lead  = orig[:len(orig) - len(orig.lstrip("\n"))]
           trail = orig[len(orig.rstrip("\n")):]
           rebuilt = preamble + lead + core_file.rstrip("\n") + trail
 
-          reg_file = open("Blueprint/REGISTER.yaml", encoding="utf-8", newline="").read()
+          reg_file = open("Blueprint/DIRECTORY.yaml", encoding="utf-8", newline="").read()
           recovered = reg_file.split("\n", 1)[1].rstrip("\n")
-          orig = parts["REGISTER"]
+          orig = parts["DIRECTORY"]
           rebuilt += (orig[:fence.start()] + "```yaml\n" + recovered + "\n```"
                       + orig[fence.end():])
 
@@ -243,10 +244,10 @@ jobs:
           # shortlinks are repointed at /reg.
           for s, d in [("Blueprint/BLUEPRINT.txt",   "Blueprint/COMPILED.md"),
                        ("Blueprint/BLUEPRINT.txt",   "Blueprint/COMPILED.txt"),
-                       ("Blueprint/REGISTER.yaml",   "Blueprint/STATUS.yaml"),
-                       ("Blueprint/REGISTER.yaml",   "Blueprint/REFERENCES.yaml"),
-                       ("Blueprint/REGISTER.yaml",   "Blueprint/STATUS.txt"),
-                       ("Blueprint/REGISTER.yaml",   "Blueprint/REFERENCES.txt")]:
+                       ("Blueprint/DIRECTORY.yaml",  "Blueprint/STATUS.yaml"),
+                       ("Blueprint/DIRECTORY.yaml",  "Blueprint/REFERENCES.yaml"),
+                       ("Blueprint/DIRECTORY.yaml",  "Blueprint/STATUS.txt"),
+                       ("Blueprint/DIRECTORY.yaml",  "Blueprint/REFERENCES.txt")]:
               open(d, "w", encoding="utf-8").write(open(s, encoding="utf-8").read())
               print("shim: %s -> %s" % (s, d))
           EOF
@@ -256,11 +257,11 @@ jobs:
           set -e
           cmp Blueprint/BLUEPRINT.txt Blueprint/COMPILED.md
           cmp Blueprint/BLUEPRINT.txt Blueprint/COMPILED.txt
-          cmp Blueprint/REGISTER.yaml Blueprint/REGISTER.txt
-          cmp Blueprint/REGISTER.yaml Blueprint/STATUS.yaml
-          cmp Blueprint/REGISTER.yaml Blueprint/REFERENCES.yaml
-          cmp Blueprint/REGISTER.yaml Blueprint/STATUS.txt
-          cmp Blueprint/REGISTER.yaml Blueprint/REFERENCES.txt
+          cmp Blueprint/DIRECTORY.yaml Blueprint/DIRECTORY.txt
+          cmp Blueprint/DIRECTORY.yaml Blueprint/STATUS.yaml
+          cmp Blueprint/DIRECTORY.yaml Blueprint/REFERENCES.yaml
+          cmp Blueprint/DIRECTORY.yaml Blueprint/STATUS.txt
+          cmp Blueprint/DIRECTORY.yaml Blueprint/REFERENCES.txt
           echo "all shims byte-identical"
 
       - name: Install pandoc 3 and python-docx
@@ -387,7 +388,7 @@ jobs:
               # the cover tagline (op-ruled). The slug goes to Word document
               # properties; the components line stays in the source for anyone
               # reading the raw text and is suppressed in the volume.
-              r"^Components: CORE \+ REGISTER",
+              r"^Components: GUIDE \+ DIRECTORY",
               # The PART entry is retired: the seam is an HTML comment, which
               # pandoc emits as RawBlock and the audit never counts as a unit.
               #
@@ -426,8 +427,8 @@ jobs:
           # PROCESSES is a section inside CORE from 080826; the file is no
           # longer produced and would otherwise sit at /pro frozen at 010826
           git rm -q --ignore-unmatch Blueprint/PROCESSES.txt
-          git add Blueprint/CORE.txt \
-                  Blueprint/REGISTER.yaml Blueprint/REGISTER.txt \
+          git add Blueprint/GUIDE.txt \
+                  Blueprint/DIRECTORY.yaml Blueprint/DIRECTORY.txt \
                   Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.pdf \
                   Blueprint/BLUEPRINT.manifest.json \
                   Blueprint/COMPILED.md Blueprint/COMPILED.txt \

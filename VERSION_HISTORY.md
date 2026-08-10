@@ -9,6 +9,58 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 ---
 
 
+## 2026-08-11 — TWO FILES RENAMED GUIDE + DIRECTORY; PART OPENING PRUNED; 110826_all_guide-directory
+
+Two op-ruled deletions to the REGISTER part of `BLUEPRINT.txt`.
+
+**Evidence.** The part tagline "the lookups" rendered as an orphan paragraph
+at the foot of the last CORE page, below the closing `</state_log>` fence —
+confirmed against the built volume. Cause: `SECTION_SUBTITLE` in
+`build_bkp_compendium.py` keys on the four SECTIONS (CORE, PROCESSES, STATUS,
+REFERENCES) and carries no entry for the PART, so the source paragraph never
+reached `add_part_opening`'s subtitle path and fell through as body text.
+The `status:` `note:` block was ruled off the page as spoiling it and not
+reading; the content may be restated elsewhere.
+
+**Verdict.** Both removed at source. `build.py` re-run: dollar-pairing,
+edition, invertibility and register-parse guards all pass; register parses at
+apex 10, cabinet 8, provinces 77. REGISTER.yaml/.txt 36,996 -> 36,839 bytes;
+CORE.txt unchanged, both deletions being inside the REGISTER part.
+
+**Stamp.** Bumped to `110826_all_guide-directory`, op-ruled. Scope is `all`:
+the change reaches both files and the whole toolchain, not just the register.
+Previous build `100826_reg_exemplar-sweep`.
+
+**Also in this build: the two FILES renamed GUIDE and DIRECTORY.** The four
+volume PARTS — CORE, PROCESSES, STATUS, REFERENCES — are unchanged and still
+open exactly as before. Only the delivery layer moves.
+
+**Why.** The part level had never had a name of its own and borrowed from its
+own contents: `CORE.txt` opened `# CORE` and carried `## PROCESSES` at line 136,
+so CORE meant both a file and a section inside it. That collision is also why
+the part tagline had nowhere to render. And "register" is a false friend in a
+style guide, where it first reads as tone and manner — line 19 previously ran
+"The same rule governs the register:", which does not resolve until the clause
+after the colon.
+
+**Surface.** BLUEPRINT.txt seams, front matter and 15 prose references;
+build.py (12); compile.yml (35, including the EXPECTED_ABSENT front-matter
+pattern, which would otherwise have failed the coverage audit — caught by dry
+run, not by inspection); build_bkp_compendium.py (1 line: the seam word now maps
+to the internal component name, so nothing else in the builder moves);
+shift.py (4); seal.py (3, including the seam regex, which would have FATALed
+every seal); push.bat (3); index.txt/.yaml; CLAUDE.md (24). Old delivered files
+CORE.txt, REGISTER.txt and REGISTER.yaml removed from the repo rather than left
+in place — a superseded file that still resolves is how a dead path serves live-
+looking content, which cost five weeks between 27 June and 10 August.
+
+**Verified before push, not predicted.** pandoc 3.9 installed locally and the
+full chain run: build.py four guards PASS; volume builds, register renders 345
+leaf values / 388 paragraphs; coverage audit 209/212, 3 declared absent, 0
+unexplained; block profile Header 55 / CodeBlock 4 / BulletList 15 /
+OrderedList 2 unchanged, only Para 149 -> 148. shift.py SHIFT READY on the
+renamed parts.
+
 ## 2026-08-10 — EXEMPLAR SWEEP OPENED; RETIRING A CATEGORY RULED; 100826_reg_exemplar-sweep
 
 First cuts of a sweep through `references/foreign_people`, and a custody rule

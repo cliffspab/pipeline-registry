@@ -45,7 +45,7 @@ TIMEOUT_SECONDS = 480
 # two designs, one document. It is now a LibreOffice conversion of the volume
 # itself, made by the compile job, so it comes back with the docx rather than
 # going out ahead of it.
-FROM_ROOT = ["BLUEPRINT.txt", "CORE.txt", "REGISTER.yaml", "REGISTER.txt",
+FROM_ROOT = ["BLUEPRINT.txt", "GUIDE.txt", "DIRECTORY.yaml", "DIRECTORY.txt",
              "build.py"]
 FROM_CLONE = ["BLUEPRINT.docx", "BLUEPRINT.pdf", "BLUEPRINT.manifest.json"]
 
@@ -58,9 +58,9 @@ def git(*args, check=True):
 def current_tag():
     """The build tag, read from the source's own front matter."""
     src = (ROOT / "BLUEPRINT.txt").read_text(encoding="utf-8")
-    m = re.search(r"<!-- PART: (\S+) CORE -->", src)
+    m = re.search(r"<!-- PART: (\S+) GUIDE -->", src)
     if not m:
-        sys.exit("FATAL: no CORE seam in BLUEPRINT.txt — cannot name the edition.")
+        sys.exit("FATAL: no GUIDE seam in BLUEPRINT.txt — cannot name the edition.")
     return m.group(1)
 
 

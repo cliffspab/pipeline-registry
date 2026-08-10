@@ -2,8 +2,8 @@
 """
 Cut the shift folder.
 
-    Shift/CORE.txt        core + processes, markdown syntax
-    Shift/REGISTER.txt    register + status, YAML syntax
+    Shift/GUIDE.txt       core + processes, markdown syntax
+    Shift/DIRECTORY.txt   status + references, YAML syntax
 
 Both copied from the confirmed-latest parts at the root of Project_Space.
 Nothing else ever goes in it. It is a copy and never a source: nothing is
@@ -26,9 +26,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SHIFT = ROOT / "Shift"
-PARTS = ("CORE.txt", "REGISTER.txt")
+PARTS = ("GUIDE.txt", "DIRECTORY.txt")
 
-SEAM = re.compile(r"PART:\s+(\S+)\s+(CORE|REGISTER)")
+SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
 
 
 def digest(path):

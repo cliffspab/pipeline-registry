@@ -21,7 +21,7 @@ edited by hand.
 python3 shift.py
 ```
 
-It cuts or refreshes `Shift\` — `CORE.txt` + `REGISTER.txt`, copied from the
+It cuts or refreshes `Shift\` — `GUIDE.txt` + `DIRECTORY.txt`, copied from the
 confirmed-latest parts at the root. Idempotent: if the folder is already correct
 it writes nothing; if the operator has taken the files, it puts them back. It
 refuses to cut a set whose parts disagree on their build tag.
@@ -40,8 +40,8 @@ copy for the Bangkok Post. It is **one document in two parts**:
 
 | Part | Carries | Syntax | Delivered as |
 | :---- | :---- | :---- | :---- |
-| **CORE** | core + processes | markdown | `.txt` |
-| **REGISTER** | register + status | YAML | `.txt` |
+| **GUIDE** | CORE + PROCESSES | markdown | `.txt` |
+| **DIRECTORY** | STATUS + REFERENCES | YAML | `.txt` |
 
 **The extension is inert.** Nothing in the chain reads it: pandoc is told the
 format explicitly and raw.githubusercontent serves every extension as
@@ -54,11 +54,11 @@ register fenced as YAML inside it. Everything else is derived by `build.py`
 locally, or by `compile.yml` on push. A hand-edit to a derived file is rejected
 by CI.
 
-Current build: **`070826_all_rebuild`**.
+Current build: **`110826_all_guide-directory`**.
 
 ## What a shift needs
 
-**`CORE.txt` + `REGISTER.txt`, most recent version. Nothing else.**
+**`GUIDE.txt` + `DIRECTORY.txt`, most recent version. Nothing else.**
 
 Every build cuts a `Shift\` folder holding exactly those two, as a matter of
 course. It is deleted once the operator confirms the content has been taken. The
@@ -97,7 +97,7 @@ Establish this before acting. Two roles, two governing documents.
 
 | Role | You are | Governed by |
 | :---- | :---- | :---- |
-| **Desk** | subediting filed copy — heads, decks, fit, house style | `CORE.txt` + `REGISTER.txt`. Nothing else. |
+| **Desk** | subediting filed copy — heads, decks, fit, house style | `GUIDE.txt` + `DIRECTORY.txt`. Nothing else. |
 | **Custody** | changing, building, recording or shipping the documents | `pipeline-registry\RECORDS-AND-CONSOLIDATION.md` |
 
 Most work here is custody. The desk job is what the corpus exists to serve, not
@@ -146,8 +146,8 @@ whether the change is one word or a restructure.
    edition. The docx is never built locally.
    **Clear the lines you are pushing before the commit is made.** Nothing does
    this for you — see trap 10.
-10. **Cut the shift folder.** `Shift\` at the root, holding exactly `CORE.txt` +
-    `REGISTER.txt` copied from the confirmed-latest parts. This happens as a
+10. **Cut the shift folder.** `Shift\` at the root, holding exactly `GUIDE.txt` +
+    `DIRECTORY.txt` copied from the confirmed-latest parts. This happens as a
     matter of course on every build, not on request. Nothing else ever goes in
     it, nothing is ever edited in it, and it is never a source.
 11. **Delete it** on operator confirmation that the content has been taken.
@@ -188,8 +188,8 @@ Each has fired at least once. They are why the procedure reads as it does.
    recording one.
 6. **The register must stay fenced.** Unfenced, every `#` becomes a markdown H1
    and the indentation carrying the structure is lost to paragraph merging.
-7. **CI rejects hand-edited derived files.** `Blueprint/CORE.txt` and
-   `Blueprint/REGISTER.*` are regenerated; changing them by hand fails the push.
+7. **CI rejects hand-edited derived files.** `Blueprint/GUIDE.txt` and
+   `Blueprint/DIRECTORY.*` are regenerated; changing them by hand fails the push.
 10. **`COMMITS-PENDING.md` is never cleared, so it stops being a guard.** The
     rule says lines clear on the push. No step does it: `push.bat` does not touch
     the file, and the desk is a fresh session every time, so the job belongs to
@@ -223,18 +223,18 @@ marks the only file a human may change.
 # Paths are relative to Project_Space. Read with the prose above; neither is
 # complete alone.
 
-build: 090826_reg_part-opening
-previous: 070826_all_rebuild    # pushed 090826, commit 8a4d4ff + bot c7bca93
-pushed: false                   # 090826_reg_part-opening is not pushed
+build: 110826_all_guide-directory
+previous: 100826_reg_exemplar-sweep   # the last pushed build
+pushed: false                   # 110826_all_guide-directory is not pushed
 serving:
   status: LIVE — the whole chain, verified 090826 by contents API against local sizes
   bot_commit: c7bca93        # compile-bot, the derived parts
   note: >
-    CORE.txt 27557 and REGISTER.txt/.yaml 36301 on the remote, byte-for-byte the
+    GUIDE.txt 27557 and DIRECTORY.txt/.yaml 36301 on the remote, byte-for-byte the
     local parts. PROCESSES.txt removed by the job. The shims are genuine copies,
     not stale files: STATUS.* and REFERENCES.* all share one blob sha with
-    REGISTER.yaml, and COMPILED.* shares one with BLUEPRINT.txt. Manifest
-    rebaselined at the two-part profile — Header 54, components CORE + REGISTER.
+    DIRECTORY.yaml, and COMPILED.* shares one with BLUEPRINT.txt. Manifest
+    rebaselined at the two-part profile — Header 54, files GUIDE + DIRECTORY.
 
 working_set:
   purpose: the current text. The root of this folder is authoritative.
@@ -244,21 +244,21 @@ working_set:
       syntax: markdown, register fenced as YAML inside it
       hand_edit: true
       deploys: substitute      # where a destination takes one file
-    CORE.txt:
+    GUIDE.txt:
       role: derived, verbatim slice
       contains: core + processes
       syntax: markdown
       hand_edit: false
       deploys: true
       link: /core
-    REGISTER.txt:
-      role: derived, byte-identical to REGISTER.yaml
+    DIRECTORY.txt:
+      role: derived, byte-identical to DIRECTORY.yaml
       contains: register + status
       syntax: yaml
       hand_edit: false
       deploys: true
       link: /reg
-    REGISTER.yaml:
+    DIRECTORY.yaml:
       role: derived, authoring form
       hand_edit: false
       deploys: false
@@ -288,7 +288,7 @@ shift_folder:
   path: Shift/
   cut_by: shift.py          # run on entry, unprompted. Operator side is zero touch.
   purpose: exactly what is needed to work a shift, and nothing else.
-  contents: [CORE.txt, REGISTER.txt]
+  contents: [GUIDE.txt, DIRECTORY.txt]
   lifecycle: >
     Regenerated on entry and on every build, from the confirmed-latest parts.
     Idempotent — already correct writes nothing, taken files are put back. An
@@ -311,7 +311,7 @@ editions:
       tools/build_bkp_compendium.py, which runs in the compile job, so no docx
       exists for a build until it is pushed and CI has run. Seal the volume into
       the edition after the push, not before.
-  what_build_py_writes: [CORE.txt, REGISTER.yaml, REGISTER.txt, BLUEPRINT.pdf]
+  what_build_py_writes: [GUIDE.txt, DIRECTORY.yaml, DIRECTORY.txt, BLUEPRINT.pdf]
 
 custody:
   path: pipeline-registry/
@@ -342,8 +342,8 @@ custody:
   blueprint_dir:
     path: pipeline-registry/Blueprint/
     note: >
-      Only BLUEPRINT.txt is copied here by hand. CI derives CORE.txt,
-      REGISTER.yaml, REGISTER.txt, the docx and the manifest, and commits them.
+      Only BLUEPRINT.txt is copied here by hand. CI derives GUIDE.txt,
+      DIRECTORY.yaml, DIRECTORY.txt, the docx and the manifest, and commits them.
       STATUS/REFERENCES/COMPILED files are compatibility shims written by CI so
       old shortlinks resolve; they are retiring and must never be deployed from.
     index: [index.txt, index.yaml]      # shortlink map, byte-identical twins
@@ -384,7 +384,9 @@ history:
     note: >
       The volume renderer is built and verified but NOT pushed. Two items need
       an operator ruling before BLUEPRINT.txt is touched — the PROCESSES section
-      boundary and the name of CORE's unnamed half — and one op-requested change
+      boundary and the name of CORE's unnamed half (RULED 110826: the two FILES
+      are GUIDE and DIRECTORY; the four volume PARTS are unchanged) — and one
+      op-requested change
       is outstanding, the tagline flush under the heading.
   070826_handoff_pull-integrity.md:
     role: prior handoff. Readable cold, no prior thread required.

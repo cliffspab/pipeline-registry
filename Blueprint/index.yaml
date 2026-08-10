@@ -1,12 +1,14 @@
 # Shortlink map. 070826_all_rebuild: four parts became two.
-# CORE and REGISTER are derived from BLUEPRINT.txt by the compile job.
+# GUIDE and DIRECTORY are derived from BLUEPRINT.txt by the compile job.
+# 110826: the two FILES are GUIDE and DIRECTORY. The four volume PARTS -
+# CORE, PROCESSES, STATUS, REFERENCES - are unchanged.
 
 entry: blueprint
 
 files:
   blueprint: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/BLUEPRINT.txt
-  core: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/CORE.txt
-  reg: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/REGISTER.yaml
+  core: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt
+  reg: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/DIRECTORY.yaml
 
 # Deployment subset: core + reg, confirmed latest only. blueprint substitutes
 # where a destination takes one file. Nothing else deploys.
