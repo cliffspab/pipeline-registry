@@ -1,12 +1,12 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-110826_all_guide-directory
+110826_all_shortlink-names
 
 Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are the edit surface: GUIDE in markdown, DIRECTORY in YAML.
 
-<!-- PART: 110826_all_guide-directory GUIDE -->
+<!-- PART: 110826_all_shortlink-names GUIDE -->
 
-go.fuzzylogic.page/core
+go.fuzzylogic.page/guide
 
 # GUIDE
 
@@ -58,11 +58,11 @@ Where a rule and its exception straddle GUIDE and DIRECTORY, the rule is stated 
 
 ## Sources
 
-* **go.fuzzylogic.page/blue** — BLUEPRINT. Every part in one document.
-* **go.fuzzylogic.page/reg** — DIRECTORY. The lookups, YAML.
-* **go.fuzzylogic.page/core** — GUIDE. This document alone.
+* **go.fuzzylogic.page/blue** — BLUEPRINT. Both parts in one document.
+* **go.fuzzylogic.page/guide** — GUIDE. Core and processes, markdown.
+* **go.fuzzylogic.page/dir** — DIRECTORY. Status and references, YAML.
 
-BLUE carries the directory in a fenced YAML block and is sufficient on its own. REG serves the directory alone, for surfaces that want it as a file rather than a section.
+BLUE carries the directory in a fenced YAML block and is sufficient on its own. DIR serves the directory alone, for surfaces that want it as a file rather than a section. A shift needs GUIDE and DIR, and nothing else.
 
 Every part carries a build tag: the build date and the build name. Parts of one build carry one tag.
 
@@ -518,14 +518,14 @@ Unresolved:
 
 </state_log>
 
-<!-- PART: 110826_all_guide-directory DIRECTORY -->
+<!-- PART: 110826_all_shortlink-names DIRECTORY -->
 
-go.fuzzylogic.page/reg
+go.fuzzylogic.page/dir
 
 # DIRECTORY
 
 ```yaml
-# go.fuzzylogic.page/reg
+# go.fuzzylogic.page/dir
 #
 # DIRECTORY
 # the lookups
