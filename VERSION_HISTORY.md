@@ -9,6 +9,42 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 ---
 
 
+## 2026-08-11 — SHORTLINK LINES ALIGNED TO THE FILE NAMES; 110826_all_shortlink-names
+
+Follow-on to `110826_all_guide-directory`, which renamed the two delivered
+files but left the document naming the old shortlinks internally.
+
+**Changed.** The GUIDE part self-identified as `go.fuzzylogic.page/core` and
+the DIRECTORY part as `/reg`, in the body and in the YAML fence header. Both
+now read `/guide` and `/dir`. The Sources block listed BLUE, REG and CORE; it
+now lists **/blue**, **/guide** and **/dir**, and states that a shift needs
+GUIDE and DIR and nothing else.
+
+**Compatibility.** `/core` and `/reg` still resolve and move to the `shims:`
+block in `index.txt` and `index.yaml`, alongside `status`, `refs` and `full`.
+The operating document names only current links; the index carries the shim map.
+
+**Stamp.** Bumped to `110826_all_shortlink-names`. `110826_all_guide-directory`
+is pushed and live at b308601 with bot 6bca4dd, so amending content under it
+would put one tag over two revisions — trap 2. The edition guard cannot catch
+that case, because both parts would still agree with each other.
+
+**Caught in passing: clear_pending.py failed silently on the last push.** It
+matches `^- \d{4}-\d{2}-\d{2} `, so every pending entry must open with a date.
+The four entries written for `110826_all_guide-directory` opened with a filename
+instead, matched nothing, and the script printed "pending: already clear,
+nothing to archive" and exited 0. push.bat continued, the lines rode into the
+commit and stayed in Pending after the push — the exact condition trap 10 exists
+to prevent, re-created by the entry format rather than by a missing step.
+Those four are now moved to COMMITS-ARCHIVE.md by hand and Pending is rewritten
+in the dated form; `clear_pending.py --check` sees all three current entries.
+
+**Open.** `clear_pending.py` reports "already clear" both when Pending is empty
+and when it cannot parse what is there. A line warning on unmatched `- ` entries
+under the heading would separate the two. Not changed here.
+
+**Verified.** build.py four guards PASS at the new tag; shift.py SHIFT READY.
+
 ## 2026-08-11 — TWO FILES RENAMED GUIDE + DIRECTORY; PART OPENING PRUNED; 110826_all_guide-directory
 
 Two op-ruled deletions to the REGISTER part of `BLUEPRINT.txt`.

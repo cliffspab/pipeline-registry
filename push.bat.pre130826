@@ -30,7 +30,7 @@ echo === mirroring bootstrap set ===
 if not exist "bootstrap" mkdir "bootstrap"
 REM 100826: seal.py and clear_pending.py added. push.bat CALLS both, so a repo
 REM that does not hold them carries a push script it cannot run after a restore.
-for %%F in (CLAUDE.md shift.py build.py seal.py clear_pending.py CANDIDATE_ONLY.md 130826_candidate-breakpoints.md 130826_candidate-remaining-failures.md) do (
+for %%F in (CLAUDE.md shift.py build.py seal.py clear_pending.py) do (
   if exist "..\%%F" (
     copy /Y "..\%%F" "bootstrap\%%F" >nul
     echo   mirrored %%F

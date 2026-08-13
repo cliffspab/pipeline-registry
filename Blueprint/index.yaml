@@ -7,15 +7,17 @@ entry: blueprint
 
 files:
   blueprint: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/BLUEPRINT.txt
-  core: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt
-  reg: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/DIRECTORY.yaml
+  guide: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt
+  dir: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/DIRECTORY.yaml
 
-# Deployment subset: core + reg, confirmed latest only. blueprint substitutes
+# Deployment subset: guide + dir, confirmed latest only. blueprint substitutes
 # where a destination takes one file. Nothing else deploys.
 
 # Compatibility shims, written by the compile job so existing links resolve.
 # Retiring. Do not deploy from these.
 shims:
+  core: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt
+  reg: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/DIRECTORY.yaml
   status: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/STATUS.yaml
   refs: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/REFERENCES.yaml
   full: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/COMPILED.txt

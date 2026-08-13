@@ -6,6 +6,44 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 ---
 
 
+
+
+## Cleared 2026-08-13
+
+- 2026-08-11 | BLUEPRINT.txt | ALIGN shortlink lines to the file names. Part
+  self-IDs /core -> /guide and /reg -> /dir, in the body and in the YAML fence
+  header. Sources block now lists /blue, /guide, /dir.
+
+- 2026-08-11 | index.txt/.yaml | MOVE core and reg to the shims block; files
+  block now keys guide and dir.
+
+- 2026-08-11 | compile.yml | EXPECTED_ABSENT fence pattern /reg -> /dir, to
+  follow the fence header. Left unchanged it fails the coverage audit.
+
+- 2026-08-11 | clear_pending.py | ADD stray-entry guard. It reported "already
+  clear" both when Pending was empty and when it could not parse what was
+  there, which is how four entries survived the last push. Any bullet not
+  opening with a date is now named and the run fails, stopping the push.
+
+- 2026-08-11 | stamp | 110826_all_guide-directory -> 110826_all_shortlink-names.
+  The previous tag is pushed and live; amending under it puts one tag over two
+  revisions (trap 2).
+
+## Cleared 2026-08-11
+
+- 2026-08-11 | BLUEPRINT.txt | DELETE orphaned part tagline "the lookups"
+  under `# REGISTER` — no component page to land on, rendered stranded at
+  the foot of the CORE page.
+
+- 2026-08-11 | BLUEPRINT.txt | DELETE the `status:` `note:` block — spoiled
+  the page and did not read.
+
+- 2026-08-11 | toolchain | RENAME the two files CORE.txt -> GUIDE.txt and
+  REGISTER.txt/.yaml -> DIRECTORY.txt/.yaml. Four volume PARTS unchanged.
+  Old delivered files removed from the repo.
+
+- 2026-08-11 | stamp | 100826_reg_exemplar-sweep -> 110826_all_guide-directory.
+
 ## Cleared 2026-08-10
 
 - 2026-08-10 | compile.yml + build.py + seal.py | ONE DESIGN, TWO FORMATS. The

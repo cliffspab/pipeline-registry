@@ -49,6 +49,33 @@ def split_pending(text):
     head, body = text[: m.end()], text[m.end():]
     entries = re.findall(r"^- \d{4}-\d{2}-\d{2} .*?(?=^- \d{4}-\d{2}-\d{2} |\Z)",
                          body, re.M | re.S)
+
+    # 110826: this script matched nothing, printed "already clear" and exited 0
+    # on the 110826_all_guide-directory push, because the four entries opened
+    # with a filename rather than a date. push.bat read exit 0 as success, the
+    # lines rode into the commit and stayed pending afterwards - trap 10
+    # re-created by the entry format rather than by a missing step.
+    #
+    # An unparseable list and an empty list are not the same state and must not
+    # report the same way. Any bullet under the heading that did not match is
+    # named and the run fails, so the push stops rather than passing silently.
+    # Checked per bullet, not against the matched text: the final entry's
+    # pattern runs to \Z, so a malformed line at the end is absorbed into it
+    # and would otherwise be archived as part of the entry above.
+    stray = [ln for ln in body.splitlines()
+             if ln.startswith("- ") and not re.match(r"^- \d{4}-\d{2}-\d{2} ", ln)]
+    if stray:
+        print("[FAIL] %d line(s) under '## Pending' are not in the archivable"
+              % len(stray))
+        print("       form and would be left behind by this push:")
+        for ln in stray:
+            print("         " + ln[:88])
+        print()
+        print("       Every entry must open with a date:")
+        print("         - YYYY-MM-DD | file or scope | what changed.")
+        print("       Continuation lines are indented two spaces.")
+        raise SystemExit(1)
+
     return head, [e.rstrip() for e in entries]
 
 

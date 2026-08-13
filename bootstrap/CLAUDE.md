@@ -54,7 +54,7 @@ register fenced as YAML inside it. Everything else is derived by `build.py`
 locally, or by `compile.yml` on push. A hand-edit to a derived file is rejected
 by CI.
 
-Current build: **`110826_all_guide-directory`**.
+Current build: **`110826_all_shortlink-names`**.
 
 ## What a shift needs
 
@@ -223,9 +223,9 @@ marks the only file a human may change.
 # Paths are relative to Project_Space. Read with the prose above; neither is
 # complete alone.
 
-build: 110826_all_guide-directory
-previous: 100826_reg_exemplar-sweep   # the last pushed build
-pushed: false                   # 110826_all_guide-directory is not pushed
+build: 110826_all_shortlink-names
+previous: 110826_all_guide-directory  # pushed 110826, commit b308601 + bot 6bca4dd
+pushed: false                   # 110826_all_shortlink-names is not pushed
 serving:
   status: LIVE — the whole chain, verified 090826 by contents API against local sizes
   bot_commit: c7bca93        # compile-bot, the derived parts

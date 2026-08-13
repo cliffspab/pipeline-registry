@@ -402,7 +402,7 @@ jobs:
               # YAML against the paragraphs written, and fails the build if any
               # are dropped. That is finer than this gate ever was - per entry
               # rather than per block. See render_register().
-              r"^# go\.fuzzylogic\.page/reg",
+              r"^# go\.fuzzylogic\.page/dir",
           ]
 
           d = json.load(open("/tmp/audit.json"))
