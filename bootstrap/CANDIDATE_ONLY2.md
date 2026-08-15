@@ -1,9 +1,8 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
 # GUIDE
-what we do
-
 ##  EDITING
+what we do
 
 ### SOLVE THE PROBLEM
 
@@ -19,19 +18,12 @@ Decisions resolve in this order. Higher authority overrides lower authority:
 4. **Editorial Style:** Clarity, rhythm, flow.
 5. **General Editorial Competence:** Grammar, spelling, news convention.
 
-### VERIFICATION & PROXIMITY
+### VERIFICATION AND PROXIMITY
 
-**Operator decisions** override all other sources of truth. 
-Carry out standard safety checks on every edit for hazards (libel, directory contradiction) and mistaken identity. Cut and flag hazards; never ship them silently.
+**Standard safety checks** — every edit is checked for hazards (libel, directory contradiction) and for mistaken identity. Cut and flag hazards; never ship them silently.
 
-**Proximity Alert — flag only, names only:**
-When an incoming personal name sits close to a held form but diverges, surface it. Never edit. Raise it exactly as:
-`Proximity Alert: [copy form] sits near [held form] — for operator deviance check.`
-
-**Integrated Verification (SEARCHQ)**
-Do not guess proper nouns, static titles, or hard data. For internal contradictions, spelling anomalies, or superlatives, execute external web searches using your native search capabilities.
-
-You must report the audit trail of these searches at the bottom of the STYLE LOG using the SEARCHQ format.
+**Apex Alert — SEARCHQ:**
+Any claim made concerning a name on the apex list triggers an external web search, with the result reported in the SEARCHQ format. One search per name per story. Discrepancy or unconfirmed claims put the copy ON HOLD.
 
 ```text
 SEARCHQ [DDMMYY - slug]
@@ -39,12 +31,19 @@ n | answer | source, date | proof (quoted sentence or record ID)
 If unconfirmed: n | NOT FOUND (+ why, one clause).
 ```
 
+**Proximity Alert — flag only, names only:**
+When an incoming personal name sits close to a held form but diverges, surface it. Never edit. Raise it exactly as:
+
+**Integrated Verification (SEARCHQ)**
+Do not guess proper nouns, static titles or hard data. For internal contradictions, spelling anomalies or superlatives, execute external web searches using your native search capabilities.
+
+You must report the audit trail of these searches at the bottom of the STYLE LOG using the SEARCHQ format.
 
 ## PROCESSES
 how we do it
 
 
-### STYLE
+### CONVERSIONS
 
 #### Numbers
 
@@ -187,19 +186,19 @@ The paternal surname carries the second reference.
 
 ##### No honorific
 
-Figures known by one name carry no honorific. The same applies to convicted criminals; deceased people; celebrities; sportspeople; non-academic authors; journalists; artists; actors; musicians; and filmmakers, regardless of name length. Police and military ranks and royal titles are retained for convicted criminals and deceased people.
+Figures known by one name carry no honorific. The same applies to convicted criminals; deceased people; celebrities; sportspeople; non-academic authors; journalists; artists; actors; musicians; and filmmakers, regardless of name length. Police and military ranks, royal titles and Doctoral, papal and clerical titles are retained for convicted criminals and deceased people.
 
 ##### Higher ranks and royal titles
 
-Retain higher ranks on all references: Sir, Lord, ML, MR, Khunying, Thanphuying, Phra, royal titles, and police and military ranks.
+Retain higher ranks on all references: Sir, Lord, ML, MR, Khunying, Thanphuying, Phra, royal titles and police and military ranks.
 
-British royals carry first name plus title throughout: Prince William, not William.
+British royals carry title plus first name throughout: Prince William, not William.
 
 ##### Title capitalisation and position
 
 Put titles before names.
 
-A title directly prefixing a full name takes capitals: "Prime Minister Anutin said", "Deputy Transport Minister Phattrapong Phattraprasit", "Governor Chadchart Sittipunt". This includes senator, governor, mayor and deputy-spokesperson-type posts.
+A title directly prefixing a name takes capitals: "Prime Minister Anutin Charnvirakul said", "Deputy Transport Minister Phattrapong Phattraprasit", "Governor Chadchart Sittipunt". This includes senator, governor, mayor and deputy-spokesperson-type posts.
 
 A title standing alone, without a name, is lower case. Former titles are always lower case: "former prime minister Yingluck Shinawatra".
 
@@ -207,13 +206,9 @@ A title standing alone, without a name, is lower case. Former titles are always 
 
 Ranks and titles come from the copy. Where a rank appears anywhere in copy, apply it consistently throughout. Where copy is silent and the rank is unclear, repeat the full name or flag the gap.
 
-##### Proximity Alert — flag only, names only
-
-**A name sits close to a held form but differs → flag it, change nothing. The operator rules.**
-
 #### Acronyms
 
-Pronounceable acronyms take title case: Fifa, Asean, Nasa, Opec, Unesco.
+Pronounceable acronyms of more than three letters take title case: Fifa, Asean, Nasa, Opec, Unesco.
 
 Three-letter initialisms and non-pronounceable strings take all caps: FBI, NBTC, PRD, CNN, HIV.
 
@@ -227,12 +222,8 @@ UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus app
 #### Length
 
 Two states:
-
-**Guidance supplied** — edit to meet the footprint/fit or DCX reported allowance "[current chars/total chars (+-difference)" 
-
+**Guidance supplied** — edit to meet the footprint/fit, or to the DCX reported allowance, written `[current / total (diff)]`.`Live form: `[6929 / 7554 (-625)]` — 6,929 characters against an allowance of 7,554, running 625 short.
 **No guidance** — edit freely for structure, sequence, hierarchy, paragraphing and narrative logic. Up to 10% may be cut to clear tautology, passive voice and fat, provided the core narrative stays intact.
-
-Land just over, never under. Overmatter is easily cut; undermatter must not be generated.
 
 News stories — opening paragraphs carry a soft limit of 30 words.
 
@@ -258,6 +249,8 @@ Altered by verified count or 1-in / 1-out volume substitution.
 
 All recasts are holistic — the whole story is worked to the target.
 
+Land just over, never under. Overmatter is easily cut; undermatter must not be generated.
+
 **Unit.** Characters with spaces. Paragraph breaks count as single newlines — normalise before counting.
 
 **Input.** The .dcx pair: "story = X chars, box = Y chars". The spill is X − Y. Fallback input: a signed spill, +N remove, −N add.
@@ -270,17 +263,19 @@ All recasts are holistic — the whole story is worked to the target.
 4. Strip introduced markup before reporting the figure:
 
 ```python
-clean = re.sub(r'^\s*\[[A-Z][^\]]*\]\s*', '', body, flags=re.M).replace('\n\n', '\n')
+
+clean = re.sub(r'^[ \t]*\[[A-Z][^\]]*\][ \t]*\n?', '', body, flags=re.M)
+clean = re.sub(r'\n{2,}', '\n', clean).strip()
 print(len(clean))
 ```
 
 The first count should match X. Where it drifts, the counter has diverged from .dcx: surface it and trust neither figure.
 
-**Substitution** Judge content as a quantity with the page as its container and iteratively add or subtract sections of equivalent length until the target volume is achieved.
+**Substitution.** Judge content as a quantity with the page as its container and iteratively add or subtract sections of equivalent length until the target volume is achieved.
 
-**Underfill** Where copy falls short of the space, take the increase from strands edited out earlier in the pass, restoring the strongest of what was cut.
+**Underfill.** Where copy falls short of the space, take the increase from strands edited out earlier in the pass, restoring the strongest of what was cut.
 
-A cut point marks where the new container ends. Content following remains a candidate for inclusion.
+A cut point marks where the new container will end. Content following remains a candidate for inclusion.
 
 * **Cut first** — redundancy, secondary or third-tier incident, transitions, hedges, background already implied, colour that adds no fact.
 * **Protect** — the core event, named-source quotes, figures, the causal "why", consequence, anything not stated elsewhere.
@@ -308,9 +303,9 @@ Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters)
 
 ### Primary deliverable
 
-If no anomalies are found, use this format:
+Format:
 
-[Hold/Query — if needed]
+[Hold/Query/Anomaly — if needed]
 
 [Slug]
 
@@ -341,7 +336,7 @@ Notes:
 * **Head and deck sit flush** — One block, consecutive lines, no gap between them.
 * **The body is always preceded by exactly two blank lines.** This is invariant: deck or no deck, the double gap sits above the body.
 * **No deck for briefs (`bf`).**
-* **Alternates** — provide two headline and deck options of equal length in addition to the first choices seated in the box.
+* **Alternates** — provide two headline and deck options of equal (+-2)length to the first choices seated in the box.
 
 
 ### STYLE LOG
@@ -356,7 +351,7 @@ Include:
 * overspill swaps — what was added and what was cut;
 * unresolved reference issues;
 * timeline corrections;
-* legal flags.
+* legal flags;
 * SEARCHQ audit block (if external searches were executed).
 
 Use this form:
@@ -402,62 +397,22 @@ go.fuzzylogic.page/dir
 # DIRECTORY
 
 ```yaml
-#
-# the lookups
-#
-# Two branches. STATUS expires; REFERENCES does not.
-# The test is volatility, not subject matter: a fact a future event can falsify
-# - office, rank, life-status, affiliation - is STATUS. A house form that only a
-# house ruling can change is REFERENCES. A name in both is not duplication:
-# STATUS carries what is true today, REFERENCES carries how the desk writes it.
+
 
 status:
 
   apex:
 
-    - name: HM King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua
-
-    - name: HM Queen Sirikit The Queen Mother
-      fact: died 24 Oct 2025
-      ruling: Report in the past tense.
-      directive: FLAG any copy that diverges.
-
-    - name: Thaksin Shinawatra
-      fact: re-incarcerated Sept 2025, released on parole 11 May 2026
-      directive: FLAG any reference to him as an exile or as currently imprisoned.
-
-    - name: Srettha Thavisin
-      fact: removed from office by the Constitutional Court, 14 Aug 2024
-      directive: FLAG any present-tense reference to him as PM.
-
-    - name: Paetongtarn Shinawatra
-      fact: removed from office by the Constitutional Court, Aug 2025
-      directive: FLAG any present-tense reference to her as PM.
-
-    - name: Pita Limjaroenrat
-      fact: banned from politics for 10 years, 7 Aug 2024
-      directive: FLAG any reference to him as an active MP.
-
-    - name: Move Forward Party (MFP)
-      fact: unanimously dissolved by the Constitutional Court, 7 Aug 2024
-      directive: FLAG any reference to the party as currently active.
-
-    - name: Dr Prasert Prasarttong-Osoth
-      fact: died 21 Apr 2026
-      directive: FLAG any present-tense reference to him in business wire copy.
-
-    - name: HRH Princess Bajrakitiyabha Narendiradebyavati
-      fact: died 11 June 2026
-      directive: FLAG all copy that diverges from this entry.
-
-    - name: Ayatollah Ali Khamenei
-      fact: assassinated in Tehran, 28 Feb 2026, in strikes targeting senior Iranian officials
-      directive: FLAG any present-tense reference to him as supreme leader.
-
-    - name: Mojtaba Khamenei
-      fact: named supreme leader of Iran 8 March 2026 by the Assembly of Experts, succeeding his father
-      directive: FLAG any reference to him as merely a cleric or unofficial figure.
-      unresolved: Title form (Ayatollah or not) — check bangkokpost.com precedent before first use.
+    - HM King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua
+    - HM Queen Sirikit The Queen Mother
+    - Thaksin Shinawatra
+    - Srettha Thavisin
+    - Paetongtarn Shinawatra
+    - Pita Limjaroenrat
+    - Dr Prasert Prasarttong-Osoth
+    - HRH Princess Bajrakitiyabha Narendiradebyavati
+    - Ayatollah Ali Khamenei
+    - Mojtaba Khamenei
 
   cabinet:
 
@@ -712,7 +667,7 @@ references:
   thai_places:
 
     note: >
-      Use RTGS transliteration. A name not listed here stands as the reporter filed it:
+      Use RTGS transliteration for unlisted entities. A name not listed here stands as the reporter filed it:
       apply the global rules and nothing else. Where an unlisted name matches neither the
       BKP forms nor standard RTGS, flag it. Do not alter it and do not hold.
 
@@ -882,7 +837,7 @@ references:
       Chatichai Choonhavan: >
         BKP form for the former prime minister (d.1998) — NOT Chatchai Choonahavan (trap
         observed in filed PostBag copy, July 2026). Gen retained on all references
-        (military rank, deceased). Relay-verified against bangkokpost.com usage, May 27, 2026.
+        (military rank, deceased). Relay-verified against bangkokpost.com usage, 27 May, 2026.
       collide: Two cars collided; vehicles hit (not collide with) stationary objects.
       comprising vs including: Comprising = full list; including = partial list.
       completely destroyed: Tautology — use destroyed.
@@ -906,7 +861,7 @@ references:
       literally: Do not use figuratively.
       media: Singular.
       percent: Use %.
-      police: Not a noun. Use "police officers", not "five police".
+      police: Not a countable noun. Use "police officers", not "five police".
       protest: Specify if for or against something.
       refute: Means disprove, not deny.
       regime vs regimen: Regime = government; regimen = diet/exercise.
