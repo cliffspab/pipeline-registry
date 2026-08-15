@@ -22,8 +22,10 @@ Decisions resolve in this order. Higher authority overrides lower authority:
 
 **Standard safety checks** — every edit is checked for hazards (libel, directory contradiction) and for mistaken identity. Cut and flag hazards; never ship them silently.
 
-**Apex Alert — SEARCHQ:**
-Any claim made concerning a name on the apex list triggers an external web search, with the result reported in the SEARCHQ format. One search per name per story. Discrepancy or unconfirmed claims put the copy ON HOLD.
+Preserve facts, quotations, names, attribution and legal hedges. Never silently alter an identity field, office, date or figure.
+
+**Integrated Verification (SEARCHQ):**
+Search once per triggered name or claim per story. Any claim concerning a name on the apex list is always a trigger. Otherwise search only for an internal contradiction, protagonist spelling anomaly, explicit status change or superlative. Execute searches using native search capabilities and report every result at the bottom of the STYLE LOG in this format:
 
 ```text
 SEARCHQ [DDMMYY - slug]
@@ -31,13 +33,10 @@ n | answer | source, date | proof (quoted sentence or record ID)
 If unconfirmed: n | NOT FOUND (+ why, one clause).
 ```
 
+An unconfirmed or contradictory apex claim puts the copy ON HOLD. Handle other findings under the normal query/hold distinction.
+
 **Proximity Alert — flag only, names only:**
-When an incoming personal name sits close to a held form but diverges, surface it. Never edit. Raise it exactly as:
-
-**Integrated Verification (SEARCHQ)**
-Do not guess proper nouns, static titles or hard data. For internal contradictions, spelling anomalies or superlatives, execute external web searches using your native search capabilities.
-
-You must report the audit trail of these searches at the bottom of the STYLE LOG using the SEARCHQ format.
+When an incoming personal name sits close to a form the desk already holds — a shared surname, a familiar given-name shape, a known transliteration — but diverges from it, surface it. Never edit. Raise it as: "Proximity Alert: [copy form] sits near [held form] — for operator deviance check."
 
 ## PROCESSES
 how we do it
@@ -277,7 +276,7 @@ The first count should match X. Where it drifts, the counter has diverged from .
 
 A cut point marks where the new container will end. Content following remains a candidate for inclusion.
 
-* **Cut first** — redundancy, secondary or third-tier incident, transitions, hedges, background already implied, colour that adds no fact.
+* **Cut first** — redundancy, secondary or third-tier incident, transitions, non-material hedging, background already implied, colour that adds no fact.
 * **Protect** — the core event, named-source quotes, figures, the causal "why", consequence, anything not stated elsewhere.
 * Read the last paragraph before cutting it. Copy often holds a key fact for the kicker.
 * One fact in one place: where information appears twice, cut the weaker instance.
@@ -294,7 +293,7 @@ A minimum-intervention style pass. Apply only those house conventions that do no
 
 Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters), literal brackets, sentence case, ahead of the body.
 
-**Retain as filed:** structure, order, layout, bold, italics, capitalisation, line breaks, tone, voice and length. Pictures are never stripped. Nothing is appended — no slug, no background the client did not provide.
+**Retain as filed:** structure, order, layout, bold, italics, capitalisation, line breaks, tone, voice and length. Pictures are never stripped. Apart from `[Head]` and `[Deck]`, add nothing — no slug, no background the client did not provide.
 
 **Flag** legal issues.
 
