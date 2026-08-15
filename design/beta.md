@@ -1,3 +1,6 @@
+BETA BRANCH — xx0826_all_compact — go.fuzzylogic.page/beta
+
+
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
 # GUIDE
@@ -389,9 +392,7 @@ Unresolved:
 
 
 
-<!-- PART: 110826_all_guide-directory DIRECTORY -->
-
-go.fuzzylogic.page/dir
+BETA BRANCH — xx0826_all_compact — go.fuzzylogic.page/beta
 
 # DIRECTORY
 
