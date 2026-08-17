@@ -1,6 +1,19 @@
 @echo off
 setlocal
-cd /d "D:\Documents\BANGKOK POST DESK EDITOR\Project_Space\pipeline-registry" || (echo [ERROR] repo folder not found & pause & exit /b 1)
+REM --- find the repo ----------------------------------------------------------
+REM This script lives IN the clone, so the clone is wherever this script is.
+REM %~dp0 is that folder, with a trailing backslash, drive included. Resolving it
+REM this way means the folder can be moved, renamed or put on another drive and
+REM the script still works. It used to hold a hardcoded D:\ path; the folder moved
+REM to C:\Users and every run exited here before reaching git.
+cd /d "%~dp0" || (echo [ERROR] could not enter "%~dp0" & pause & exit /b 1)
+if not exist ".git" (
+  echo [ERROR] no .git here - this script is not sitting in the clone.
+  echo         Looked in: "%~dp0"
+  echo         Put push.bat back in the pipeline-registry folder and re-run.
+  pause & exit /b 1
+)
+echo [ok] repo: %cd%
 
 REM --- clear a STALE lock, but only if no git process is running ---
 if exist ".git\index.lock" (
@@ -129,7 +142,8 @@ if "%LH%"=="%RH%" (
   echo           Do not assume it published. Investigate before trusting.
 )
 echo.
-echo (Verify with a cache-buster: go.fuzzylogic.page/core?cb=1 - a bare fetch)
-echo (can return a body from a superseded commit with no error. Trap 1.)
+echo (Verify with a cache-buster on the raw link - a bare fetch can return a)
+echo (body from a superseded commit with no error. Trap 1.)
+echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt?cb=1)
 pause
 endlocal

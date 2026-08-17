@@ -8,6 +8,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-17
+
+- 2026-08-16 Blueprint/index.{txt,yaml} - core and reg marked retired names, superseded by guide and dir (op-ruled 160826). Dub repoint of core done by the operator same day and verified; reg has no entry and none was created.
+
+- 2026-08-16 design/Sidebar/ - sidebar collection relocated out of Shift\ into the clone, 10 files (SIDEBAR.md/.docx/.pdf, EDIT, PR, PHOTO, CHECK, WATCH, AUDIT, MANIFEST). Checked for credential-shaped links before it entered a public repo; none.
+
+- 2026-08-16 CLAUDE.md (root; mirrors to bootstrap/) - six facts corrected: pushed, serving sizes and bot commit, the /core and /reg links, the editions list and current, the history handoff pointer, and the design folder note. Facts only, no rule changed.
+
 ## Cleared 2026-08-13
 
 - 2026-08-11 | BLUEPRINT.txt | ALIGN shortlink lines to the file names. Part

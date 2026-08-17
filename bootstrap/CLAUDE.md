@@ -225,12 +225,12 @@ marks the only file a human may change.
 
 build: 110826_all_shortlink-names
 previous: 110826_all_guide-directory  # pushed 110826, commit b308601 + bot 6bca4dd
-pushed: false                   # 110826_all_shortlink-names is not pushed
+pushed: true                    # live on origin; parts carry the tag at f4db87f
 serving:
-  status: LIVE — the whole chain, verified 090826 by contents API against local sizes
-  bot_commit: c7bca93        # compile-bot, the derived parts
+  status: LIVE — the whole chain, verified 160826 against origin at f4db87f
+  bot_commit: 3ac740c        # compile-bot, the derived parts, 130826
   note: >
-    GUIDE.txt 27557 and DIRECTORY.txt/.yaml 36301 on the remote, byte-for-byte the
+    GUIDE.txt 26399 and DIRECTORY.txt/.yaml 36842 on the remote, byte-for-byte the
     local parts. PROCESSES.txt removed by the job. The shims are genuine copies,
     not stale files: STATUS.* and REFERENCES.* all share one blob sha with
     DIRECTORY.yaml, and COMPILED.* shares one with BLUEPRINT.txt. Manifest
@@ -250,14 +250,14 @@ working_set:
       syntax: markdown
       hand_edit: false
       deploys: true
-      link: /core
+      link: /guide      # /core retired 160826
     DIRECTORY.txt:
       role: derived, byte-identical to DIRECTORY.yaml
       contains: register + status
       syntax: yaml
       hand_edit: false
       deploys: true
-      link: /reg
+      link: /dir        # /reg retired 160826
     DIRECTORY.yaml:
       role: derived, authoring form
       hand_edit: false
@@ -302,7 +302,7 @@ shift_folder:
 editions:
   path: Editions/
   purpose: sealed builds, outside the clone. Artifacts of record.
-  current: Editions/090826_reg_part-opening/
+  current: Editions/110826_all_shortlink-names/
   sealed:
     070826_all_rebuild: complete — parts, pdf, and the docx/pdf volume pair
     090826_reg_part-opening: >
@@ -311,6 +311,13 @@ editions:
       tools/build_bkp_compendium.py, which runs in the compile job, so no docx
       exists for a build until it is pushed and CI has run. Seal the volume into
       the edition after the push, not before.
+    100826_reg_exemplar-sweep: >
+      complete — txt, pdf, docx, manifest. Last edition under the four-part
+      names: it carries CORE.txt and REGISTER.txt/.yaml, not GUIDE and DIRECTORY.
+    110826_all_guide-directory: complete — parts, pdf, docx, manifest.
+    110826_all_shortlink-names: >
+      complete — parts, pdf, docx, manifest. The current edition, and the build
+      serving on origin.
   what_build_py_writes: [GUIDE.txt, DIRECTORY.yaml, DIRECTORY.txt, BLUEPRINT.pdf]
 
 custody:
@@ -375,12 +382,32 @@ custody:
     contents: [build_bkp_compendium.py, bkp_docx_design.py, audit_bkp_compendium.py]
   design:
     path: pipeline-registry/design/
-    note: markdown-to-Word spec. References compare/COMPILED.md and
-          compare/BKP_conversion_design_proof.docx, NEITHER OF WHICH EXISTS.
+    note: >
+      Two unrelated things share this folder. (1) The markdown-to-Word spec —
+      BKP_MARKDOWN_TO_WORD_SPEC.md and
+      CLAUDE_BKP_DOCX_COMPANION_BUILD_INSTRUCTIONS.md — which reference
+      compare/COMPILED.md and compare/BKP_conversion_design_proof.docx, NEITHER
+      OF WHICH EXISTS. (2) beta.md, the beta lane, served at
+      go.fuzzylogic.page/beta. The lane is NOT part of the build chain: not
+      derived by build.py or compile.yml, not deployed, not in the shift set.
+      Nothing on entry depends on it.
 
 history:
+  130826_decisions.md:
+    role: >
+      CURRENT RULINGS. Desk rulings of 13 August against CANDIDATE_ONLY.md,
+      superseding CANDIDATE_REVIEW.md (120826) wherever they differ. Its own
+      open list closes at nothing. Read before reopening any question it names.
+  110826_handoff_sidebar-set.md:
+    role: >
+      Sidebar skill collection — EDIT, PR, PHOTO, CHECK, WATCH, AUDIT — as at
+      11 August, with the panel capability findings. Copied down 160826 from the
+      claude.ai Project doc so a session without the Project has it. Six open
+      items at its foot.
+  130826_candidate-breakpoints.md, 130826_candidate-remaining-failures.md:
+    role: candidate-build findings, 130826. Companions to the rulings above.
   090826_handoff_volume-render.md:
-    role: CURRENT HANDOFF. Read on resuming. Written on WRAP.
+    role: prior handoff — the volume renderer. Read on resuming that work.
     note: >
       The volume renderer is built and verified but NOT pushed. Two items need
       an operator ruling before BLUEPRINT.txt is touched — the PROCESSES section

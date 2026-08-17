@@ -2,11 +2,17 @@
 """
 Cut the shift folder.
 
+    Shift/BLUEPRINT.txt   both parts in one document, for a destination that
+                          takes one file
     Shift/GUIDE.txt       core + processes, markdown syntax
     Shift/DIRECTORY.txt   status + references, YAML syntax
 
-Both copied from the confirmed-latest parts at the root of Project_Space.
-Nothing else ever goes in it. It is a copy and never a source: nothing is
+All three copied from the confirmed-latest set at the root of Project_Space.
+Nothing else ever goes in it. The folder is the bare minimum needed to sub a
+release from anywhere, handed over whole: the split pair for a destination that
+takes two files, the single document for one that takes text. Anything else in
+there is something to sift through before working, which is the one thing the
+folder exists to prevent. It is a copy and never a source: nothing is
 edited there, and nothing unique ever lives there, so deleting it can never
 lose anything.
 
@@ -26,7 +32,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SHIFT = ROOT / "Shift"
-PARTS = ("GUIDE.txt", "DIRECTORY.txt")
+PARTS = ("BLUEPRINT.txt", "GUIDE.txt", "DIRECTORY.txt")
+
+# Only the two derived parts carry a `PART:` seam. BLUEPRINT.txt is the source
+# and opens with its title, so it is copied and size-checked but not tag-checked.
+SEAMED = ("GUIDE.txt", "DIRECTORY.txt")
 
 SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
 
@@ -56,7 +66,7 @@ def main():
 
     # Every part of one build carries one tag. A part on a different tag is a
     # bad set and must not be handed to a shift.
-    tags = {name: tag_of(src) for name, src in sources.items()}
+    tags = {name: tag_of(sources[name]) for name in SEAMED}
     if None in tags.values():
         print("FATAL: a part carries no seam:", tags)
         return 1
@@ -80,7 +90,7 @@ def main():
 
     if stale:
         problems.append("not part of a shift: %s" % ", ".join(stale))
-        print("STRAY in Shift/: %s — a shift folder holds the two parts and "
+        print("STRAY in Shift/: %s — a shift folder holds the three files and "
               "nothing else" % ", ".join(stale))
 
     # A stray file is not repaired by copying — the desk does not delete on this
@@ -96,7 +106,7 @@ def main():
         print("\nbuild %s — SHIFT READY" % tag)
         return 0
 
-    print("\nshift ready — build %s, two parts, text format" % tag)
+    print("\nshift ready — build %s, three files, text format" % tag)
     return 0
 
 

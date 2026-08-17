@@ -9,6 +9,134 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 ---
 
 
+## 2026-08-16 — SHIFT FOLDER RETURNED TO THE GO-BAG; shift.py CUTS THREE
+
+**The purpose, restated by the operator and recorded here because the desk had it
+wrong.** The folder exists so that a subeditor reached anywhere, in any state, has
+the bare minimum to sub a release and nothing to sift through. That is
+`BLUEPRINT.txt` whole for a destination taking one file, and `GUIDE.txt` +
+`DIRECTORY.txt` for one taking the split pair. Three files. The beta lane is kept
+out deliberately — it is not the lifesaver the folder is for.
+
+**Found.** `Shift\` held 27 entries. The three current parts were refreshed to
+`110826_all_shortlink-names` this session; the other 24 dated from the 11 August
+composite assembly recorded in its own `MANIFEST.txt`. The desk read an earlier
+instruction — family-less documents stay saved — as licence to keep that composite
+in place and refresh around it, and refreshed `DIRECTORY.yaml` as part of the set,
+entrenching a stray on a folder it had already reported would fail its own guard.
+
+**Done.** The sidebar collection — SIDEBAR.md/.docx/.pdf, EDIT, PR, PHOTO, CHECK,
+WATCH, AUDIT, MANIFEST — moved to `pipeline-registry/design/Sidebar/`, design being
+where work sits that needs no close watch until finished. Checked for
+credential-shaped links first, none found, which matters because design/ is inside
+the public clone. The shim set was already copied to `_pending-delete\`. The
+remaining strays are redundant against `Editions/110826_all_guide-directory/`, the
+clone or origin. `Shift\` goes to three; the sweep is the operator's, `rm` being
+blocked on the mount.
+
+**shift.py corrected.** `PARTS` was two files, so the tool that maintains the
+folder would have reported NOT READY on `BLUEPRINT.txt` forever — the go-bag
+rejected by its own keeper. `PARTS` is now the three. `BLUEPRINT.txt` opens with
+its title rather than a `PART:` seam, so the build-tag agreement check runs over a
+separate `SEAMED` pair and the source is copied without being tag-checked.
+Exercised against a mock root: clean cut, idempotent re-run, stray detected and
+NOT READY returned with exit 1.
+
+## 2026-08-16 — SHORTLINK AUDIT; core AND reg REPOINTED AND RETIRED
+
+**Audit.** Every shortlink in the operating instruction set tested against Dub
+and against its raw target. Live and correct: `/blue`, `/guide`, `/dir`,
+`/beta`, `/git`, `/bpdocx`, `/status`, `/refs`. Dub keys are case-insensitive —
+`/DIR` and `/dir` resolve identically.
+
+**Found.** `/core` returned HTTP 404 on every attempt during the audit, against
+a destination of `main/Blueprint/CORE.txt` — a path deleted from the repo on
+2026-08-11 in b308601. The desk asserted a mechanism for the bare 404 that it had
+not verified and could not verify from outside the Dub console; what it had was
+the 404 and the deleted destination, which was enough for the finding and not
+enough for the explanation. Record the evidence, not the mechanism. The entry below records `/core` and `/reg` as moving to the shims
+block and still resolving — the index was updated, the Dub destination was not.
+`/pro` behaves the same way against `PROCESSES.txt`, deleted 2026-08-09, and was
+already ruled retired on 080826. `/reg` and `/full` are not registered on Dub at
+all: Dub serves its own "link not found" page for those, which is what separates
+them from the 404 cases.
+
+**Evidence.** Raw fetch of `main/Blueprint/CORE.txt` → 404. `git log
+--diff-filter=D` names b308601 (2026-08-11) for `Blueprint/CORE.txt` and
+c7bca93 (2026-08-09) for `Blueprint/PROCESSES.txt`. Bare HTTP 404 on `/core` and
+`/pro`, against Dub's rendered error page on `/reg` and `/full`.
+
+**Verdict (op-ruled 2026-08-16).** Repoint `/core` at the live part so nothing
+held on an old link breaks, and treat it as a retired name from this date — not
+published, not cited in the operating document. `index.txt` and `index.yaml`
+carry the retirement line alongside the 080826 `pro` line.
+
+**Closed same day.** The operator repointed `/core` at
+`refs/heads/main/Blueprint/GUIDE.txt` within the hour and it was verified
+resolving, 302, same target as `/guide`. `/reg` has no Dub entry and none was
+created: a key invented for a name retired the same day buys nothing, and
+`index.txt` already carries the target if one is ever wanted.
+
+**`/pro` is not settled.** It returned a bare 404 on three attempts with
+different cache-busting parameters. That signature is not diagnostic — `/core`
+produced it too while registered — so nothing about `/pro` can be concluded from
+outside the Dub console. It was ruled retired on 080826 either way; if an entry
+is still there it is aimed at `PROCESSES.txt`, deleted 2026-08-09.
+
+**Also found, unactioned.** `Shift/` holds the `110826_all_guide-directory`
+parts, one build behind the root's `110826_all_shortlink-names`; it also holds
+the 11 August SIDEBAR composite, which `shift.py`'s no-stray-file guard will
+refuse. Left as assembled, no ruling sought. `compile.yml`'s header comment at
+lines 11-13 still labels the two derived files `/core /reg`.
+
+**Clone state.** No content drift between the clone and origin: every byte-size
+difference is CRLF under `* text=auto`. origin/main at f4db87f.
+
+**BOOTSTRAP CORRECTED, same day.** Six untrue facts in `CLAUDE.md`, found while
+answering the audit and fixed under the file's own closing rule. `pushed: false`
+for `110826_all_shortlink-names` — it is live on origin. `serving:` carried
+GUIDE.txt 27557 and DIRECTORY 36301 at bot `c7bca93`, verified 090826; the remote
+now holds 26399 and 36842 at bot `3ac740c`. `working_set` gave GUIDE.txt the link
+`/core` and DIRECTORY.txt `/reg`, both retired earlier today; now `/guide` and
+`/dir`. `editions:` named 090826_reg_part-opening as current and listed two
+sealed; `Editions\` holds five, and the current one is 110826_all_shortlink-names.
+`history:` pointed at the 090826 handoff as CURRENT with the 110826 and 130826
+documents sitting past it. `custody.design` described the folder as the
+markdown-to-Word spec alone; it also holds `beta.md`, the beta lane, which is not
+in the build chain and which nothing on entry depends on.
+
+The fenced index still parses and the two-part profile is unchanged. The root
+copy is the one edited; `bootstrap/CLAUDE.md` is the mirror and `push.bat`
+overwrites it root -> clone on the next run.
+
+**WITHDRAWN, same day — the claim above was false.** This entry originally
+recorded that a session carrying the claude.ai Project cannot execute `shift.py`,
+and a working arrangement was recommended on that basis. It is not true. A cloud
+session runs the toolchain in its own container and moves files over the desktop
+bridge. Tested 160826: `build.py` executed there against the current source,
+passed all four guards — dollar-pairing, edition at
+`110826_all_shortlink-names`, invertibility, register parse (apex 10, cabinet 8,
+provinces 77) — and produced `GUIDE.txt` and `DIRECTORY.txt` byte-identical to
+the copies on the machine. pandoc 3.1.3 and xelatex are both present.
+
+The desk had one observation — no shell tool addressing the operator's machine —
+and built "therefore a cloud session cannot run the pipeline" on top of it,
+repeated it as settled across a dozen turns, and recommended restructuring the
+working setup around it. It never ran the test, which took one command. Same
+fault as the `/core` mechanism above and the `pushed: false` read out of the
+bootstrap instead of off origin: an unexplained gap filled with a plausible
+mechanism and reported as fact.
+
+What is actually out of reach from a cloud session, tested rather than assumed:
+deleting or moving files on the operator's machine, no tool existing for either;
+and `git push`, this clone being unauthenticated. The docx was never built
+locally in any mode — `build.py` defers it to CI via `seal.py`. Related and also open:
+publishing the bootstrap as `go.fuzzylogic.page/boot` over
+`main/bootstrap/CLAUDE.md`, which already serves as plain text and is mirrored on
+every push. The Dub key does not exist yet, and an index entry written before the
+key exists would repeat exactly the `/core` failure, so nothing was added here.
+
+
 ## 2026-08-11 — SHORTLINK LINES ALIGNED TO THE FILE NAMES; 110826_all_shortlink-names
 
 Follow-on to `110826_all_guide-directory`, which renamed the two delivered
