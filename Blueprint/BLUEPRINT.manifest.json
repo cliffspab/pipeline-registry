@@ -1,5 +1,5 @@
 {
-  "source": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.txt",
+  "edition": "210826_gpt_compact",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
@@ -7,13 +7,13 @@
     1,
     1
   ],
-  "source_blocks": 226,
+  "source_blocks": 155,
   "source_block_types": {
-    "BulletList": 15,
-    "CodeBlock": 4,
-    "Header": 55,
+    "BulletList": 14,
+    "CodeBlock": 6,
+    "Header": 41,
     "OrderedList": 2,
-    "Para": 148,
+    "Para": 90,
     "RawBlock": 2
   },
   "suppressed_structural_separator_paragraphs": 0,
