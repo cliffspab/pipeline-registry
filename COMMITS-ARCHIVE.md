@@ -11,6 +11,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-21
+
+- 2026-08-21 | CI | Match the declared raw-DIRECTORY omission at its current `status:` opening instead of the retired shortlink marker.
+
 ## Cleared 2026-08-21
 
 - 2026-08-21 | Blueprint | Remove the terminal blank line inside DIRECTORY so the CI split remains byte-for-byte invertible.
