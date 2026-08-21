@@ -9,7 +9,7 @@ name: Split BLUEPRINT into parts and build the style guide
 # FOUR are derived from it on push, and never touched by hand:
 #   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
 #   Blueprint/GUIDE.txt        )  part delivery for machine consumers:
-#   Blueprint/DIRECTORY.yaml   )  /core /reg
+#   Blueprint/DIRECTORY.yaml   )  /guide /dir
 #   Blueprint/DIRECTORY.txt    )
 #
 # 070826: PROCESSES merged into CORE as a section; STATUS and REFERENCES
@@ -187,9 +187,8 @@ jobs:
           for branch in ("status", "references"):
               if branch not in parsed:
                   sys.exit("FATAL: the register is missing the '%s' branch." % branch)
-          print("register parse: PASS (apex %d, cabinet %d, provinces %d)"
+          print("register parse: PASS (apex %d, provinces %d)"
                 % (len(parsed["status"]["apex"]),
-                   len(parsed["status"]["cabinet"]["members"]),
                    len(parsed["references"]["thai_places"]["provinces"])))
 
           reg_text = "# PART: %s DIRECTORY\n%s\n" % (tag, reg_body)
@@ -289,7 +288,7 @@ jobs:
           # against the profile recorded by the last successful build. A
           # heading typed as bare text keeps every word - the coverage audit
           # stays green - but the Header count drops. That is what this catches.
-          import json, subprocess, sys, os, tempfile, collections
+          import json, subprocess, sys, os, re, tempfile, collections
 
           pandoc = open("/tmp/pandoc_path").read().strip()
           with tempfile.TemporaryDirectory() as tmp:
@@ -306,7 +305,15 @@ jobs:
           if not os.path.exists(prev_path):
               print("no previous manifest - baseline established, skipping")
               sys.exit(0)
-          prev = json.load(open(prev_path, encoding="utf-8")).get("source_block_types")
+          previous_manifest = json.load(open(prev_path, encoding="utf-8"))
+          source_text = open("Blueprint/BLUEPRINT.txt", encoding="utf-8").read()
+          edition_match = re.search(r"<!-- PART: (\S+) GUIDE -->", source_text)
+          current_edition = edition_match.group(1) if edition_match else ""
+          previous_edition = previous_manifest.get("edition", "")
+          if "_gpt_" in current_edition and "_gpt_" not in previous_edition:
+              print("legacy -> GPT edition: accepting one explicit structure baseline transition")
+              sys.exit(0)
+          prev = previous_manifest.get("source_block_types")
           if not prev:
               print("previous manifest carries no profile - skipping")
               sys.exit(0)

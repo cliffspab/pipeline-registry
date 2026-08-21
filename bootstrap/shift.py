@@ -1,28 +1,5 @@
 #!/usr/bin/env python3
-"""
-Cut the shift folder.
-
-    Shift/BLUEPRINT.txt   both parts in one document, for a destination that
-                          takes one file
-    Shift/GUIDE.txt       core + processes, markdown syntax
-    Shift/DIRECTORY.txt   status + references, YAML syntax
-
-All three copied from the confirmed-latest set at the root of Project_Space.
-Nothing else ever goes in it. The folder is the bare minimum needed to sub a
-release from anywhere, handed over whole: the split pair for a destination that
-takes two files, the single document for one that takes text. Anything else in
-there is something to sift through before working, which is the one thing the
-folder exists to prevent. It is a copy and never a source: nothing is
-edited there, and nothing unique ever lives there, so deleting it can never
-lose anything.
-
-Idempotent. Run it on entry to the folder, on every build, and any time the
-parts move. If the folder is already correct it says so and writes nothing;
-if the operator has taken the files, it puts them back.
-
-    python3 shift.py            cut or refresh
-    python3 shift.py --check    report only, exit 1 if not shift-ready
-"""
+"""Build or verify the exact shift handover set."""
 
 import hashlib
 import re
@@ -32,83 +9,107 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SHIFT = ROOT / "Shift"
+SIDEBAR_SOURCE = ROOT / "pipeline-registry" / "design" / "Sidebar"
+SIDEBAR_DEST = SHIFT / "Sidebar"
 PARTS = ("BLUEPRINT.txt", "GUIDE.txt", "DIRECTORY.txt")
-
-# Only the two derived parts carry a `PART:` seam. BLUEPRINT.txt is the source
-# and opens with its title, so it is copied and size-checked but not tag-checked.
 SEAMED = ("GUIDE.txt", "DIRECTORY.txt")
-
 SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
 
 
 def digest(path):
-    return hashlib.md5(path.read_bytes()).hexdigest()
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def tag_of(path):
-    """The build tag from the part's own seam — its first line."""
     with path.open(encoding="utf-8") as fh:
-        m = SEAM.search(fh.readline())
-    return m.group(1) if m else None
+        match = SEAM.search(fh.readline())
+    return match.group(1) if match else None
 
 
 def main():
     check_only = "--check" in sys.argv
     problems = []
-
     sources = {name: ROOT / name for name in PARTS}
+
     for name, src in sources.items():
-        if not src.exists():
-            problems.append("missing source: %s" % name)
+        if not src.is_file():
+            problems.append(f"missing source: {name}")
+    if not SIDEBAR_SOURCE.is_dir():
+        problems.append(f"missing Sidebar source: {SIDEBAR_SOURCE}")
     if problems:
         print("\n".join(problems))
         return 1
 
-    # Every part of one build carries one tag. A part on a different tag is a
-    # bad set and must not be handed to a shift.
     tags = {name: tag_of(sources[name]) for name in SEAMED}
-    if None in tags.values():
-        print("FATAL: a part carries no seam:", tags)
-        return 1
-    if len(set(tags.values())) != 1:
-        print("FATAL: parts disagree on build tag:", tags)
+    if None in tags.values() or len(set(tags.values())) != 1:
+        print("FATAL: parts do not carry one matching build tag:", tags)
         return 1
     tag = next(iter(tags.values()))
 
-    SHIFT.mkdir(exist_ok=True)
-
-    stale = [p.name for p in SHIFT.iterdir() if p.name not in PARTS]
-    for name, src in sources.items():
-        dst = SHIFT / name
-        if dst.exists() and digest(dst) == digest(src):
-            print("current: Shift/%s" % name)
-            continue
-        problems.append(name)
-        if not check_only:
-            shutil.copy2(src, dst)
-            print("written: Shift/%s" % name)
-
-    if stale:
-        problems.append("not part of a shift: %s" % ", ".join(stale))
-        print("STRAY in Shift/: %s — a shift folder holds the three files and "
-              "nothing else" % ", ".join(stale))
-
-    # A stray file is not repaired by copying — the desk does not delete on this
-    # mount. It is reported and the folder is NOT declared ready, whichever mode
-    # we are in. A false all-clear is the fault this whole procedure exists to
-    # prevent.
-    if stale:
-        print("\nbuild %s — NOT READY. Move the stray file(s) to "
-              "_pending-delete\\ and re-run." % tag)
+    sidebar_sources = {
+        p.name: p for p in SIDEBAR_SOURCE.iterdir() if p.is_file()
+    }
+    if not sidebar_sources:
+        print("FATAL: Sidebar source contains no files")
         return 1
 
-    if check_only:
-        print("\nbuild %s — SHIFT READY" % tag)
-        return 0
+    if not check_only:
+        SHIFT.mkdir(exist_ok=True)
+        SIDEBAR_DEST.mkdir(exist_ok=True)
 
-    print("\nshift ready — build %s, three files, text format" % tag)
+    if not SHIFT.is_dir():
+        problems.append("Shift folder does not exist")
+    else:
+        allowed = set(PARTS) | {"Sidebar"}
+        stale = sorted(p.name for p in SHIFT.iterdir() if p.name not in allowed)
+        if stale:
+            problems.append("stray in Shift/: " + ", ".join(stale))
+
+    for name, src in sources.items():
+        dst = SHIFT / name
+        if dst.is_file() and digest(dst) == digest(src):
+            print(f"current: Shift/{name}")
+        else:
+            problems.append(f"stale or missing: Shift/{name}")
+            if not check_only:
+                shutil.copy2(src, dst)
+                print(f"written: Shift/{name}")
+
+    if SIDEBAR_DEST.is_dir():
+        stale_sidebar = sorted(
+            p.name for p in SIDEBAR_DEST.iterdir()
+            if not p.is_file() or p.name not in sidebar_sources
+        )
+        if stale_sidebar:
+            problems.append("stray in Shift/Sidebar/: " + ", ".join(stale_sidebar))
+    else:
+        problems.append("missing: Shift/Sidebar/")
+
+    for name, src in sorted(sidebar_sources.items()):
+        dst = SIDEBAR_DEST / name
+        if dst.is_file() and digest(dst) == digest(src):
+            print(f"current: Shift/Sidebar/{name}")
+        else:
+            problems.append(f"stale or missing: Shift/Sidebar/{name}")
+            if not check_only:
+                shutil.copy2(src, dst)
+                print(f"written: Shift/Sidebar/{name}")
+
+    if problems and check_only:
+        print("\n".join(problems))
+        print(f"\nbuild {tag} — NOT READY")
+        return 1
+
+    # Copying repairs missing or stale approved files, but never removes strays.
+    remaining = [p for p in problems if p.startswith("stray in")]
+    if remaining:
+        print("\n".join(remaining))
+        print(f"\nbuild {tag} — NOT READY; move strays to Archive and rerun")
+        return 1
+
+    print(f"\nshift ready — build {tag}; three text files + {len(sidebar_sources)} Sidebar files")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

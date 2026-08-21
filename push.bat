@@ -28,6 +28,62 @@ if exist ".git\index.lock" (
   )
 )
 
+REM --- read-only preflight: no mirroring, staging or record clearing yet -------
+echo.
+echo === PRE-FLIGHT - NOTHING HAS BEEN STAGED ===
+if exist ".git\MERGE_HEAD" (
+  echo [ABORT] unfinished merge detected.
+  pause & exit /b 1
+)
+if exist ".git\rebase-merge" (
+  echo [ABORT] unfinished rebase detected.
+  pause & exit /b 1
+)
+for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
+  if not exist "..\%%F" (
+    echo [ABORT] required workspace file missing: ..\%%F
+    pause & exit /b 1
+  )
+)
+git fetch origin || (echo [FAIL] fetch failed - nothing changed locally & pause & exit /b 1)
+git diff --check || (echo [ABORT] whitespace/error check failed & pause & exit /b 1)
+
+echo.
+echo --- branch and payload ---
+git status --short --branch
+echo.
+git diff --stat
+echo.
+git diff --name-status
+echo.
+echo --- untracked files ---
+git ls-files --others --exclude-standard
+echo.
+echo --- pending record ---
+type COMMITS-PENDING.md
+
+echo.
+echo --- bootstrap files that will change ---
+for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
+  if not exist "bootstrap\%%F" (
+    echo   ADD bootstrap\%%F
+  ) else (
+    fc /b "..\%%F" "bootstrap\%%F" >nul
+    if errorlevel 1 echo   UPDATE bootstrap\%%F
+  )
+)
+
+echo.
+echo Review every modified, deleted and untracked path above.
+echo Typing PUSH authorises the exact displayed payload, bootstrap mirrors,
+echo pending-list archival, commit, rebase, push, verification and sealing.
+set "BKP_CONFIRM="
+set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
+if /I not "%BKP_CONFIRM%"=="PUSH" (
+  echo [STOPPED] preflight only. Nothing staged, committed or pushed.
+  exit /b 0
+)
+echo [confirmed] beginning the authorised push sequence.
 REM --- mirror the bootstrap set into the clone so the push backs it up -------
 REM These three live at the Project_Space root and are NOT part of the published
 REM volume. CLAUDE.md must sit at the root to be read on entry, and none of them
@@ -43,7 +99,7 @@ echo === mirroring bootstrap set ===
 if not exist "bootstrap" mkdir "bootstrap"
 REM 100826: seal.py and clear_pending.py added. push.bat CALLS both, so a repo
 REM that does not hold them carries a push script it cannot run after a restore.
-for %%F in (CLAUDE.md shift.py build.py seal.py clear_pending.py CANDIDATE_ONLY.md 130826_candidate-breakpoints.md 130826_candidate-remaining-failures.md) do (
+for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
   if exist "..\%%F" (
     copy /Y "..\%%F" "bootstrap\%%F" >nul
     echo   mirrored %%F

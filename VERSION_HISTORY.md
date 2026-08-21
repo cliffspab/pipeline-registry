@@ -8,6 +8,15 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 ---
 
+## 2026-08-21 — 210826_gpt_compact: COMPACT BLUEPRINT AND GPT ADMINISTRATION
+
+**Promoted.** The approved compact beta is now the source: Integrity and cabinet are gone; operator becomes supervisor in current instructions; CORE becomes EDITING; GUIDE and DIRECTORY carry the shortlinks `/guide` and `/dir`; output templates are boxed; the apex list remains at ten and the redundant reversals heading is removed.
+
+**Machinery.** The renderer and CI now compile the cabinet-free structure and record the edition. The one-time GPT baseline transition is explicit; later GPT editions return to the normal structure guard. `AGENTS.md` replaces CLAUDE administration, Shift carries the three current text files plus the shared Sidebar set, and `push.bat` now stops at a read-only preflight unless the supervisor types literal `PUSH`.
+
+**Housekeeping.** Pre-GPT workspace material and obsolete repository candidate/handoff mirrors were moved into the dated local archive. The two abandoned editable/generated-surface notes were discarded.
+
+**Verdict.** Ready for supervisor survey and the maiden guarded push.
 
 ## 2026-08-16 — SHIFT FOLDER RETURNED TO THE GO-BAG; shift.py CUTS THREE
 

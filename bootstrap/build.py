@@ -135,7 +135,6 @@ def register_yaml(part, tag):
             fail(f"the register is missing the '{branch}' branch")
     print(f"register parse guard: PASS "
           f"(apex {len(parsed['status']['apex'])}, "
-          f"cabinet {len(parsed['status']['cabinet']['members'])}, "
           f"provinces {len(parsed['references']['thai_places']['provinces'])})")
     return f"# PART: {tag} DIRECTORY\n{body}\n", parsed
 

@@ -9,6 +9,23 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-21
+
+- 2026-08-21 | Blueprint | Promote `210826_gpt_compact`: compact beta source, Integrity and cabinet removed, supervisor terminology, EDITING hierarchy and boxed output templates.
+
+- 2026-08-21 | Directory | Keep the apex register at ten figures; remove the redundant political-and-legal-reversals display heading.
+
+- 2026-08-21 | Build | Update the renderer and CI for GUIDE (`/guide`) and DIRECTORY (`/dir`), cabinet-free validation, edition manifests and the one-time GPT baseline transition.
+
+- 2026-08-21 | Administration | Replace obsolete CLAUDE administration with `AGENTS.md` and mirror it through bootstrap.
+
+- 2026-08-21 | Shift | Make Shift exactly BLUEPRINT.txt, GUIDE.txt, DIRECTORY.txt and the current Sidebar set.
+
+- 2026-08-21 | Push | Add a read-only preflight and literal `PUSH` gate to `push.bat`.
+
+- 2026-08-21 | Archive | Archive the pre-GPT workspace material and retire obsolete beta, candidate and handoff mirrors from the repository.
+
 ## Cleared 2026-08-17
 
 - 2026-08-16 Blueprint/index.{txt,yaml} - core and reg marked retired names, superseded by guide and dir (op-ruled 160826). Dub repoint of core done by the operator same day and verified; reg has no entry and none was created.

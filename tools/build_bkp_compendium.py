@@ -87,8 +87,8 @@ SECTION_DISPLAY = {"REFERENCES": "REFS"}
 # The running head names where the text actually lives, which is the file the
 # reader would fetch. PROCESSES is inside CORE; both register branches are /reg.
 SECTION_SHORTFORM = {
-    "CORE": "/core", "PROCESSES": "/core",
-    "STATUS": "/reg", "REFERENCES": "/reg",
+    "CORE": "/guide", "PROCESSES": "/guide",
+    "STATUS": "/dir", "REFERENCES": "/dir",
 }
 
 # YAML key -> the heading the original volume printed. Anything absent here is
@@ -140,13 +140,13 @@ RECORD_FIELDS = ["fact", "office", "ruling", "second_ref", "directive"]
 # register all key off COMPONENTS - so this is presentation only and never
 # reaches back into canon.
 COMPONENT_DISPLAY = {
-    "CORE": "CORE",
+    "CORE": "EDITING",
     "DIRECTORY": "DIRECTORY",
 }
 
 COMPONENT_SHORTFORM = {
-    "CORE": "/core",
-    "DIRECTORY": "/reg",
+    "CORE": "/guide",
+    "DIRECTORY": "/dir",
 }
 COMPONENT_DESCRIPTIONS = {
     "CORE": "Doctrine, authority, conventions, editing and output",
@@ -336,7 +336,7 @@ def add_field(paragraph, instruction, cached_text=""):
 
 def configure_header_footer(section, label, blank_first=False):
     section.different_first_page_header_footer = blank_first
-    short = COMPONENT_SHORTFORM.get(label, label)
+    short = SECTION_SHORTFORM.get(label, COMPONENT_SHORTFORM.get(label, label))
     # The running head sits at the same horizontal position its cell occupies
     # in the four-bar register: CORE far left, PROCESSES a quarter across,
     # STATUS half, REFERENCES three-quarters. Placement alone says which
@@ -395,7 +395,7 @@ def add_register(doc, active):
         # pagination - it appears in the running head, where the folio needs a
         # compact label. REFERENCES stays fully titled here; REFS is used only
         # in the section head, where the long form will not fit its cell.
-        p.add_run(name)
+        p.add_run(SECTION_DISPLAY.get(name, COMPONENT_DISPLAY.get(name, name)))
     set_table_borders(table, "000000", 10)
     row_pr = table.rows[0]._tr.get_or_add_trPr()
     repeat = OxmlElement("w:tblHeader")
@@ -852,8 +852,15 @@ def render_register_node(doc, node, level):
                 doc.add_paragraph(register_heading(key), style=heading_style)
                 render_register_node(doc, value, level + 1)
             elif isinstance(value, list):
-                if value and isinstance(value[0], dict):
+                if key == "apex":
                     doc.add_paragraph(register_heading(key), style=heading_style)
+                    for item in value:
+                        p = doc.add_paragraph()
+                        run = p.add_run(str(item))
+                        run.bold = True
+                elif value and isinstance(value[0], dict):
+                    if key != "reversals":
+                        doc.add_paragraph(register_heading(key), style=heading_style)
                     for record in value:
                         add_entry(doc, record.get("name", ""), compose_record(record))
                 else:
@@ -1029,7 +1036,7 @@ def render_list(doc, block, decimal_num_id, bullet_num_id, level=0):
 # volume still has four parts - CORE, PROCESSES, STATUS, REFERENCES - and
 # none of them move. This dict is also the set of source H1s to swallow,
 # since add_part_opening prints the title itself.
-COMPONENT_TITLES = {"GUIDE": "CORE", "DIRECTORY": "DIRECTORY"}
+COMPONENT_TITLES = {"GUIDE": "CORE", "EDITING": "CORE", "DIRECTORY": "DIRECTORY"}
 
 PART_SEAM_RE = re.compile(r"<!--\s*PART:\s*(\S+)\s+(\w+)\s*-->")
 
@@ -1077,9 +1084,9 @@ def is_axiom_candidate(blocks, index, last_heading_level):
     return blocks[index + 1]["t"] in ("Para", "BulletList", "OrderedList")
 
 
-def write_manifest(path, source, output, ast, skipped_separators):
+def write_manifest(path, source, output, ast, skipped_separators, edition):
     payload = {
-        "source": str(source.resolve()),
+        "edition": edition,
         "output": str(output.resolve()),
         "pandoc_api_version": ast.get("pandoc-api-version"),
         "source_blocks": len(ast["blocks"]),
@@ -1282,6 +1289,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
     last_heading_level = None
     skipped_separators = 0
     skip_indices = set()
+    directory_stamp = None
 
     for index in range(start_index, len(blocks)):
         if index in skip_indices:
@@ -1295,8 +1303,11 @@ def build(source, reference, output, pandoc, manifest, component=None):
             # Lifted into the opening page's running head, not printed in the
             # body. The source keeps the line: it is the component's identity
             # when the .txt is read on its own, and the edition guard's anchor.
-            set_first_page_stamp(doc.sections[-1],
-                                 "%s | %s" % (current_edition, block_text(block).strip()))
+            stamp = "%s | %s" % (current_edition, block_text(block).strip())
+            if current_component == "DIRECTORY":
+                directory_stamp = stamp
+            else:
+                set_first_page_stamp(doc.sections[-1], stamp)
             last_heading_level = None
             continue
         # 010826: the part opens on the SEAM, not on the title. The seam is
@@ -1416,6 +1427,8 @@ def build(source, reference, output, pandoc, manifest, component=None):
                     _n[0] += 1
                     add_part_opening(doc, name, _n[0],
                                      subtitle=SECTION_SUBTITLE.get(name))
+                    if directory_stamp:
+                        set_first_page_stamp(doc.sections[-1], directory_stamp)
                 render_register(doc, parsed, open_section)
                 part_number += 2
             else:
@@ -1490,7 +1503,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
             set_paragraph_bottom_rule(para, 30, 10)
 
     doc.save(output)
-    write_manifest(manifest, source, output, ast, skipped_separators)
+    write_manifest(manifest, source, output, ast, skipped_separators, current_edition)
     print(output)
 
 
