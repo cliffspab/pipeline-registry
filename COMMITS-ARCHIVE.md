@@ -10,6 +10,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-21
+
+- 2026-08-21 | Blueprint | Remove the terminal blank line inside DIRECTORY so the CI split remains byte-for-byte invertible.
+
 ## Cleared 2026-08-21
 
 - 2026-08-21 | Blueprint | Promote `210826_gpt_compact`: compact beta source, Integrity and cabinet removed, supervisor terminology, EDITING hierarchy and boxed output templates.

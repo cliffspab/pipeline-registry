@@ -853,5 +853,4 @@ references:
       who vs whom: Who = he/she/they; whom = him/her/them.
       widow: '"Widow of the late" is tautology.'
       Xmas: Banned; use Christmas.
-
 ```
