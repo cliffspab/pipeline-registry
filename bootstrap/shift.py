@@ -57,9 +57,13 @@ def main():
 
     if not check_only and SHIFT.is_dir():
         last_refresh = datetime.fromtimestamp(SHIFT.stat().st_mtime).date()
-        if last_refresh == date.today():
+        shift_guide = SHIFT / "GUIDE.txt"
+        shift_tag = tag_of(shift_guide) if shift_guide.is_file() else None
+        if last_refresh == date.today() and shift_tag == tag:
             print(f"Shift already refreshed today ({last_refresh.isoformat()}); no write")
             return 0
+        if last_refresh == date.today():
+            print(f"Shift carries {shift_tag or 'no edition'}; refreshing newly sealed {tag}")
 
     if not check_only:
         SHIFT.mkdir(exist_ok=True)
@@ -96,7 +100,7 @@ def main():
 
     if not check_only:
         os.utime(SHIFT, None)
-    print(f"\nshift ready — build {tag}; six files; refresh no more than once per day")
+    print(f"\nshift ready — build {tag}; six files; refresh daily or when a newly sealed edition supersedes it")
     return 0
 
 

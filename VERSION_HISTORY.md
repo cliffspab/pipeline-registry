@@ -14,7 +14,7 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 **No drift.** The manifest is rebuilt from the parsed Directory on every local and CI build. The YAML payload remains unchanged and valid; the source-invertibility guard removes only the generated manifest before comparing the derived Directory with the fenced source.
 
-**Shift handover.** The latest sealed BLUEPRINT.docx is now the required sixth Shift file. A new source edition leaves Shift on the last sealed handover until CI has rebuilt and seal.py has installed the matching DOCX; only then is Shift refreshed.
+**Shift handover.** The latest sealed BLUEPRINT.docx is now the required sixth Shift file. A new source edition leaves Shift on the last sealed handover until CI has rebuilt and seal.py has installed the matching DOCX; only then is Shift refreshed. If that seal lands after an earlier same-day refresh, the differing edition tag overrides the daily no-write guard.
 
 **Evidence.** Source dollar-pairing, edition, invertibility and register-parse guards pass. The candidate Directory twins are byte-identical and expose the complete routing manifest before the payload.
 

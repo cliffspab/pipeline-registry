@@ -14,6 +14,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-29
+
+- 2026-08-29 — Complete the always-latest Shift rule: when today's handover carries an older tag, allow the newly sealed edition to supersede it automatically; retain the daily no-write guard when the tags already match.
+
 ## Cleared 2026-08-29
 
 - 2026-08-29 — Promote `290826_gpt_directory-index`: generate a compact YAML-path manifest at the top of DIRECTORY.txt/DIRECTORY.yaml from current status names and reference collections; install the same logic in local/bootstrap and CI builds.

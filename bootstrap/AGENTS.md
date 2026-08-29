@@ -47,8 +47,7 @@ Edit the root source only. Never hand-edit derived files in `pipeline-registry/B
 - `SIDEBAR.master.txt`
 - `BLUEPRINT.docx` (the sealed document for the current edition)
 
-Refresh Shift no more than once per calendar day. `shift.py --check` may be run
-at any time because it is read-only.
+Refresh Shift no more than once per calendar day unless a newly sealed edition supersedes the current handover. `shift.py --check` may be run at any time because it is read-only.
 
 Nothing in Shift is a source. Nothing unique lives there.
 
