@@ -136,7 +136,40 @@ def register_yaml(part, tag):
     print(f"register parse guard: PASS "
           f"(apex {len(parsed['status']['apex'])}, "
           f"provinces {len(parsed['references']['thai_places']['provinces'])})")
-    return f"# PART: {tag} DIRECTORY\n{body}\n", parsed
+    return f"# PART: {tag} DIRECTORY\n{directory_index(parsed)}\n{body}\n", parsed
+
+
+def directory_index(parsed):
+    """Build a compact routing manifest before the large YAML payload."""
+    status = parsed["status"]
+    refs = parsed["references"]
+
+    def names(items):
+        if isinstance(items, dict):
+            return list(items)
+        return [item.get("name", str(item)) if isinstance(item, dict) else str(item)
+                for item in items]
+
+    routes = [
+        ("status.apex", names(status["apex"])),
+        ("status.second_tier.reversals", names(status["second_tier"]["reversals"])),
+        ("status.second_tier.mortalities", names(status["second_tier"]["mortalities"])),
+        ("status.second_tier.corporate", names(status["second_tier"]["corporate"])),
+        ("status.global", names(status["global"])),
+        ("references.countries", list(refs["countries"])),
+        ("references.foreign_places", list(refs["foreign_places"])),
+        ("references.thai_places", list(refs["thai_places"])),
+        ("references.organisations", list(refs["organisations"])),
+        ("references.vocabulary", list(refs["vocabulary"])),
+    ]
+    lines = [
+        "# DIRECTORY INDEX — inspect this manifest before loading a branch.",
+        "# Fetch or search only the matching YAML path unless the whole Directory is needed.",
+    ]
+    for path, entries in routes:
+        lines.append(f"# {path}: {' | '.join(entries)}")
+    lines.append("# END DIRECTORY INDEX")
+    return "\n".join(lines)
 
 
 # ---------- rendered artifact ----------

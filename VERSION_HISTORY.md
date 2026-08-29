@@ -8,6 +8,17 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 ---
 
+## 2026-08-29 — 290826_gpt_directory-index: ROUTE BEFORE RETRIEVAL
+
+**Approved and promoted.** DIRECTORY.txt and its byte-identical DIRECTORY.yaml twin now open with a compact routing manifest generated from the live YAML. It enumerates the monitored-person groups, foreign-place countries and organisations, and names the countries, Thai places and vocabulary branches by exact YAML path. A synced model can identify the relevant branch before consuming the long payload.
+
+**No drift.** The manifest is rebuilt from the parsed Directory on every local and CI build. The YAML payload remains unchanged and valid; the source-invertibility guard removes only the generated manifest before comparing the derived Directory with the fenced source.
+
+**Shift handover.** The latest sealed BLUEPRINT.docx is now the required sixth Shift file. A new source edition leaves Shift on the last sealed handover until CI has rebuilt and seal.py has installed the matching DOCX; only then is Shift refreshed.
+
+**Evidence.** Source dollar-pairing, edition, invertibility and register-parse guards pass. The candidate Directory twins are byte-identical and expose the complete routing manifest before the payload.
+
+**Verdict.** Ready for the supervisor-authorised guarded push and CI rebuild.
 ## 2026-08-29 — 290826_gpt_job-report: ONE MODULAR REPORT PER EDIT
 
 **Approved and promoted.** Every completed edit is now one JOB REPORT identified by the slug as filed. EDIT carries the query/hold note, page-ready box and alternates; STYLE LOG lists actual interventions only; mandatory REFERENCES follows immediately as the evidence mast; UNRESOLVED appears only when further action is required.

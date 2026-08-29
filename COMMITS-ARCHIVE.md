@@ -13,6 +13,13 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-29
+
+- 2026-08-29 — Promote `290826_gpt_directory-index`: generate a compact YAML-path manifest at the top of DIRECTORY.txt/DIRECTORY.yaml from current status names and reference collections; install the same logic in local/bootstrap and CI builds.
+
+- 2026-08-29 — Make sealed `BLUEPRINT.docx` the required sixth Shift item; retain the last sealed handover during a build and refresh Shift only after the new edition is sealed.
+
 ## Cleared 2026-08-29
 
 - 2026-08-29 | Blueprint/BLUEPRINT.txt | PROMOTE `290826_gpt_job-report`: retain indexed navigation through genuine Heading 4; wrap each completed edit as a slug-ID Job Report; keep STYLE LOG intervention-only; require a REFERENCES evidence mast immediately after it; add DIRECTORYQ/SEARCHQ only when used and UNRESOLVED only when follow-up is required; retire SCOPE, OUTCOME and STATE LOG.

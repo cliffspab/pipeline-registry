@@ -30,11 +30,11 @@ Edit the root source only. Never hand-edit derived files in `pipeline-registry/B
 1. Make and test an isolated candidate.
 2. Copy the approved source to root `BLUEPRINT.txt`.
 3. Run root `build.py`; all guards must pass.
-4. Run `shift.py --check`, then `shift.py` if refresh is required.
+4. Keep Shift on the last sealed edition while a new edition is being built; do not refresh it from an unsealed candidate.
 5. Copy the approved source alone to `pipeline-registry/Blueprint/BLUEPRINT.txt` and install approved machinery changes.
 6. Record the exact payload in `COMMITS-PENDING.md` and the edition in `VERSION_HISTORY.md`.
 7. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
-8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed.
+8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. Then run `shift.py --check` and refresh Shift if required.
 
 ## Shift contract
 
@@ -45,6 +45,7 @@ Edit the root source only. Never hand-edit derived files in `pipeline-registry/B
 - `DIRECTORY.txt`
 - `DIRECTORY.yaml`
 - `SIDEBAR.master.txt`
+- `BLUEPRINT.docx` (the sealed document for the current edition)
 
 Refresh Shift no more than once per calendar day. `shift.py --check` may be run
 at any time because it is read-only.

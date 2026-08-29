@@ -17,6 +17,7 @@ PARTS = (
     "DIRECTORY.txt",
     "DIRECTORY.yaml",
     "SIDEBAR.master.txt",
+    "BLUEPRINT.docx",
 )
 SEAMED = ("GUIDE.txt", "DIRECTORY.txt")
 SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
@@ -35,13 +36,7 @@ def tag_of(path):
 def main():
     check_only = "--check" in sys.argv
     problems = []
-    sources = {name: ROOT / name for name in PARTS}
-
-    if not check_only and SHIFT.is_dir():
-        last_refresh = datetime.fromtimestamp(SHIFT.stat().st_mtime).date()
-        if last_refresh == date.today():
-            print(f"Shift already refreshed today ({last_refresh.isoformat()}); no write")
-            return 0
+    sources = {name: ROOT / name for name in PARTS if name != "BLUEPRINT.docx"}
 
     for name, src in sources.items():
         if not src.is_file():
@@ -55,6 +50,16 @@ def main():
         print("FATAL: parts do not carry one matching build tag:", tags)
         return 1
     tag = next(iter(tags.values()))
+    sources["BLUEPRINT.docx"] = ROOT / "Editions" / tag / "BLUEPRINT.docx"
+    if not sources["BLUEPRINT.docx"].is_file():
+        print(f"missing sealed document: Editions/{tag}/BLUEPRINT.docx")
+        return 1
+
+    if not check_only and SHIFT.is_dir():
+        last_refresh = datetime.fromtimestamp(SHIFT.stat().st_mtime).date()
+        if last_refresh == date.today():
+            print(f"Shift already refreshed today ({last_refresh.isoformat()}); no write")
+            return 0
 
     if not check_only:
         SHIFT.mkdir(exist_ok=True)
@@ -91,7 +96,7 @@ def main():
 
     if not check_only:
         os.utime(SHIFT, None)
-    print(f"\nshift ready — build {tag}; five files; refresh no more than once per day")
+    print(f"\nshift ready — build {tag}; six files; refresh no more than once per day")
     return 0
 
 
