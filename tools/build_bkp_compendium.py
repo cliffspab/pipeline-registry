@@ -1110,52 +1110,26 @@ def parse_markdown(pandoc, source):
         return json.loads(ast_path.read_text(encoding="utf-8"))
 
 
-def add_contents(doc):
-    """A contents list built as ordinary paragraphs, not a Word TOC field.
+def add_contents(doc, level4_texts):
+    """Build one compact linked index page from Heading 1/2/3/4 paragraphs.
 
-    CURRENTLY OFF - the call in build() is commented out. Op-ruled 100826: an
-    index without page numbers is a list, not an index. Adding numbers needs a
-    two-pass build, which is straightforward, but it is blocked on a design
-    ruling first: page numbering RESTARTS in every part (restart_page_numbering
-    below), so the folio reads "/core 2" and STATUS begins at 1 again. A
-    page-numbered index cannot address that volume without either qualifying
-    every entry by part or running the numbering continuously.
-
-    RULED 100826: qualify by part. "REFS 1" is the wanted form, so the restart
-    stays. To finish it:
-      1. Uncomment the call. Keep the entry paragraphs at the SAME line count as
-         the numbered version will have, so pass one paginates identically and
-         the numbers measured stay true - the contents fits one page at 22
-         entries.
-      2. Build, convert to PDF, and read the folio off each page: every page
-         already prints SECTION_SHORTFORM + number in its header, e.g.
-         "/core 2". Match each heading to the first page it appears on AFTER
-         the contents page.
-      3. The part for each entry is the Heading 1 above it in the entries list -
-         CORE, PROCESSES, STATUS, REFS - not the shortform, which collapses
-         PROCESSES into /core and both branches into /reg.
-      4. Rebuild with "PART n" appended to each entry, convert again.
-
-    A TOC field is populated by Word on open and cached in the file. CI has no
-    Word: it builds the volume and converts it to PDF in the same job, so the
-    field is still empty at conversion and the published PDF gets no index.
-    LibreOffice will not populate it either - tested 100826, both with the bare
-    field and with w:updateFields set. Opening the docx by hand between the two
-    steps would work and is exactly the kind of step nobody owns.
-
-    So the list is content. Real paragraphs, internal links to bookmarks on the
-    headings, no field anywhere. It converts like any other text, which means
-    the docx and the PDF carry the same index. No page numbers - they would need
-    a layout pass the builder does not have, and the volume is read on screen.
+    Every entry is an ordinary internal hyperlink to a bookmark on its heading,
+    so navigation works immediately without Word updating a TOC or PAGEREF
+    field. The index stays in the cover section and the existing NEW_PAGE
+    section break keeps EDITING on its established first page.
     """
+    indexed_styles = ("Heading 1", "Heading 2", "Heading 3", "Heading 4")
     entries = []
     for para in doc.paragraphs:
-        if para.style.name not in ("Heading 1", "Heading 2"):
+        if para.style.name not in indexed_styles:
             continue
         text = para.text.strip()
-        if not text:
+        # Source Heading 5/6 paragraphs are intentionally flattened to Word's
+        # Heading 4 style. Index only texts proven to be true source level 4.
+        if para.style.name == "Heading 4" and text not in level4_texts:
             continue
-        entries.append((para.style.name, text, para))
+        if text:
+            entries.append((para.style.name, text, para))
     if not entries:
         return
 
@@ -1164,10 +1138,9 @@ def add_contents(doc):
         return
 
     for index, (_, _, para) in enumerate(entries):
-        name = "_bkp_toc_%d" % index
         start = OxmlElement("w:bookmarkStart")
         start.set(qn("w:id"), str(9000 + index))
-        start.set(qn("w:name"), name)
+        start.set(qn("w:name"), "_bkp_toc_%d" % index)
         end = OxmlElement("w:bookmarkEnd")
         end.set(qn("w:id"), str(9000 + index))
         para._p.insert(0, start)
@@ -1175,12 +1148,23 @@ def add_contents(doc):
 
     block = []
     head = doc.add_paragraph("CONTENTS", style="Heading 2")
+    head.paragraph_format.keep_with_next = True
     block.append(head._p)
+    indents = {
+        "Heading 1": 0.0, "Heading 2": 0.22,
+        "Heading 3": 0.44, "Heading 4": 0.66,
+    }
+    sizes = {
+        "Heading 1": "19", "Heading 2": "18",
+        "Heading 3": "17", "Heading 4": "16",
+    }
     for index, (style, text, _) in enumerate(entries):
         p = doc.add_paragraph()
         pf = p.paragraph_format
-        pf.left_indent = Inches(0.0 if style == "Heading 1" else 0.28)
-        pf.space_after = Pt(2)
+        pf.left_indent = Inches(indents[style])
+        pf.space_after = Pt(1)
+        pf.keep_with_next = True
+
         link = OxmlElement("w:hyperlink")
         link.set(qn("w:anchor"), "_bkp_toc_%d" % index)
         run = OxmlElement("w:r")
@@ -1188,7 +1172,7 @@ def add_contents(doc):
         if style == "Heading 1":
             rpr.append(OxmlElement("w:b"))
         sz = OxmlElement("w:sz")
-        sz.set(qn("w:val"), "20" if style == "Heading 1" else "18")
+        sz.set(qn("w:val"), sizes[style])
         rpr.append(sz)
         run.append(rpr)
         t = OxmlElement("w:t")
@@ -1199,18 +1183,24 @@ def add_contents(doc):
         p._p.append(link)
         block.append(p._p)
 
-    # The contents ends the front matter: CORE opens on a fresh page after it.
-    brk = doc.add_paragraph()
-    run = OxmlElement("w:r")
-    br = OxmlElement("w:br")
-    br.set(qn("w:type"), "page")
-    run.append(br)
-    brk._p.append(run)
-    block.append(brk._p)
+    # The final entry may end normally; the section boundary itself supplies
+    # the page break after this otherwise unbreakable index block.
+    last_ppr = block[-1].get_or_add_pPr()
+    keep = last_ppr.find(qn("w:keepNext"))
+    if keep is not None:
+        last_ppr.remove(keep)
 
+    body = doc._body._element
+    boundary = next(
+        (child for child in body
+         if child.tag == qn("w:p")
+         and child.find("w:pPr/w:sectPr", body.nsmap) is not None),
+        None,
+    )
+    if boundary is None:
+        boundary = anchor._p
     for element in block:
-        anchor._p.addprevious(element)
-
+        boundary.addprevious(element)
 
 def build(source, reference, output, pandoc, manifest, component=None):
     ast = parse_markdown(pandoc, source)
@@ -1459,9 +1449,12 @@ def build(source, reference, output, pandoc, manifest, component=None):
             _next.alignment = _p.alignment
             _next.paragraph_format.left_indent = _p.paragraph_format.left_indent
 
-    # add_contents(doc)  # OFF 100826 - see the docstring. Needs the folio
-    # restart ruled on first: a page-numbered index cannot address a volume
-    # whose numbering restarts in every part.
+    level4_texts = {
+        inlines_text(block["c"][2]).strip()
+        for block in blocks
+        if block["t"] == "Header" and block["c"][0] == 4
+    }
+    add_contents(doc, level4_texts)
     set_update_fields(doc)
     for section_index, section in enumerate(doc.sections):
         pg_num = section._sectPr.find(qn("w:pgNumType"))

@@ -8,6 +8,34 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 ---
 
+## 2026-08-29 — 290826_gpt_job-report: ONE MODULAR REPORT PER EDIT
+
+**Approved and promoted.** Every completed edit is now one JOB REPORT identified by the slug as filed. EDIT carries the query/hold note, page-ready box and alternates; STYLE LOG lists actual interventions only; mandatory REFERENCES follows immediately as the evidence mast; UNRESOLVED appears only when further action is required.
+
+**Sparse reporting.** REFERENCES always names the selected edition and exact applicable GUIDE chapter paths. DIRECTORYQ appears only for triggered internal lookups and distinguishes a held form, `NOT LISTED` and `UNAVAILABLE`; SEARCHQ appears only when external verification ran. Defaults and null declarations are omitted. The report's existence is the completion signal, so OUTCOME and STATE LOG are retired. The same reasoning supersedes the same-day SCOPE candidate before publication: pre-edit planning added ceremony to desk-length copy, while mandatory post-edit evidence provides the useful pressure against unsupported claims.
+
+**Evidence.** Source split, edition, invertibility and register guards pass; register rendering remains complete at 282 leaf values. The indexed volume renders cleanly at 24 pages. Its dedicated contents page carries 43 bookmarks and 43 internal links through genuine source Heading 4, including JOB REPORT, REFERENCES and UNRESOLVED; it carries zero PAGEREF fields.
+
+**Verdict.** Ready for the supervisor-authorised guarded push and CI rebuild.
+## 2026-08-29 — 290826_gpt_scope: VISIBLE INTERNAL LOOKUP SCOPE
+
+**Promoted.** Every edit now opens its Style Log with a four-line SCOPE block: standing checks, triggered DIRECTORY paths, protected unchanged categories and retrieval gaps. A standalone `scope` request returns that block before editing and stops, allowing supervisor inspection without making the normal workflow depend on a preflight turn.
+
+**Resolved audit.** Triggered internal lookups now close through DIRECTORYQ as `term | exact.path | held form, NOT LISTED or UNAVAILABLE`. `NOT LISTED` requires a successful path check; `UNAVAILABLE` records that no check was possible. External searches remain in SEARCHQ, and confirmed-correct material is not inflated into Style Log interventions.
+
+**Evidence.** Source split, edition, invertibility and register guards pass; register rendering remains complete at 282 leaf values. The volume renders cleanly at 24 pages. Its dedicated index carries 42 bookmarks and 42 internal links, including the new SCOPE AND DIRECTORYQ section, with zero PAGEREF fields. The scope rules, DIRECTORYQ form and existing Style Log example share one readable page.
+
+**Verdict.** The small return-time overhead buys a visible internal-consultation trail and makes failed or partial retrieval explicit. Promoted locally; publication remains pending.
+## 2026-08-28 — 280826_gpt_index: LINKED CONTENTS PAGE
+
+**Promoted.** The raw Blueprint now opens with a compact contents list that states the current architecture: GUIDE contains EDITING and PROCESSES; DIRECTORY remains the second file-level component.
+
+**Word navigation.** The generated volume now places a dedicated one-page contents section immediately after the cover. It is derived from real Heading 1–3 paragraphs plus genuine source Heading 4 paragraphs, reaching `VERIFICATION AND PROXIMITY`, `Numbers` and `Names and honorifics` without pulling in flattened source levels 5–6. Each of its 41 entries links directly to a bookmark on the destination heading. There is deliberately no folio column.
+
+**Evidence.** Source split, edition, invertibility and register guards pass; register rendering remains complete at 282 leaf values. The DOCX renders as 23 pages: cover, contents and the existing 21 following pages. The cover and all 21 pre-existing body pages compare pixel-identically with the current volume except for the intended edition stamp. Structural inspection finds 41 bookmarks, 41 internal links and zero PAGEREF fields.
+
+**Verdict.** Candidate promoted locally and recorded for supervisor push. Publication remains pending.
+
 ## 2026-08-21 — 210826_gpt_compact: COMPACT BLUEPRINT AND GPT ADMINISTRATION
 
 **Promoted.** The approved compact beta is now the source: Integrity and cabinet are gone; operator becomes supervisor in current instructions; CORE becomes EDITING; GUIDE and DIRECTORY carry the shortlinks `/guide` and `/dir`; output templates are boxed; the apex list remains at ten and the redundant reversals heading is removed.

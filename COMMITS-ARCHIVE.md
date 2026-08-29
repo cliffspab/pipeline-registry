@@ -12,6 +12,13 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-29
+
+- 2026-08-29 | Blueprint/BLUEPRINT.txt | PROMOTE `290826_gpt_job-report`: retain indexed navigation through genuine Heading 4; wrap each completed edit as a slug-ID Job Report; keep STYLE LOG intervention-only; require a REFERENCES evidence mast immediately after it; add DIRECTORYQ/SEARCHQ only when used and UNRESOLVED only when follow-up is required; retire SCOPE, OUTCOME and STATE LOG.
+
+- 2026-08-28 | tools/build_bkp_compendium.py | ENABLE a dedicated generated Word index page after the cover: Heading 1/2/3 plus genuine source Heading 4 internal links, including VERIFICATION AND PROXIMITY, Numbers and Names and honorifics; no folio column; preserve the EDITING first-page register treatment.
+
 ## Cleared 2026-08-21
 
 - 2026-08-21 | CI | Match the declared raw-DIRECTORY omission at its current `status:` opening instead of the retired shortlink marker.

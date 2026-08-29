@@ -12,10 +12,14 @@ Ask before publishing, moving or deleting material, changing the edition identit
 
 One source: root `BLUEPRINT.txt`.
 
-Two files are derived from it:
+Three files are derived from it:
 
 - `GUIDE.txt` = EDITING + PROCESSES; shortlink `/guide`.
 - `DIRECTORY.txt` = STATUS + REFERENCES; shortlink `/dir`.
+- `DIRECTORY.yaml` = byte-identical alternate extension for YAML consumers.
+
+`SIDEBAR.master.txt` is the single modular sidebar candidate. BLUEPRINT still
+governs: the sidebar selects workflows and must not duplicate editorial rules.
 
 The fenced YAML Directory inside `BLUEPRINT.txt` is load-bearing. Every source and derived part carries one matching edition tag. GPT-era editions include `_gpt_` in that tag; the first is `210826_gpt_compact`.
 
@@ -39,7 +43,11 @@ Edit the root source only. Never hand-edit derived files in `pipeline-registry/B
 - `BLUEPRINT.txt`
 - `GUIDE.txt`
 - `DIRECTORY.txt`
-- `Sidebar/`, mirroring every current file in `pipeline-registry/design/Sidebar/`
+- `DIRECTORY.yaml`
+- `SIDEBAR.master.txt`
+
+Refresh Shift no more than once per calendar day. `shift.py --check` may be run
+at any time because it is read-only.
 
 Nothing in Shift is a source. Nothing unique lives there.
 
