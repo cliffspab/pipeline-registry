@@ -1,4 +1,17 @@
-# PART: 290826_gpt_job-report DIRECTORY
+# PART: 290826_gpt_directory-index DIRECTORY
+# DIRECTORY INDEX — inspect this manifest before loading a branch.
+# Fetch or search only the matching YAML path unless the whole Directory is needed.
+# status.apex: HM King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua | HM Queen Sirikit The Queen Mother | Thaksin Shinawatra | Srettha Thavisin | Paetongtarn Shinawatra | Pita Limjaroenrat | Dr Prasert Prasarttong-Osoth | HRH Princess Bajrakitiyabha Narendiradebyavati | Ayatollah Ali Khamenei | Mojtaba Khamenei
+# status.second_tier.reversals: Thanathorn Juangroongruangkit | Saksayam Chidchob | Arnon Nampa | Rukchanok 'Ice' Srinork | Nikorn Chamnong | Stithorn Thananithichot | Korn Chatikavanij | Chaichanok Chidchob | Chadchart Sittipunt
+# status.second_tier.mortalities: Gen Suchinda Kraprayoon | Man Phatnothai | Dr Wanlop Thaineua | Chonsawat Asavahame | Chodchoy Thavisin | Pope Francis | Dick Cheney | Jane Goodall | Charlie Kirk | Pope Emeritus Benedict XVI ("Pope Benedict") | Li Keqiang
+# status.second_tier.corporate: Brenton Justin Mauriello | Pisit Thangtanagul
+# status.global: Donald Trump and JD Vance | King Charles III | King Salman bin Abdulaziz al-Saud | King Jigme Khesar Namgyel Wangchuck | Catherine, Princess of Wales | Prince William, Prince of Wales | To Lam
+# references.countries: preferred_forms | demonyms | structure | headline_abbreviations | the_article
+# references.foreign_places: AUSTRALIA | AZERBAIJAN | BANGLADESH | BELGIUM | BOSNIA & HERZEGOVINA | BRAZIL | BURKINA FASO | CAMBODIA | CHILE | CHINA | EGYPT | GERMANY | GREENLAND | HONG KONG | ICELAND | INDIA | INDONESIA | IRAN | IRAQ | ISRAEL | ITALY | JAPAN | KAZAKHSTAN | KIRIBATI | MOLDOVA | MONGOLIA | MOROCCO | MYANMAR | NEPAL | NETHERLANDS | NIGERIA | NORTH KOREA | RUSSIA | SOUTH AFRICA | SWEDEN | SYRIA | TANZANIA | TURKEY | UKRAINE | UNITED STATES | VIETNAM | YEMEN
+# references.thai_places: note | transliteration_rules | airports | third_party_spellings | provinces
+# references.organisations: Abu Sayyaf | al-Nusra Front | al-Qaeda | al-Qaeda in the Arabian Peninsula | al-Shebab | Ba'ath Party | Hezbollah | Houthis | The Islamic State | Jamaat-ul-Ahrar | Labor Party | Malaysia Airlines | Medecins Sans Frontieres | Moro Islamic Liberation Front | Pavena Foundation | sharia law | Shia | Yezidis | Fifa
+# references.vocabulary: note | numbers_symbols | uk_us_traps | rulings
+# END DIRECTORY INDEX
 
 
 status:
