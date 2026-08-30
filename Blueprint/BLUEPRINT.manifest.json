@@ -1,5 +1,5 @@
 {
-  "edition": "290826_gpt_directory-index",
+  "edition": "300826_gpt_index-style",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
