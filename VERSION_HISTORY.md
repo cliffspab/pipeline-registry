@@ -8,6 +8,15 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 ---
 
+## 2026-08-30 — 300826_gpt_index-style: TWO-PANEL CONTENTS PAGE
+
+**Approved and promoted.** The Word contents page now uses a full-width black CONTENTS banner above two matched bordered panels. GUIDE contains EDITING and PROCESSES; DIRECTORY contains STATUS and REFS. Each panel uses the volume's Arial Black/Arial, black/grey heading language instead of the earlier uniformly small list.
+
+**Navigation and page contract.** All 43 entries remain direct internal links to 43 heading bookmarks. The contents remains alone on page 2, EDITING begins on page 3, and no PAGEREF or page-number column is introduced.
+
+**Evidence.** The candidate renders at 24 pages. Its matched panels extend to 713pt on the 792pt page; pixel comparison against the sealed predecessor finds changes on page 2 only. Register rendering remains complete at 282 leaf values and 317 paragraphs.
+
+**Verdict.** Supervisor approved. Ready for guarded push, CI rebuild, seal and Shift refresh.
 ## 2026-08-29 — 290826_gpt_directory-index: ROUTE BEFORE RETRIEVAL
 
 **Approved and promoted.** DIRECTORY.txt and its byte-identical DIRECTORY.yaml twin now open with a compact routing manifest generated from the live YAML. It enumerates the monitored-person groups, foreign-place countries and organisations, and names the countries, Thai places and vocabulary branches by exact YAML path. A synced model can identify the relevant branch before consuming the long payload.

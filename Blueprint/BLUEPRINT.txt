@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-290826_gpt_directory-index
+300826_gpt_index-style
 
 Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are the edit surface: GUIDE in markdown, DIRECTORY in YAML.
 
@@ -32,7 +32,7 @@ Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are
     - [UNRESOLVED](#unresolved)
 - [DIRECTORY](#directory)
 
-<!-- PART: 290826_gpt_directory-index GUIDE -->
+<!-- PART: 300826_gpt_index-style GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -413,7 +413,7 @@ REFERENCES immediately follows the Style Log and is mandatory. It is the evidenc
 
 ```text
 REFERENCES
-290826_gpt_directory-index | GUIDE: PROCESSES > CONVERSIONS > Numbers; OUTPUT > FORMAT
+300826_gpt_index-style | GUIDE: PROCESSES > CONVERSIONS > Numbers; OUTPUT > FORMAT
 ```
 
 Name only chapters actually applicable to the edit. Do not list the entire GUIDE.
@@ -438,7 +438,7 @@ UNRESOLVED
 Confirm paragraph 4 attribution before release.
 ```
 
-<!-- PART: 290826_gpt_directory-index DIRECTORY -->
+<!-- PART: 300826_gpt_index-style DIRECTORY -->
 
 go.fuzzylogic.page/dir
 

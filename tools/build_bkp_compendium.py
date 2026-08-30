@@ -1111,25 +1111,21 @@ def parse_markdown(pandoc, source):
 
 
 def add_contents(doc, level4_texts):
-    """Build one compact linked index page from Heading 1/2/3/4 paragraphs.
-
-    Every entry is an ordinary internal hyperlink to a bookmark on its heading,
-    so navigation works immediately without Word updating a TOC or PAGEREF
-    field. The index stays in the cover section and the existing NEW_PAGE
-    section break keeps EDITING on its established first page.
-    """
+    """Build a linked two-panel contents page: GUIDE beside DIRECTORY."""
     indexed_styles = ("Heading 1", "Heading 2", "Heading 3", "Heading 4")
     entries = []
+    panel = "GUIDE"
     for para in doc.paragraphs:
         if para.style.name not in indexed_styles:
             continue
         text = para.text.strip()
-        # Source Heading 5/6 paragraphs are intentionally flattened to Word's
-        # Heading 4 style. Index only texts proven to be true source level 4.
         if para.style.name == "Heading 4" and text not in level4_texts:
             continue
-        if text:
-            entries.append((para.style.name, text, para))
+        if not text:
+            continue
+        if text == "STATUS":
+            panel = "DIRECTORY"
+        entries.append((panel, para.style.name, text, para))
     if not entries:
         return
 
@@ -1137,7 +1133,7 @@ def add_contents(doc, level4_texts):
     if anchor is None:
         return
 
-    for index, (_, _, para) in enumerate(entries):
+    for index, (_, _, _, para) in enumerate(entries):
         start = OxmlElement("w:bookmarkStart")
         start.set(qn("w:id"), str(9000 + index))
         start.set(qn("w:name"), "_bkp_toc_%d" % index)
@@ -1146,33 +1142,53 @@ def add_contents(doc, level4_texts):
         para._p.insert(0, start)
         para._p.append(end)
 
-    block = []
-    head = doc.add_paragraph("CONTENTS", style="Heading 2")
-    head.paragraph_format.keep_with_next = True
-    block.append(head._p)
-    indents = {
-        "Heading 1": 0.0, "Heading 2": 0.22,
-        "Heading 3": 0.44, "Heading 4": 0.66,
-    }
-    sizes = {
-        "Heading 1": "19", "Heading 2": "18",
-        "Heading 3": "17", "Heading 4": "16",
-    }
-    for index, (style, text, _) in enumerate(entries):
-        p = doc.add_paragraph()
+    def box_borders(cell, color="9A9A9A", size="12"):
+        tc_pr = cell._tc.get_or_add_tcPr()
+        borders = tc_pr.find(qn("w:tcBorders"))
+        if borders is None:
+            borders = OxmlElement("w:tcBorders")
+            tc_pr.append(borders)
+        for edge in ("top", "left", "bottom", "right"):
+            node = OxmlElement("w:" + edge)
+            node.set(qn("w:val"), "single")
+            node.set(qn("w:sz"), size)
+            node.set(qn("w:color"), color)
+            borders.append(node)
+
+    def linked_entry(cell, index, style, text, panel):
+        sizes = {
+            "GUIDE": {"Heading 1": "30", "Heading 2": "22", "Heading 3": "19", "Heading 4": "17"},
+            "DIRECTORY": {"Heading 1": "32", "Heading 2": "24", "Heading 3": "20", "Heading 4": "17"},
+        }
+        spacing = {
+            "GUIDE": {"Heading 1": (7, 3), "Heading 2": (4, 1.5), "Heading 3": (3, 1), "Heading 4": (1.5, 0.5)},
+            "DIRECTORY": {"Heading 1": (8, 3), "Heading 2": (5, 2), "Heading 3": (3, 1.5), "Heading 4": (1.5, 0.5)},
+        }
+        indents = {"Heading 1": 0.0, "Heading 2": 0.12, "Heading 3": 0.24, "Heading 4": 0.36}
+        fonts = {"Heading 1": "Arial Black", "Heading 2": "Arial Black", "Heading 3": "Arial Black", "Heading 4": "Arial"}
+        colors = {"Heading 1": "000000", "Heading 2": "A0A0A0", "Heading 3": "555555", "Heading 4": "000000"}
+
+        p = cell.add_paragraph()
         pf = p.paragraph_format
         pf.left_indent = Inches(indents[style])
-        pf.space_after = Pt(1)
-        pf.keep_with_next = True
+        pf.space_before = Pt(spacing[panel][style][0])
+        pf.space_after = Pt(spacing[panel][style][1])
+        pf.line_spacing = 1.0
 
         link = OxmlElement("w:hyperlink")
         link.set(qn("w:anchor"), "_bkp_toc_%d" % index)
         run = OxmlElement("w:r")
         rpr = OxmlElement("w:rPr")
-        if style == "Heading 1":
-            rpr.append(OxmlElement("w:b"))
+        rfonts = OxmlElement("w:rFonts")
+        for attr in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
+            rfonts.set(qn(attr), fonts[style])
+        rpr.append(rfonts)
+        rpr.append(OxmlElement("w:b"))
+        color = OxmlElement("w:color")
+        color.set(qn("w:val"), colors[style])
+        rpr.append(color)
         sz = OxmlElement("w:sz")
-        sz.set(qn("w:val"), sizes[style])
+        sz.set(qn("w:val"), sizes[panel][style])
         rpr.append(sz)
         run.append(rpr)
         t = OxmlElement("w:t")
@@ -1181,15 +1197,56 @@ def add_contents(doc, level4_texts):
         run.append(t)
         link.append(run)
         p._p.append(link)
-        block.append(p._p)
 
-    # The final entry may end normally; the section boundary itself supplies
-    # the page break after this otherwise unbreakable index block.
-    last_ppr = block[-1].get_or_add_pPr()
-    keep = last_ppr.find(qn("w:keepNext"))
-    if keep is not None:
-        last_ppr.remove(keep)
+    banner = doc.add_table(rows=1, cols=1)
+    set_repeat_table_layout(banner, [9360])
+    set_table_borders(banner, color="000000", size=14)
+    banner_cell = banner.cell(0, 0)
+    set_cell_shading(banner_cell, "000000")
+    set_cell_margins(banner_cell, top=150, start=120, bottom=150, end=120)
+    bp = banner_cell.paragraphs[0]
+    bp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    bp.paragraph_format.space_after = Pt(0)
+    br = bp.add_run("CONTENTS")
+    br.font.name = "Arial Black"
+    br.font.size = Pt(28)
+    br.font.bold = True
+    br.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
+    spacer = doc.add_paragraph()
+    spacer.paragraph_format.space_after = Pt(8)
+    spacer.add_run().font.size = Pt(2)
+
+    panels = doc.add_table(rows=1, cols=3)
+    set_repeat_table_layout(panels, [4500, 360, 4500])
+    row_pr = panels.rows[0]._tr.get_or_add_trPr()
+    row_pr.append(OxmlElement("w:cantSplit"))
+    row_height = OxmlElement("w:trHeight")
+    row_height.set(qn("w:val"), "11200")
+    row_height.set(qn("w:hRule"), "atLeast")
+    row_pr.append(row_height)
+    left, gutter, right = panels.rows[0].cells
+    set_cell_margins(left, top=160, start=180, bottom=180, end=180)
+    set_cell_margins(gutter, top=0, start=0, bottom=0, end=0)
+    set_cell_margins(right, top=160, start=180, bottom=180, end=180)
+    for cell in (left, right):
+        set_cell_shading(cell, "F7F7F7")
+        box_borders(cell)
+    for cell, label in ((left, "GUIDE"), (right, "DIRECTORY")):
+        p = cell.paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.paragraph_format.space_after = Pt(7)
+        r = p.add_run(label)
+        r.font.name = "Arial Black"
+        r.font.size = Pt(16)
+        r.font.bold = True
+        set_paragraph_bottom_rule(p, size=16, space=4)
+
+    for index, (panel, style, text, _) in enumerate(entries):
+        linked_entry(left if panel == "GUIDE" else right,
+                     index, style, text, panel)
+
+    block = [banner._tbl, spacer._p, panels._tbl]
     body = doc._body._element
     boundary = next(
         (child for child in body

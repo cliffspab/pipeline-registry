@@ -15,6 +15,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-08-30
+
+- 2026-08-30 — Promote `300826_gpt_index-style`: replace the skinny single-column Word contents with a full-width CONTENTS banner and matched side-by-side GUIDE/DIRECTORY panels; preserve all 43 internal links and the dedicated page-2 boundary.
+
 ## Cleared 2026-08-29
 
 - 2026-08-29 — Complete the always-latest Shift rule: when today's handover carries an older tag, allow the newly sealed edition to supersede it automatically; retain the daily no-write guard when the tags already match.
