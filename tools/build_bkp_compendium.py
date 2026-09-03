@@ -153,6 +153,21 @@ COMPONENT_DESCRIPTIONS = {
     "DIRECTORY": "Current tripwires, canonical forms and exceptions",
 }
 SEPARATOR_RE = re.compile(r"^={20,}$")
+GUIDE_HEADING_CODE_RE = re.compile(r"^\[(G(?:\d+(?:-[A-Z]\d*)?))\]\s+(.+)$")
+SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "G2"}
+
+
+def heading_label(text):
+    """Return routing text without an edition-bound GUIDE display code."""
+    match = GUIDE_HEADING_CODE_RE.match(text.strip())
+    return match.group(2) if match else text.strip()
+
+
+def section_heading(component):
+    """Keep GUIDE codes in Word titles while routing on stable labels."""
+    label = SECTION_DISPLAY.get(component, COMPONENT_DISPLAY.get(component, component))
+    code = SECTION_HEADING_CODE.get(component)
+    return f"[{code}] {label}" if code else label
 
 
 def ensure_style(doc, name, base="normal"):
@@ -512,7 +527,7 @@ def add_part_opening(doc, component, part_number, subtitle=None):
     # alone says which section this is, echoing the blank black cell above
     # and the running head on every page that follows. Cell width 2340 twips.
     title = doc.add_paragraph(
-        SECTION_DISPLAY.get(component, COMPONENT_DISPLAY.get(component, component)),
+        section_heading(component),
         style="Heading 1")
     # The title sits over its own cell. 090826 — this keyed off COMPONENTS,
     # which had become two, so REGISTER counted as the LAST cell and anchored
@@ -1290,7 +1305,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
             lvl, _, inl = b["c"]
             if lvl != 1:
                 continue
-            txt = inlines_text(inl).strip().upper()
+            txt = heading_label(inlines_text(inl)).upper()
             if txt not in COMPONENT_TITLES:
                 continue
             name = COMPONENT_TITLES[txt]
@@ -1383,16 +1398,17 @@ def build(source, reference, output, pandoc, manifest, component=None):
         if kind == "Header":
             level, _, inlines = block["c"]
             text = inlines_text(inlines).strip()
+            label = heading_label(text)
             # The component title is an ordinary H1 now: the seam above it has
             # already opened the part, and add_part_opening prints the name, so
             # printing it again would duplicate it.
-            if level == 1 and text.upper() in COMPONENT_TITLES:
+            if level == 1 and label.upper() in COMPONENT_TITLES:
                 last_heading_level = 1
                 continue
             # 090826: PROCESSES is a SECTION of the file (an H2 inside CORE)
             # and a PART of the volume. The 080826 merge collapsed both at
             # once; only the file one had to move. It opens on its own heading.
-            if level == 2 and text.upper() == "PROCESSES":
+            if level == 2 and label.upper() == "PROCESSES":
                 part_number += 1
                 add_part_opening(doc, "PROCESSES", part_number)
                 last_heading_level = None

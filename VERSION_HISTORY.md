@@ -6,6 +6,30 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-03 — 030926_control_v1: BLUEPRINT STEERING LAYER
+
+**Approved and promoted locally.** `BANGKOK POST DESK CONTROL` is established as the peer operational source to BLUEPRINT. BLUEPRINT remains the complete editorial authority; CONTROL provides the shared `/edit`, `/check`, `/photo` and `/pr` entry points and routes each workflow through that authority without reducing it.
+
+**Source contract.** A reachable linked Blueprint is used as supplied. If it is unreachable, the failure is declared and work stops pending another explicitly supplied authoritative route. Edition selection and source custody remain with the supervisor; the workflows do not add a preliminary completeness, parity or edition audit.
+
+**Time rule.** Clock times in news reported abroad take "(local time)". Reader-participation events such as broadcasts, kick-offs and launches are converted to "(Thailand time)". Race times use colons.
+
+**Machinery.** `Control/build.py` deterministically generates the four-command plugin from `Control/CONTROL.txt`. Local push preflight checks root/clone CONTROL parity and generated output; CI independently rejects generated-file drift.
+
+**Verdict.** Ready for supervisor review and guarded push. No commit or push has been made.
+
+## 2026-09-01 — 010926_gpt_alpha-index: CODED GOVERNANCE ROUTING
+
+**Approved and promoted.** The contents-led architecture remains. Its 23 citeable GUIDE nodes now carry compact edition-bound alphanumeric codes, and mandatory REFERENCES names only the edition and applicable codes. The raw source map contains no Markdown navigation links; the Word compiler traverses coded headings and creates native bookmarks and linked contents independently.
+
+**Runtime and handover.** The modular sidebar now distinguishes warm same-edition reuse from cold or changed-edition retrieval, validates the coded GUIDE map and returns the current JOB REPORT contract. Sealed Shift is reduced to one Directory delivery, `DIRECTORY.yaml`; text-only consumers may change the extension locally. Published `.txt` and `.yaml` Directory twins remain available for compatibility.
+
+**Directory foundation retained.** The same edition includes the source-owned, build-validated YAML routing index and the supervisor-confirmed Khlong Thom Centre exception. The build rejects Directory-index drift and missing, orphaned or duplicate GUIDE codes.
+
+**Evidence.** Source dollar-pairing, edition, invertibility, GUIDE-code, routing-index and register-parse guards pass. The custom Word build preserves all 23 coded GUIDE headings and creates native bookmarks. The coverage audit matches 144 of 147 units; the source title, Components declaration and full Directory delivery URL are declared presentation suppressions, with any other absence fatal. An isolated five-file Shift refresh and subsequent read-only check pass.
+
+**Verdict.** Supervisor approved. Ready for guarded push, CI rebuild, seal and Shift refresh.
+
 ---
 
 ## 2026-08-30 — 300826_gpt_index-style: TWO-PANEL CONTENTS PAGE

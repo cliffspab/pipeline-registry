@@ -3,8 +3,9 @@ name: Split BLUEPRINT into parts and build the style guide
 # ---------------------------------------------------------------------------
 # 270726.
 #
-# ONE file is edited:
+# TWO peer sources are edited:
 #   Blueprint/BLUEPRINT.txt
+#   Control/CONTROL.txt
 #
 # FOUR are derived from it on push, and never touched by hand:
 #   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
@@ -55,6 +56,9 @@ on:
     branches: [main]
     paths:
       - 'Blueprint/BLUEPRINT.txt'
+      - 'Control/CONTROL.txt'
+      - 'Control/build.py'
+      - 'Control/plugin/**'
       - '.github/workflows/compile.yml'
   workflow_dispatch:
 
@@ -68,6 +72,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Guard - CONTROL plugin is current
+        run: python3 Control/build.py --check
 
       - name: Guard - reject hand-edits to derived files
         if: github.event_name == 'push'
@@ -426,6 +433,9 @@ jobs:
               # properties; the components line stays in the source for anyone
               # reading the raw text and is suppressed in the volume.
               r"^Components: GUIDE \+ DIRECTORY",
+              # DIRECTORY uses compact /dir running heads in the volume. The
+              # full raw-delivery shortlink remains source-only.
+              r"^go\.fuzzylogic\.page/dir$",
               # The PART entry is retired: the seam is an HTML comment, which
               # pandoc emits as RawBlock and the audit never counts as a unit.
               #

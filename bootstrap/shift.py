@@ -14,12 +14,11 @@ SHIFT = ROOT / "Shift"
 PARTS = (
     "BLUEPRINT.txt",
     "GUIDE.txt",
-    "DIRECTORY.txt",
     "DIRECTORY.yaml",
-    "SIDEBAR.master.txt",
+    "CONTROL.txt",
     "BLUEPRINT.docx",
 )
-SEAMED = ("GUIDE.txt", "DIRECTORY.txt")
+SEAMED = ("GUIDE.txt", "DIRECTORY.yaml")
 SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
 
 
@@ -100,7 +99,7 @@ def main():
 
     if not check_only:
         os.utime(SHIFT, None)
-    print(f"\nshift ready — build {tag}; six files; refresh daily or when a newly sealed edition supersedes it")
+    print(f"\nshift ready — build {tag}; five files; refresh daily or when a newly sealed edition supersedes it")
     return 0
 
 

@@ -16,6 +16,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-03
+
+- 2026-09-01 | Blueprint/BLUEPRINT.txt + tools/build_bkp_compendium.py + .github/workflows/compile.yml + bootstrap/{build.py,shift.py,AGENTS.md} | PROMOTE 010926_gpt_alpha-index: retain the contents architecture; add 23 edition-bound GUIDE codes and compact coded REFERENCES; make the Word compiler route on clean labels while generating coded linked headings; retain the source-owned Directory index and Khlong Thom exception; reduce sealed Shift to one Directory file (DIRECTORY.yaml).
+
+- 2026-09-03 | Blueprint/BLUEPRINT.txt | AMEND time treatment: label clock times in news reported abroad "(local time)"; convert reader-participation events to "(Thailand time)"; punctuate race times with colons.
+
+- 2026-09-03 | Control/{CONTROL.txt,build.py,plugin/**} + .github/workflows/compile.yml + bootstrap/{AGENTS.md,build.py,shift.py} + push.bat + RECORDS-AND-CONSOLIDATION.md | ADD 030926_control_v1 as the peer BANGKOK POST DESK CONTROL steering source; generate compatible /edit, /check, /photo and /pr workflows that route through the complete BLUEPRINT; remove the model-side source-audit stage; guard source parity and generated output before push and in CI.
+
 ## Cleared 2026-08-30
 
 - 2026-08-30 — Promote `300826_gpt_index-style`: replace the skinny single-column Word contents with a full-width CONTENTS banner and matched side-by-side GUIDE/DIRECTORY panels; preserve all 43 internal links and the dedicated page-2 boundary.

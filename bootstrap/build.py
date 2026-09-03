@@ -8,8 +8,8 @@ ONE file is edited:
 
 Four are derived from it and never touched by hand:
 
-    GUIDE.txt         the operating manual, part delivery for /core
-    DIRECTORY.yaml    the lookups, part delivery for /reg
+    GUIDE.txt         the operating manual, part delivery for /guide
+    DIRECTORY.yaml    the lookups, part delivery for /dir
     DIRECTORY.txt     DIRECTORY.yaml under a .txt extension, byte-identical
     BLUEPRINT.pdf     the rendered artifact of record
 
@@ -42,6 +42,8 @@ EXPECT = ["GUIDE", "DIRECTORY"]
 
 SEAM = re.compile(r"<!-- PART: (\S+) (\w+) -->")
 FENCE = re.compile(r"```yaml\n(.*?)\n```", re.S)
+GUIDE_CODE = re.compile(r"^#{1,6} \[(G(?:\d+(?:-[A-Z]\d*)?))\] ", re.M)
+CONTENTS_CODE = re.compile(r"^\s*- \[(G(?:\d+(?:-[A-Z]\d*)?))\] \S", re.M)
 
 
 def fail(msg):
@@ -99,6 +101,27 @@ def guard_invertible(preamble, parts, src):
     print("invertibility guard: PASS (parts recompile byte-for-byte)")
 
 
+def guard_guide_codes(src):
+    """Require one target heading for every edition-bound GUIDE code."""
+    contents = CONTENTS_CODE.findall(src)
+    headings = GUIDE_CODE.findall(src)
+    duplicate_contents = sorted({code for code in contents if contents.count(code) > 1})
+    duplicate_headings = sorted({code for code in headings if headings.count(code) > 1})
+    if duplicate_contents:
+        fail("duplicate GUIDE codes in CONTENTS: " + ", ".join(duplicate_contents))
+    if duplicate_headings:
+        fail("duplicate GUIDE codes on headings: " + ", ".join(duplicate_headings))
+    missing = sorted(set(contents) - set(headings))
+    orphaned = sorted(set(headings) - set(contents))
+    if missing:
+        fail("GUIDE codes in CONTENTS without headings: " + ", ".join(missing))
+    if orphaned:
+        fail("GUIDE heading codes absent from CONTENTS: " + ", ".join(orphaned))
+    if not contents:
+        fail("no coded GUIDE nodes found")
+    print(f"GUIDE-code guard: PASS ({len(contents)} edition-bound nodes)")
+
+
 # ---------- split ----------
 
 def split(src):
@@ -117,11 +140,7 @@ def split(src):
 
 
 def register_yaml(part, tag):
-    """Lift the register out of its fence and restore the comment seam.
-
-    The shipped register carries '# PART:' because an HTML comment will not
-    parse as YAML; BLUEPRINT carries '<!-- PART: -->' because '#' is an H1
-    in markdown. That one line is the only difference between them."""
+    """Lift the fenced Directory and validate its source-owned routing index."""
     m = FENCE.search(part)
     if not m:
         fail("no ```yaml fence found in the DIRECTORY part.")
@@ -133,44 +152,44 @@ def register_yaml(part, tag):
     for branch in ("status", "references"):
         if branch not in parsed:
             fail(f"the register is missing the '{branch}' branch")
+    guard_index(parsed)
     print(f"register parse guard: PASS "
           f"(apex {len(parsed['status']['apex'])}, "
           f"provinces {len(parsed['references']['thai_places']['provinces'])})")
-    return f"# PART: {tag} DIRECTORY\n{directory_index(parsed)}\n{body}\n", parsed
+    return f"# PART: {tag} DIRECTORY\n{body}\n", parsed
 
 
-def directory_index(parsed):
-    """Build a compact routing manifest before the large YAML payload."""
+def guard_index(parsed):
+    """Require the source-owned routing index to mirror live Directory paths."""
+    index = parsed.get("index")
+    if not isinstance(index, dict):
+        fail("the register is missing the source-owned 'index' branch")
+
     status = parsed["status"]
-    refs = parsed["references"]
+    expected = {
+        ("apex",): status["apex"],
+        ("second_tier", "reversals"): [item["name"] for item in status["second_tier"]["reversals"]],
+        ("second_tier", "mortalities"): list(status["second_tier"]["mortalities"]),
+        ("second_tier", "corporate"): list(status["second_tier"]["corporate"]),
+        ("global",): [item["name"] for item in status["global"]],
+    }
+    for path, actual in expected.items():
+        held = index["status"]
+        for key in path:
+            held = held[key]
+        if held != actual:
+            fail("index.status." + ".".join(path) + " does not match the live Directory path")
 
-    def names(items):
-        if isinstance(items, dict):
-            return list(items)
-        return [item.get("name", str(item)) if isinstance(item, dict) else str(item)
-                for item in items]
-
-    routes = [
-        ("status.apex", names(status["apex"])),
-        ("status.second_tier.reversals", names(status["second_tier"]["reversals"])),
-        ("status.second_tier.mortalities", names(status["second_tier"]["mortalities"])),
-        ("status.second_tier.corporate", names(status["second_tier"]["corporate"])),
-        ("status.global", names(status["global"])),
-        ("references.countries", list(refs["countries"])),
-        ("references.foreign_places", list(refs["foreign_places"])),
-        ("references.thai_places", list(refs["thai_places"])),
-        ("references.organisations", list(refs["organisations"])),
-        ("references.vocabulary", list(refs["vocabulary"])),
-    ]
-    lines = [
-        "# DIRECTORY INDEX — inspect this manifest before loading a branch.",
-        "# Fetch or search only the matching YAML path unless the whole Directory is needed.",
-    ]
-    for path, entries in routes:
-        lines.append(f"# {path}: {' | '.join(entries)}")
-    lines.append("# END DIRECTORY INDEX")
-    return "\n".join(lines)
-
+    branches = ["countries", "foreign_places", "thai_places", "organisations", "vocabulary"]
+    if index["references"]["branches"] != branches:
+        fail("index.references.branches does not match the live Directory branches")
+    trap = "Khlong Thom Centre (Bangkok market): held exception to Klong (not Khlong)."
+    if trap not in index["references"]["thai_places"]["traps"]:
+        fail("index is missing the Khlong Thom Centre retrieval trap")
+    if not any("Khlong Thom Centre" in item
+               for item in parsed["references"]["thai_places"]["transliteration_rules"]):
+        fail("Thai-place rules are missing the Khlong Thom Centre exception")
+    print("routing-index guard: PASS (source-owned paths and Khlong Thom Centre trap)")
 
 # ---------- rendered artifact ----------
 
@@ -242,6 +261,7 @@ def main():
     tag = guard_edition(tags, preamble)
     TAG_HOLDER[0] = tag
     guard_invertible(preamble, parts, src)
+    guard_guide_codes(src)
 
     reg_text, _ = register_yaml(parts["DIRECTORY"], tag)
 

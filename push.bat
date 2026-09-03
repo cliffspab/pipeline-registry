@@ -39,7 +39,7 @@ if exist ".git\rebase-merge" (
   echo [ABORT] unfinished rebase detected.
   pause & exit /b 1
 )
-for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md CONTROL.txt shift.py build.py seal.py clear_pending.py) do (
   if not exist "..\%%F" (
     echo [ABORT] required workspace file missing: ..\%%F
     pause & exit /b 1
@@ -47,6 +47,19 @@ for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
 )
 git fetch origin || (echo [FAIL] fetch failed - nothing changed locally & pause & exit /b 1)
 git diff --check || (echo [ABORT] whitespace/error check failed & pause & exit /b 1)
+if not exist "Control\CONTROL.txt" (
+  echo [ABORT] required steering source missing: Control\CONTROL.txt
+  pause & exit /b 1
+)
+%SystemRoot%\System32\fc.exe /b "..\CONTROL.txt" "Control\CONTROL.txt" >nul
+if errorlevel 1 (
+  echo [ABORT] root CONTROL.txt and Control\CONTROL.txt differ.
+  pause & exit /b 1
+)
+python Control\build.py --check || (
+  echo [ABORT] CONTROL plugin is stale or invalid.
+  pause & exit /b 1
+)
 
 echo.
 echo --- branch and payload ---
@@ -68,7 +81,7 @@ for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
   if not exist "bootstrap\%%F" (
     echo   ADD bootstrap\%%F
   ) else (
-    fc /b "..\%%F" "bootstrap\%%F" >nul
+    %SystemRoot%\System32\fc.exe /b "..\%%F" "bootstrap\%%F" >nul
     if errorlevel 1 echo   UPDATE bootstrap\%%F
   )
 )
@@ -85,8 +98,8 @@ if /I not "%BKP_CONFIRM%"=="PUSH" (
 )
 echo [confirmed] beginning the authorised push sequence.
 REM --- mirror the bootstrap set into the clone so the push backs it up -------
-REM These three live at the Project_Space root and are NOT part of the published
-REM volume. CLAUDE.md must sit at the root to be read on entry, and none of them
+REM These workspace files live at the Project_Space root and are NOT part of the published
+REM volume. AGENTS.md must sit at the root to be read on entry, and none of them
 REM may go in Blueprint\ or the compile job would treat them as components. That
 REM leaves them on one machine, unbacked. This mirrors them into bootstrap\ so
 REM they ride every push.
