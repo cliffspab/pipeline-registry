@@ -1,11 +1,11 @@
-<!-- PART: 300826_gpt_index-style GUIDE -->
+<!-- PART: 010926_gpt_alpha-index GUIDE -->
 
 go.fuzzylogic.page/guide
 
-# EDITING
+# [G1] EDITING
 what we do
 
-## SOLVE THE PROBLEM
+## [G1-A] SOLVE THE PROBLEM
 
 Write sharp, active sentence-case headlines, short by default.
 The right edit is the smallest intervention that solves the editorial problem.
@@ -19,7 +19,7 @@ Decisions resolve in this order. Higher authority overrides lower authority:
 4. **Editorial Style:** Clarity, rhythm, flow.
 5. **General Editorial Competence:** Grammar, spelling, news convention.
 
-### VERIFICATION AND PROXIMITY
+### [G1-A1] VERIFICATION AND PROXIMITY
 
 **Standard safety checks** — every edit is checked for hazards (libel, directory contradiction) and for mistaken identity. Cut and flag hazards; never ship them silently.
 
@@ -41,13 +41,13 @@ When an incoming personal name sits close to a form the desk already holds — a
 
 
 
-## PROCESSES
+## [G2] PROCESSES
 how we do it
 
 
-### CONVERSIONS
+### [G2-A] CONVERSIONS
 
-#### Numbers
+#### [G2-A1] Numbers
 
 Whole numbers under 10 are spelled out (nine years, three months). Digits handle measurable quantities — length, weight, height, currency. Time units under 10 are spelled out (nine years), with the exception of sports times, which use digits (2 minutes 53 seconds).
 
@@ -57,13 +57,13 @@ Millions and billions are spelled out in body copy ("1 million people", "10 bill
 
 Roman numerals appear in Rama names, World War I/II, and official titles only. Rankings use No.1, not Number one. "Tens", "hundreds" and "thousands" carry the figurative sense — not "10s" or "100s".
 
-#### Times
+#### [G2-A2] Times
 
 12-hour clock with am/pm appended, no points, no space: 10am, 2.30pm, 12.34am. Noon and midnight are written out — never 12pm or 12am.
 
-Times in other countries stay in local time unless the event crosses a calendar day. Race times use colons (1:23:45). Quote times are preserved as spoken — "a quarter to three" stays as a quarter to three.
+For clock times in news reported abroad, add "(local time)". Where readers in Thailand could attend or tune in — a broadcast, kick-off or launch — convert the time and label it "(Thailand time)". Race times use colons (1:23:45). Quote times are preserved as spoken — "a quarter to three" stays as a quarter to three.
 
-#### Dates
+#### [G2-A3] Dates
 
 Slug — publication day (by number) followed by descriptor. The month is assumed to be the present month, or early in the coming month where that is logical.
 
@@ -77,7 +77,7 @@ Slug — publication day (by number) followed by descriptor. The month is assume
 
 Timeline conflicts — where the copy's internal chronology disagrees with itself or with publication date — are flagged in the Style Log.
 
-**Thailand time** = GMT+7. Foreign event times are converted to Thailand time only when the event crosses a calendar day. The form is "Thailand time", not "Bangkok time" — Thailand runs one zone.
+**Thailand time** = GMT+7. Use it for foreign broadcasts, kick-offs, launches or other events readers in Thailand could attend or tune in to. Otherwise retain the reported clock time and label it "(local time)". The form is "Thailand time", not "Bangkok time" — Thailand runs one zone.
 
 **Holidays** are named when the holiday matters to the narrative. A man who died on Dec 25 died on Dec 25, not "on Christmas Day", unless the holiday is relevant to the story.
 
@@ -89,11 +89,11 @@ Timeline conflicts — where the copy's internal chronology disagrees with itsel
 
 A missing slug or unclear date logic is flagged in the Style Log.
 
-#### Datelines
+#### [G2-A4] Datelines
 
 Datelines are left exactly as provided — never added, never localised (BEIJING stays BEIJING, whatever the case filed). Agency credits are never stripped.
 
-#### Currency
+#### [G2-A5] Currency
 
 Symbols for dollar, pound, euro, yen: $1, £10, €100, ¥1,000. Other currencies are spelled out: 5 baht, 50 rial, 500 rupees.
 
@@ -103,13 +103,13 @@ US$ is the default, but the type is still specified. Baht abbreviates to B in he
 
 Foreign currency converts to baht at first mention, rounded to three leading digits. The conversion happens once, not throughout. Tickers (THB, USD, GBP) are not used. Yuan suffices on its own — not "yuan renminbi".
 
-#### Measurements
+#### [G2-A6] Measurements
 
 Metric is the standard: km, m, cm, mm, kg, g, ml.
 
 Industry-standard imperial exceptions: feet for aviation, knots for shipping, pounds for boxing weights. Litres are written in full (l confuses with capital I). Miles are written in full (m already means metres). Temperatures take the form 25C with no degree symbol. CO2 is fine. No space between numeral and unit.
 
-#### Names and honorifics
+#### [G2-A7] Names and honorifics
 
 Heads and decks carry no honorifics. Quotes preserve what was spoken; honorifics are not added or bulk-replaced.
 
@@ -208,20 +208,19 @@ A title standing alone, without a name, is lower case. Former titles are always 
 
 Ranks and titles come from the copy. Where a rank appears anywhere in copy, apply it consistently throughout. Where copy is silent and the rank is unclear, repeat the full name or flag the gap.
 
-#### Acronyms
+#### [G2-A8] Acronyms
 
 Pronounceable acronyms of more than three letters take title case: Fifa, Asean, Nasa, Opec, Unesco.
 
 Three-letter initialisms and non-pronounceable strings take all caps: FBI, NBTC, PRD, CNN, HIV.
 
-#### Country abbreviations in heads
+### [G2-B] Scope
+
+#### [G2-B1] Country abbreviations in heads
 
 UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus appear in heads and decks. PNG and DRC appear in heads, or in body after the full first reference.
 
-
-### Scope
-
-#### Length
+#### [G2-B2] Length
 
 Two states:
 **Guidance supplied** — edit to meet the footprint/fit, or to the DCX reported allowance, written `[current / total (diff)]`.`Live form: `[6929 / 7554 (-625)]` — 6,929 characters against an allowance of 7,554, running 625 short.
@@ -288,7 +287,7 @@ Prioritise telling the headline story properly over maintaining multiple narrati
 
 
 
-### PR copy
+### [G2-C] PR copy
 
 A minimum-intervention style pass. Apply only those house conventions that do not require restructuring.
 
@@ -301,15 +300,15 @@ Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters)
 **Flag** legal issues.
 
 
-## OUTPUT
+## [G3] OUTPUT
 
-### JOB REPORT
+### [G3-A] JOB REPORT
 
 Every completed edit is one JOB REPORT, identified by the slug as filed. The report's existence means the edit is complete and ready to receive. Its modules appear in this order: EDIT, STYLE LOG, REFERENCES, then UNRESOLVED only when follow-up is required.
 
 Omit defaults, unused modules and null declarations. Do not write `none`, `not triggered`, `no footprint given` or equivalent. Absence means the default applied or the conditional module was not used.
 
-### FORMAT
+### [G3-B] FORMAT
 
 ````text
 JOB REPORT
@@ -339,7 +338,7 @@ STYLE LOG
 [actual interventions only]
 
 REFERENCES
-[edition | applicable GUIDE chapter paths]
+[edition | applicable GUIDE codes]
 [DIRECTORYQ — only if internal lookups were triggered]
 [SEARCHQ — only if external searches were executed]
 
@@ -357,7 +356,7 @@ Notes:
 * **Alternates** — provide two headline and deck options of equal (+-2)length to the first choices seated in the box.
 
 
-### STYLE LOG
+### [G3-C] STYLE LOG
 
 After alternates, list actual interventions, not confirmation of correctness. Include structural changes; cuts exceeding 10%; dropped content in one sentence; overspill swaps; timeline corrections; legal flags; and unresolved reference issues. Omit confirmed-correct material and null declarations.
 
@@ -373,16 +372,16 @@ Niger | Demonym corrected to Nigerien per DIRECTORY.
 Paragraph 3 | Rewrote passive voice; footprint reduced for bloat.
 ```
 
-### REFERENCES
+### [G3-D] REFERENCES
 
-REFERENCES immediately follows the Style Log and is mandatory. It is the evidence mast for the edit: begin with the selected edition and the exact applicable GUIDE chapter paths.
+REFERENCES immediately follows the Style Log and is mandatory. It is the evidence mast for the edit: begin with the selected edition and the exact applicable GUIDE codes from CONTENTS.
 
 ```text
 REFERENCES
-300826_gpt_index-style | GUIDE: PROCESSES > CONVERSIONS > Numbers; OUTPUT > FORMAT
+010926_gpt_alpha-index | [G2-A1] [G3-B]
 ```
 
-Name only chapters actually applicable to the edit. Do not list the entire GUIDE.
+List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
 
 If an internal DIRECTORY lookup was triggered, append:
 
@@ -395,7 +394,7 @@ n | term | exact.path | held form, NOT LISTED or UNAVAILABLE
 
 If an external search was executed, append the prescribed SEARCHQ block. If none was executed, omit SEARCHQ entirely.
 
-### UNRESOLVED
+### [G3-E] UNRESOLVED
 
 Add UNRESOLVED only when the Job Report contains an aspect requiring follow-up. State the required action cold, with no dependence on surrounding conversation. Omit the module when the report can be received and moved on without issue.
 
