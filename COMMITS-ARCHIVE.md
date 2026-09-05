@@ -17,6 +17,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-06
+
+- 2026-09-06 | Blueprint/BLUEPRINT.txt | PROMOTE 060926_gpt_restored-rules: restore approved substantive rules for verification, dates, numbers, currency, measurements, names and honorifics; add [G2-A9] italics and title styling; route required styles through the Style Log; add Thai road-name and soi-by-road-name rulings.
+
 ## Cleared 2026-09-03
 
 - 2026-09-01 | Blueprint/BLUEPRINT.txt + tools/build_bkp_compendium.py + .github/workflows/compile.yml + bootstrap/{build.py,shift.py,AGENTS.md} | PROMOTE 010926_gpt_alpha-index: retain the contents architecture; add 23 edition-bound GUIDE codes and compact coded REFERENCES; make the Word compiler route on clean labels while generating coded linked headings; retain the source-owned Directory index and Khlong Thom exception; reduce sealed Shift to one Directory file (DIRECTORY.yaml).

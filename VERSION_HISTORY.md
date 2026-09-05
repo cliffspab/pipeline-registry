@@ -6,6 +6,17 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-06 — 060926_gpt_restored-rules: RECOVERED HOUSE RULES
+
+**Approved and promoted locally.** Restores supervisor-recovered substantive rules across verification, dates, numbers, currency, measurements, names and honorifics. Adds `[G2-A9] Italics and title styling`, including complete works, component titles, named manned vessels, foreign words and species names; routes elements requiring DCX treatment through `Styles required` in the Style Log.
+
+**Directory.** Adds explicit Thai-place rulings for capitalisation of road-name components and for sois better known by road names, including `On Nut Road`.
+
+**Evidence.** Dollar-pairing, edition, invertibility, GUIDE-code, routing-index and register-parse guards pass. The fenced Directory passes safe YAML loading. Shift remains on the last sealed edition pending publication, CI rebuild and sealing.
+
+**Verdict.** Supervisor approved. Registry source and pending payload prepared for guarded push; Shift refresh withheld until the edition is sealed.
+
+---
 ## 2026-09-03 — 030926_control_v1: BLUEPRINT STEERING LAYER
 
 **Approved and promoted locally.** `BANGKOK POST DESK CONTROL` is established as the peer operational source to BLUEPRINT. BLUEPRINT remains the complete editorial authority; CONTROL provides the shared `/edit`, `/check`, `/photo` and `/pr` entry points and routes each workflow through that authority without reducing it.
