@@ -1,4 +1,4 @@
-# PART: 010926_gpt_alpha-index DIRECTORY
+# PART: 060926_gpt_restored-rules DIRECTORY
 # DIRECTORY INDEX — inspect this manifest before loading a branch.
 # Fetch or search only the matching YAML path unless the whole Directory is needed.
 # status.apex: HM King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua | HM Queen Sirikit The Queen Mother | Thaksin Shinawatra | Srettha Thavisin | Paetongtarn Shinawatra | Pita Limjaroenrat | Dr Prasert Prasarttong-Osoth | HRH Princess Bajrakitiyabha Narendiradebyavati | Ayatollah Ali Khamenei | Mojtaba Khamenei
@@ -8,7 +8,7 @@
 # status.global: Donald Trump and JD Vance | King Charles III | King Salman bin Abdulaziz al-Saud | King Jigme Khesar Namgyel Wangchuck | Catherine, Princess of Wales | Prince William, Prince of Wales | To Lam
 # references.countries: preferred_forms | demonyms | structure | headline_abbreviations | the_article
 # references.foreign_places: AUSTRALIA | AZERBAIJAN | BANGLADESH | BELGIUM | BOSNIA & HERZEGOVINA | BRAZIL | BURKINA FASO | CAMBODIA | CHILE | CHINA | EGYPT | GERMANY | GREENLAND | HONG KONG | ICELAND | INDIA | INDONESIA | IRAN | IRAQ | ISRAEL | ITALY | JAPAN | KAZAKHSTAN | KIRIBATI | MOLDOVA | MONGOLIA | MOROCCO | MYANMAR | NEPAL | NETHERLANDS | NIGERIA | NORTH KOREA | RUSSIA | SOUTH AFRICA | SWEDEN | SYRIA | TANZANIA | TURKEY | UKRAINE | UNITED STATES | VIETNAM | YEMEN
-# references.thai_places: note | transliteration_rules | airports | third_party_spellings | provinces
+# references.thai_places: note | transliteration_rules | road_names | soi_by_road_name | airports | third_party_spellings | provinces
 # references.organisations: Abu Sayyaf | al-Nusra Front | al-Qaeda | al-Qaeda in the Arabian Peninsula | al-Shebab | Ba'ath Party | Hezbollah | Houthis | The Islamic State | Jamaat-ul-Ahrar | Labor Party | Malaysia Airlines | Medecins Sans Frontieres | Moro Islamic Liberation Front | Pavena Foundation | sharia law | Shia | Yezidis | Fifa
 # references.vocabulary: note | numbers_symbols | uk_us_traps | rulings
 # END DIRECTORY INDEX
@@ -311,6 +311,13 @@ references:
       - Rama roads — Roman numerals; Rama IX Road, never Phra Ram
       - Postcodes — no comma; Bangkok 10900 (not Bangkok, 10900)
 
+    road_names: >
+      Every component of a road name caps: Khao San Road, Ratchadamnoen Avenue.
+
+    soi_by_road_name: >
+      Where a soi is better known by a road name, the road name carries it: On
+      Nut Road.
+
     airports:
       - Two Bangkok airports — always specify Don Muang or Suvarnabhumi
       - Never "Bangkok airport"
@@ -497,7 +504,7 @@ references:
       serial vs series: Serial = continuous plot; series = unrelated stories.
       swat vs swot: Swat flies; swot for an exam.
       Thai prefix: Superfluous in most cases ("the Thai government"). Strip unless differentiating.
-      Thailand time: Use for foreign events readers in Thailand could attend or tune in to; otherwise retain the reported time and mark "(local time)". Never "Bangkok time" — one zone.
+      Thailand time: Use only if event crosses calendar days. Never "Bangkok time" — one zone.
       that vs which: That = definitive (no comma); which = descriptive (comma).
       tortuous vs torturous: Tortuous = winding; torturous = excruciating.
       transpire: Means leak out, not occur or happen.

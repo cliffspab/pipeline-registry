@@ -1,5 +1,5 @@
 {
-  "edition": "010926_gpt_alpha-index",
+  "edition": "060926_gpt_restored-rules",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
@@ -7,13 +7,13 @@
     1,
     1
   ],
-  "source_blocks": 164,
+  "source_blocks": 189,
   "source_block_types": {
     "BulletList": 13,
     "CodeBlock": 8,
-    "Header": 44,
+    "Header": 45,
     "OrderedList": 2,
-    "Para": 95,
+    "Para": 119,
     "RawBlock": 2
   },
   "suppressed_structural_separator_paragraphs": 0,

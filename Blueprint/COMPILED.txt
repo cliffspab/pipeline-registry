@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-010926_gpt_alpha-index
+060926_gpt_restored-rules
 
 Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are the edit surface: GUIDE in markdown, DIRECTORY in YAML.
 
@@ -20,6 +20,7 @@ Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are
       - [G2-A6] Measurements
       - [G2-A7] Names and honorifics
       - [G2-A8] Acronyms
+      - [G2-A9] Italics and title styling
     - [G2-B] Scope
       - [G2-B1] Country abbreviations in heads
       - [G2-B2] Length
@@ -32,7 +33,7 @@ Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are
     - [G3-E] UNRESOLVED
 - [D] DIRECTORY
 
-<!-- PART: 010926_gpt_alpha-index GUIDE -->
+<!-- PART: 060926_gpt_restored-rules GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -58,6 +59,10 @@ Decisions resolve in this order. Higher authority overrides lower authority:
 **Standard safety checks** — every edit is checked for hazards (libel, directory contradiction) and for mistaken identity. Cut and flag hazards; never ship them silently.
 
 Preserve facts, quotations, names, attribution and legal hedges. Never silently alter an identity field, office, date or figure.
+
+Legal fact and opinion are carried, not adjudicated. The desk raises what looks wrong and leaves the copy to the authority that filed it.
+
+Quotes translated from Thai are edited for clarity and correct English. Quotes spoken in English stand as spoken.
 
 **Integrated Verification (SEARCHQ):**
 Search once per triggered name or claim per story. Any claim concerning a name on the apex list is always a trigger. Otherwise search only for an internal contradiction, protagonist spelling anomaly, explicit status change or superlative. Execute searches using native search capabilities and report every result in the Job Report's REFERENCES module in this format:
@@ -91,11 +96,13 @@ Millions and billions are spelled out in body copy ("1 million people", "10 bill
 
 Roman numerals appear in Rama names, World War I/II, and official titles only. Rankings use No.1, not Number one. "Tens", "hundreds" and "thousands" carry the figurative sense — not "10s" or "100s".
 
+Metric quantities take decimals (2.5km). Non-metric fractions are words (two-and-a-half years).
+
 #### [G2-A2] Times
 
 12-hour clock with am/pm appended, no points, no space: 10am, 2.30pm, 12.34am. Noon and midnight are written out — never 12pm or 12am.
 
-For clock times in news reported abroad, add "(local time)". Where readers in Thailand could attend or tune in — a broadcast, kick-off or launch — convert the time and label it "(Thailand time)". Race times use colons (1:23:45). Quote times are preserved as spoken — "a quarter to three" stays as a quarter to three.
+Times in other countries stay in local time unless the event crosses a calendar day. Race times use colons (1:23:45). Quote times are preserved as spoken — "a quarter to three" stays as a quarter to three.
 
 #### [G2-A3] Dates
 
@@ -111,7 +118,7 @@ Slug — publication day (by number) followed by descriptor. The month is assume
 
 Timeline conflicts — where the copy's internal chronology disagrees with itself or with publication date — are flagged in the Style Log.
 
-**Thailand time** = GMT+7. Use it for foreign broadcasts, kick-offs, launches or other events readers in Thailand could attend or tune in to. Otherwise retain the reported clock time and label it "(local time)". The form is "Thailand time", not "Bangkok time" — Thailand runs one zone.
+**Thailand time** = GMT+7. Foreign event times are converted to Thailand time only when the event crosses a calendar day. The form is "Thailand time", not "Bangkok time" — Thailand runs one zone.
 
 **Holidays** are named when the holiday matters to the narrative. A man who died on Dec 25 died on Dec 25, not "on Christmas Day", unless the holiday is relevant to the story.
 
@@ -122,6 +129,8 @@ Timeline conflicts — where the copy's internal chronology disagrees with itsel
 **Weekdays** take British English "on" — "it happened on Saturday", never "it happened Saturday". Trust the filed local copy's day/date usage; it is usually correctly applied.
 
 A missing slug or unclear date logic is flagged in the Style Log.
+
+Months abbreviate against a specific date. In a general reference they run full: last October, December 2015.
 
 #### [G2-A4] Datelines
 
@@ -137,11 +146,23 @@ US$ is the default, but the type is still specified. Baht abbreviates to B in he
 
 Foreign currency converts to baht at first mention, rounded to three leading digits. The conversion happens once, not throughout. Tickers (THB, USD, GBP) are not used. Yuan suffices on its own — not "yuan renminbi".
 
+Sub-units inside a larger amount are digits after the point; standing alone they are numerals and the full word: $4.99 and 99 cents, 4.75 baht and 75 satang.
+
+Currency names shared across countries — won, pounds, pesos, krone, rial, rupee — carry the national qualifier.
+
 #### [G2-A6] Measurements
 
 Metric is the standard: km, m, cm, mm, kg, g, ml.
 
 Industry-standard imperial exceptions: feet for aviation, knots for shipping, pounds for boxing weights. Litres are written in full (l confuses with capital I). Miles are written in full (m already means metres). Temperatures take the form 25C with no degree symbol. CO2 is fine. No space between numeral and unit.
+
+Accents, tone marks and diacritics are dropped throughout, proper names included: cafe, Dusseldorf, Beyonce, Pena Nieto.
+
+Industry-standard imperial inside a quote converts in square brackets. In body text the metric replaces it outright.
+
+Fahrenheit appears only inside a quote, with the Celsius conversion in square brackets.
+
+Rai stands. Floor and plot areas take sq m.
 
 #### [G2-A7] Names and honorifics
 
@@ -242,11 +263,37 @@ A title standing alone, without a name, is lower case. Former titles are always 
 
 Ranks and titles come from the copy. Where a rank appears anywhere in copy, apply it consistently throughout. Where copy is silent and the rank is unclear, repeat the full name or flag the gap.
 
+Titles abbreviate against a name: Prof, Dr, Jr, Sr, St, Mt, Corp, Co.
+
+Children take first names.
+
+A naming convention travels with the person: Mitsuo Shibahashi is Mr Shibahashi in Bangkok as in Tokyo.
+
 #### [G2-A8] Acronyms
 
 Pronounceable acronyms of more than three letters take title case: Fifa, Asean, Nasa, Opec, Unesco.
 
 Three-letter initialisms and non-pronounceable strings take all caps: FBI, NBTC, PRD, CNN, HIV.
+
+#### [G2-A9] Italics and title styling
+
+Complete works take italic. Books, films, albums, songs, plays, stage shows, newspapers, magazines and computer games.
+
+Parts within a work take quote marks. Chapters, sections, acts, articles and headlines.
+
+Named manned vessels take italic: *Titanic*, *Apollo 13*, *Air Force One*. Models, operators and prefixes stay plain, as do unmanned craft — drones, rovers, satellites.
+
+Quote marks also carry academic papers, studies, exhibitions, concerts, seminars, promotions and other named events.
+
+Plain: religious texts, reference books, dictionaries, encyclopaedias, sports events, computer programs and websites.
+
+Web addresses are lower case, without protocol or subdomain: bangkokpost.com. The publication name caps normally in running text.
+
+A foreign word already used in English stands plain: soi, wat, tuk-tuk, muay Thai, ya ba, Songkran, tsunami, kamikaze, feng shui, and dish names — pad Thai, som tam, sushi, lasagne. Anything else takes italic on first mention only, with a translation in brackets where the meaning is not obvious from context. Where an English word will serve, it serves.
+
+Latin species names follow the common name, bracketed and italicised, first word capped: chimpanzee (*Pan troglodytes*). Once only, unless quoted.
+
+Titles taking italic or quote marks are entered under Styles required.
 
 ### [G2-B] Scope
 
@@ -277,6 +324,8 @@ Tessellation, for Overset and Underset tweaks:
 * **Heavy, 1.5** — m, w, M, W, O, Q, G, C
 
 Overset swaps heavy glyphs for lean to reduce the footprint; Underset reverses it.
+
+Sub-heads are entered under Styles required.
 
 ##### Body
 
@@ -392,6 +441,8 @@ Notes:
 
 ### [G3-C] STYLE LOG
 
+Where an element needs a DCX treatment the box cannot carry, Styles required: heads the STYLE LOG and lists it. Intervention lines follow.
+
 After alternates, list actual interventions, not confirmation of correctness. Include structural changes; cuts exceeding 10%; dropped content in one sentence; overspill swaps; timeline corrections; legal flags; and unresolved reference issues. Omit confirmed-correct material and null declarations.
 
 Use this form:
@@ -412,7 +463,7 @@ REFERENCES immediately follows the Style Log and is mandatory. It is the evidenc
 
 ```text
 REFERENCES
-010926_gpt_alpha-index | [G2-A1] [G3-B]
+060926_gpt_restored-rules | [G2-A1] [G3-B]
 ```
 
 List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
@@ -437,7 +488,7 @@ UNRESOLVED
 Confirm paragraph 4 attribution before release.
 ```
 
-<!-- PART: 010926_gpt_alpha-index DIRECTORY -->
+<!-- PART: 060926_gpt_restored-rules DIRECTORY -->
 
 go.fuzzylogic.page/dir
 
@@ -743,6 +794,13 @@ references:
       - Rama roads — Roman numerals; Rama IX Road, never Phra Ram
       - Postcodes — no comma; Bangkok 10900 (not Bangkok, 10900)
 
+    road_names: >
+      Every component of a road name caps: Khao San Road, Ratchadamnoen Avenue.
+
+    soi_by_road_name: >
+      Where a soi is better known by a road name, the road name carries it: On
+      Nut Road.
+
     airports:
       - Two Bangkok airports — always specify Don Muang or Suvarnabhumi
       - Never "Bangkok airport"
@@ -929,7 +987,7 @@ references:
       serial vs series: Serial = continuous plot; series = unrelated stories.
       swat vs swot: Swat flies; swot for an exam.
       Thai prefix: Superfluous in most cases ("the Thai government"). Strip unless differentiating.
-      Thailand time: Use for foreign events readers in Thailand could attend or tune in to; otherwise retain the reported time and mark "(local time)". Never "Bangkok time" — one zone.
+      Thailand time: Use only if event crosses calendar days. Never "Bangkok time" — one zone.
       that vs which: That = definitive (no comma); which = descriptive (comma).
       tortuous vs torturous: Tortuous = winding; torturous = excruciating.
       transpire: Means leak out, not occur or happen.
