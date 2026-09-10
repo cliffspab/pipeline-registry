@@ -19,6 +19,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-11
+
+- 2026-09-11 | CI recovery trigger | Re-run the `100926_gpt_directory-routing` build after the first workflow correctly rejected generated GUIDE and DIRECTORY files included in the desk payload; no editorial content change.
+
 ## Cleared 2026-09-11
 
 - 2026-09-11 | BLUEPRINT and derived files | Promote `100926_gpt_directory-routing`; add GUIDE `DIRECTORY ACCESS`; replace the duplicated Directory index with ten exact routes; rebuild GUIDE, Directory twins and compatibility shims.

@@ -14,7 +14,9 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 **Evidence.** Dollar-pairing, shared-edition, invertibility, GUIDE-code, ten-route and register-parse guards pass. The Word register renders all 288 leaf values into 319 paragraphs. LibreOffice and Poppler render the 26-page candidate successfully; visual inspection confirms the two-panel contents page contains the Directory index and the document has no gross layout failures.
 
-**Verdict.** Supervisor approved. Registry source, derived compatibility files and machinery are prepared for guarded push. Shift remains on the last sealed edition until CI rebuild and sealing succeed.
+**Publication recovery.** The first source push reached GitHub as `53f94cc`, but CI correctly stopped because generated GUIDE and DIRECTORY files had been included in the desk payload. A source-neutral follow-up trigger is recorded so CI can regenerate those files from the approved source and complete the build.
+
+**Verdict.** Supervisor approved and source published. Shift remains on the last sealed edition until the recovery build and sealing succeed.
 
 ---
 
