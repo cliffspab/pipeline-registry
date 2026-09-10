@@ -49,6 +49,11 @@ name: Split BLUEPRINT into parts and build the style guide
 # COMPILED.{md,txt} and the STATUS/REFERENCES .yaml paths are still written as
 # compatibility shims so existing shortlinks resolve until adoption is
 # confirmed. Delete that block once they are repointed.
+#
+# 110926: A source push accidentally included regenerated GUIDE/DIRECTORY
+# files and was rejected by the derived-file guard. This comment-only workflow
+# change is the source-neutral recovery trigger; workflow_dispatch remains the
+# preferred manual retry path after any future non-source failure.
 # ---------------------------------------------------------------------------
 
 on:

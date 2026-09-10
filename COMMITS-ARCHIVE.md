@@ -20,6 +20,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-11
+
+- 2026-09-11 | CI workflow | Trigger the source-neutral recovery build for `100926_gpt_directory-routing` after the history-only recovery commit did not match the workflow path filter; document `workflow_dispatch` as the future manual retry route.
+
 ## Cleared 2026-09-11
 
 - 2026-09-11 | CI recovery trigger | Re-run the `100926_gpt_directory-routing` build after the first workflow correctly rejected generated GUIDE and DIRECTORY files included in the desk payload; no editorial content change.
