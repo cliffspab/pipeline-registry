@@ -194,40 +194,37 @@ jobs:
           for branch in ("status", "references"):
               if branch not in parsed:
                   sys.exit("FATAL: the register is missing the '%s' branch." % branch)
+
+          index = parsed.get("index")
+          if not isinstance(index, dict):
+              sys.exit("FATAL: the Directory is missing the source-owned 'index' branch")
+          routes = index.get("routes")
+          if not isinstance(routes, dict):
+              sys.exit("FATAL: index.routes must be a mapping")
+          if set(routes) != {"status", "references"}:
+              sys.exit("FATAL: index.routes must contain status and references")
+          seen = set()
+          for group, paths in routes.items():
+              if not isinstance(paths, list) or not paths:
+                  sys.exit("FATAL: index.routes.%s must be a non-empty list" % group)
+              for path in paths:
+                  if not isinstance(path, str) or path in seen:
+                      sys.exit("FATAL: invalid or duplicate Directory route: %r" % path)
+                  seen.add(path)
+                  keys = path.split(".")
+                  if keys[0] != group:
+                      sys.exit("FATAL: Directory route is in the wrong group: %s" % path)
+                  held = parsed
+                  for key in keys:
+                      if not isinstance(held, dict) or key not in held:
+                          sys.exit("FATAL: Directory route does not resolve: %s" % path)
+                      held = held[key]
+          print("routing-index guard: PASS (%d live paths)" % len(seen))
           print("register parse: PASS (apex %d, provinces %d)"
                 % (len(parsed["status"]["apex"]),
                    len(parsed["references"]["thai_places"]["provinces"])))
 
-          def index_names(items):
-              if isinstance(items, dict):
-                  return list(items)
-              return [item.get("name", str(item)) if isinstance(item, dict)
-                      else str(item) for item in items]
-
-          status = parsed["status"]
-          refs = parsed["references"]
-          routes = [
-              ("status.apex", index_names(status["apex"])),
-              ("status.second_tier.reversals", index_names(status["second_tier"]["reversals"])),
-              ("status.second_tier.mortalities", index_names(status["second_tier"]["mortalities"])),
-              ("status.second_tier.corporate", index_names(status["second_tier"]["corporate"])),
-              ("status.global", index_names(status["global"])),
-              ("references.countries", list(refs["countries"])),
-              ("references.foreign_places", list(refs["foreign_places"])),
-              ("references.thai_places", list(refs["thai_places"])),
-              ("references.organisations", list(refs["organisations"])),
-              ("references.vocabulary", list(refs["vocabulary"])),
-          ]
-          index_lines = [
-              "# DIRECTORY INDEX — inspect this manifest before loading a branch.",
-              "# Fetch or search only the matching YAML path unless the whole Directory is needed.",
-          ]
-          for path, entries in routes:
-              index_lines.append("# %s: %s" % (path, " | ".join(entries)))
-          index_lines.append("# END DIRECTORY INDEX")
-          index_text = "\n".join(index_lines)
-
-          reg_text = "# PART: %s DIRECTORY\n%s\n%s\n" % (tag, index_text, reg_body)
+          reg_text = "# PART: %s DIRECTORY\n%s\n" % (tag, reg_body)
           for d in ("Blueprint/DIRECTORY.yaml", "Blueprint/DIRECTORY.txt"):
               open(d, "w", encoding="utf-8", newline="").write(reg_text)
               print("part: %-11s -> %-27s %6d chars" % ("DIRECTORY", d, len(reg_text)))
@@ -244,8 +241,7 @@ jobs:
           rebuilt = preamble + lead + core_file.rstrip("\n") + trail
 
           reg_file = open("Blueprint/DIRECTORY.yaml", encoding="utf-8", newline="").read()
-          shipped = reg_file.split("\n", 1)[1]
-          recovered = shipped.split("# END DIRECTORY INDEX\n", 1)[1].rstrip("\n")
+          recovered = reg_file.split("\n", 1)[1].rstrip("\n")
           orig = parts["DIRECTORY"]
           rebuilt += (orig[:fence.start()] + "```yaml\n" + recovered + "\n```"
                       + orig[fence.end():])

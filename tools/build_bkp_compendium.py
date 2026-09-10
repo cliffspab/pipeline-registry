@@ -1117,9 +1117,23 @@ def write_manifest(path, source, output, ast, skipped_separators, edition):
 
 def parse_markdown(pandoc, source):
     with tempfile.TemporaryDirectory(prefix="bkp-pandoc-") as tmp:
+        # BLUEPRINT carries the Directory in a five-backtick transport fence
+        # so its bytes remain invertible alongside embedded triple fences.
+        # Pandoc therefore sees the register as Markdown instead of one YAML
+        # block. Normalize only that outer wrapper in the temporary parse copy;
+        # the source itself remains byte-for-byte untouched.
+        source_text = Path(source).read_text(encoding="utf-8")
+        normalized = re.sub(
+            r"(?ms)(<!-- PART: [^\n]+ DIRECTORY -->.*?\n)`````yaml\n(.*?)\n```(?=\s*\Z)",
+            lambda match: match.group(1) + "```yaml\n" + match.group(2) + "\n```",
+            source_text,
+            count=1,
+        )
+        parse_source = Path(tmp) / "BLUEPRINT.md"
+        parse_source.write_text(normalized, encoding="utf-8")
         ast_path = Path(tmp) / "ast.json"
         subprocess.run(
-            [str(pandoc), "-f", "gfm", "-t", "json", str(source), "-o", str(ast_path)],
+            [str(pandoc), "-f", "gfm", "-t", "json", str(parse_source), "-o", str(ast_path)],
             check=True,
         )
         return json.loads(ast_path.read_text(encoding="utf-8"))

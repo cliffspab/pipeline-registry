@@ -160,37 +160,37 @@ def register_yaml(part, tag):
 
 
 def guard_index(parsed):
-    """Require the source-owned routing index to mirror live Directory paths."""
+    """Require every source-owned routing-index path to resolve."""
     index = parsed.get("index")
     if not isinstance(index, dict):
-        fail("the register is missing the source-owned 'index' branch")
+        fail("the Directory is missing the source-owned 'index' branch")
 
-    status = parsed["status"]
-    expected = {
-        ("apex",): status["apex"],
-        ("second_tier", "reversals"): [item["name"] for item in status["second_tier"]["reversals"]],
-        ("second_tier", "mortalities"): list(status["second_tier"]["mortalities"]),
-        ("second_tier", "corporate"): list(status["second_tier"]["corporate"]),
-        ("global",): [item["name"] for item in status["global"]],
-    }
-    for path, actual in expected.items():
-        held = index["status"]
-        for key in path:
-            held = held[key]
-        if held != actual:
-            fail("index.status." + ".".join(path) + " does not match the live Directory path")
+    routes = index.get("routes")
+    if not isinstance(routes, dict):
+        fail("index.routes must be a mapping")
 
-    branches = ["countries", "foreign_places", "thai_places", "organisations", "vocabulary"]
-    if index["references"]["branches"] != branches:
-        fail("index.references.branches does not match the live Directory branches")
-    trap = "Khlong Thom Centre (Bangkok market): held exception to Klong (not Khlong)."
-    if trap not in index["references"]["thai_places"]["traps"]:
-        fail("index is missing the Khlong Thom Centre retrieval trap")
-    if not any("Khlong Thom Centre" in item
-               for item in parsed["references"]["thai_places"]["transliteration_rules"]):
-        fail("Thai-place rules are missing the Khlong Thom Centre exception")
-    print("routing-index guard: PASS (source-owned paths and Khlong Thom Centre trap)")
+    expected_groups = {"status", "references"}
+    if set(routes) != expected_groups:
+        fail("index.routes must contain status and references")
 
+    seen = set()
+    for group, paths in routes.items():
+        if not isinstance(paths, list) or not paths:
+            fail(f"index.routes.{group} must be a non-empty list")
+        for path in paths:
+            if not isinstance(path, str) or path in seen:
+                fail(f"invalid or duplicate Directory route: {path!r}")
+            seen.add(path)
+            keys = path.split(".")
+            if keys[0] != group:
+                fail(f"Directory route is in the wrong group: {path}")
+            held = parsed
+            for key in keys:
+                if not isinstance(held, dict) or key not in held:
+                    fail(f"Directory route does not resolve: {path}")
+                held = held[key]
+
+    print(f"routing-index guard: PASS ({len(seen)} live paths)")
 # ---------- rendered artifact ----------
 
 def render_pdf(src):

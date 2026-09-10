@@ -1,6 +1,19 @@
-<!-- PART: 060926_gpt_restored-rules GUIDE -->
+<!-- PART: 100926_gpt_directory-routing GUIDE -->
 
 go.fuzzylogic.page/guide
+
+## DIRECTORY ACCESS
+
+The DIRECTORY is the authoritative lookup layer for current status, names,
+places, organisations and house-form exceptions.
+
+When copy triggers a lookup, inspect `index.rule` and `index.searchq`, then open
+the narrowest applicable route under `index.routes`: `status` for current
+people, titles, reversals and mortalities; or the matching `references` branch
+for countries, foreign places, Thai places, organisations or vocabulary.
+
+Do not infer Directory content from this route map. If the required Directory
+branch cannot be accessed, report it as `UNAVAILABLE`.
 
 # [G1] EDITING
 what we do
@@ -428,7 +441,7 @@ REFERENCES immediately follows the Style Log and is mandatory. It is the evidenc
 
 ```text
 REFERENCES
-060926_gpt_restored-rules | [G2-A1] [G3-B]
+100926_gpt_directory-routing | [G2-A1] [G3-B]
 ```
 
 List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.

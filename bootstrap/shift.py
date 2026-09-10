@@ -18,6 +18,7 @@ PARTS = (
     "CONTROL.txt",
     "BLUEPRINT.docx",
 )
+TRANSPORT_HOUSEKEEPING = {".tmp.driveupload"}
 SEAMED = ("GUIDE.txt", "DIRECTORY.yaml")
 SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
 
@@ -70,7 +71,9 @@ def main():
     if not SHIFT.is_dir():
         problems.append("Shift folder does not exist")
     else:
-        allowed = set(PARTS)
+        # Google Drive creates this hidden upload workspace while transporting
+        # the folder. It is not handover payload; every other stray still fails.
+        allowed = set(PARTS) | TRANSPORT_HOUSEKEEPING
         stale = sorted(p.name for p in SHIFT.iterdir() if p.name not in allowed)
         if stale:
             problems.append("stray in Shift/: " + ", ".join(stale))

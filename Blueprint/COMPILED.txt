@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-060926_gpt_restored-rules
+100926_gpt_directory-routing
 
 Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are the edit surface: GUIDE in markdown, DIRECTORY in YAML.
 
@@ -33,9 +33,22 @@ Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are
     - [G3-E] UNRESOLVED
 - [D] DIRECTORY
 
-<!-- PART: 060926_gpt_restored-rules GUIDE -->
+<!-- PART: 100926_gpt_directory-routing GUIDE -->
 
 go.fuzzylogic.page/guide
+
+## DIRECTORY ACCESS
+
+The DIRECTORY is the authoritative lookup layer for current status, names,
+places, organisations and house-form exceptions.
+
+When copy triggers a lookup, inspect `index.rule` and `index.searchq`, then open
+the narrowest applicable route under `index.routes`: `status` for current
+people, titles, reversals and mortalities; or the matching `references` branch
+for countries, foreign places, Thai places, organisations or vocabulary.
+
+Do not infer Directory content from this route map. If the required Directory
+branch cannot be accessed, report it as `UNAVAILABLE`.
 
 # [G1] EDITING
 what we do
@@ -463,7 +476,7 @@ REFERENCES immediately follows the Style Log and is mandatory. It is the evidenc
 
 ```text
 REFERENCES
-060926_gpt_restored-rules | [G2-A1] [G3-B]
+100926_gpt_directory-routing | [G2-A1] [G3-B]
 ```
 
 List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
@@ -488,7 +501,7 @@ UNRESOLVED
 Confirm paragraph 4 attribution before release.
 ```
 
-<!-- PART: 060926_gpt_restored-rules DIRECTORY -->
+<!-- PART: 100926_gpt_directory-routing DIRECTORY -->
 
 go.fuzzylogic.page/dir
 
@@ -501,58 +514,19 @@ index:
     Open only a named branch the copy triggers; keep provinces closed unless a district is named.
   searchq: >
     Apex always; otherwise only contradiction, spelling anomaly, explicit status change or superlative.
-  status:
-    apex:
-      - HM King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua
-      - HM Queen Sirikit The Queen Mother
-      - Thaksin Shinawatra
-      - Srettha Thavisin
-      - Paetongtarn Shinawatra
-      - Pita Limjaroenrat
-      - Dr Prasert Prasarttong-Osoth
-      - HRH Princess Bajrakitiyabha Narendiradebyavati
-      - Ayatollah Ali Khamenei
-      - Mojtaba Khamenei
-    second_tier:
-      reversals:
-        - Thanathorn Juangroongruangkit
-        - Saksayam Chidchob
-        - Arnon Nampa
-        - Rukchanok 'Ice' Srinork
-        - Nikorn Chamnong
-        - Stithorn Thananithichot
-        - Korn Chatikavanij
-        - Chaichanok Chidchob
-        - Chadchart Sittipunt
-      mortalities:
-        - Gen Suchinda Kraprayoon
-        - Man Phatnothai
-        - Dr Wanlop Thaineua
-        - Chonsawat Asavahame
-        - Chodchoy Thavisin
-        - Pope Francis
-        - Dick Cheney
-        - Jane Goodall
-        - Charlie Kirk
-        - Pope Emeritus Benedict XVI ("Pope Benedict")
-        - Li Keqiang
-      corporate:
-        - Brenton Justin Mauriello
-        - Pisit Thangtanagul
-    global:
-      - Donald Trump and JD Vance
-      - King Charles III
-      - King Salman bin Abdulaziz al-Saud
-      - King Jigme Khesar Namgyel Wangchuck
-      - Catherine, Princess of Wales
-      - Prince William, Prince of Wales
-      - To Lam
-  references:
-    branches: [countries, foreign_places, thai_places, organisations, vocabulary]
-    thai_places:
-      traps:
-        - "Khlong Thom Centre (Bangkok market): held exception to Klong (not Khlong)."
-
+  routes:
+    status:
+      - status.apex
+      - status.second_tier.reversals
+      - status.second_tier.mortalities
+      - status.second_tier.corporate
+      - status.global
+    references:
+      - references.countries
+      - references.foreign_places
+      - references.thai_places
+      - references.organisations
+      - references.vocabulary
 status:
 
   apex:

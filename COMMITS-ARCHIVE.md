@@ -18,6 +18,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-11
+
+- 2026-09-11 | BLUEPRINT and derived files | Promote `100926_gpt_directory-routing`; add GUIDE `DIRECTORY ACCESS`; replace the duplicated Directory index with ten exact routes; rebuild GUIDE, Directory twins and compatibility shims.
+
+- 2026-09-11 | Directory machinery | Validate every source-owned route locally and in CI; remove the generated name-heavy Directory manifest; normalise the five-backtick transport fence only for Word parsing so STATUS, REFS and the Directory contents index render structurally.
+
+- 2026-09-11 | Shift machinery | Permit only Google Drive's exact `.tmp.driveupload` transient marker in addition to the five-file sealed handover; retain rejection of every other extra file.
+
 ## Cleared 2026-09-06
 
 - 2026-09-06 | Blueprint/BLUEPRINT.txt | PROMOTE 060926_gpt_restored-rules: restore approved substantive rules for verification, dates, numbers, currency, measurements, names and honorifics; add [G2-A9] italics and title styling; route required styles through the Style Log; add Thai road-name and soi-by-road-name rulings.

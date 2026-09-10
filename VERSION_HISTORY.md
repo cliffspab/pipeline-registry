@@ -6,6 +6,18 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-11 — 100926_gpt_directory-routing: COMPACT DIRECTORY ROUTING
+
+**Approved and promoted locally.** GUIDE now opens with a short `DIRECTORY ACCESS` module that directs lookup work through `index.rule`, `index.searchq` and the narrowest applicable path. The source-owned Directory index is reduced to ten exact routes under `index.routes`: five for current status and five for references. It no longer duplicates the names or contents held by those branches.
+
+**Machinery.** Local and CI guards now require both route groups, reject empty, duplicate or misgrouped paths, and resolve every path against the live Directory. The generated Directory no longer prepends the former name-heavy routing manifest. The Word builder normalises the five-backtick Directory transport wrapper only in its temporary Pandoc input, allowing the structured register and its mini contents index to render without altering source bytes. Shift validation tolerates Google Drive's exact `.tmp.driveupload` sync marker while continuing to reject every other extra file.
+
+**Evidence.** Dollar-pairing, shared-edition, invertibility, GUIDE-code, ten-route and register-parse guards pass. The Word register renders all 288 leaf values into 319 paragraphs. LibreOffice and Poppler render the 26-page candidate successfully; visual inspection confirms the two-panel contents page contains the Directory index and the document has no gross layout failures.
+
+**Verdict.** Supervisor approved. Registry source, derived compatibility files and machinery are prepared for guarded push. Shift remains on the last sealed edition until CI rebuild and sealing succeed.
+
+---
+
 ## 2026-09-06 — 060926_gpt_restored-rules: RECOVERED HOUSE RULES
 
 **Approved and promoted locally.** Restores supervisor-recovered substantive rules across verification, dates, numbers, currency, measurements, names and honorifics. Adds `[G2-A9] Italics and title styling`, including complete works, component titles, named manned vessels, foreign words and species names; routes elements requiring DCX treatment through `Styles required` in the Style Log.
