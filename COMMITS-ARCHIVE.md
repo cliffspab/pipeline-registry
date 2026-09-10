@@ -21,6 +21,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-11
+
+- 2026-09-11 | CI coverage audit | Update the declared structured-Directory unit prefix from the former `status: apex:` opening to the approved compact index opening `index: rule:`; the renderer's 288-leaf coverage guard remains authoritative.
+
 ## Cleared 2026-09-11
 
 - 2026-09-11 | CI workflow | Trigger the source-neutral recovery build for `100926_gpt_directory-routing` after the history-only recovery commit did not match the workflow path filter; document `workflow_dispatch` as the future manual retry route.

@@ -450,7 +450,9 @@ jobs:
               # YAML against the paragraphs written, and fails the build if any
               # are dropped. That is finer than this gate ever was - per entry
               # rather than per block. See render_register().
-              r"^status: apex:",
+              # 100926: the compact source-owned route index now precedes the
+              # status branch inside the one audited Directory unit.
+              r"^index: rule:",
           ]
 
           d = json.load(open("/tmp/audit.json"))
