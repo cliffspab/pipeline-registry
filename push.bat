@@ -39,7 +39,7 @@ if exist ".git\rebase-merge" (
   echo [ABORT] unfinished rebase detected.
   pause & exit /b 1
 )
-for %%F in (AGENTS.md CONTROL.txt shift.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md CONTROL.txt shift.py sync_master.py build.py seal.py clear_pending.py) do (
   if not exist "..\%%F" (
     echo [ABORT] required workspace file missing: ..\%%F
     pause & exit /b 1
@@ -77,7 +77,7 @@ type COMMITS-PENDING.md
 
 echo.
 echo --- bootstrap files that will change ---
-for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md shift.py sync_master.py build.py seal.py clear_pending.py) do (
   if not exist "bootstrap\%%F" (
     echo   ADD bootstrap\%%F
   ) else (
@@ -112,7 +112,7 @@ echo === mirroring bootstrap set ===
 if not exist "bootstrap" mkdir "bootstrap"
 REM 100826: seal.py and clear_pending.py added. push.bat CALLS both, so a repo
 REM that does not hold them carries a push script it cannot run after a restore.
-for %%F in (AGENTS.md shift.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md shift.py sync_master.py build.py seal.py clear_pending.py) do (
   if exist "..\%%F" (
     copy /Y "..\%%F" "bootstrap\%%F" >nul
     echo   mirrored %%F
@@ -205,6 +205,15 @@ if "%LH%"=="%RH%" (
     echo.
     echo [note] edition not sealed. The push itself is fine and live.
     echo        Re-run:  python seal.py
+  ) else (
+    echo.
+    echo === refreshing Drive pipeline containers ===
+    python "..\sync_master.py"
+    if errorlevel 1 (
+      echo.
+      echo [note] edition sealed, but the Drive containers were not refreshed.
+      echo        Re-run:  python sync_master.py
+    )
   )
 ) else (
   echo [WARNING] local %LH% does NOT match origin/main %RH%.
@@ -213,6 +222,6 @@ if "%LH%"=="%RH%" (
 echo.
 echo (Verify with a cache-buster on the raw link - a bare fetch can return a)
 echo (body from a superseded commit with no error. Trap 1.)
-echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt?cb=1)
+echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txa t?cb=1)
 pause
 endlocal

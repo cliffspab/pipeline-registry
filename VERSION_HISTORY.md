@@ -6,6 +6,16 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-11 — SEALED DRIVE CONTAINERS AND PROCESSES DELIVERY
+
+**Pipeline delivery.** `PROCESSES.txt` is restored as an edition-stamped generated output containing the bounded `[G2] PROCESSES` section. It is built locally and by CI, guarded against hand-editing, committed with the other derived outputs and copied into every sealed edition.
+
+**Drive mapping.** After a successful seal, `sync_master.py` updates seven pre-existing stable containers in `SYNC_MASTER`: GUIDE, PROCESSES, DIRECTORY YAML and text, BLUEPRINT text, PDF and DOCX. The updater reads only from the sealed edition, verifies hashes after writing and refuses to create missing targets, protecting the listed Drive file identities from accidental duplicates.
+
+**Verdict.** Source-neutral pipeline extension approved by the supervisor. Publication and live container refresh await the guarded push, CI rebuild and seal.
+
+---
+
 ## 2026-09-11 — 100926_gpt_directory-routing: COMPACT DIRECTORY ROUTING
 
 **Approved and promoted locally.** GUIDE now opens with a short `DIRECTORY ACCESS` module that directs lookup work through `index.rule`, `index.searchq` and the narrowest applicable path. The source-owned Directory index is reduced to ten exact routes under `index.routes`: five for current status and five for references. It no longer duplicates the names or contents held by those branches.

@@ -7,15 +7,16 @@ name: Split BLUEPRINT into parts and build the style guide
 #   Blueprint/BLUEPRINT.txt
 #   Control/CONTROL.txt
 #
-# FOUR are derived from it on push, and never touched by hand:
+# FIVE are derived from it on push, and never touched by hand:
 #   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
 #   Blueprint/GUIDE.txt        )  part delivery for machine consumers:
-#   Blueprint/DIRECTORY.yaml   )  /guide /dir
+#   Blueprint/PROCESSES.txt    )  /guide /processes /dir
+#   Blueprint/DIRECTORY.yaml   )
 #   Blueprint/DIRECTORY.txt    )
 #
-# 070826: PROCESSES merged into CORE as a section; STATUS and REFERENCES
-# merged as DIRECTORY, two branches. Four parts became two FILES; the four
-# volume PARTS - CORE, PROCESSES, STATUS, REFERENCES - are unchanged. The register
+# 070826: PROCESSES merged into GUIDE as a section; STATUS and REFERENCES
+# merged as DIRECTORY, two branches. 110926 restores PROCESSES as a focused
+# generated delivery while GUIDE remains whole. The register
 # travels inside BLUEPRINT in a ```yaml fence and is lifted out of it
 # verbatim - the bytes between fence and seam are the register exactly.
 #
@@ -87,7 +88,7 @@ jobs:
           set -e
           CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} || true)
           echo "changed in this push:"; echo "$CHANGED"
-          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(GUIDE|DIRECTORY)\.(txt|md|yaml)$' || true)
+          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(GUIDE|PROCESSES|DIRECTORY)\.(txt|md|yaml)$' || true)
           if [ -n "$BAD" ]; then
             echo ""
             echo "REJECTED - these are DERIVED files and were edited by hand:"
@@ -177,6 +178,18 @@ jobs:
           core_body = parts["GUIDE"].lstrip("\n").rstrip("\n") + "\n"
           open("Blueprint/GUIDE.txt", "w", encoding="utf-8", newline="").write(core_body)
           print("part: %-11s -> %-27s %6d chars" % ("GUIDE", "Blueprint/GUIDE.txt", len(core_body)))
+
+          # ---- PROCESSES: focused G2 delivery -------------------------------
+          process_match = re.search(
+              r'^## \[G2\] PROCESSES\s*$.*?(?=^## \[G3\] OUTPUT\s*$)',
+              core_body, re.M | re.S)
+          if not process_match:
+              sys.exit("FATAL: GUIDE has no bounded [G2] PROCESSES section.")
+          process_body = ("<!-- PART: %s PROCESSES -->\n\n%s\n"
+                          % (tag, process_match.group(0).rstrip("\n")))
+          open("Blueprint/PROCESSES.txt", "w", encoding="utf-8", newline="").write(process_body)
+          print("part: %-11s -> %-27s %6d chars"
+                % ("PROCESSES", "Blueprint/PROCESSES.txt", len(process_body)))
 
           # ---- DIRECTORY: lift out of the fence -----------------------------
           # The shipped register carries "# PART:" because an HTML comment will
@@ -474,10 +487,7 @@ jobs:
         run: |
           git config user.name "compile-bot"
           git config user.email "actions@users.noreply.github.com"
-          # PROCESSES is a section inside CORE from 080826; the file is no
-          # longer produced and would otherwise sit at /pro frozen at 010826
-          git rm -q --ignore-unmatch Blueprint/PROCESSES.txt
-          git add Blueprint/GUIDE.txt \
+          git add Blueprint/GUIDE.txt Blueprint/PROCESSES.txt \
                   Blueprint/DIRECTORY.yaml Blueprint/DIRECTORY.txt \
                   Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.pdf \
                   Blueprint/BLUEPRINT.manifest.json \

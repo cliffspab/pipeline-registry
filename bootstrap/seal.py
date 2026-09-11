@@ -45,8 +45,8 @@ TIMEOUT_SECONDS = 480
 # two designs, one document. It is now a LibreOffice conversion of the volume
 # itself, made by the compile job, so it comes back with the docx rather than
 # going out ahead of it.
-FROM_ROOT = ["BLUEPRINT.txt", "GUIDE.txt", "DIRECTORY.yaml", "DIRECTORY.txt",
-             "build.py"]
+FROM_ROOT = ["BLUEPRINT.txt", "GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml",
+             "DIRECTORY.txt", "build.py"]
 FROM_CLONE = ["BLUEPRINT.docx", "BLUEPRINT.pdf", "BLUEPRINT.manifest.json"]
 
 

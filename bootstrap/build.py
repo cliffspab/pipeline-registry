@@ -6,9 +6,10 @@ ONE file is edited:
 
     BLUEPRINT.txt     markdown throughout, register fenced as YAML inside it
 
-Four are derived from it and never touched by hand:
+Five are derived from it and never touched by hand:
 
     GUIDE.txt         the operating manual, part delivery for /guide
+    PROCESSES.txt     the G2 operational section, part delivery for /processes
     DIRECTORY.yaml    the lookups, part delivery for /dir
     DIRECTORY.txt     DIRECTORY.yaml under a .txt extension, byte-identical
     BLUEPRINT.pdf     the rendered artifact of record
@@ -44,6 +45,9 @@ SEAM = re.compile(r"<!-- PART: (\S+) (\w+) -->")
 FENCE = re.compile(r"```yaml\n(.*?)\n```", re.S)
 GUIDE_CODE = re.compile(r"^#{1,6} \[(G(?:\d+(?:-[A-Z]\d*)?))\] ", re.M)
 CONTENTS_CODE = re.compile(r"^\s*- \[(G(?:\d+(?:-[A-Z]\d*)?))\] \S", re.M)
+PROCESSES_SECTION = re.compile(
+    r"^## \[G2\] PROCESSES\s*$.*?(?=^## \[G3\] OUTPUT\s*$)", re.M | re.S
+)
 
 
 def fail(msg):
@@ -159,6 +163,15 @@ def register_yaml(part, tag):
     return f"# PART: {tag} DIRECTORY\n{body}\n", parsed
 
 
+def processes_text(guide_part, tag):
+    """Publish G2 as a focused, edition-stamped consumer file."""
+    match = PROCESSES_SECTION.search(guide_part)
+    if not match:
+        fail("GUIDE has no bounded [G2] PROCESSES section.")
+    body = match.group(0).rstrip("\n") + "\n"
+    return f"<!-- PART: {tag} PROCESSES -->\n\n{body}"
+
+
 def guard_index(parsed):
     """Require every source-owned routing-index path to resolve."""
     index = parsed.get("index")
@@ -264,8 +277,10 @@ def main():
     guard_guide_codes(src)
 
     reg_text, _ = register_yaml(parts["DIRECTORY"], tag)
+    process_text = processes_text(parts["GUIDE"], tag)
 
     open("GUIDE.txt", "w", encoding="utf-8").write(parts["GUIDE"].rstrip("\n") + "\n")
+    open("PROCESSES.txt", "w", encoding="utf-8").write(process_text)
     open("DIRECTORY.yaml", "w", encoding="utf-8").write(reg_text)
     open("DIRECTORY.txt", "w", encoding="utf-8").write(reg_text)
 
@@ -273,7 +288,7 @@ def main():
 
     print()
     print(f"{MASTER:<15}{len(src):>8,} chars  {src.count(chr(10)) + 1:>5,} lines   SOURCE")
-    for f in ("GUIDE.txt", "DIRECTORY.yaml", "DIRECTORY.txt"):
+    for f in ("GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml", "DIRECTORY.txt"):
         print(f"{f:<15}{len(open(f, encoding='utf-8').read()):>8,} chars"
               f"{'':>13}derived")
     print(f"{'BLUEPRINT.pdf':<15}{pdf}")

@@ -12,9 +12,10 @@ Ask before publishing, moving or deleting material, changing the edition identit
 
 Two peer sources: root `BLUEPRINT.txt` governs editorial work; root `CONTROL.txt` governs command invocation and workflow routing.
 
-Three files are derived from BLUEPRINT:
+Four files are derived from BLUEPRINT:
 
 - `GUIDE.txt` = EDITING + PROCESSES; shortlink `/guide`.
+- `PROCESSES.txt` = the focused `[G2] PROCESSES` section for direct loading.
 - `DIRECTORY.yaml` = STATUS + REFERENCES; shortlink `/dir`.
 - `DIRECTORY.txt` = byte-identical compatibility twin for text-only surfaces.
 
@@ -51,8 +52,16 @@ Refresh Shift no more than once per calendar day unless a newly sealed edition s
 
 Nothing in Shift is a source. Nothing unique lives there.
 
+## Drive container contract
+
+After an edition is sealed, `sync_master.py` maps its seven pipeline outputs
+onto the existing stable files in `D:\GoogleONE\My Drive\SYNC_MASTER`:
+GUIDE, PROCESSES, both DIRECTORY formats, BLUEPRINT text, PDF and DOCX. It must
+update the existing containers in place and refuse to create a missing target.
+Never refresh these containers from an unsealed candidate.
+
 ## Generated and historical material
 
-`Blueprint/GUIDE.txt`, `DIRECTORY.txt`, `DIRECTORY.yaml`, compatibility shims, DOCX, PDF and manifest are generated. `Control/plugin/` is generated from `Control/CONTROL.txt`. Bootstrap files are mirrors. `git add -A` publishes deletions as well as additions.
+`Blueprint/GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.txt`, `DIRECTORY.yaml`, compatibility shims, DOCX, PDF and manifest are generated. `Control/plugin/` is generated from `Control/CONTROL.txt`. Bootstrap files are mirrors. `git add -A` publishes deletions as well as additions.
 
 Keep the workspace root operational, not historical. Put superseded handoffs, candidates, probes and pre-GPT administration in the dated Archive. Do not carry old model-specific instructions forward. Keep this file short and current.
