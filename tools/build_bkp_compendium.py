@@ -154,7 +154,7 @@ COMPONENT_DESCRIPTIONS = {
 }
 SEPARATOR_RE = re.compile(r"^={20,}$")
 GUIDE_HEADING_CODE_RE = re.compile(r"^\[(G(?:\d+(?:-[A-Z]\d*)?))\]\s+(.+)$")
-SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "G2"}
+SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "G4"}
 
 
 def heading_label(text):

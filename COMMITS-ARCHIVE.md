@@ -24,6 +24,13 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-12
+
+- 2026-09-12 | tools/build_bkp_compendium.py | Correct the generated Processes part-opening from stale `[G2]` to source code `[G4]`, resolving the 120926 CI coverage failure.
+
+- 2026-09-12 | VERSION_HISTORY.md | Record the failed first CI run, corrected presentation mapping and successful local recovery audit.
+
 ## Cleared 2026-09-12
 
 - 2026-09-12 | Blueprint/BLUEPRINT.txt | Promote `120926_gpt_modular-routing`: reorder GUIDE as Editing → Output → PR → Processes; recode GUIDE nodes; move country abbreviations from Scope into Conversions; rename the Job Report module REFERENCES to EVIDENCE while retaining the Directory `references` branch.

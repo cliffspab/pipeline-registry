@@ -16,6 +16,8 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
 **Evidence.** The isolated candidate passes dollar-pairing, shared-edition, invertibility, 24-node GUIDE-code, ten-route and register-parse guards. A normalised multiset comparison finds zero added or removed editorial payload lines. The Directory payload is byte-identical apart from its required edition stamp. Generated `PROCESSES.txt` contracts from 15,752 to 11,267 characters because Scope and PR no longer leak into it.
 
+**CI recovery.** The first source run failed its Word coverage audit because the document builder still synthesised the Processes part-opening with the former `[G2]` code. The presentation mapping is corrected to `[G4]`; a local Word rebuild renders all 288 Directory leaves, and its coverage audit now has only the three standing declared presentation suppressions.
+
 **Verdict.** Structural edition approved by the supervisor and prepared locally for the guarded push. Shift remains untouched until publication, CI rebuild and sealing.
 
 ---
