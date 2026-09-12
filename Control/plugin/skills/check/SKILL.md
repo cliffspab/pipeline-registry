@@ -22,7 +22,7 @@ route. Never bridge the gap from memory.
 Read the complete filed material first. Read BLUEPRINT's authority,
 verification and output sections, the task-relevant GUIDE sections and every
 DIRECTORY branch triggered by the material. Use edition-bound GUIDE codes and
-the REFERENCES contract when BLUEPRINT provides them; never invent or
+the EVIDENCE contract when BLUEPRINT provides it; never invent or
 back-port codes.
 
 Never silently alter a fact, quotation, name, identity field, office, date,

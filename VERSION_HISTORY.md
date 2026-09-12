@@ -6,6 +6,20 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-12 — 120926_gpt_modular-routing: WORKFLOW-FIRST GUIDE ORDER
+
+**Approved and promoted locally.** The GUIDE is reordered without changing its editorial payload. Scope and Length now complete `[G1] EDITING`; the indivisible Job Report contract is `[G2] OUTPUT`; the separate minimum-intervention route is `[G3] PR COPY`; and conversions form the focused `[G4] PROCESSES` lookup module. Country abbreviations in heads moves from Scope into Conversions beside the other abbreviation rules.
+
+**Codes and machinery.** All edition-bound GUIDE codes, contents entries and the evidence example are recoded to the new hierarchy. The process extractor now publishes the bounded `[G4] PROCESSES` tail, excluding Editing, Output and PR.
+
+**Unambiguous evidence label.** The Job Report's mandatory `REFERENCES` module is renamed `EVIDENCE`, distinguishing its edition/code declaration and lookup record from the Directory's `references` data branch. The stable Directory paths remain unchanged. CONTROL and all four generated workflow skills route to the renamed EVIDENCE contract.
+
+**Evidence.** The isolated candidate passes dollar-pairing, shared-edition, invertibility, 24-node GUIDE-code, ten-route and register-parse guards. A normalised multiset comparison finds zero added or removed editorial payload lines. The Directory payload is byte-identical apart from its required edition stamp. Generated `PROCESSES.txt` contracts from 15,752 to 11,267 characters because Scope and PR no longer leak into it.
+
+**Verdict.** Structural edition approved by the supervisor and prepared locally for the guarded push. Shift remains untouched until publication, CI rebuild and sealing.
+
+---
+
 ## 2026-09-11 — SEALED DRIVE CONTAINERS AND PROCESSES DELIVERY
 
 **Pipeline delivery.** `PROCESSES.txt` is restored as an edition-stamped generated output containing the bounded `[G2] PROCESSES` section. It is built locally and by CI, guarded against hand-editing, committed with the other derived outputs and copied into every sealed edition.

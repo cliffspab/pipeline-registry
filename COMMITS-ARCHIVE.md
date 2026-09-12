@@ -23,6 +23,17 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-12
+
+- 2026-09-12 | Blueprint/BLUEPRINT.txt | Promote `120926_gpt_modular-routing`: reorder GUIDE as Editing → Output → PR → Processes; recode GUIDE nodes; move country abbreviations from Scope into Conversions; rename the Job Report module REFERENCES to EVIDENCE while retaining the Directory `references` branch.
+
+- 2026-09-12 | bootstrap/build.py + .github/workflows/compile.yml | Publish the focused `[G4] PROCESSES` tail under the new GUIDE order.
+
+- 2026-09-12 | Control/CONTROL.txt + Control/plugin/skills | Route all four generated workflow skills to the EVIDENCE contract.
+
+- 2026-09-12 | VERSION_HISTORY.md | Record the approved structural edition and its verified payload.
+
 ## Cleared 2026-09-11
 
 - 2026-09-11 | Processes and Drive delivery | Generate edition-stamped `Blueprint/PROCESSES.txt` from `[G2]` on every build, seal it with the edition, and refresh the seven stable `SYNC_MASTER` Drive containers only after sealing.

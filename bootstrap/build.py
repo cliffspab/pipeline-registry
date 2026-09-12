@@ -9,7 +9,7 @@ ONE file is edited:
 Five are derived from it and never touched by hand:
 
     GUIDE.txt         the operating manual, part delivery for /guide
-    PROCESSES.txt     the G2 operational section, part delivery for /processes
+    PROCESSES.txt     the G4 operational section, part delivery for /processes
     DIRECTORY.yaml    the lookups, part delivery for /dir
     DIRECTORY.txt     DIRECTORY.yaml under a .txt extension, byte-identical
     BLUEPRINT.pdf     the rendered artifact of record
@@ -46,7 +46,8 @@ FENCE = re.compile(r"```yaml\n(.*?)\n```", re.S)
 GUIDE_CODE = re.compile(r"^#{1,6} \[(G(?:\d+(?:-[A-Z]\d*)?))\] ", re.M)
 CONTENTS_CODE = re.compile(r"^\s*- \[(G(?:\d+(?:-[A-Z]\d*)?))\] \S", re.M)
 PROCESSES_SECTION = re.compile(
-    r"^## \[G2\] PROCESSES\s*$.*?(?=^## \[G3\] OUTPUT\s*$)", re.M | re.S
+    r"^## \[G4\] PROCESSES\s*$.*\Z",
+    re.M | re.S,
 )
 
 
@@ -164,10 +165,10 @@ def register_yaml(part, tag):
 
 
 def processes_text(guide_part, tag):
-    """Publish G2 as a focused, edition-stamped consumer file."""
+    """Publish G4 as a focused, edition-stamped consumer file."""
     match = PROCESSES_SECTION.search(guide_part)
     if not match:
-        fail("GUIDE has no bounded [G2] PROCESSES section.")
+        fail("GUIDE has no bounded [G4] PROCESSES section.")
     body = match.group(0).rstrip("\n") + "\n"
     return f"<!-- PART: {tag} PROCESSES -->\n\n{body}"
 

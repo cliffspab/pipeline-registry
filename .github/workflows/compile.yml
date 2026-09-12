@@ -179,12 +179,12 @@ jobs:
           open("Blueprint/GUIDE.txt", "w", encoding="utf-8", newline="").write(core_body)
           print("part: %-11s -> %-27s %6d chars" % ("GUIDE", "Blueprint/GUIDE.txt", len(core_body)))
 
-          # ---- PROCESSES: focused G2 delivery -------------------------------
+          # ---- PROCESSES: focused G4 delivery -------------------------------
           process_match = re.search(
-              r'^## \[G2\] PROCESSES\s*$.*?(?=^## \[G3\] OUTPUT\s*$)',
+              r'^## \[G4\] PROCESSES\s*$.*\Z',
               core_body, re.M | re.S)
           if not process_match:
-              sys.exit("FATAL: GUIDE has no bounded [G2] PROCESSES section.")
+              sys.exit("FATAL: GUIDE has no bounded [G4] PROCESSES section.")
           process_body = ("<!-- PART: %s PROCESSES -->\n\n%s\n"
                           % (tag, process_match.group(0).rstrip("\n")))
           open("Blueprint/PROCESSES.txt", "w", encoding="utf-8", newline="").write(process_body)
