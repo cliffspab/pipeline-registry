@@ -1,39 +1,41 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-100926_gpt_directory-routing
+130926_gpt_task-skills
 
 Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are the edit surface: GUIDE in markdown, DIRECTORY in YAML.
 
 ## CONTENTS
 
 - [G] GUIDE
-  - [G1] EDITING
+  - [G1] EDIT
     - [G1-A] SOLVE THE PROBLEM
       - [G1-A1] VERIFICATION AND PROXIMITY
-  - [G2] PROCESSES
-    - [G2-A] CONVERSIONS
-      - [G2-A1] Numbers
-      - [G2-A2] Times
-      - [G2-A3] Dates
-      - [G2-A4] Datelines
-      - [G2-A5] Currency
-      - [G2-A6] Measurements
-      - [G2-A7] Names and honorifics
-      - [G2-A8] Acronyms
-      - [G2-A9] Italics and title styling
-    - [G2-B] Scope
-      - [G2-B1] Country abbreviations in heads
-      - [G2-B2] Length
-    - [G2-C] PR copy
-  - [G3] OUTPUT
-    - [G3-A] JOB REPORT
-    - [G3-B] FORMAT
-    - [G3-C] STYLE LOG
-    - [G3-D] REFERENCES
-    - [G3-E] UNRESOLVED
+    - [G1-B] Scope
+      - [G1-B1] Length
+    - [G1-C] OUTPUT
+      - [G1-C1] JOB REPORT
+      - [G1-C2] FORMAT
+      - [G1-C3] STYLE LOG
+      - [G1-C4] EVIDENCE
+      - [G1-C5] UNRESOLVED
+  - [G2] PHOTO
+  - [G3] CHECK
+  - [G4] PR
+  - [G5] PROCESSES
+    - [G5-A] CONVERSIONS
+      - [G5-A1] Numbers
+      - [G5-A2] Times
+      - [G5-A3] Dates
+      - [G5-A4] Datelines
+      - [G5-A5] Currency
+      - [G5-A6] Measurements
+      - [G5-A7] Names and honorifics
+      - [G5-A8] Acronyms
+      - [G5-A9] Country abbreviations in heads
+      - [G5-A10] Italics and title styling
 - [D] DIRECTORY
 
-<!-- PART: 100926_gpt_directory-routing GUIDE -->
+<!-- PART: 130926_gpt_task-skills GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -50,8 +52,10 @@ for countries, foreign places, Thai places, organisations or vocabulary.
 Do not infer Directory content from this route map. If the required Directory
 branch cannot be accessed, report it as `UNAVAILABLE`.
 
-# [G1] EDITING
+# [G1] EDIT
 what we do
+
+Invocation: `$edit`, `/edit` or `@Edit`.
 
 ## [G1-A] SOLVE THE PROBLEM
 
@@ -78,7 +82,7 @@ Legal fact and opinion are carried, not adjudicated. The desk raises what looks 
 Quotes translated from Thai are edited for clarity and correct English. Quotes spoken in English stand as spoken.
 
 **Integrated Verification (SEARCHQ):**
-Search once per triggered name or claim per story. Any claim concerning a name on the apex list is always a trigger. Otherwise search only for an internal contradiction, protagonist spelling anomaly, explicit status change or superlative. Execute searches using native search capabilities and report every result in the Job Report's REFERENCES module in this format:
+Search once per triggered name or claim per story. Any claim concerning a name on the apex list is always a trigger. Otherwise search only for an internal contradiction, protagonist spelling anomaly, explicit status change or superlative. Execute searches using native search capabilities and report every result in the Job Report's EVIDENCE module in this format:
 
 ```text
 SEARCHQ [DDMMYY - slug]
@@ -93,13 +97,233 @@ When an incoming personal name sits close to a form the desk already holds — a
 
 
 
-## [G2] PROCESSES
+
+
+
+## [G1-B] Scope
+
+
+### [G1-B1] Length
+
+Two states:
+**Guidance supplied** — edit to meet the footprint/fit, or to the DCX reported allowance, written `[current / total (diff)]`.`Live form: `[6929 / 7554 (-625)]` — 6,929 characters against an allowance of 7,554, running 625 short.
+**No guidance** — edit freely for structure, sequence, hierarchy, paragraphing and narrative logic. Up to 10% may be cut to clear tautology, passive voice and fat, provided the core narrative stays intact.
+
+News stories — opening paragraphs carry a soft limit of 30 words.
+
+##### Heads and Decks
+
+**DCX budget** — triggers where the supervisor supplies a headline or deck target as a figure with a DCX[X] prefix and the number of lines it applies to.
+
+It is the TOTAL across however many lines, never per-line.
+
+Draft to the budget within ±2. For multi-line heads, balance the lines to within ±1 of each other. Aim at the lower end of the margin.
+
+Tessellation, for Overset and Underset tweaks:
+
+* **Baseline, 1.0** — standard letters (a, e, n, o, p)
+* **Lean, 0.5** — i, l, t, f, r, s, j, spaces, punctuation
+* **Heavy, 1.5** — m, w, M, W, O, Q, G, C
+
+Overset swaps heavy glyphs for lean to reduce the footprint; Underset reverses it.
+
+Sub-heads are entered under Styles required.
+
+##### Body
+
+Altered by verified count or 1-in / 1-out volume substitution.
+
+All recasts are holistic — the whole story is worked to the target.
+
+Land just over, never under. Overmatter is easily cut; undermatter must not be generated.
+
+**Unit.** Characters with spaces. Paragraph breaks count as single newlines — normalise before counting.
+
+**Input.** The .dcx pair: "story = X chars, box = Y chars". The spill is X − Y. Fallback input: a signed spill, +N remove, −N add.
+
+**Verified count.** Two passes, not a loop.
+
+1. Recast by value toward the target proportion. No count yet.
+2. One `len()` against Y sets the exact residual.
+3. Correct the residual by adjusting already-counted material.
+4. Strip introduced markup before reporting the figure:
+
+```python
+
+clean = re.sub(r'^[ \t]*\[[A-Z][^\]]*\][ \t]*\n?', '', body, flags=re.M)
+clean = re.sub(r'\n{2,}', '\n', clean).strip()
+print(len(clean))
+```
+
+The first count should match X. Where it drifts, the counter has diverged from .dcx: surface it and trust neither figure.
+
+**Substitution.** Judge content as a quantity with the page as its container and iteratively add or subtract sections of equivalent length until the target volume is achieved.
+
+**Underfill.** Where copy falls short of the space, take the increase from strands edited out earlier in the pass, restoring the strongest of what was cut.
+
+A cut point marks where the new container will end. Content following remains a candidate for inclusion.
+
+* **Cut first** — redundancy, secondary or third-tier incident, transitions, non-material hedging, background already implied, colour that adds no fact.
+* **Protect** — the core event, named-source quotes, figures, the causal "why", consequence, anything not stated elsewhere.
+* Read the last paragraph before cutting it. Copy often holds a key fact for the kicker.
+* One fact in one place: where information appears twice, cut the weaker instance.
+
+Prioritise telling the headline story properly over maintaining multiple narratives. Record dropped content in the Style Log in one sentence.
+
+
+
+## [G1-C] OUTPUT
+
+### [G1-C1] JOB REPORT
+
+Every completed edit is one JOB REPORT, identified by the slug as filed. The report's existence means the edit is complete and ready to receive. Its modules appear in this order: EDIT, STYLE LOG, EVIDENCE, then UNRESOLVED only when follow-up is required.
+
+Omit defaults, unused modules and null declarations. Do not write `none`, `not triggered`, `no footprint given` or equivalent. Absence means the default applied or the conditional module was not used.
+
+### [G1-C2] FORMAT
+
+````text
+JOB REPORT
+ID: [slug-as-filed]
+
+EDIT
+
+[Hold/Query/Anomaly — if needed]
+
+[THE BOX — FENCED CODE BLOCK + COPY BUTTON]
+
+<page_ready>
+
+```text
+[First-choice headline in sentence case]
+[First-choice deck]
+
+
+[Full clean body copy]
+```
+
+</page_ready>
+
+[ALTERNATES]
+
+STYLE LOG
+[actual interventions only]
+
+EVIDENCE
+[edition | applicable GUIDE codes]
+[DIRECTORYQ — only if internal lookups were triggered]
+[SEARCHQ — only if external searches were executed]
+
+[UNRESOLVED — only if follow-up is required]
+````
+
+Notes:
+
+* **The fenced code block has a copy button for the supervisor to lift the whole edit in one action.**
+* **HOLD HOLD HOLD** suppresses the box: must be all-caps.
+* **A query** is a question the copy survives. The copy ships, and the question is logged inside EDIT before the box so the supervisor sees it before lifting.
+* **Head and deck sit flush** — One block, consecutive lines, no gap between them.
+* **The body is always preceded by exactly two blank lines.** This is invariant: deck or no deck, the double gap sits above the body.
+* **No deck for briefs (`bf`).**
+* **Alternates** — provide two headline and deck options of equal (+-2)length to the first choices seated in the box.
+
+
+### [G1-C3] STYLE LOG
+
+Where an element needs a DCX treatment the box cannot carry, Styles required: heads the STYLE LOG and lists it. Intervention lines follow.
+
+After alternates, list actual interventions, not confirmation of correctness. Include structural changes; cuts exceeding 10%; dropped content in one sentence; overspill swaps; timeline corrections; legal flags; and unresolved reference issues. Omit confirmed-correct material and null declarations.
+
+Use this form:
+
+```text
+Issue / Entity | Action Taken
+
+Examples:
+
+Niger | Demonym corrected to Nigerien per DIRECTORY.
+
+Paragraph 3 | Rewrote passive voice; footprint reduced for bloat.
+```
+### [G1-C4] EVIDENCE
+
+EVIDENCE immediately follows the Style Log and is mandatory. Begin with the selected edition and the exact applicable GUIDE codes from CONTENTS.
+
+```text
+EVIDENCE
+130926_gpt_task-skills | [G5-A1] [G1-C2]
+```
+
+List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
+
+If an internal DIRECTORY lookup was triggered, append:
+
+```text
+DIRECTORYQ [DDMMYY - slug]
+n | term | exact.path | held form, NOT LISTED or UNAVAILABLE
+```
+
+`NOT LISTED` requires a successful check with no entry; `UNAVAILABLE` means no check was possible. If no internal lookup was triggered, omit DIRECTORYQ entirely.
+
+If an external search was executed, append the prescribed SEARCHQ block. If none was executed, omit SEARCHQ entirely.
+
+### [G1-C5] UNRESOLVED
+
+Add UNRESOLVED only when the Job Report contains an aspect requiring follow-up. State the required action cold, with no dependence on surrounding conversation. Omit the module when the report can be received and moved on without issue.
+
+```text
+UNRESOLVED
+Confirm paragraph 4 attribution before release.
+```
+
+## [G2] PHOTO
+
+Invocation: `$photo`, `/photo` or `@Photo`.
+
+Handle the standalone headline and caption. Inspect the actual image whenever
+visual precision matters; otherwise state the limitation and caption only what
+the filed material supports.
+
+Write a sharp sentence-case headline and an accurate caption using only what
+the image and filed material establish. Preserve the supplied credit. Apply
+the relevant headline, caption, fit, count, alternate and logging rules. Never
+invent identity, action, location, emotion, cause or credit.
+
+## [G3] CHECK
+
+Invocation: `$check`, `/check` or `@Check`.
+
+Perform the initialling pass. CHECK reports; it does not edit. Treat the page
+as read-only and return no rewritten copy.
+
+Run the required safety checks, searches, DIRECTORY lookups, proximity checks,
+naming traps and house-convention pass. Do not carry a separate watch list;
+current names and facts come from DIRECTORY.
+
+Report perceived spatial issues as perceived. Return findings and open flags
+only.
+
+## [G4] PR
+
+Invocation: `$pr`, `/pr` or `@PR`.
+
+A minimum-intervention style pass. Apply only those house conventions that do not require restructuring.
+
+**Apply:** US to UK spelling; place names to BKP forms per DIRECTORY; honorifics; punctuation, Oxford comma removed; CONVERSIONS rules for currency, dates and numbers; plain errors of grammar and punctuation. Captions get the same pass as the body.
+
+Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters), literal brackets, sentence case, ahead of the body.
+
+**Retain as filed:** structure, order, layout, bold, italics, capitalisation, line breaks, tone, voice and length. Pictures are never stripped. Apart from `[Head]` and `[Deck]`, add nothing — no slug, no background the client did not provide.
+
+**Flag** legal issues.
+
+## [G5] PROCESSES
 how we do it
 
 
-### [G2-A] CONVERSIONS
+### [G5-A] CONVERSIONS
 
-#### [G2-A1] Numbers
+#### [G5-A1] Numbers
 
 Whole numbers under 10 are spelled out (nine years, three months). Digits handle measurable quantities — length, weight, height, currency. Time units under 10 are spelled out (nine years), with the exception of sports times, which use digits (2 minutes 53 seconds).
 
@@ -111,13 +335,13 @@ Roman numerals appear in Rama names, World War I/II, and official titles only. R
 
 Metric quantities take decimals (2.5km). Non-metric fractions are words (two-and-a-half years).
 
-#### [G2-A2] Times
+#### [G5-A2] Times
 
 12-hour clock with am/pm appended, no points, no space: 10am, 2.30pm, 12.34am. Noon and midnight are written out — never 12pm or 12am.
 
 Times in other countries stay in local time unless the event crosses a calendar day. Race times use colons (1:23:45). Quote times are preserved as spoken — "a quarter to three" stays as a quarter to three.
 
-#### [G2-A3] Dates
+#### [G5-A3] Dates
 
 Slug — publication day (by number) followed by descriptor. The month is assumed to be the present month, or early in the coming month where that is logical.
 
@@ -145,11 +369,11 @@ A missing slug or unclear date logic is flagged in the Style Log.
 
 Months abbreviate against a specific date. In a general reference they run full: last October, December 2015.
 
-#### [G2-A4] Datelines
+#### [G5-A4] Datelines
 
 Datelines are left exactly as provided — never added, never localised (BEIJING stays BEIJING, whatever the case filed). Agency credits are never stripped.
 
-#### [G2-A5] Currency
+#### [G5-A5] Currency
 
 Symbols for dollar, pound, euro, yen: $1, £10, €100, ¥1,000. Other currencies are spelled out: 5 baht, 50 rial, 500 rupees.
 
@@ -163,7 +387,7 @@ Sub-units inside a larger amount are digits after the point; standing alone they
 
 Currency names shared across countries — won, pounds, pesos, krone, rial, rupee — carry the national qualifier.
 
-#### [G2-A6] Measurements
+#### [G5-A6] Measurements
 
 Metric is the standard: km, m, cm, mm, kg, g, ml.
 
@@ -177,7 +401,7 @@ Fahrenheit appears only inside a quote, with the Celsius conversion in square br
 
 Rai stands. Floor and plot areas take sq m.
 
-#### [G2-A7] Names and honorifics
+#### [G5-A7] Names and honorifics
 
 Heads and decks carry no honorifics. Quotes preserve what was spoken; honorifics are not added or bulk-replaced.
 
@@ -282,13 +506,17 @@ Children take first names.
 
 A naming convention travels with the person: Mitsuo Shibahashi is Mr Shibahashi in Bangkok as in Tokyo.
 
-#### [G2-A8] Acronyms
+#### [G5-A8] Acronyms
 
 Pronounceable acronyms of more than three letters take title case: Fifa, Asean, Nasa, Opec, Unesco.
 
 Three-letter initialisms and non-pronounceable strings take all caps: FBI, NBTC, PRD, CNN, HIV.
 
-#### [G2-A9] Italics and title styling
+#### [G5-A9] Country abbreviations in heads
+
+UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus appear in heads and decks. PNG and DRC appear in heads, or in body after the full first reference.
+
+#### [G5-A10] Italics and title styling
 
 Complete works take italic. Books, films, albums, songs, plays, stage shows, newspapers, magazines and computer games.
 
@@ -308,200 +536,7 @@ Latin species names follow the common name, bracketed and italicised, first word
 
 Titles taking italic or quote marks are entered under Styles required.
 
-### [G2-B] Scope
-
-#### [G2-B1] Country abbreviations in heads
-
-UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus appear in heads and decks. PNG and DRC appear in heads, or in body after the full first reference.
-
-#### [G2-B2] Length
-
-Two states:
-**Guidance supplied** — edit to meet the footprint/fit, or to the DCX reported allowance, written `[current / total (diff)]`.`Live form: `[6929 / 7554 (-625)]` — 6,929 characters against an allowance of 7,554, running 625 short.
-**No guidance** — edit freely for structure, sequence, hierarchy, paragraphing and narrative logic. Up to 10% may be cut to clear tautology, passive voice and fat, provided the core narrative stays intact.
-
-News stories — opening paragraphs carry a soft limit of 30 words.
-
-##### Heads and Decks
-
-**DCX budget** — triggers where the supervisor supplies a headline or deck target as a figure with a DCX[X] prefix and the number of lines it applies to.
-
-It is the TOTAL across however many lines, never per-line.
-
-Draft to the budget within ±2. For multi-line heads, balance the lines to within ±1 of each other. Aim at the lower end of the margin.
-
-Tessellation, for Overset and Underset tweaks:
-
-* **Baseline, 1.0** — standard letters (a, e, n, o, p)
-* **Lean, 0.5** — i, l, t, f, r, s, j, spaces, punctuation
-* **Heavy, 1.5** — m, w, M, W, O, Q, G, C
-
-Overset swaps heavy glyphs for lean to reduce the footprint; Underset reverses it.
-
-Sub-heads are entered under Styles required.
-
-##### Body
-
-Altered by verified count or 1-in / 1-out volume substitution.
-
-All recasts are holistic — the whole story is worked to the target.
-
-Land just over, never under. Overmatter is easily cut; undermatter must not be generated.
-
-**Unit.** Characters with spaces. Paragraph breaks count as single newlines — normalise before counting.
-
-**Input.** The .dcx pair: "story = X chars, box = Y chars". The spill is X − Y. Fallback input: a signed spill, +N remove, −N add.
-
-**Verified count.** Two passes, not a loop.
-
-1. Recast by value toward the target proportion. No count yet.
-2. One `len()` against Y sets the exact residual.
-3. Correct the residual by adjusting already-counted material.
-4. Strip introduced markup before reporting the figure:
-
-```python
-
-clean = re.sub(r'^[ \t]*\[[A-Z][^\]]*\][ \t]*\n?', '', body, flags=re.M)
-clean = re.sub(r'\n{2,}', '\n', clean).strip()
-print(len(clean))
-```
-
-The first count should match X. Where it drifts, the counter has diverged from .dcx: surface it and trust neither figure.
-
-**Substitution.** Judge content as a quantity with the page as its container and iteratively add or subtract sections of equivalent length until the target volume is achieved.
-
-**Underfill.** Where copy falls short of the space, take the increase from strands edited out earlier in the pass, restoring the strongest of what was cut.
-
-A cut point marks where the new container will end. Content following remains a candidate for inclusion.
-
-* **Cut first** — redundancy, secondary or third-tier incident, transitions, non-material hedging, background already implied, colour that adds no fact.
-* **Protect** — the core event, named-source quotes, figures, the causal "why", consequence, anything not stated elsewhere.
-* Read the last paragraph before cutting it. Copy often holds a key fact for the kicker.
-* One fact in one place: where information appears twice, cut the weaker instance.
-
-Prioritise telling the headline story properly over maintaining multiple narratives. Record dropped content in the Style Log in one sentence.
-
-
-
-### [G2-C] PR copy
-
-A minimum-intervention style pass. Apply only those house conventions that do not require restructuring.
-
-**Apply:** US to UK spelling; place names to BKP forms per DIRECTORY; honorifics; punctuation, Oxford comma removed; CONVERSIONS rules for currency, dates and numbers; plain errors of grammar and punctuation. Captions get the same pass as the body.
-
-Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters), literal brackets, sentence case, ahead of the body.
-
-**Retain as filed:** structure, order, layout, bold, italics, capitalisation, line breaks, tone, voice and length. Pictures are never stripped. Apart from `[Head]` and `[Deck]`, add nothing — no slug, no background the client did not provide.
-
-**Flag** legal issues.
-
-
-## [G3] OUTPUT
-
-### [G3-A] JOB REPORT
-
-Every completed edit is one JOB REPORT, identified by the slug as filed. The report's existence means the edit is complete and ready to receive. Its modules appear in this order: EDIT, STYLE LOG, REFERENCES, then UNRESOLVED only when follow-up is required.
-
-Omit defaults, unused modules and null declarations. Do not write `none`, `not triggered`, `no footprint given` or equivalent. Absence means the default applied or the conditional module was not used.
-
-### [G3-B] FORMAT
-
-````text
-JOB REPORT
-ID: [slug-as-filed]
-
-EDIT
-
-[Hold/Query/Anomaly — if needed]
-
-[THE BOX — FENCED CODE BLOCK + COPY BUTTON]
-
-<page_ready>
-
-```text
-[First-choice headline in sentence case]
-[First-choice deck]
-
-
-[Full clean body copy]
-```
-
-</page_ready>
-
-[ALTERNATES]
-
-STYLE LOG
-[actual interventions only]
-
-REFERENCES
-[edition | applicable GUIDE codes]
-[DIRECTORYQ — only if internal lookups were triggered]
-[SEARCHQ — only if external searches were executed]
-
-[UNRESOLVED — only if follow-up is required]
-````
-
-Notes:
-
-* **The fenced code block has a copy button for the supervisor to lift the whole edit in one action.**
-* **HOLD HOLD HOLD** suppresses the box: must be all-caps.
-* **A query** is a question the copy survives. The copy ships, and the question is logged inside EDIT before the box so the supervisor sees it before lifting.
-* **Head and deck sit flush** — One block, consecutive lines, no gap between them.
-* **The body is always preceded by exactly two blank lines.** This is invariant: deck or no deck, the double gap sits above the body.
-* **No deck for briefs (`bf`).**
-* **Alternates** — provide two headline and deck options of equal (+-2)length to the first choices seated in the box.
-
-
-### [G3-C] STYLE LOG
-
-Where an element needs a DCX treatment the box cannot carry, Styles required: heads the STYLE LOG and lists it. Intervention lines follow.
-
-After alternates, list actual interventions, not confirmation of correctness. Include structural changes; cuts exceeding 10%; dropped content in one sentence; overspill swaps; timeline corrections; legal flags; and unresolved reference issues. Omit confirmed-correct material and null declarations.
-
-Use this form:
-
-```text
-Issue / Entity | Action Taken
-
-Examples:
-
-Niger | Demonym corrected to Nigerien per DIRECTORY.
-
-Paragraph 3 | Rewrote passive voice; footprint reduced for bloat.
-```
-
-### [G3-D] REFERENCES
-
-REFERENCES immediately follows the Style Log and is mandatory. It is the evidence mast for the edit: begin with the selected edition and the exact applicable GUIDE codes from CONTENTS.
-
-```text
-REFERENCES
-100926_gpt_directory-routing | [G2-A1] [G3-B]
-```
-
-List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
-
-If an internal DIRECTORY lookup was triggered, append:
-
-```text
-DIRECTORYQ [DDMMYY - slug]
-n | term | exact.path | held form, NOT LISTED or UNAVAILABLE
-```
-
-`NOT LISTED` requires a successful check with no entry; `UNAVAILABLE` means no check was possible. If no internal lookup was triggered, omit DIRECTORYQ entirely.
-
-If an external search was executed, append the prescribed SEARCHQ block. If none was executed, omit SEARCHQ entirely.
-
-### [G3-E] UNRESOLVED
-
-Add UNRESOLVED only when the Job Report contains an aspect requiring follow-up. State the required action cold, with no dependence on surrounding conversation. Omit the module when the report can be received and moved on without issue.
-
-```text
-UNRESOLVED
-Confirm paragraph 4 attribution before release.
-```
-
-<!-- PART: 100926_gpt_directory-routing DIRECTORY -->
+<!-- PART: 130926_gpt_task-skills DIRECTORY -->
 
 go.fuzzylogic.page/dir
 

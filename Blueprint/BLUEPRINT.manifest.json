@@ -1,5 +1,5 @@
 {
-  "edition": "100926_gpt_directory-routing",
+  "edition": "130926_gpt_task-skills",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
@@ -7,13 +7,13 @@
     1,
     1
   ],
-  "source_blocks": 193,
+  "source_blocks": 204,
   "source_block_types": {
     "BulletList": 13,
     "CodeBlock": 8,
-    "Header": 46,
+    "Header": 48,
     "OrderedList": 2,
-    "Para": 122,
+    "Para": 131,
     "RawBlock": 2
   },
   "suppressed_structural_separator_paragraphs": 0,
