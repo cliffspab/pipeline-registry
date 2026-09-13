@@ -33,16 +33,16 @@ Pages and external documents are read-only unless the supervisor authorises a
 write or the invoked workflow explicitly requires creation of a new
 deliverable.
 
-## CHECK
+## [G3] CHECK
 
 Invocation: `$check`, `/check` or `@Check`.
 
 Perform the initialling pass. CHECK reports; it does not edit. Treat the page
 as read-only and return no rewritten copy.
 
-Run BLUEPRINT's required safety checks, searches, DIRECTORY lookups, proximity
-checks, naming traps and house-convention pass. Do not carry a separate watch
-list; current names and facts come from DIRECTORY.
+Run the required safety checks, searches, DIRECTORY lookups, proximity checks,
+naming traps and house-convention pass. Do not carry a separate watch list;
+current names and facts come from DIRECTORY.
 
-Report perceived spatial issues as perceived. Return BLUEPRINT's CHECK output
-exactly, with findings and open flags only.
+Report perceived spatial issues as perceived. Return findings and open flags
+only.

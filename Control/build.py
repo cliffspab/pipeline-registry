@@ -10,8 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "CONTROL.txt"
+BLUEPRINT = ROOT.parent / "Blueprint" / "BLUEPRINT.txt"
 OUT = ROOT / "plugin"
-MODULES = ("EDIT", "CHECK", "PR", "PHOTO")
+MODULES = ("EDIT", "PHOTO", "CHECK", "PR")
 META = {
     "EDIT": {
         "description": "Edit Bangkok Post copy through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use when explicitly invoked as $edit, @Edit or with a leading literal /edit request, and automatically for Bangkok Post subbing, editing, fitting, headline, deck, caption, proofing, PR-copy, brief, overspill, DCX, Style Log or State Log work.",
@@ -67,6 +68,25 @@ def expected_files(source: str) -> dict[Path, str]:
     if re.search(r"audit its completeness|compare it with a snapshot|matching .*edition", common, re.I):
         fail("model-side source audit instructions remain")
 
+    if not BLUEPRINT.is_file():
+        fail(f"authoritative Blueprint is missing: {BLUEPRINT}")
+    blueprint = BLUEPRINT.read_text(encoding="utf-8")
+    task_bounds = {
+        "EDIT": (r"^# \[G1\] EDIT\s*$", r"^## \[G2\] PHOTO\s*$"),
+        "PHOTO": (r"^## \[G2\] PHOTO\s*$", r"^## \[G3\] CHECK\s*$"),
+        "CHECK": (r"^## \[G3\] CHECK\s*$", r"^## \[G4\] PR\s*$"),
+        "PR": (r"^## \[G4\] PR\s*$", r"^## \[G5\] PROCESSES\s*$"),
+    }
+    task_sections = {}
+    for name, (start, end) in task_bounds.items():
+        match = re.search(f"({start}.*?)(?={end})", blueprint, re.M | re.S)
+        if not match:
+            fail(f"Blueprint task section is missing or unbounded: {name}")
+        task_sections[name] = match.group(1).rstrip() + "\n"
+        marker = f"Source section: `[{ {'EDIT': 'G1', 'PHOTO': 'G2', 'CHECK': 'G3', 'PR': 'G4'}[name]}]"
+        if marker not in extract(source, name):
+            fail(f"CONTROL route does not select the current {name} section")
+
     files: dict[Path, str] = {}
     manifest = {
         "name": "edit",
@@ -94,7 +114,7 @@ def expected_files(source: str) -> dict[Path, str]:
 
     for name in MODULES:
         slug = name.lower()
-        module = extract(source, name)
+        module = task_sections[name]
         skill = (
             "---\n"
             f"name: {slug}\n"

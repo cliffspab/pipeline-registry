@@ -21,9 +21,9 @@
     ],
     "defaultPrompt": [
       "Use $edit to edit this Bangkok Post copy with the authoritative BLUEPRINT.",
+      "Use $photo to handle this Bangkok Post headline and caption with the authoritative BLUEPRINT.",
       "Use $check to check this placed Bangkok Post copy with the authoritative BLUEPRINT.",
-      "Use $pr to process this Bangkok Post paid-placement copy with the authoritative BLUEPRINT.",
-      "Use $photo to handle this Bangkok Post headline and caption with the authoritative BLUEPRINT."
+      "Use $pr to process this Bangkok Post paid-placement copy with the authoritative BLUEPRINT."
     ]
   }
 }

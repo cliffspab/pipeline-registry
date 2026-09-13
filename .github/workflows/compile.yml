@@ -179,12 +179,12 @@ jobs:
           open("Blueprint/GUIDE.txt", "w", encoding="utf-8", newline="").write(core_body)
           print("part: %-11s -> %-27s %6d chars" % ("GUIDE", "Blueprint/GUIDE.txt", len(core_body)))
 
-          # ---- PROCESSES: focused G4 delivery -------------------------------
+          # ---- PROCESSES: focused G5 delivery -------------------------------
           process_match = re.search(
-              r'^## \[G4\] PROCESSES\s*$.*\Z',
+              r'^## \[G5\] PROCESSES\s*$.*\Z',
               core_body, re.M | re.S)
           if not process_match:
-              sys.exit("FATAL: GUIDE has no bounded [G4] PROCESSES section.")
+              sys.exit("FATAL: GUIDE has no bounded [G5] PROCESSES section.")
           process_body = ("<!-- PART: %s PROCESSES -->\n\n%s\n"
                           % (tag, process_match.group(0).rstrip("\n")))
           open("Blueprint/PROCESSES.txt", "w", encoding="utf-8", newline="").write(process_body)
@@ -285,6 +285,14 @@ jobs:
                        "shared-edition scheme requires one stamp across all of "
                        "them; a skewed set ships silently. Refusing to build.")
           print("edition guard: PASS (all parts at %s)" % tag)
+
+          # ---- VERSION WITNESS ---------------------------------------------
+          # /ver serves this exact one-line payload. It is generated from the
+          # same verified seam as every delivery and is never edited by hand.
+          open("Blueprint/VERSION.txt", "w", encoding="utf-8", newline="").write(tag + "\n")
+          if open("Blueprint/VERSION.txt", encoding="utf-8").read() != tag + "\n":
+              sys.exit("FATAL: VERSION.txt does not match the Blueprint edition.")
+          print("version witness: %s" % tag)
 
           # ---- compatibility shims ------------------------------------------
           # Retiring shortlinks. /status and /refs resolved to STATUS.yaml and
@@ -487,7 +495,7 @@ jobs:
         run: |
           git config user.name "compile-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add Blueprint/GUIDE.txt Blueprint/PROCESSES.txt \
+          git add Blueprint/GUIDE.txt Blueprint/PROCESSES.txt Blueprint/VERSION.txt \
                   Blueprint/DIRECTORY.yaml Blueprint/DIRECTORY.txt \
                   Blueprint/BLUEPRINT.docx Blueprint/BLUEPRINT.pdf \
                   Blueprint/BLUEPRINT.manifest.json \

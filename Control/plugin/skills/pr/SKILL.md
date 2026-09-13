@@ -33,14 +33,16 @@ Pages and external documents are read-only unless the supervisor authorises a
 write or the invoked workflow explicitly requires creation of a new
 deliverable.
 
-## PR
+## [G4] PR
 
 Invocation: `$pr`, `/pr` or `@PR`.
 
-Perform BLUEPRINT's minimum-intervention paid-placement pass. Preserve client
-content and presentation except where BLUEPRINT or the supervisor directs
-otherwise. Route legal and material factual issues visibly rather than
-silently rewriting them.
+A minimum-intervention style pass. Apply only those house conventions that do not require restructuring.
 
-Create a new document only when an editable source and authority to write are
-both present. Follow BLUEPRINT's PR output and logging requirements exactly.
+**Apply:** US to UK spelling; place names to BKP forms per DIRECTORY; honorifics; punctuation, Oxford comma removed; CONVERSIONS rules for currency, dates and numbers; plain errors of grammar and punctuation. Captions get the same pass as the body.
+
+Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters), literal brackets, sentence case, ahead of the body.
+
+**Retain as filed:** structure, order, layout, bold, italics, capitalisation, line breaks, tone, voice and length. Pictures are never stripped. Apart from `[Head]` and `[Deck]`, add nothing — no slug, no background the client did not provide.
+
+**Flag** legal issues.

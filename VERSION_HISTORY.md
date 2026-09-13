@@ -6,6 +6,42 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-13 — 130926_gpt_task-skills: ONE BLUEPRINT, FOUR NATIVE TASKS
+
+**Candidate promoted locally.** The GUIDE now presents the desk's work in its
+natural order: `[G1] EDIT`, `[G2] PHOTO`, `[G3] CHECK`, `[G4] PR`, then shared
+`[G5] PROCESSES`. The complete editing doctrine, scope and Job Report remain one
+bounded EDIT section; no abbreviated EDIT workflow duplicates it. Each task
+carries its invocation line, with a restrained grey border in the Word volume.
+
+**Single-source skills.** `130926_control_blueprint-skills` retains command routing and shared operational
+authority only. Its builder now lifts each skill body verbatim from the matching
+bounded Blueprint section. The generated plugin order is EDIT, PHOTO, CHECK, PR,
+so every Blueprint update and skill update travels in the same push.
+
+**Master extraction and version witness.** `extract.py` verifies the complete
+master and emits EDIT, PHOTO, CHECK, PR, PROCESSES, GUIDE, DIRECTORY or the
+edition on demand. Generated `VERSION.txt` contains only the exact edition plus
+newline for `/ver`. The sealed Drive contract reduces from seven persistent
+derivatives to the complete master and this version witness; consumers extract
+temporary parts and discard them after use.
+
+**Evidence.** The isolated candidate passes dollar-pairing, shared-edition,
+invertibility, 26-node GUIDE-code, ten-route and register-parse guards. All four
+generated skills pass their validators and the plugin manifest passes plugin
+validation. The master/version Drive check and version-bound extraction pass.
+The candidate Word volume builds with all 288 Directory leaves and renders to
+26 pages; the indexed task order and invocation borders render cleanly. The
+guarded-push display is forced non-interactive after the larger skill diff
+exposed Git's pager trapping the batch file at `(END)` before confirmation.
+
+**Verdict.** Supervisor-approved architecture promoted locally for the guarded
+push. Shift and live Drive containers remain untouched until CI rebuild and
+sealing. The new stable `version_sync.txt` container and `/ver` shortlink remain
+one-time supervisor setup items.
+
+---
+
 ## 2026-09-12 — 120926_gpt_modular-routing: WORKFLOW-FIRST GUIDE ORDER
 
 **Approved and promoted locally.** The GUIDE is reordered without changing its editorial payload. Scope and Length now complete `[G1] EDITING`; the indivisible Job Report contract is `[G2] OUTPUT`; the separate minimum-intervention route is `[G3] PR COPY`; and conversions form the focused `[G4] PROCESSES` lookup module. Country abbreviations in heads moves from Scope into Conversions beside the other abbreviation rules.

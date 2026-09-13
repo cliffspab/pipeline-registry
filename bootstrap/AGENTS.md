@@ -12,16 +12,20 @@ Ask before publishing, moving or deleting material, changing the edition identit
 
 Two peer sources: root `BLUEPRINT.txt` governs editorial work; root `CONTROL.txt` governs command invocation and workflow routing.
 
-Four files are derived from BLUEPRINT:
+Five text deliveries are derived from BLUEPRINT:
 
-- `GUIDE.txt` = EDITING + PROCESSES; shortlink `/guide`.
-- `PROCESSES.txt` = the focused `[G2] PROCESSES` section for direct loading.
+- `GUIDE.txt` = EDIT + PHOTO + CHECK + PR + PROCESSES; shortlink `/guide`.
+- `PROCESSES.txt` = the focused `[G5] PROCESSES` section for compatibility.
 - `DIRECTORY.yaml` = STATUS + REFERENCES; shortlink `/dir`.
 - `DIRECTORY.txt` = byte-identical compatibility twin for text-only surfaces.
+- `VERSION.txt` = the exact one-line edition witness; shortlink `/ver`.
 
-`CONTROL.txt` is the peer operational source. BLUEPRINT governs editorial work;
-CONTROL exposes commands, selects workflows and routes each task into BLUEPRINT.
-It must not duplicate editorial rules.
+The Word volume and its PDF conversion are also generated artifacts.
+
+`CONTROL.txt` is the peer operational source. BLUEPRINT governs editorial work
+and contains the four complete task sections. CONTROL exposes commands and maps
+each generated skill to its bounded Blueprint section. It must not duplicate
+editorial rules.
 
 The fenced YAML Directory inside `BLUEPRINT.txt` is load-bearing. Every source and derived part carries one matching edition tag. GPT-era editions include `_gpt_` in that tag; the first is `210826_gpt_compact`.
 
@@ -54,11 +58,12 @@ Nothing in Shift is a source. Nothing unique lives there.
 
 ## Drive container contract
 
-After an edition is sealed, `sync_master.py` maps its seven pipeline outputs
-onto the existing stable files in `D:\GoogleONE\My Drive\SYNC_MASTER`:
-GUIDE, PROCESSES, both DIRECTORY formats, BLUEPRINT text, PDF and DOCX. It must
-update the existing containers in place and refuse to create a missing target.
-Never refresh these containers from an unsealed candidate.
+After an edition is sealed, `sync_master.py` updates two stable files in
+`D:\GoogleONE\My Drive\SYNC_MASTER`: the complete Blueprint text and its exact
+one-line version witness. `extract.py` verifies the master and emits requested
+sections for temporary use. The updater must update existing containers in
+place and refuse to create a missing target. Never refresh them from an
+unsealed candidate.
 
 ## Generated and historical material
 

@@ -33,14 +33,15 @@ Pages and external documents are read-only unless the supervisor authorises a
 write or the invoked workflow explicitly requires creation of a new
 deliverable.
 
-## PHOTO
+## [G2] PHOTO
 
 Invocation: `$photo`, `/photo` or `@Photo`.
 
-Handle the standalone headline and caption through BLUEPRINT's PHOTO route.
-Inspect the actual image whenever visual precision matters; otherwise state
-the limitation and caption only what the filed material supports.
+Handle the standalone headline and caption. Inspect the actual image whenever
+visual precision matters; otherwise state the limitation and caption only what
+the filed material supports.
 
-Follow BLUEPRINT's headline, caption, credit, fit, count, alternate and logging
-requirements exactly. Never invent identity, action, location, emotion, cause
-or credit.
+Write a sharp sentence-case headline and an accurate caption using only what
+the image and filed material establish. Preserve the supplied credit. Apply
+the relevant headline, caption, fit, count, alternate and logging rules. Never
+invent identity, action, location, emotion, cause or credit.

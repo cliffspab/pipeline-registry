@@ -140,7 +140,7 @@ RECORD_FIELDS = ["fact", "office", "ruling", "second_ref", "directive"]
 # register all key off COMPONENTS - so this is presentation only and never
 # reaches back into canon.
 COMPONENT_DISPLAY = {
-    "CORE": "EDITING",
+    "CORE": "EDIT",
     "DIRECTORY": "DIRECTORY",
 }
 
@@ -149,12 +149,12 @@ COMPONENT_SHORTFORM = {
     "DIRECTORY": "/dir",
 }
 COMPONENT_DESCRIPTIONS = {
-    "CORE": "Doctrine, authority, conventions, editing and output",
+    "CORE": "Bangkok Post editing and its output contract",
     "DIRECTORY": "Current tripwires, canonical forms and exceptions",
 }
 SEPARATOR_RE = re.compile(r"^={20,}$")
 GUIDE_HEADING_CODE_RE = re.compile(r"^\[(G(?:\d+(?:-[A-Z]\d*)?))\]\s+(.+)$")
-SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "G4"}
+SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "G5"}
 
 
 def heading_label(text):
@@ -779,7 +779,7 @@ def add_horizontal_rule(doc):
     set_paragraph_bottom_rule(p, 8, 2)
 
 
-def set_paragraph_box(paragraph, fill="F4F4F4"):
+def set_paragraph_box(paragraph, fill="F4F4F4", color="000000", size="10", space="7"):
     p_pr = paragraph._p.get_or_add_pPr()
     shading = p_pr.find(qn("w:shd"))
     if shading is None:
@@ -793,9 +793,9 @@ def set_paragraph_box(paragraph, fill="F4F4F4"):
     for edge in ("top", "left", "bottom", "right"):
         node = OxmlElement(f"w:{edge}")
         node.set(qn("w:val"), "single")
-        node.set(qn("w:sz"), "10")
-        node.set(qn("w:space"), "7")
-        node.set(qn("w:color"), "000000")
+        node.set(qn("w:sz"), size)
+        node.set(qn("w:space"), space)
+        node.set(qn("w:color"), color)
         borders.append(node)
 
 
@@ -1051,7 +1051,7 @@ def render_list(doc, block, decimal_num_id, bullet_num_id, level=0):
 # volume still has four parts - CORE, PROCESSES, STATUS, REFERENCES - and
 # none of them move. This dict is also the set of source H1s to swallow,
 # since add_part_opening prints the title itself.
-COMPONENT_TITLES = {"GUIDE": "CORE", "EDITING": "CORE", "DIRECTORY": "DIRECTORY"}
+COMPONENT_TITLES = {"GUIDE": "CORE", "EDIT": "CORE", "DIRECTORY": "DIRECTORY"}
 
 PART_SEAM_RE = re.compile(r"<!--\s*PART:\s*(\S+)\s+(\w+)\s*-->")
 
@@ -1463,7 +1463,15 @@ def build(source, reference, output, pandoc, manifest, component=None):
                 add_code_block(doc, "\n\n".join(gathered))
                 last_heading_level = None
                 continue
-            if is_axiom_candidate(blocks, index, last_heading_level):
+            if text.startswith("Invocation:"):
+                p = doc.add_paragraph()
+                add_inlines(p, block["c"])
+                p.paragraph_format.left_indent = Inches(0.05)
+                p.paragraph_format.right_indent = Inches(0.05)
+                p.paragraph_format.space_before = Pt(2)
+                p.paragraph_format.space_after = Pt(9)
+                set_paragraph_box(p, fill="FAFAFA", color="B8B8B8", size="5", space="5")
+            elif is_axiom_candidate(blocks, index, last_heading_level):
                 add_axiom(doc, block["c"])
             else:
                 if all(label in text for label in ("Status:", "Architecture:", "Companions:")):
@@ -1566,7 +1574,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
     # The version line is restyled to match the shortlink above it (Arial,
     # bold, grey) so the two read as one block, and the section rule is hung
     # under the pair rather than under the head.
-    slug_re = re.compile(r'^\d{6}_all_records-extracted$')
+    slug_re = re.compile(r'^\d{6}_[a-z0-9]+_[a-z0-9-]+$')
     for para in doc.paragraphs:
         if slug_re.match(para.text.strip()):
             for r in para.runs:

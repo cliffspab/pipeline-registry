@@ -1,39 +1,41 @@
 # THE BANGKOK POST BLUEPRINT — FULL GOVERNANCE DOCUMENT
 
-120926_gpt_modular-routing
+130926_gpt_task-skills
 
 Components: GUIDE + DIRECTORY. Assembled from them on every build. The parts are the edit surface: GUIDE in markdown, DIRECTORY in YAML.
 
 ## CONTENTS
 
 - [G] GUIDE
-  - [G1] EDITING
+  - [G1] EDIT
     - [G1-A] SOLVE THE PROBLEM
       - [G1-A1] VERIFICATION AND PROXIMITY
     - [G1-B] Scope
       - [G1-B1] Length
-  - [G2] OUTPUT
-    - [G2-A] JOB REPORT
-    - [G2-B] FORMAT
-    - [G2-C] STYLE LOG
-    - [G2-D] EVIDENCE
-    - [G2-E] UNRESOLVED
-  - [G3] PR COPY
-  - [G4] PROCESSES
-    - [G4-A] CONVERSIONS
-      - [G4-A1] Numbers
-      - [G4-A2] Times
-      - [G4-A3] Dates
-      - [G4-A4] Datelines
-      - [G4-A5] Currency
-      - [G4-A6] Measurements
-      - [G4-A7] Names and honorifics
-      - [G4-A8] Acronyms
-      - [G4-A9] Country abbreviations in heads
-      - [G4-A10] Italics and title styling
+    - [G1-C] OUTPUT
+      - [G1-C1] JOB REPORT
+      - [G1-C2] FORMAT
+      - [G1-C3] STYLE LOG
+      - [G1-C4] EVIDENCE
+      - [G1-C5] UNRESOLVED
+  - [G2] PHOTO
+  - [G3] CHECK
+  - [G4] PR
+  - [G5] PROCESSES
+    - [G5-A] CONVERSIONS
+      - [G5-A1] Numbers
+      - [G5-A2] Times
+      - [G5-A3] Dates
+      - [G5-A4] Datelines
+      - [G5-A5] Currency
+      - [G5-A6] Measurements
+      - [G5-A7] Names and honorifics
+      - [G5-A8] Acronyms
+      - [G5-A9] Country abbreviations in heads
+      - [G5-A10] Italics and title styling
 - [D] DIRECTORY
 
-<!-- PART: 120926_gpt_modular-routing GUIDE -->
+<!-- PART: 130926_gpt_task-skills GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -50,8 +52,10 @@ for countries, foreign places, Thai places, organisations or vocabulary.
 Do not infer Directory content from this route map. If the required Directory
 branch cannot be accessed, report it as `UNAVAILABLE`.
 
-# [G1] EDITING
+# [G1] EDIT
 what we do
+
+Invocation: `$edit`, `/edit` or `@Edit`.
 
 ## [G1-A] SOLVE THE PROBLEM
 
@@ -168,15 +172,15 @@ Prioritise telling the headline story properly over maintaining multiple narrati
 
 
 
-## [G2] OUTPUT
+## [G1-C] OUTPUT
 
-### [G2-A] JOB REPORT
+### [G1-C1] JOB REPORT
 
 Every completed edit is one JOB REPORT, identified by the slug as filed. The report's existence means the edit is complete and ready to receive. Its modules appear in this order: EDIT, STYLE LOG, EVIDENCE, then UNRESOLVED only when follow-up is required.
 
 Omit defaults, unused modules and null declarations. Do not write `none`, `not triggered`, `no footprint given` or equivalent. Absence means the default applied or the conditional module was not used.
 
-### [G2-B] FORMAT
+### [G1-C2] FORMAT
 
 ````text
 JOB REPORT
@@ -224,7 +228,7 @@ Notes:
 * **Alternates** — provide two headline and deck options of equal (+-2)length to the first choices seated in the box.
 
 
-### [G2-C] STYLE LOG
+### [G1-C3] STYLE LOG
 
 Where an element needs a DCX treatment the box cannot carry, Styles required: heads the STYLE LOG and lists it. Intervention lines follow.
 
@@ -241,13 +245,13 @@ Niger | Demonym corrected to Nigerien per DIRECTORY.
 
 Paragraph 3 | Rewrote passive voice; footprint reduced for bloat.
 ```
-### [G2-D] EVIDENCE
+### [G1-C4] EVIDENCE
 
 EVIDENCE immediately follows the Style Log and is mandatory. Begin with the selected edition and the exact applicable GUIDE codes from CONTENTS.
 
 ```text
 EVIDENCE
-120926_gpt_modular-routing | [G4-A1] [G2-B]
+130926_gpt_task-skills | [G5-A1] [G1-C2]
 ```
 
 List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
@@ -263,7 +267,7 @@ n | term | exact.path | held form, NOT LISTED or UNAVAILABLE
 
 If an external search was executed, append the prescribed SEARCHQ block. If none was executed, omit SEARCHQ entirely.
 
-### [G2-E] UNRESOLVED
+### [G1-C5] UNRESOLVED
 
 Add UNRESOLVED only when the Job Report contains an aspect requiring follow-up. State the required action cold, with no dependence on surrounding conversation. Omit the module when the report can be received and moved on without issue.
 
@@ -272,7 +276,36 @@ UNRESOLVED
 Confirm paragraph 4 attribution before release.
 ```
 
-## [G3] PR COPY
+## [G2] PHOTO
+
+Invocation: `$photo`, `/photo` or `@Photo`.
+
+Handle the standalone headline and caption. Inspect the actual image whenever
+visual precision matters; otherwise state the limitation and caption only what
+the filed material supports.
+
+Write a sharp sentence-case headline and an accurate caption using only what
+the image and filed material establish. Preserve the supplied credit. Apply
+the relevant headline, caption, fit, count, alternate and logging rules. Never
+invent identity, action, location, emotion, cause or credit.
+
+## [G3] CHECK
+
+Invocation: `$check`, `/check` or `@Check`.
+
+Perform the initialling pass. CHECK reports; it does not edit. Treat the page
+as read-only and return no rewritten copy.
+
+Run the required safety checks, searches, DIRECTORY lookups, proximity checks,
+naming traps and house-convention pass. Do not carry a separate watch list;
+current names and facts come from DIRECTORY.
+
+Report perceived spatial issues as perceived. Return findings and open flags
+only.
+
+## [G4] PR
+
+Invocation: `$pr`, `/pr` or `@PR`.
 
 A minimum-intervention style pass. Apply only those house conventions that do not require restructuring.
 
@@ -284,13 +317,13 @@ Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters)
 
 **Flag** legal issues.
 
-## [G4] PROCESSES
+## [G5] PROCESSES
 how we do it
 
 
-### [G4-A] CONVERSIONS
+### [G5-A] CONVERSIONS
 
-#### [G4-A1] Numbers
+#### [G5-A1] Numbers
 
 Whole numbers under 10 are spelled out (nine years, three months). Digits handle measurable quantities — length, weight, height, currency. Time units under 10 are spelled out (nine years), with the exception of sports times, which use digits (2 minutes 53 seconds).
 
@@ -302,13 +335,13 @@ Roman numerals appear in Rama names, World War I/II, and official titles only. R
 
 Metric quantities take decimals (2.5km). Non-metric fractions are words (two-and-a-half years).
 
-#### [G4-A2] Times
+#### [G5-A2] Times
 
 12-hour clock with am/pm appended, no points, no space: 10am, 2.30pm, 12.34am. Noon and midnight are written out — never 12pm or 12am.
 
 Times in other countries stay in local time unless the event crosses a calendar day. Race times use colons (1:23:45). Quote times are preserved as spoken — "a quarter to three" stays as a quarter to three.
 
-#### [G4-A3] Dates
+#### [G5-A3] Dates
 
 Slug — publication day (by number) followed by descriptor. The month is assumed to be the present month, or early in the coming month where that is logical.
 
@@ -336,11 +369,11 @@ A missing slug or unclear date logic is flagged in the Style Log.
 
 Months abbreviate against a specific date. In a general reference they run full: last October, December 2015.
 
-#### [G4-A4] Datelines
+#### [G5-A4] Datelines
 
 Datelines are left exactly as provided — never added, never localised (BEIJING stays BEIJING, whatever the case filed). Agency credits are never stripped.
 
-#### [G4-A5] Currency
+#### [G5-A5] Currency
 
 Symbols for dollar, pound, euro, yen: $1, £10, €100, ¥1,000. Other currencies are spelled out: 5 baht, 50 rial, 500 rupees.
 
@@ -354,7 +387,7 @@ Sub-units inside a larger amount are digits after the point; standing alone they
 
 Currency names shared across countries — won, pounds, pesos, krone, rial, rupee — carry the national qualifier.
 
-#### [G4-A6] Measurements
+#### [G5-A6] Measurements
 
 Metric is the standard: km, m, cm, mm, kg, g, ml.
 
@@ -368,7 +401,7 @@ Fahrenheit appears only inside a quote, with the Celsius conversion in square br
 
 Rai stands. Floor and plot areas take sq m.
 
-#### [G4-A7] Names and honorifics
+#### [G5-A7] Names and honorifics
 
 Heads and decks carry no honorifics. Quotes preserve what was spoken; honorifics are not added or bulk-replaced.
 
@@ -473,17 +506,17 @@ Children take first names.
 
 A naming convention travels with the person: Mitsuo Shibahashi is Mr Shibahashi in Bangkok as in Tokyo.
 
-#### [G4-A8] Acronyms
+#### [G5-A8] Acronyms
 
 Pronounceable acronyms of more than three letters take title case: Fifa, Asean, Nasa, Opec, Unesco.
 
 Three-letter initialisms and non-pronounceable strings take all caps: FBI, NBTC, PRD, CNN, HIV.
 
-#### [G4-A9] Country abbreviations in heads
+#### [G5-A9] Country abbreviations in heads
 
 UK and US appear anywhere. NZ, HK, LA, NY, SK, NK, S Africa, S Sudan and Aus appear in heads and decks. PNG and DRC appear in heads, or in body after the full first reference.
 
-#### [G4-A10] Italics and title styling
+#### [G5-A10] Italics and title styling
 
 Complete works take italic. Books, films, albums, songs, plays, stage shows, newspapers, magazines and computer games.
 
@@ -503,7 +536,7 @@ Latin species names follow the common name, bracketed and italicised, first word
 
 Titles taking italic or quote marks are entered under Styles required.
 
-<!-- PART: 120926_gpt_modular-routing DIRECTORY -->
+<!-- PART: 130926_gpt_task-skills DIRECTORY -->
 
 go.fuzzylogic.page/dir
 

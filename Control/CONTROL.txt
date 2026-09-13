@@ -1,6 +1,6 @@
 # BANGKOK POST DESK CONTROL
 
-030926_control_v1
+130926_control_blueprint-skills
 
 Single source for the four desk workflows. BLUEPRINT governs. Every
 extracted skill consists of COMMON plus its named module. No module carries a
@@ -44,18 +44,7 @@ deliverable.
 
 ## EDIT
 
-Invocation: `$edit`, `/edit` or `@Edit`.
-
-Edit the full copy. Make the smallest intervention that solves the editorial
-problem while preserving meaning, facts, voice, attribution and footprint.
-
-Parse copy type, slug and fit instruction. Preserve hold, halve, trim, grow,
-fits and overspill as distinct tasks. Read visible DC-X constraints without
-waiting to be asked and follow BLUEPRINT's verified-count or substitution
-route. Without length guidance, edit freely within BLUEPRINT scope.
-
-Return BLUEPRINT's exact JOB REPORT and module order. Do not truncate,
-summarise or manufacture filler to hit a target.
+Source section: `[G1] EDIT`.
 
 ====================== MODULE EDIT — END ======================
 
@@ -63,17 +52,7 @@ summarise or manufacture filler to hit a target.
 
 ## CHECK
 
-Invocation: `$check`, `/check` or `@Check`.
-
-Perform the initialling pass. CHECK reports; it does not edit. Treat the page
-as read-only and return no rewritten copy.
-
-Run BLUEPRINT's required safety checks, searches, DIRECTORY lookups, proximity
-checks, naming traps and house-convention pass. Do not carry a separate watch
-list; current names and facts come from DIRECTORY.
-
-Report perceived spatial issues as perceived. Return BLUEPRINT's CHECK output
-exactly, with findings and open flags only.
+Source section: `[G3] CHECK`.
 
 ===================== MODULE CHECK — END ======================
 
@@ -81,15 +60,7 @@ exactly, with findings and open flags only.
 
 ## PR
 
-Invocation: `$pr`, `/pr` or `@PR`.
-
-Perform BLUEPRINT's minimum-intervention paid-placement pass. Preserve client
-content and presentation except where BLUEPRINT or the supervisor directs
-otherwise. Route legal and material factual issues visibly rather than
-silently rewriting them.
-
-Create a new document only when an editable source and authority to write are
-both present. Follow BLUEPRINT's PR output and logging requirements exactly.
+Source section: `[G4] PR`.
 
 ======================= MODULE PR — END =======================
 
@@ -97,14 +68,6 @@ both present. Follow BLUEPRINT's PR output and logging requirements exactly.
 
 ## PHOTO
 
-Invocation: `$photo`, `/photo` or `@Photo`.
-
-Handle the standalone headline and caption through BLUEPRINT's PHOTO route.
-Inspect the actual image whenever visual precision matters; otherwise state
-the limitation and caption only what the filed material supports.
-
-Follow BLUEPRINT's headline, caption, credit, fit, count, alternate and logging
-requirements exactly. Never invent identity, action, location, emotion, cause
-or credit.
+Source section: `[G2] PHOTO`.
 
 ====================== MODULE PHOTO — END =====================

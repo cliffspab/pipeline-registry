@@ -1,5 +1,9 @@
 @echo off
 setlocal
+REM Preflight output must return to this batch file. A large diff otherwise
+REM opens Git's interactive pager and strands the operator at (END).
+set "GIT_PAGER=cat"
+set "PAGER=cat"
 REM --- find the repo ----------------------------------------------------------
 REM This script lives IN the clone, so the clone is wherever this script is.
 REM %~dp0 is that folder, with a trailing backslash, drive included. Resolving it
@@ -39,14 +43,14 @@ if exist ".git\rebase-merge" (
   echo [ABORT] unfinished rebase detected.
   pause & exit /b 1
 )
-for %%F in (AGENTS.md CONTROL.txt shift.py sync_master.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md CONTROL.txt shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if not exist "..\%%F" (
     echo [ABORT] required workspace file missing: ..\%%F
     pause & exit /b 1
   )
 )
 git fetch origin || (echo [FAIL] fetch failed - nothing changed locally & pause & exit /b 1)
-git diff --check || (echo [ABORT] whitespace/error check failed & pause & exit /b 1)
+git -c core.safecrlf=false --no-pager diff --check || (echo [ABORT] whitespace/error check failed & pause & exit /b 1)
 if not exist "Control\CONTROL.txt" (
   echo [ABORT] required steering source missing: Control\CONTROL.txt
   pause & exit /b 1
@@ -63,11 +67,11 @@ python Control\build.py --check || (
 
 echo.
 echo --- branch and payload ---
-git status --short --branch
+git --no-pager status --short --branch
 echo.
-git diff --stat
+git -c core.safecrlf=false --no-pager diff --stat
 echo.
-git diff --name-status
+git -c core.safecrlf=false --no-pager diff --name-status
 echo.
 echo --- untracked files ---
 git ls-files --others --exclude-standard
@@ -77,7 +81,7 @@ type COMMITS-PENDING.md
 
 echo.
 echo --- bootstrap files that will change ---
-for %%F in (AGENTS.md shift.py sync_master.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if not exist "bootstrap\%%F" (
     echo   ADD bootstrap\%%F
   ) else (
@@ -112,7 +116,7 @@ echo === mirroring bootstrap set ===
 if not exist "bootstrap" mkdir "bootstrap"
 REM 100826: seal.py and clear_pending.py added. push.bat CALLS both, so a repo
 REM that does not hold them carries a push script it cannot run after a restore.
-for %%F in (AGENTS.md shift.py sync_master.py build.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if exist "..\%%F" (
     copy /Y "..\%%F" "bootstrap\%%F" >nul
     echo   mirrored %%F
@@ -185,7 +189,7 @@ if errorlevel 1 (
 echo.
 echo === verifying against origin ===
 git fetch origin >nul 2>&1
-git status -sb
+git --no-pager status -sb
 git rev-parse --short HEAD > "%temp%\_lh.txt"
 git rev-parse --short origin/main > "%temp%\_rh.txt"
 set /p LH=<"%temp%\_lh.txt"

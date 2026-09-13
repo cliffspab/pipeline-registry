@@ -25,6 +25,39 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-13
+
+- 2026-09-13 | Blueprint architecture | Promote `130926_gpt_task-skills`:
+  make EDIT the complete native `[G1]` skill,
+  followed by PHOTO, CHECK and PR, with Output nested inside EDIT and shared
+  Processes recoded to `[G5]`.
+
+- 2026-09-13 | Control plugin | Generate all four plugin skill bodies from
+  their bounded Blueprint sections;
+  retain CONTROL as the invocation/router source and order the plugin workflows
+  EDIT, PHOTO, CHECK, PR.
+
+- 2026-09-13 | Word builder | Add the restrained invocation-line border and
+  update the compiled-volume
+  mappings for EDIT and `[G5] PROCESSES`.
+
+- 2026-09-13 | Version and extraction | Add generated
+  `Blueprint/VERSION.txt` for `/ver`, the verified on-demand
+  `extract.py` machinery, CI publication and sealing support.
+
+- 2026-09-13 | Drive sync | Reduce sealed Drive synchronisation to the complete
+  Blueprint master plus its
+  exact version witness; retain refusal to create a missing stable container.
+
+- 2026-09-13 | Bootstrap | Mirror the updated AGENTS, build, extraction,
+  sealing and sync machinery into
+  `bootstrap/` during the guarded push.
+
+- 2026-09-13 | Push preflight | Keep the guarded-push preflight non-interactive
+  so a large diff cannot open
+  Git's pager and strand the batch file at `(END)` before the `PUSH` prompt.
+
 ## Cleared 2026-09-12
 
 - 2026-09-12 | tools/build_bkp_compendium.py | Correct the generated Processes part-opening from stale `[G2]` to source code `[G4]`, resolving the 120926 CI coverage failure.

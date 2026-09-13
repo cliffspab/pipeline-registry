@@ -46,7 +46,7 @@ TIMEOUT_SECONDS = 480
 # itself, made by the compile job, so it comes back with the docx rather than
 # going out ahead of it.
 FROM_ROOT = ["BLUEPRINT.txt", "GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml",
-             "DIRECTORY.txt", "build.py"]
+             "DIRECTORY.txt", "VERSION.txt", "build.py", "extract.py"]
 FROM_CLONE = ["BLUEPRINT.docx", "BLUEPRINT.pdf", "BLUEPRINT.manifest.json"]
 
 
