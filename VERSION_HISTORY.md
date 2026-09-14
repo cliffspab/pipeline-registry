@@ -6,6 +6,26 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-14 — DRIVE MASTER ROUTE MOVED AND IDENTIFIED
+
+**Machinery only.** The sealed-container updater now defaults to
+`D:\GoogleDrive\My Drive\BKP_SYNC_MASTER`, replacing the retired GoogleONE
+mount. Its recorded Drive identity is folder
+`13kYSk0V4JEiUs5IclNB9nPDQJYkfHa7d`, with the existing stable Blueprint and
+version container IDs recorded in place. The updater identifies this routing
+revision on every run as `140926_sync_workspace-direct`, independently of the
+unchanged Blueprint edition.
+
+**Evidence.** Local `--check` verifies both containers against sealed edition
+`140926_gpt_desk-refinements`. The authenticated Workspace Drive connection
+lists both exact files under the recorded folder and direct reads return the
+same edition witness. No container was created or replaced.
+
+**Verdict.** Approved route correction prepared for guarded push. The
+Blueprint edition is unchanged.
+
+---
+
 ## 2026-09-14 — 140926_gpt_desk-refinements: NIGHTLY-WORKFLOW CORRECTIONS
 
 **Cleared refinements.** The EDIT opening now foregrounds the standing

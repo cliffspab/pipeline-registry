@@ -27,6 +27,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-14
+
+- 2026-09-14 | Drive updater route | Replace the retired GoogleONE desktop
+  path with `D:\GoogleDrive\My Drive\BKP_SYNC_MASTER` and record the verified
+  Workspace folder, Blueprint-container and version-container IDs for stable
+  in-place syncing; identify the machinery as
+  `140926_sync_workspace-direct` in every run.
+
 ## Cleared 2026-09-14
 
 - 2026-09-14 | Blueprint `140926_gpt_desk-refinements` | Foreground the standing
