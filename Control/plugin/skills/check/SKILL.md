@@ -1,6 +1,6 @@
 ---
 name: check
-description: Check placed Bangkok Post copy before initialling through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use when explicitly invoked as $check, @Check or with a leading literal /check request.
+description: Check placed Bangkok Post copy before initialling through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups.
 ---
 
 # BANGKOK POST DESK CONTROL
@@ -34,8 +34,6 @@ write or the invoked workflow explicitly requires creation of a new
 deliverable.
 
 ## [G3] CHECK
-
-Invocation: `$check`, `/check` or `@Check`.
 
 Perform the initialling pass. CHECK reports; it does not edit. Treat the page
 as read-only and return no rewritten copy.

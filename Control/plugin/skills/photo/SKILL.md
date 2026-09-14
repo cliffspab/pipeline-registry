@@ -1,6 +1,6 @@
 ---
 name: photo
-description: Handle standalone Bangkok Post headlines and captions through the complete authoritative BLUEPRINT, including visual verification and spatial fitting. Use when explicitly invoked as $photo, @Photo or with a leading literal /photo request.
+description: Handle standalone Bangkok Post headlines and captions through the complete authoritative BLUEPRINT, including visual verification and spatial fitting.
 ---
 
 # BANGKOK POST DESK CONTROL
@@ -34,8 +34,6 @@ write or the invoked workflow explicitly requires creation of a new
 deliverable.
 
 ## [G2] PHOTO
-
-Invocation: `$photo`, `/photo` or `@Photo`.
 
 Handle the standalone headline and caption. Inspect the actual image whenever
 visual precision matters; otherwise state the limitation and caption only what

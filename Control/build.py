@@ -15,25 +15,25 @@ OUT = ROOT / "plugin"
 MODULES = ("EDIT", "PHOTO", "CHECK", "PR")
 META = {
     "EDIT": {
-        "description": "Edit Bangkok Post copy through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use when explicitly invoked as $edit, @Edit or with a leading literal /edit request, and automatically for Bangkok Post subbing, editing, fitting, headline, deck, caption, proofing, PR-copy, brief, overspill, DCX, Style Log or State Log work.",
+        "description": "Edit Bangkok Post copy through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use for Bangkok Post subbing, editing, fitting, headline, deck, brief, overspill, DCX, Style Log or State Log work; paid-placement and PR copy use the PR skill.",
         "display": "Bangkok Post Edit",
         "short": "Edit copy to Bangkok Post desk rules",
         "prompt": "Use $edit to edit this Bangkok Post copy with the authoritative BLUEPRINT.",
     },
     "CHECK": {
-        "description": "Check placed Bangkok Post copy before initialling through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use when explicitly invoked as $check, @Check or with a leading literal /check request.",
+        "description": "Check placed Bangkok Post copy before initialling through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups.",
         "display": "Bangkok Post Check",
         "short": "Check placed copy before initialling",
         "prompt": "Use $check to check this placed Bangkok Post copy with the authoritative BLUEPRINT.",
     },
     "PR": {
-        "description": "Process Bangkok Post paid-placement copy through the complete authoritative BLUEPRINT using its minimum-intervention PR route. Use when explicitly invoked as $pr, @PR or with a leading literal /pr request.",
+        "description": "Process Bangkok Post paid-placement, advertorial or PR copy through the complete authoritative BLUEPRINT using its minimum-intervention PR route.",
         "display": "Bangkok Post PR",
         "short": "Process paid-placement copy",
         "prompt": "Use $pr to process this Bangkok Post paid-placement copy with the authoritative BLUEPRINT.",
     },
     "PHOTO": {
-        "description": "Handle standalone Bangkok Post headlines and captions through the complete authoritative BLUEPRINT, including visual verification and spatial fitting. Use when explicitly invoked as $photo, @Photo or with a leading literal /photo request.",
+        "description": "Handle standalone Bangkok Post headlines and captions through the complete authoritative BLUEPRINT, including visual verification and spatial fitting.",
         "display": "Bangkok Post Photo",
         "short": "Write and fit standalone captions",
         "prompt": "Use $photo to handle this Bangkok Post headline and caption with the authoritative BLUEPRINT.",

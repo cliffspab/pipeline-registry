@@ -1,6 +1,6 @@
 ---
 name: pr
-description: Process Bangkok Post paid-placement copy through the complete authoritative BLUEPRINT using its minimum-intervention PR route. Use when explicitly invoked as $pr, @PR or with a leading literal /pr request.
+description: Process Bangkok Post paid-placement, advertorial or PR copy through the complete authoritative BLUEPRINT using its minimum-intervention PR route.
 ---
 
 # BANGKOK POST DESK CONTROL
@@ -35,8 +35,6 @@ deliverable.
 
 ## [G4] PR
 
-Invocation: `$pr`, `/pr` or `@PR`.
-
 A minimum-intervention style pass. Apply only those house conventions that do not require restructuring.
 
 **Apply:** US to UK spelling; place names to BKP forms per DIRECTORY; honorifics; punctuation, Oxford comma removed; CONVERSIONS rules for currency, dates and numbers; plain errors of grammar and punctuation. Captions get the same pass as the body.
@@ -44,5 +42,9 @@ A minimum-intervention style pass. Apply only those house conventions that do no
 Add a `[Head]` line (max 90 characters) and a `[Deck]` line (max 120 characters), literal brackets, sentence case, ahead of the body.
 
 **Retain as filed:** structure, order, layout, bold, italics, capitalisation, line breaks, tone, voice and length. Pictures are never stripped. Apart from `[Head]` and `[Deck]`, add nothing — no slug, no background the client did not provide.
+
+Return the complete pass in the conversation. Create or update an external
+document only when the supervisor explicitly asks for it, and then return the
+copy in the conversation as well.
 
 **Flag** legal issues.

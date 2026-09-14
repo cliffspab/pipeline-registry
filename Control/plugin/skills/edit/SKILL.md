@@ -1,6 +1,6 @@
 ---
 name: edit
-description: Edit Bangkok Post copy through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use when explicitly invoked as $edit, @Edit or with a leading literal /edit request, and automatically for Bangkok Post subbing, editing, fitting, headline, deck, caption, proofing, PR-copy, brief, overspill, DCX, Style Log or State Log work.
+description: Edit Bangkok Post copy through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use for Bangkok Post subbing, editing, fitting, headline, deck, brief, overspill, DCX, Style Log or State Log work; paid-placement and PR copy use the PR skill.
 ---
 
 # BANGKOK POST DESK CONTROL
@@ -36,12 +36,23 @@ deliverable.
 # [G1] EDIT
 what we do
 
-Invocation: `$edit`, `/edit` or `@Edit`.
-
 ## [G1-A] SOLVE THE PROBLEM
 
 Write sharp, active sentence-case headlines, short by default.
 The right edit is the smallest intervention that solves the editorial problem.
+
+**HOUSE ESSENTIALS — every story:**
+
+* Use British English except in quotations and proper names.
+* Remove the Oxford comma.
+* Use metric units, subject to the industry and Thai-land exceptions in [G5-A6].
+* Run dates against publication day under [G5-A3].
+* Apply the second-reference convention in [G5-A7]; Thai, Malaysian, Lao and
+  unprefixed Arabic names take the given name.
+* Keep a news intro to about 30 words.
+* Write active, short, sentence-case heads.
+
+The detailed rules below supply the forms and exceptions.
 
 **Default to "I don't know" over generation of any kind.** Genuine uncertainty stated plainly is the desired behaviour; performed certainty is the fault. "What's actually there" is the only thing that matters.
 
@@ -71,6 +82,8 @@ n | answer | source, date | proof (quoted sentence or record ID)
 If unconfirmed: n | NOT FOUND (+ why, one clause).
 ```
 
+DDMMYY is the date the search is performed; the slug remains the slug as filed.
+
 An unconfirmed or contradictory apex claim puts the copy ON HOLD. Handle other findings under the normal query/hold distinction.
 
 **Proximity Alert — flag only, names only:**
@@ -98,7 +111,9 @@ News stories — opening paragraphs carry a soft limit of 30 words.
 
 It is the TOTAL across however many lines, never per-line.
 
-Draft to the budget within ±2. For multi-line heads, balance the lines to within ±1 of each other. Aim at the lower end of the margin.
+Draft to the budget within ±2. For multi-line heads, balance the lines visually;
+within ±1 character is the target, not a pass/fail condition. Aim at the lower end
+of the margin.
 
 Tessellation, for Overset and Underset tweaks:
 
@@ -118,21 +133,24 @@ All recasts are holistic — the whole story is worked to the target.
 
 Land just over, never under. Overmatter is easily cut; undermatter must not be generated.
 
-**Unit.** Characters with spaces. Paragraph breaks count as single newlines — normalise before counting.
+**Unit.** Characters with spaces. Paragraph breaks are structure and are not
+counted by DCX — normalise them away before counting.
 
 **Input.** The .dcx pair: "story = X chars, box = Y chars". The spill is X − Y. Fallback input: a signed spill, +N remove, −N add.
 
-**Verified count.** Two passes, not a loop.
+**Verified count.** Two count passes, not an open-ended count-and-rewrite loop.
 
 1. Recast by value toward the target proportion. No count yet.
-2. One `len()` against Y sets the exact residual.
+2. A first `len()` against Y sets the exact residual.
 3. Correct the residual by adjusting already-counted material.
-4. Strip introduced markup before reporting the figure:
+4. Strip introduced output labels, discard paragraph breaks and run the final
+   `len()` for the reported figure:
 
 ```python
 
-clean = re.sub(r'^[ \t]*\[[A-Z][^\]]*\][ \t]*\n?', '', body, flags=re.M)
-clean = re.sub(r'\n{2,}', '\n', clean).strip()
+clean = re.sub(r'^[ \t]*\[(?:Head|Deck|Subhead)\][^\n]*\n?', '', body, flags=re.M)
+clean = re.sub(r'\r\n?', '\n', clean)
+clean = clean.replace('\n', '').strip()
 print(len(clean))
 ```
 
@@ -169,21 +187,15 @@ ID: [slug-as-filed]
 
 EDIT
 
-[Hold/Query/Anomaly — if needed]
-
-[THE BOX — FENCED CODE BLOCK + COPY BUTTON]
-
-<page_ready>
+[Hold or query, if needed — always above the box, never below]
 
 ```text
-[First-choice headline in sentence case]
-[First-choice deck]
+[Head — sentence case]
+[Deck]
 
 
-[Full clean body copy]
+[Body, blank line between paragraphs]
 ```
-
-</page_ready>
 
 [ALTERNATES]
 
@@ -200,13 +212,19 @@ EVIDENCE
 
 Notes:
 
-* **The fenced code block has a copy button for the supervisor to lift the whole edit in one action.**
+* **The fenced block is the box.** Nothing else goes inside it — no XML tags,
+  style notes or slug. One code block gives one copy action straight into DCX.
 * **HOLD HOLD HOLD** suppresses the box: must be all-caps.
 * **A query** is a question the copy survives. The copy ships, and the question is logged inside EDIT before the box so the supervisor sees it before lifting.
 * **Head and deck sit flush** — One block, consecutive lines, no gap between them.
 * **The body is always preceded by exactly two blank lines.** This is invariant: deck or no deck, the double gap sits above the body.
+* **Paragraph spacing** — return every page-ready body with one blank line between
+  paragraphs, even when filed copy arrives run together. This display rule is
+  independent of counting, which discards paragraph breaks.
 * **No deck for briefs (`bf`).**
-* **Alternates** — provide two headline and deck options of equal (+-2)length to the first choices seated in the box.
+* **Alternates** — provide two headline and deck options. Where a DCX budget is
+  supplied, each option must meet that same budget; a free edit carries no
+  equal-length requirement.
 
 
 ### [G1-C3] STYLE LOG
@@ -232,7 +250,7 @@ EVIDENCE immediately follows the Style Log and is mandatory. Begin with the sele
 
 ```text
 EVIDENCE
-130926_gpt_task-skills | [G5-A1] [G1-C2]
+140926_gpt_desk-refinements | [G5-A1] [G1-C2]
 ```
 
 List only codes actually applicable to the edit. Do not list the entire GUIDE. A code is edition-bound and is interpreted only with the edition printed on the same line.
@@ -243,6 +261,9 @@ If an internal DIRECTORY lookup was triggered, append:
 DIRECTORYQ [DDMMYY - slug]
 n | term | exact.path | held form, NOT LISTED or UNAVAILABLE
 ```
+
+DDMMYY is the date the Directory lookup is performed; the slug remains the slug
+as filed.
 
 `NOT LISTED` requires a successful check with no entry; `UNAVAILABLE` means no check was possible. If no internal lookup was triggered, omit DIRECTORYQ entirely.
 

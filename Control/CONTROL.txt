@@ -1,6 +1,6 @@
 # BANGKOK POST DESK CONTROL
 
-130926_control_blueprint-skills
+140926_control_task-routing
 
 Single source for the four desk workflows. BLUEPRINT governs. Every
 extracted skill consists of COMMON plus its named module. No module carries a

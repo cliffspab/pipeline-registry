@@ -26,6 +26,20 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-14
+
+- 2026-09-14 | Blueprint `140926_gpt_desk-refinements` | Foreground the standing
+  every-story rules; align body counting with DCX's zero-width paragraph
+  breaks; narrow output-label stripping; simplify the page-ready box; restore
+  paragraph display spacing; free unbudgeted alternates from equal-length
+  matching; clarify lookup dates; soften multi-line balance to a visual target;
+  remove redundant invocation lines; and require PR copy back in conversation.
+
+- 2026-09-14 | Control `140926_control_task-routing` | Remove trigger aliases from
+  generated skill descriptions and route paid-placement, advertorial and PR
+  copy to PR rather than the EDIT skill; regenerate all four plugin skills.
+
 ## Cleared 2026-09-13
 
 - 2026-09-13 | Blueprint architecture | Promote `130926_gpt_task-skills`:

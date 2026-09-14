@@ -6,6 +6,44 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-14 — 140926_gpt_desk-refinements: NIGHTLY-WORKFLOW CORRECTIONS
+
+**Cleared refinements.** The EDIT opening now foregrounds the standing
+every-story rules without moving their detailed homes. The page-ready fence is
+the box: XML-like scaffolding is removed, paragraph display spacing is explicit
+and unbudgeted alternates no longer inherit an equal-length constraint. Search
+and Directory dates now mean the day the lookup was performed.
+
+**DCX and heads.** Body counting now discards paragraph breaks, matching the
+measured DCX behaviour on 14orange and wangtanod. The label-removal expression
+is narrowed to named output labels so bracketed body text is preserved. The
+workflow makes its two counts explicit. Multi-line head balance remains a
+visual target rather than an impossible pass/fail character equality; the
+meaning of ambiguous filed budgets remains open for separate ruling.
+
+**Task routing.** Redundant invocation lines are removed from the Blueprint
+sections and therefore from generated skill bodies. Skill metadata no longer
+lists competing trigger spellings; paid-placement, advertorial and PR copy is
+routed away from EDIT and into PR. PR always returns the complete pass in the
+conversation; an external document is additional and requires an explicit
+supervisor request.
+
+**Held questions.** No EVIDENCE/DIRECTORYQ redesign or headline-budget syntax
+has been adopted. The Directory's heterogeneous semantic YAML remains: the
+build successfully parses the register and resolves its ten routes and 288
+leaf values, so no failing automation justified a schema migration. The
+reported recurring-faults section is absent from the current source.
+
+**Evidence.** The isolated candidate passes dollar-pairing, shared-edition,
+invertibility, 26-node GUIDE-code, ten-route and register-parse guards. All four
+generated skills reproduce byte-for-byte under their validator.
+
+**Verdict.** Supervisor-cleared candidate promoted locally for the guarded
+push. Shift remains on sealed `130926_gpt_task-skills` until publication, CI
+rebuild and sealing.
+
+---
+
 ## 2026-09-13 — 130926_gpt_task-skills: ONE BLUEPRINT, FOUR NATIVE TASKS
 
 **Candidate promoted locally.** The GUIDE now presents the desk's work in its
