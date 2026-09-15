@@ -93,7 +93,8 @@ for %%F in (AGENTS.md shift.py sync_master.py build.py extract.py seal.py clear_
 echo.
 echo Review every modified, deleted and untracked path above.
 echo Typing PUSH authorises the exact displayed payload, bootstrap mirrors,
-echo pending-list archival, commit, rebase, push, verification and sealing.
+echo pending-list archival, commit, rebase, push, verification, sealing,
+echo Shift refresh and Drive master sync.
 set "BKP_CONFIRM="
 set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
 if /I not "%BKP_CONFIRM%"=="PUSH" (
@@ -211,6 +212,23 @@ if "%LH%"=="%RH%" (
     echo        Re-run:  python seal.py
   ) else (
     echo.
+    echo === refreshing Shift handover ===
+    python "..\shift.py"
+    if errorlevel 1 (
+      echo.
+      echo [note] edition sealed, but Shift was not refreshed.
+      echo        Re-run:  python shift.py
+    ) else (
+      python "..\shift.py" --check
+      if errorlevel 1 (
+        echo.
+        echo [note] Shift refresh ran, but verification failed.
+        echo        Re-run:  python shift.py --check
+      ) else (
+        echo [ok] Shift is current and verified.
+      )
+    )
+    echo.
     echo === refreshing Drive pipeline containers ===
     python "..\sync_master.py"
     if errorlevel 1 (
@@ -226,6 +244,6 @@ if "%LH%"=="%RH%" (
 echo.
 echo (Verify with a cache-buster on the raw link - a bare fetch can return a)
 echo (body from a superseded commit with no error. Trap 1.)
-echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txa t?cb=1)
+echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt?cb=1)
 pause
 endlocal

@@ -40,7 +40,7 @@ Edit the two root sources only. Never hand-edit derived files in `pipeline-regis
 5. Copy the approved editorial source to `pipeline-registry/Blueprint/BLUEPRINT.txt`, copy the approved steering source to `pipeline-registry/Control/CONTROL.txt`, and install approved machinery changes.
 6. Record the exact payload in `COMMITS-PENDING.md` and the edition in `VERSION_HISTORY.md`.
 7. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
-8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. Then run `shift.py --check` and refresh Shift if required.
+8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. The guarded push then refreshes and verifies Shift and syncs the Drive master; if either handover step fails, its named rerun remains outstanding without undoing the published push.
 
 ## Shift contract
 

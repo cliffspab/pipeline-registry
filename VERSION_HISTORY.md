@@ -6,6 +6,30 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-15 — ONE AUTHORISATION TO SEALED HANDOVER
+
+**Machinery only.** After GitHub publication, compile-bot integration and a
+successful seal, the guarded push now refreshes Shift, verifies its five-file
+contract and syncs the two Drive master containers. The preflight states that
+the supervisor's literal `PUSH` authorises those bounded post-publication
+steps as well as the displayed repository payload.
+
+**Failure boundary.** Publication success is not rewritten as failure if a
+later handover copy cannot complete. Shift refresh, Shift verification and
+Drive sync each name the exact standalone command that remains to be rerun.
+The cache-buster example is corrected to the live `GUIDE.txt` path.
+
+**Evidence.** The candidate preserves the existing seal gate: neither Shift
+nor Drive is touched unless `seal.py` succeeds. `shift.py` retains its sealed
+edition and once-per-day guards, with a newly sealed superseding edition as
+the explicit exception. The unchanged sealed edition and both Drive master
+containers verify current before promotion.
+
+**Verdict.** Approved machinery candidate prepared for one guarded push. The
+Blueprint and Control editions are unchanged.
+
+---
+
 ## 2026-09-14 — DRIVE MASTER ROUTE MOVED AND IDENTIFIED
 
 **Machinery only.** The sealed-container updater now defaults to

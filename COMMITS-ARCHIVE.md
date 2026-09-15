@@ -28,6 +28,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-15
+
+- 2026-09-15 | One-push handover | Extend guarded `push.bat` so a successful
+  seal refreshes and verifies Shift before syncing the Drive master; report
+  each post-publication failure with its exact rerun command, update the
+  custodian contract and correct the malformed cache-buster example.
+
 ## Cleared 2026-09-14
 
 - 2026-09-14 | Drive updater route | Replace the retired GoogleONE desktop
