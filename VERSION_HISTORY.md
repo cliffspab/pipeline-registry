@@ -6,6 +6,28 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-18 — EDITORIAL-AUTHORITY CI BASELINE RECOVERY
+
+**Failure.** The publication commit reached `origin/main`, but the compile job
+stopped at the markdown-structure guard. The approved rewrite deliberately
+reduced the Pandoc profile from 48 to 23 headers, 14 to three bullet lists and
+eight to five code blocks. The guard's only baseline exception covered a
+legacy-to-GPT transition, while both editions in this change already carried
+GPT identities.
+
+**Recovery.** The guard now admits exactly the transition from
+`140926_gpt_desk-refinements` to `160926_gpt_editorial-authority` and only when
+the complete audited candidate-13 block profile matches: three bullet lists,
+five code blocks, 23 headers, two ordered lists, 61 paragraphs and three raw
+blocks. Any profile drift still fails, and later builds compare normally with
+the new manifest once CI establishes it.
+
+**Verdict.** Bounded recovery prepared for a second guarded push. The Blueprint
+and Control sources are unchanged; sealing, Shift refresh and Drive sync remain
+outstanding until CI succeeds.
+
+---
+
 ## 2026-09-18 — 160926_gpt_editorial-authority: EDITORIAL AUTHORITY REWRITE
 
 **Editorial model.** The Guide now begins with `TELL THE STORY` and states the

@@ -365,6 +365,30 @@ jobs:
           edition_match = re.search(r"<!-- PART: (\S+) GUIDE -->", source_text)
           current_edition = edition_match.group(1) if edition_match else ""
           previous_edition = previous_manifest.get("edition", "")
+          approved_transitions = {
+              ("140926_gpt_desk-refinements", "160926_gpt_editorial-authority"): {
+                  "BulletList": 3,
+                  "CodeBlock": 5,
+                  "Header": 23,
+                  "OrderedList": 2,
+                  "Para": 61,
+                  "RawBlock": 3,
+              },
+          }
+          approved_profile = approved_transitions.get(
+              (previous_edition, current_edition)
+          )
+          if approved_profile is not None:
+              if dict(now) != approved_profile:
+                  sys.exit(
+                      "FATAL: approved structure transition has an unexpected "
+                      "block profile: %r" % dict(sorted(now.items()))
+                  )
+              print(
+                  "approved edition structure transition: %s -> %s"
+                  % (previous_edition, current_edition)
+              )
+              sys.exit(0)
           if "_gpt_" in current_edition and "_gpt_" not in previous_edition:
               print("legacy -> GPT edition: accepting one explicit structure baseline transition")
               sys.exit(0)

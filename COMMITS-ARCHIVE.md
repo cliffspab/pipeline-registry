@@ -30,6 +30,18 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-18
+
+- 2026-09-18 — post-push CI recovery for
+  `160926_gpt_editorial-authority`, exact payload:
+  - `.github/workflows/compile.yml` — admit only the audited transition from
+    `140926_gpt_desk-refinements` when the incoming Pandoc block profile exactly
+    matches candidate 13; ordinary structure regression protection remains.
+  - `VERSION_HISTORY.md` — record the failed guard and bounded recovery.
+  - `COMMITS-PENDING.md` — this approval record, archived automatically by the
+    guarded push.
+
 ## Cleared 2026-09-18
 
 - 2026-09-18 — `160926_gpt_editorial-authority` and
