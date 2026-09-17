@@ -1,14 +1,10 @@
-# PART: 140926_gpt_desk-refinements DIRECTORY
+# PART: 160926_gpt_editorial-authority DIRECTORY
 
 index:
-  rule: >
-    Open only a named branch the copy triggers; keep provinces closed unless a district is named.
-  searchq: >
-    Apex always; otherwise only contradiction, spelling anomaly, explicit status change or superlative.
   routes:
     status:
       - status.apex
-      - status.second_tier.reversals
+      - status.second_tier.watch
       - status.second_tier.mortalities
       - status.second_tier.corporate
       - status.global
@@ -18,6 +14,17 @@ index:
       - references.thai_places
       - references.organisations
       - references.vocabulary
+      - references.numbers
+      - references.times
+      - references.dates
+      - references.datelines
+      - references.currency
+      - references.measurements
+      - references.names_honorifics
+      - references.acronyms
+      - references.headline_country_forms
+      - references.title_styling
+      - references.language_forms
 status:
 
   apex:
@@ -35,7 +42,7 @@ status:
 
   second_tier:
 
-    reversals:
+    watch:
 
       - name: Thanathorn Juangroongruangkit
         fact: acquitted of royal defamation charges, May 2026
@@ -63,7 +70,7 @@ status:
         fact: >
           Democrat Party list-MP and deputy leader for economic affairs; chairman of the
           party policy committee. Named one of three Democrat prime ministerial candidates,
-          with Abhisit Vejjajiva, for the 8 Feb 2026 general election.
+          with Abhisit Vejjajiva, for the Feb 8, 2026 general election.
         directive: >
           FLAG any reference to him as a Chart Pattana Kla or Kla figure,
           or as a sitting finance minister.
@@ -75,8 +82,8 @@ status:
 
       - name: Chadchart Sittipunt
         fact: >
-          re-elected Bangkok governor 28 June 2026 with a record 1,537,784 votes;
-          second term began 9 July 2026. Ran as an independent after resigning early
+          re-elected Bangkok governor June 28, 2026 with a record 1,537,784 votes;
+          second term began July 9, 2026. Ran as an independent after resigning early
           in May 2026.
         ruling: >
           Take "incumbent" or "governor" as filed. Capped before the full name per the
@@ -93,8 +100,8 @@ status:
       Dick Cheney: died 2025
       Jane Goodall: died 2025
       Charlie Kirk: died 2025
-      Pope Emeritus Benedict XVI ("Pope Benedict"): died 31 Dec 2022, aged 95; resigned the papacy 2013
-      Li Keqiang: died 27 Oct 2023
+      Pope Emeritus Benedict XVI ("Pope Benedict"): died Dec 31, 2022, aged 95; resigned the papacy 2013
+      Li Keqiang: died Oct 27, 2023
 
     corporate:
       Brenton Justin Mauriello: CEO of Raimon Land, from April 2024
@@ -103,7 +110,7 @@ status:
   global:
 
     - name: Donald Trump and JD Vance
-      fact: sitting president and vice-president of the United States, from 20 Jan 2025
+      fact: sitting president and vice-president of the United States, from Jan 20, 2025
       second_ref: Mr Trump, Mr Vance
       directive: FLAG any reference to them as private citizens or former officials.
 
@@ -113,7 +120,7 @@ status:
         treatment reduced Dec 2025 to precautionary monitoring
 
     - name: King Salman bin Abdulaziz al-Saud
-      fact: king of Saudi Arabia, from 23 Jan 2015
+      fact: king of Saudi Arabia, from Jan 23, 2015
       house_form: '"King Salman" usually suffices.'
 
     - name: King Jigme Khesar Namgyel Wangchuck
@@ -122,29 +129,254 @@ status:
 
     - name: Catherine, Princess of Wales
       fact: >
-        Princess of Wales from 9 Sept 2022, on the accession of King Charles III;
+        Princess of Wales from Sept 9, 2022, on the accession of King Charles III;
         formerly Duchess of Cambridge
       directive: FLAG any reference to her as Duchess of Cambridge.
 
     - name: Prince William, Prince of Wales
-      fact: Prince of Wales from 9 Sept 2022, letters patent Feb 2023; Duke of Cambridge 2011-2022
+      fact: Prince of Wales from Sept 9, 2022, letters patent Feb 2023; Duke of Cambridge 2011-2022
 
     - name: To Lam
       fact: >
         general secretary of the Communist Party of Vietnam, since 2024,
         and 13th president of Vietnam, since 2026. Both titles current.
       second_ref: Mr Lam
-      ruling: House lowercases 'president' before a name.
-      directive: ACCEPT 'president' or 'general secretary' as filed.
+      ruling: >
+        Capitalise formal offices: General Secretary To Lam, Communist Party Secretary General
+        To Lam and, during his tenure, Public Security Minister To Lam. In current copy, use
+        former public security minister To Lam. Appositive offices may cap: To Lam, President of
+        Vietnam and General Secretary of the Communist Party. Lower-case top leader To Lam.
+      directive: Apply title_caps and descriptive_titles; do not treat him as a named exception.
 
 references:
 
+  numbers:
+    general:
+      under_ten: Spell out whole numbers under 10.
+      measurable: Use digits for length, weight, height and currency.
+      time_units: Spell out units under 10; sports times use digits.
+      addresses: Use digits for addresses, room numbers and floors.
+      fractions: Use words in body copy; recipes use figures, eg 2½ cups.
+      sentence_opening: Spell out a number that begins a sentence.
+      large_numbers: Use digits plus million or billion in body, eg 1 million people or 8 billion baht; use m and bn in heads.
+      rounding: Round long numbers to three leading digits unless precision matters.
+      rankings: Use No.1.
+      figurative: Use tens, hundreds and thousands, not 10s or 100s.
+      percent: Use %.
+    roman_numerals:
+      use_for: [Rama names, World War I, World War II, official titles]
+    quantities:
+      metric: Use decimals, eg 2.5km.
+      non_metric: Use words, eg two-and-a-half years.
+
+  times:
+    clock: "Use the 12-hour clock with am/pm closed up: 10am, 2.30pm, 12.34am."
+    noon_midnight: Write noon and midnight; do not use 12pm or 12am.
+    foreign_events: Keep local time unless the event crosses a calendar day.
+    races: Use colons, eg 1:23:45.
+    quotations: Preserve a spoken form such as "a quarter to three".
+
+  dates:
+    order: Month before day, eg Dec 25 or Sept 11, 2001.
+    slug: Publication day by number followed by descriptor; assume the present month or a logical early date in the next month.
+    relative_filed: Trust yesterday, today and tomorrow as filed by the journalist.
+    hard_dates:
+      adjacent: The day before, of or after publication becomes yesterday, today or tomorrow.
+      within_seven_days: Other dates within seven days either side become the day name.
+      beyond_seven_days: Retain the date.
+    timeline_conflict: Record an internal or publication-date conflict in the Style Log.
+    thailand_time: Use "Thailand time" only when a foreign event crosses a calendar day.
+    holidays: Name a holiday only when it matters to the story.
+    calendar: Use the western calendar.
+    month_abbreviations: [Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec]
+    month_rule: With a specific date, abbreviate month names of six letters or more; write every month in full in a general reference.
+    weekdays: Use British English "on" before a weekday.
+
+  datelines:
+    rule: In body copy, retain a supplied dateline exactly; do not add or localise one.
+    agency_credit: Retain the filed agency credit.
+
+  currency:
+    symbols:
+      dollar: $
+      pound: £
+      euro: €
+      yen: ¥
+    other_currency: Spell out the name, eg 5 baht, 50 rial, 500 rupees.
+    dollar_prefixes: [US, Aus, NZ, S, HK]
+    dollar_rule: Specify the dollar type at first reference; US is the default type, not an omitted label.
+    baht_heads: Use B, eg B500, B5m or B5bn.
+    thai_baht: Use baht, not "Thai baht".
+    conversion: Convert foreign currency to baht at first mention, once, rounded to three leading digits.
+    tickers: Do not use THB, USD or GBP in news copy.
+    yuan: Use yuan, not yuan renminbi.
+    subunits: Use the decimal inside a larger amount and digits plus the full unit when standing alone.
+    national_qualifier: Qualify shared names such as won, pounds, pesos, krone, rial and rupee.
+
+  measurements:
+    metric_units: [km, m, cm, mm, kg, g, ml]
+    industry_exceptions:
+      aviation: feet
+      shipping: knots
+      boxing: pounds
+    litres: Write in full because lower-case l resembles capital I.
+    miles: Write in full because m means metres.
+    temperature: Use 25C with no degree symbol.
+    wind_speed: Use kph.
+    carbon_dioxide: CO2 is acceptable.
+    spacing: Close the numeral and unit.
+    quotes:
+      imperial: Retain inside a quotation and add the metric conversion in square brackets.
+      fahrenheit: Retain inside a quotation and add Celsius in square brackets.
+    body: Replace an imperial measurement with metric except for the listed industry exceptions.
+    thai_land: Rai stands.
+    area: Use sq m for floor and plot areas.
+
+  names_honorifics:
+    first_reference: Use the full name without an honorific.
+    heads_decks: Use no honorifics.
+    quotations: Preserve honorifics as spoken; do not add or bulk-replace them.
+    general_second_reference: Use Mr or Ms plus surname where no named convention applies.
+    mr_ms: No full stop.
+    doctor: Dr is for practising medical doctors, not academic doctorates.
+    khun: Reserve for direct quotations.
+    surname_required: Attach an honorific only to a surname supplied in copy.
+    traditions:
+      Chinese: Family name first; second reference Mr/Ms plus family name.
+      Indonesian: Default to Mr/Ms plus last component; use held exceptions or DCX precedent where usage differs.
+      Japanese: Given name then surname; second reference Mr/Ms plus surname.
+      Myanmar: Full name on every reference, no honorific.
+      Cambodian: Full name on every reference, no honorific.
+      Thai: Mr/Ms plus given name.
+      Malaysian: Mr/Ms plus given name.
+      Lao: Mr/Ms plus given name.
+      Arabic_without_prefix: Mr/Ms plus given name.
+      Arabic_with_prefix: Drop the prefix on second reference and use Mr/Ms plus the remaining surname; lower-case al- in personal names.
+      Korean: Family name first; hyphenate the given name and lower-case its second component; second reference Mr/Ms plus family name.
+      Vietnamese: The last component is the given name used after Mr/Ms; Thi indicates female.
+      Spanish: Use the paternal surname on second reference.
+    held_examples:
+      Xi Jinping: Mr Xi
+      Mao Zedong: Historical; no honorific.
+      Deng Xiaoping: Historical; no honorific.
+      Joko Widodo: Mr Widodo; use Jokowi only in quotations.
+      Susilo Bambang Yudhoyono: Mr Yudhoyono
+      Shinzo Abe: Abe on second reference; deceased.
+      Aung San Suu Kyi: Ms Suu Kyi; sole Myanmar exception.
+      Mahathir Mohamad: Mr Mahathir
+      Bashar al-Assad: Mr Assad
+      Abdel Fattah el-Sissi: Mr Sissi
+      Abed Rabbo Mansour Hadi: Mr Hadi
+      Kim Jong-un: Mr Kim
+      Ban Ki-moon: Mr Ban
+      Syngman Rhee: Historical; retain the established romanisation.
+      Nguyen Xuan Phuc: Mr Phuc
+      Gabriel Garcia Marquez: Garcia on second reference, not Marquez; deceased.
+    no_honorific:
+      - figures known by one name
+      - convicted criminals
+      - deceased people
+      - celebrities
+      - sportspeople
+      - non-academic authors
+      - journalists
+      - artists
+      - actors
+      - musicians
+      - filmmakers
+    retained_titles:
+      - Sir
+      - Lord
+      - ML
+      - MR
+      - Khunying
+      - Thanphuying
+      - Phra
+      - royal titles
+      - police and military ranks
+      - medical, papal and clerical titles
+    precedence: Retained titles override the no-honorific categories.
+    british_royals: Use title plus first name throughout, eg Prince William.
+    children: Use first names on later reference.
+    title_position: Put a title before the name.
+    title_caps: >
+      Capitalise a current formal title used as an official designation directly before
+      either a full or shortened name, eg Foreign Minister Maris Sangiampongsa, Foreign
+      Minister Maris, Governor Chadchart, President Trump or General Secretary To Lam.
+      Lower-case it when it stands alone or is former. A formal office name may retain
+      capitals after a name, eg To Lam, President of Vietnam and General Secretary of the
+      Communist Party. This rule governs the title if used; it does not require a title
+      instead of the normal second-reference form.
+    descriptive_titles: >
+      Lower-case a descriptive or house-lowercase role before a name, eg deputy spokesperson
+      Natapanu Nopakun, company president John Smith, human rights lawyer Arnon Nampa,
+      head coach Masatada Ishii or top leader To Lam. Do not demote a ministerial office to
+      a descriptive role: while To Lam held the post, the title was Public Security Minister
+      To Lam. Query an unlisted borderline role;
+      do not infer capitalisation from seniority alone.
+    ranks: Take ranks from copy and apply a filed rank consistently; if unclear, repeat the full name or query it.
+    title_abbreviations: Against a name, use Prof, Dr, Jr, Sr, St, Mt, Corp and Co.
+    convention_travels: A person's naming convention does not change with location.
+
+  acronyms:
+    pronounceable_over_three: Title case, eg Fifa, Asean, Nasa, Opec and Unesco.
+    initialisms: All caps for three-letter and unpronounceable forms, eg FBI, NBTC, PRD, CNN and HIV.
+
+  headline_country_forms:
+    anywhere: [UK, US, UAE]
+    heads_and_decks: [NZ, HK, LA, NY, SK, NK, S Africa, S Sudan, Aus, Saudi, STP]
+    heads_or_body_after_full_name: [PNG, DRC]
+
+  title_styling:
+    italic:
+      - books
+      - films
+      - albums
+      - songs
+      - plays
+      - stage shows
+      - newspapers
+      - magazines
+      - computer games
+      - named manned vessels
+      - unfamiliar foreign words on first reference
+      - Latin species names
+    quotation_marks:
+      - chapters
+      - sections
+      - acts
+      - articles
+      - headlines
+      - academic papers
+      - studies
+      - exhibitions
+      - concerts
+      - seminars
+      - promotions
+      - other named events
+    plain:
+      - religious texts
+      - reference books
+      - dictionaries
+      - encyclopaedias
+      - sports events
+      - computer programs
+      - websites
+    vessels: Italicise named manned vessels; keep models, operators, prefixes and unmanned craft plain.
+    web_addresses: Use lower case without protocol or subdomain, eg bangkokpost.com; capitalise the publication name in running text.
+    foreign_words: Familiar English borrowings stand plain; otherwise italicise first mention and translate when context does not supply the meaning.
+    plain_foreign_examples: [soi, wat, tuk-tuk, muay Thai, ya ba, Songkran, tsunami, kamikaze, feng shui, pad Thai, som tam, sushi, lasagne]
+    species: Put the bracketed Latin name after the common name on first reference; italicise it and capitalise the first word only.
+    dcx: Record required italics and quotation marks under `Styles required` in the Style Log.
+
+  language_forms:
+    diacritics: Drop accents, tone marks and diacritics, including in proper names.
 
   countries:
 
     preferred_forms:
       Myanmar: Not Burma.
-      Türkiye: Updated from Turkey.
+      Turkey: Use Turkey.
       Netherlands: Not Holland; government seat is The Hague (cap "The").
       DR Congo: Distinguish from Republic of Congo; DRC acceptable in headlines and body after full name.
       Czech Republic: Avoid Czechia.
@@ -174,21 +406,11 @@ references:
       Moldova: Avoid Moldavia.
       Monaco: Monte Carlo is a district, not the capital.
       Myanmar language: Language is Burmese (not Myanmar).
-      Palestine: Ramallah is admin centre; largest population in Gaza.
+      Palestine: Ramallah is admin centre.
       South Africa: Three capitals — Pretoria (executive), Cape Town (legislative), Bloemfontein (judicial).
       Sri Lanka: Capital is Kotte (not Colombo).
       China: Taiwan separate; Hong Kong and Macau are SARs.
       United States: Write state names in full (New Jersey not NJ).
-
-    headline_abbreviations:
-      NK: North Korea (headlines only).
-      SK: South Korea (headlines only).
-      NZ: New Zealand (headlines only).
-      STP: Sao Tome and Principe (headlines).
-      UAE: United Arab Emirates.
-      Saudi: Saudi Arabia (headlines only).
-      DRC: DR Congo (headlines, or body after full first reference).
-      PNG: Papua New Guinea (headlines, or body after full first reference).
 
     the_article: >
       Drop "the" before Congo, Ukraine, Sudan, Lebanon. Keep "the" for adjective-led names
@@ -243,9 +465,8 @@ references:
   thai_places:
 
     note: >
-      Use RTGS transliteration for unlisted entities. A name not listed here stands as the reporter filed it:
-      apply the global rules and nothing else. Where an unlisted name matches neither the
-      BKP forms nor standard RTGS, flag it. Do not alter it and do not hold.
+      An unlisted Thai name stands as filed. Where it matches neither a held BKP
+      form nor standard RTGS, query it without alteration.
 
     transliteration_rules:
       - Muang (not Mueang)
@@ -258,6 +479,7 @@ references:
       - Soi [Name] only when soi has its own distinct name — Soi Nana, Soi Sala Daeng, Soi Sribamphen
       - Rama roads — Roman numerals; Rama IX Road, never Phra Ram
       - Postcodes — no comma; Bangkok 10900 (not Bangkok, 10900)
+      - District names listed under provinces are held forms and override the general transliteration rules.
 
     road_names: >
       Every component of a road name caps: Khao San Road, Ratchadamnoen Avenue.
@@ -267,7 +489,7 @@ references:
       Nut Road.
 
     airports:
-      - Two Bangkok airports — always specify Don Muang or Suvarnabhumi
+      - Two Bangkok airports — always specify Don Mueang or Suvarnabhumi; Don Muang is the district.
       - Never "Bangkok airport"
       - '"Suvarnabhumi airport" suffices for body text; "Suvarnabhumi International Airport" only when using official name'
 
@@ -394,19 +616,10 @@ references:
 
     uk_us_traps:
       bashed: Use assaulted.
-      bill: Banknote for cash.
-      cellphone: Mobile phone.
-      check: Cheque for money.
       chips: Crisps for bags; chips/fries for hot food.
       coach: Economy class.
-      drugstore: Pharmacy.
-      fall: Autumn.
       football: Football is for soccer; specify gridiron or American where needed.
       garage: Repairs or storage only — petrol station for fuel.
-      gas: Petrol, diesel or fuel.
-      pants: Trousers.
-      rubber: Eraser.
-      sneakers: Trainers.
       us_forms_acceptable: [apartment, ATM, elevator, internship, public holiday, capsicum]
 
     rulings:
@@ -415,58 +628,40 @@ references:
       antivenene: Not antivenom.
       Asia-Pacific: Hyphenated.
       average: Not a synonym for poor.
-      banzai vs bonsai: Banzai = hooray; bonsai = miniature trees.
       Blu-ray: Trademark; cap B, hyphen, lower r.
       capital of: Bangkok IS the capital. Do not write "the Thai capital of Bangkok".
       Chatichai Choonhavan: >
         BKP form for the former prime minister (d.1998) — NOT Chatchai Choonahavan (trap
         observed in filed PostBag copy, July 2026). Gen retained on all references
-        (military rank, deceased). Relay-verified against bangkokpost.com usage, 27 May, 2026.
+        (military rank, deceased). Relay-verified against bangkokpost.com usage, May 27, 2026.
       collide: Two cars collided; vehicles hit (not collide with) stationary objects.
       comprising vs including: Comprising = full list; including = partial list.
       completely destroyed: Tautology — use destroyed.
       czar: Use tsar (exception — "crime czar").
       decimate: Means heavy casualties, not "almost destroy".
-      defuse vs diffuse: Defuse a bomb; diffuse means to spread.
       dhamma: Not dharma. (Karma is karma, not khamma.)
-      elicit vs illicit: Elicit = draw out; illicit = illegal.
-      ensure vs insure: Ensure = make certain; insure = insurance.
-      farther vs further: Farther = physical distance; further = abstract.
-      fewer than vs less than: Fewer for countable numbers; less for sizes/quantities.
-      flaunt vs flout: Flaunt = show off; flout = treat with contempt.
       Formula 1: Cap F, numeral 1. Abbreviate to F1.
       future tense in news: >
         Avoid. Use past-tense-as-future construction — "they were to meet on Friday", not
         "they will meet on Friday". Applies to events scheduled after the copy was filed
         but before publication.
-      historic vs historical: Historic = part of history; historical = concerning history.
-      imply vs infer: Imply = suggest; infer = deduce.
       knots: A measure of speed, not distance. Do not say "knots per hour".
       literally: Do not use figuratively.
       media: Singular.
-      percent: Use %.
       police: Not a countable noun. Use "police officers", not "five police".
       protest: Specify if for or against something.
       refute: Means disprove, not deny.
-      regime vs regimen: Regime = government; regimen = diet/exercise.
       serial vs series: Serial = continuous plot; series = unrelated stories.
-      swat vs swot: Swat flies; swot for an exam.
       Thai prefix: Superfluous in most cases ("the Thai government"). Strip unless differentiating.
-      Thailand time: Use only if event crosses calendar days. Never "Bangkok time" — one zone.
       that vs which: That = definitive (no comma); which = descriptive (comma).
-      tortuous vs torturous: Tortuous = winding; torturous = excruciating.
       transpire: Means leak out, not occur or happen.
       Twitter / tweet: Twitter upper; tweet lower.
-      urban vs urbane: Urban = city; urbane = sophisticated.
       versus / vs: Full in body text; "vs" in headlines and sports.
       virus variant names: >
         Cap the variant name (Delta variant, Omicron variant). Applies to Greek-letter
         and place-name variant designations alike.
-      weather: High/low temps (33C); kph for wind speeds.
       where: Often misused for when or in which.
       whether: Not "whether or not" if meaning "if".
       whilst, amongst, amidst: Drop the -st (while, among, amid).
-      whisky vs whiskey: Whisky = Scotch; whiskey = American/Irish.
-      who vs whom: Who = he/she/they; whom = him/her/them.
       widow: '"Widow of the late" is tautology.'
       Xmas: Banned; use Christmas.

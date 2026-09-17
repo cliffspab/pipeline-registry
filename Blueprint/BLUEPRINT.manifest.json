@@ -1,5 +1,5 @@
 {
-  "edition": "140926_gpt_desk-refinements",
+  "edition": "160926_gpt_editorial-authority",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
@@ -7,18 +7,19 @@
     1,
     1
   ],
-  "source_blocks": 206,
+  "source_blocks": 97,
   "source_block_types": {
-    "BulletList": 14,
-    "CodeBlock": 8,
-    "Header": 48,
+    "BulletList": 3,
+    "CodeBlock": 5,
+    "Header": 23,
     "OrderedList": 2,
-    "Para": 132,
-    "RawBlock": 2
+    "Para": 61,
+    "RawBlock": 3
   },
   "suppressed_structural_separator_paragraphs": 0,
   "design_components": [
     "CORE",
+    "PROCESSES",
     "DIRECTORY"
   ]
 }
