@@ -155,7 +155,7 @@ if %errorlevel%==0 (
 )
 
 REM --- integrate the compile-bot's commits BEFORE pushing ---------------------
-REM compile.yml derives GUIDE/DIRECTORY/docx/manifest and commits them to main on
+REM compile.yml derives GUIDE/PROCESSES/DIRECTORY/docx/manifest and commits them to main on
 REM every build, so the clone is behind after every build it triggers. Pushing
 REM without integrating that is rejected as a non-fast-forward, which is what
 REM happened on 090826. Rebase keeps the desk's commit on top of the bot's.
@@ -170,7 +170,7 @@ git rebase origin/main
 if errorlevel 1 (
   echo.
   echo [ABORT] rebase hit a conflict. Nothing has been pushed.
-  echo         Derived files ^(Blueprint\GUIDE.txt, DIRECTORY.*^) are regenerated
+  echo         Derived files ^(Blueprint\GUIDE.txt, PROCESSES.txt, DIRECTORY.*^) are regenerated
   echo         by CI - if the conflict is one of those, take origin's copy.
   echo         Resolve, then re-run this script. To back out entirely:
   echo             git rebase --abort

@@ -29,6 +29,40 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-18
+
+- 2026-09-18 — `160926_gpt_editorial-authority` and
+  `160926_control_editorial-authority`, exact local promotion payload:
+  - `.github/workflows/compile.yml`
+  - `Blueprint/BLUEPRINT.txt`
+  - `Blueprint/index.yaml`
+  - `Control/CONTROL.txt`
+  - `Control/build.py`
+  - `Control/plugin/.codex-plugin/plugin.json`
+  - `Control/plugin/skills/check/SKILL.md`
+  - `Control/plugin/skills/check/agents/openai.yaml`
+  - `Control/plugin/skills/edit/SKILL.md`
+  - `Control/plugin/skills/edit/agents/openai.yaml`
+  - `Control/plugin/skills/photo/SKILL.md`
+  - `Control/plugin/skills/photo/agents/openai.yaml`
+  - `Control/plugin/skills/pr/SKILL.md`
+  - `Control/plugin/skills/pr/agents/openai.yaml`
+  - `RECORDS-AND-CONSOLIDATION.md`
+  - `VERSION_HISTORY.md`
+  - `bootstrap/AGENTS.md`
+  - `bootstrap/build.py`
+  - `bootstrap/extract.py`
+  - `bootstrap/shift.py`
+  - `push.bat`
+  - `tools/build_bkp_compendium.py`
+  - `COMMITS-PENDING.md` (this approval record; archived automatically by the
+    guarded push)
+
+No Blueprint-derived delivery is hand-edited in this payload. CI regenerates
+the Guide, Processes, Directory, version witness, Word volume, PDF and
+manifest from `Blueprint/BLUEPRINT.txt` after publication.
+
 ## Cleared 2026-09-15
 
 - 2026-09-15 | One-push handover | Extend guarded `push.bat` so a successful

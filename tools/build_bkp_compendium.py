@@ -1,4 +1,4 @@
-"""Build the full BKP compiled governance set from Markdown.
+"""Build the complete Bangkok Post style guide from Markdown.
 
 The Markdown file is the sole content authority.  This builder uses Pandoc only
 as a Markdown parser, then creates native Word paragraphs, headings, lists,
@@ -13,9 +13,11 @@ import re
 import shutil
 import subprocess
 import tempfile
+import zipfile
 from pathlib import Path
 
 import yaml
+from lxml import etree
 
 from docx import Document
 from docx.enum.section import WD_SECTION
@@ -43,20 +45,16 @@ from bkp_docx_design import (
 )
 
 
-# 080826: four parts became two. PROCESSES is a section inside CORE;
-# STATUS and REFERENCES are branches of REGISTER.
-COMPONENTS = ["CORE", "DIRECTORY"]
+# GUIDE, PROCESSES and DIRECTORY are the three file deliveries. DIRECTORY
+# renders as STATUS and REFERENCES in the volume.
+COMPONENTS = ["CORE", "PROCESSES", "DIRECTORY"]
 
 # A code block longer than this cannot be held on one page, so keep_together is
 # not applied to it. Roughly a full page of Courier New 8.8 at these margins.
 KEEP_TOGETHER_MAX_LINES = 40
 
-# The strip is the reader's map and it has always had FOUR cells. It is not the
-# same thing as COMPONENTS, which is the FILE structure: two parts, because the
-# register must travel as one fenced YAML document. The content map did not
-# merge — CORE still carries core and processes, REGISTER still carries status
-# and references. Reducing the strip to two cells on the 080826 merge threw away
-# half the map and left a two-cell indicator carrying almost no information.
+# The strip is the reader's four-part map. It is not the same thing as the
+# three-file delivery structure: DIRECTORY carries both STATUS and REFERENCES.
 #
 # Cell width 9360/4 = 2340 twips. Position alone says which section this is:
 # CORE hard left, PROCESSES a quarter across, STATUS half, REFS flush right.
@@ -64,15 +62,14 @@ STRIP = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
 
 # Which strip cells each part owns. The part's title sits over the first of them.
 PART_CELLS = {
-    "CORE": ("CORE", "PROCESSES"),
+    "CORE": ("CORE",),
+    "PROCESSES": ("PROCESSES",),
     "DIRECTORY": ("STATUS", "REFERENCES"),
 }
 
-# The volume presents FOUR sections, one per strip cell, as it always has. The
-# file carries two parts because the register must travel as one fenced YAML
-# document; that is a transport constraint and it never described the reading
-# order. PROCESSES opens on its H2 inside CORE; STATUS and REFERENCES are the
-# register's two branches and open as the register is rendered.
+# The volume presents four sections, one per strip cell. EDITING and PROCESSES
+# are peer Markdown deliveries; STATUS and REFERENCES are the two Directory
+# branches and open as the register is rendered.
 SECTION_SUBTITLE = {
     "CORE": "what we do",
     "PROCESSES": "how we do it",
@@ -85,9 +82,9 @@ SECTION_SUBTITLE = {
 SECTION_DISPLAY = {"REFERENCES": "REFS"}
 
 # The running head names where the text actually lives, which is the file the
-# reader would fetch. PROCESSES is inside CORE; both register branches are /reg.
+# reader would fetch. Each peer delivery has its own short form.
 SECTION_SHORTFORM = {
-    "CORE": "/guide", "PROCESSES": "/guide",
+    "CORE": "/guide", "PROCESSES": "/processes",
     "STATUS": "/dir", "REFERENCES": "/dir",
 }
 
@@ -116,6 +113,7 @@ REGISTER_HEADINGS = {
     "organisations": "ORGANISATIONS",
     "vocabulary": "VOCABULARY & SPELLING",
     "numbers_symbols": "NUMBERS AND SYMBOLS",
+    "names_honorifics": "NAMES & HONORIFICS",
     "uk_us_traps": "UK VS US TRAPS",
     "us_forms_acceptable": "US FORMS ACCEPTABLE",
     "rulings": "VOCABULARY RULINGS",
@@ -140,21 +138,26 @@ RECORD_FIELDS = ["fact", "office", "ruling", "second_ref", "directive"]
 # register all key off COMPONENTS - so this is presentation only and never
 # reaches back into canon.
 COMPONENT_DISPLAY = {
-    "CORE": "EDIT",
+    "CORE": "EDITING",
+    "PROCESSES": "PROCESSES",
     "DIRECTORY": "DIRECTORY",
 }
 
 COMPONENT_SHORTFORM = {
     "CORE": "/guide",
+    "PROCESSES": "/processes",
     "DIRECTORY": "/dir",
 }
 COMPONENT_DESCRIPTIONS = {
     "CORE": "Bangkok Post editing and its output contract",
+    "PROCESSES": "Copy fitting, verification and bounded desk tasks",
     "DIRECTORY": "Current tripwires, canonical forms and exceptions",
 }
 SEPARATOR_RE = re.compile(r"^={20,}$")
-GUIDE_HEADING_CODE_RE = re.compile(r"^\[(G(?:\d+(?:-[A-Z]\d*)?))\]\s+(.+)$")
-SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "G5"}
+GUIDE_HEADING_CODE_RE = re.compile(
+    r"^\[((?:G\d+(?:-[A-Z]\d*)?|P(?:\d+(?:-[A-Z]\d*)?)?|D))\]\s+(.+)$"
+)
+SECTION_HEADING_CODE = {"CORE": "G1", "PROCESSES": "P"}
 
 
 def heading_label(text):
@@ -382,6 +385,90 @@ def configure_header_footer(section, label, blank_first=False):
     for footer in (section.footer, section.even_page_footer):
         footer.is_linked_to_previous = False
         clear_paragraph(footer.paragraphs[0])
+    if blank_first:
+        # The reference volume can carry a first-page header from an earlier
+        # edition.  A title-page flag does not make that part blank; it merely
+        # selects it.  Replace its contents explicitly so the cover cannot
+        # retain a stale edition stamp in the package or in Word's header UI.
+        header = section.first_page_header
+        header.is_linked_to_previous = False
+        clear_paragraph(header.paragraphs[0])
+
+
+def prune_unused_header_footer_parts(path):
+    """Remove header/footer parts not referenced by a section in document.xml.
+
+    python-docx preserves package relationships inherited from the reference
+    document even after the body and section structure are replaced.  Those
+    parts are invisible but searchable, so an old edition can survive inside
+    an otherwise current volume.  Prune only direct, unused header/footer
+    relationships and their content-type declarations; refuse parts with
+    their own relationships rather than guessing about dependent content.
+    """
+    rel_ns = "http://schemas.openxmlformats.org/package/2006/relationships"
+    office_rel_ns = (
+        "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    )
+    word_ns = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    content_ns = "http://schemas.openxmlformats.org/package/2006/content-types"
+    header_footer_types = {
+        office_rel_ns + "/header",
+        office_rel_ns + "/footer",
+    }
+
+    with zipfile.ZipFile(path, "r") as src:
+        document = etree.fromstring(src.read("word/document.xml"))
+        relationships = etree.fromstring(
+            src.read("word/_rels/document.xml.rels")
+        )
+        content_types = etree.fromstring(src.read("[Content_Types].xml"))
+        used_ids = set(document.xpath(
+            "//w:headerReference/@r:id | //w:footerReference/@r:id",
+            namespaces={"w": word_ns, "r": office_rel_ns},
+        ))
+        unused = []
+        for rel in relationships.findall("{%s}Relationship" % rel_ns):
+            if rel.get("Type") in header_footer_types and rel.get("Id") not in used_ids:
+                target = rel.get("Target")
+                if not target or "/" in target or "\\" in target:
+                    raise RuntimeError("unsafe header/footer target %r" % target)
+                sidecar = "word/_rels/%s.rels" % target
+                if sidecar in src.namelist():
+                    raise RuntimeError(
+                        "unused header/footer part has relationships: %s" % target
+                    )
+                unused.append((rel, "word/" + target, "/word/" + target))
+
+        if not unused:
+            return
+
+        removed_entries = {entry for _, entry, _ in unused}
+        removed_parts = {part for _, _, part in unused}
+        for rel, _, _ in unused:
+            relationships.remove(rel)
+        for override in list(content_types.findall("{%s}Override" % content_ns)):
+            if override.get("PartName") in removed_parts:
+                content_types.remove(override)
+
+        replacement = path.with_name(path.name + ".pruned")
+        with zipfile.ZipFile(replacement, "w") as dst:
+            for item in src.infolist():
+                if item.filename in removed_entries:
+                    continue
+                if item.filename == "word/_rels/document.xml.rels":
+                    payload = etree.tostring(
+                        relationships, xml_declaration=True, encoding="UTF-8",
+                        standalone=True,
+                    )
+                elif item.filename == "[Content_Types].xml":
+                    payload = etree.tostring(
+                        content_types, xml_declaration=True, encoding="UTF-8",
+                        standalone=True,
+                    )
+                else:
+                    payload = src.read(item.filename)
+                dst.writestr(item, payload)
+    replacement.replace(path)
 
 
 def add_register(doc, active):
@@ -427,7 +514,7 @@ def add_register(doc, active):
 
 
 def add_cover(doc, source_title, source_meta):
-    p = doc.add_paragraph("A DETERMINISTIC, AI-FIRST REIMAGINING OF\nNEWSPAPER SUB-EDITING:", style="BKP Cover Kicker")
+    p = doc.add_paragraph("A STYLE GUIDE", style="BKP Cover Kicker")
     p.paragraph_format.space_before = Pt(24)
     for line in ("THE", "BANGKOK", "POST", "BLUEPRINT"):
         doc.add_paragraph(line, style="BKP Cover Display")
@@ -883,7 +970,8 @@ def render_register_node(doc, node, level):
                     # a long one is a real list. Province rosters are the long
                     # case and there are 77 of them.
                     add_entry(doc, register_heading(key).title(),
-                              "; ".join(str(v) for v in value))
+                              "; ".join(str(v).strip().rstrip(".;")
+                                        for v in value))
             else:
                 add_entry(doc, key, value)
     elif isinstance(node, list):
@@ -1051,7 +1139,12 @@ def render_list(doc, block, decimal_num_id, bullet_num_id, level=0):
 # volume still has four parts - CORE, PROCESSES, STATUS, REFERENCES - and
 # none of them move. This dict is also the set of source H1s to swallow,
 # since add_part_opening prints the title itself.
-COMPONENT_TITLES = {"GUIDE": "CORE", "EDIT": "CORE", "DIRECTORY": "DIRECTORY"}
+COMPONENT_TITLES = {
+    "GUIDE": "CORE",
+    "EDIT": "CORE",
+    "PROCESSES": "PROCESSES",
+    "DIRECTORY": "DIRECTORY",
+}
 
 PART_SEAM_RE = re.compile(r"<!--\s*PART:\s*(\S+)\s+(\w+)\s*-->")
 
@@ -1154,6 +1247,8 @@ def add_contents(doc, level4_texts):
             continue
         if text == "STATUS":
             panel = "DIRECTORY"
+        if panel == "DIRECTORY" and para.style.name in ("Heading 3", "Heading 4"):
+            continue
         entries.append((panel, para.style.name, text, para))
     if not entries:
         return
@@ -1229,6 +1324,10 @@ def add_contents(doc, level4_texts):
 
     banner = doc.add_table(rows=1, cols=1)
     set_repeat_table_layout(banner, [9360])
+    banner_row_pr = banner.rows[0]._tr.get_or_add_trPr()
+    banner_repeat = OxmlElement("w:tblHeader")
+    banner_repeat.set(qn("w:val"), "true")
+    banner_row_pr.append(banner_repeat)
     set_table_borders(banner, color="000000", size=14)
     banner_cell = banner.cell(0, 0)
     set_cell_shading(banner_cell, "000000")
@@ -1249,6 +1348,9 @@ def add_contents(doc, level4_texts):
     panels = doc.add_table(rows=1, cols=3)
     set_repeat_table_layout(panels, [4500, 360, 4500])
     row_pr = panels.rows[0]._tr.get_or_add_trPr()
+    panel_repeat = OxmlElement("w:tblHeader")
+    panel_repeat.set(qn("w:val"), "true")
+    row_pr.append(panel_repeat)
     row_pr.append(OxmlElement("w:cantSplit"))
     row_height = OxmlElement("w:trHeight")
     row_height.set(qn("w:val"), "11200")
@@ -1261,7 +1363,7 @@ def add_contents(doc, level4_texts):
     for cell in (left, right):
         set_cell_shading(cell, "F7F7F7")
         box_borders(cell)
-    for cell, label in ((left, "GUIDE"), (right, "DIRECTORY")):
+    for cell, label in ((left, "EDITING"), (right, "DIRECTORY")):
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.space_after = Pt(7)
@@ -1419,14 +1521,6 @@ def build(source, reference, output, pandoc, manifest, component=None):
             if level == 1 and label.upper() in COMPONENT_TITLES:
                 last_heading_level = 1
                 continue
-            # 090826: PROCESSES is a SECTION of the file (an H2 inside CORE)
-            # and a PART of the volume. The 080826 merge collapsed both at
-            # once; only the file one had to move. It opens on its own heading.
-            if level == 2 and label.upper() == "PROCESSES":
-                part_number += 1
-                add_part_opening(doc, "PROCESSES", part_number)
-                last_heading_level = None
-                continue
             if level == 3 and text.startswith("Verified Editorial Status Changes:"):
                 doc.add_paragraph(text, style="BKP Status Subtitle")
                 last_heading_level = None
@@ -1560,10 +1654,10 @@ def build(source, reference, output, pandoc, manifest, component=None):
             pg_num.set(qn("w:start"), "1")
         elif pg_num is not None:
             section._sectPr.remove(pg_num)
-    doc.core_properties.title = "BKP Pipeline - Compiled Governance Set"
-    doc.core_properties.subject = " + ".join(COMPONENTS)
+    doc.core_properties.title = "The Bangkok Post Blueprint - A Style Guide"
+    doc.core_properties.subject = "Editing + Processes + Directory"
     doc.core_properties.author = "Bangkok Post Desk Editor project"
-    doc.core_properties.comments = "Mechanically generated from COMPILED.md"
+    doc.core_properties.comments = "Mechanically generated from BLUEPRINT.txt"
     # Page numbering restarts in every part except the cover. Done as a
     # post-pass: python-docx clones the sentinel sectPr on add_section(), so
     # mutating at creation time lands on the preceding section.
@@ -1591,6 +1685,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
             set_paragraph_bottom_rule(para, 30, 10)
 
     doc.save(output)
+    prune_unused_header_footer_parts(output)
     write_manifest(manifest, source, output, ast, skipped_separators, current_edition)
     print(output)
 

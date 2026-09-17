@@ -1,17 +1,17 @@
-# Shortlink map. 070826_all_rebuild: four parts became two.
-# GUIDE and DIRECTORY are derived from BLUEPRINT.txt by the compile job.
-# 110826: the two FILES are GUIDE and DIRECTORY. The four volume PARTS -
-# CORE, PROCESSES, STATUS, REFERENCES - are unchanged.
+# Shortlink map. GUIDE, PROCESSES and DIRECTORY are peer text deliveries
+# derived from BLUEPRINT.txt by the compile job. The Word volume presents
+# Editing, Processes, Status and References as its four divisions.
 
 entry: blueprint
 
 files:
   blueprint: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/BLUEPRINT.txt
   guide: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt
+  processes: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/PROCESSES.txt
   dir: https://raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/DIRECTORY.yaml
 
-# Deployment subset: guide + dir, confirmed latest only. blueprint substitutes
-# where a destination takes one file. Nothing else deploys.
+# Deployment set: guide + processes + dir. Blueprint substitutes where a
+# destination takes one file. Nothing else deploys.
 
 # Compatibility shims, written by the compile job so existing links resolve.
 # Retiring. Do not deploy from these.
@@ -29,5 +29,4 @@ shims:
 # CORE.txt, deleted 110826 (b308601); the operator repointed it at GUIDE.txt on
 # 160826 and it resolves. reg has no Dub entry at all and was not created for a
 # name being retired the same day; the target above stands if one is ever wanted.
-# Retired 080826: pro. PROCESSES is a section inside CORE and the file is no
-# longer produced.
+# Retired 080826: pro. The canonical process delivery is now /processes.

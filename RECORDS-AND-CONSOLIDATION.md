@@ -10,21 +10,21 @@ Repository administration for the pipeline-registry clone. Extracted from BLUEPR
 
 The operating corpus has two peer governance sources. `BLUEPRINT.txt` governs editorial work. `CONTROL.txt` governs command invocation, workflow selection and routing into the complete Blueprint. CONTROL does not duplicate or reduce the editorial rules.
 
-BLUEPRINT is delivered whole or as two generated parts: `GUIDE.txt` carries EDITING and PROCESSES in Markdown; `DIRECTORY.yaml` carries STATUS and REFERENCES in YAML. `DIRECTORY.txt` is a byte-identical text-extension twin. CONTROL generates the four active command workflows under `Control/plugin/`: `/edit`, `/check`, `/photo` and `/pr`.
+BLUEPRINT is delivered whole or as three generated parts: `GUIDE.txt` carries EDITING in Markdown; `PROCESSES.txt` carries the task methods in Markdown; `DIRECTORY.yaml` carries STATUS and REFERENCES in YAML. `DIRECTORY.txt` is a byte-identical text-extension twin. CONTROL generates the four active command workflows under `Control/plugin/`: `/edit`, `/check`, `/photo` and `/pr`.
 
 The corpus is everything the desk holds. The deployment subset is what a processor receives to work a shift. A file is corpus by being held; it enters the subset by being needed at the point of work.
 
 **Corpus whole**
 
 * **Peer sources** — `BLUEPRINT.txt` and `CONTROL.txt`; the only governance files edited.
-* **Derived governance** — `GUIDE.txt`, `DIRECTORY.yaml`, `DIRECTORY.txt`, and `Control/plugin/`.
+* **Derived governance** — `GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.yaml`, `DIRECTORY.txt`, and `Control/plugin/`.
 * **Artifacts of record** — `BLUEPRINT.docx`, PDF and manifest outputs.
 * **Administration** — this file, `VERSION_HISTORY.md`, `COMMITS-PENDING.md`, `DECISIONS-OPEN.yaml`, and dated handoffs.
 * **Machinery** — the Blueprint and CONTROL builders, CI workflow, `tools/`, `prompts/`, `config/` and `index`.
 
-**Deployment subset** — the current editorial governance plus CONTROL or the required generated command workflow. Where a destination takes one editorial file, use `BLUEPRINT.txt`; where it takes split delivery, use `GUIDE.txt` plus `DIRECTORY.yaml`. CONTROL supplies the steering layer in either case.
+**Deployment subset** — the current editorial guidance plus CONTROL or the required generated command workflow. Where a destination takes one editorial file, use `BLUEPRINT.txt`; where it takes split delivery, use `GUIDE.txt`, `PROCESSES.txt` and `DIRECTORY.yaml`. CONTROL supplies the steering layer in either case.
 
-The linked raw Blueprint is used when reachable. An unreachable link is declared and work stops pending another explicitly supplied authoritative route. Edition selection and source custody remain the supervisor's responsibility; the processor does not insert a separate source-audit stage.
+The GitHub registry and sealed Drive master are peer official publication surfaces. A processor uses the supplied edition. If that copy cannot be read, another official copy may be used when its edition can be identified; otherwise the supervisor is asked for the current text. Edition selection and source custody remain the supervisor's responsibility.
 
 ---
 

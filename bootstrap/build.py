@@ -8,8 +8,8 @@ ONE file is edited:
 
 Six are derived from it and never touched by hand:
 
-    GUIDE.txt         the operating manual, part delivery for /guide
-    PROCESSES.txt     the G5 operational section, part delivery for /processes
+    GUIDE.txt         the editorial brief, part delivery for /guide
+    PROCESSES.txt     the operational methods and task sections
     DIRECTORY.yaml    the lookups, part delivery for /dir
     DIRECTORY.txt     DIRECTORY.yaml under a .txt extension, byte-identical
     VERSION.txt       the exact current edition for /ver
@@ -40,16 +40,12 @@ import tempfile
 import yaml
 
 MASTER = "BLUEPRINT.txt"
-EXPECT = ["GUIDE", "DIRECTORY"]
+EXPECT = ["GUIDE", "PROCESSES", "DIRECTORY"]
 
 SEAM = re.compile(r"<!-- PART: (\S+) (\w+) -->")
 FENCE = re.compile(r"```yaml\n(.*?)\n```", re.S)
-GUIDE_CODE = re.compile(r"^#{1,6} \[(G(?:\d+(?:-[A-Z]\d*)?))\] ", re.M)
-CONTENTS_CODE = re.compile(r"^\s*- \[(G(?:\d+(?:-[A-Z]\d*)?))\] \S", re.M)
-PROCESSES_SECTION = re.compile(
-    r"^## \[G5\] PROCESSES\s*$.*\Z",
-    re.M | re.S,
-)
+GUIDE_CODE = re.compile(r"^#{1,6} \[([GP](?:\d+(?:-[A-Z]\d*)?))\] ", re.M)
+CONTENTS_CODE = re.compile(r"^\s*- \[([GP](?:\d+(?:-[A-Z]\d*)?))\] \S", re.M)
 
 
 def fail(msg):
@@ -108,24 +104,24 @@ def guard_invertible(preamble, parts, src):
 
 
 def guard_guide_codes(src):
-    """Require one target heading for every edition-bound GUIDE code."""
+    """Require one target heading for every edition-bound section code."""
     contents = CONTENTS_CODE.findall(src)
     headings = GUIDE_CODE.findall(src)
     duplicate_contents = sorted({code for code in contents if contents.count(code) > 1})
     duplicate_headings = sorted({code for code in headings if headings.count(code) > 1})
     if duplicate_contents:
-        fail("duplicate GUIDE codes in CONTENTS: " + ", ".join(duplicate_contents))
+        fail("duplicate section codes in CONTENTS: " + ", ".join(duplicate_contents))
     if duplicate_headings:
-        fail("duplicate GUIDE codes on headings: " + ", ".join(duplicate_headings))
+        fail("duplicate section codes on headings: " + ", ".join(duplicate_headings))
     missing = sorted(set(contents) - set(headings))
     orphaned = sorted(set(headings) - set(contents))
     if missing:
-        fail("GUIDE codes in CONTENTS without headings: " + ", ".join(missing))
+        fail("section codes in CONTENTS without headings: " + ", ".join(missing))
     if orphaned:
-        fail("GUIDE heading codes absent from CONTENTS: " + ", ".join(orphaned))
+        fail("section heading codes absent from CONTENTS: " + ", ".join(orphaned))
     if not contents:
-        fail("no coded GUIDE nodes found")
-    print(f"GUIDE-code guard: PASS ({len(contents)} edition-bound nodes)")
+        fail("no coded sections found")
+    print(f"section-code guard: PASS ({len(contents)} edition-bound nodes)")
 
 
 # ---------- split ----------
@@ -163,15 +159,6 @@ def register_yaml(part, tag):
           f"(apex {len(parsed['status']['apex'])}, "
           f"provinces {len(parsed['references']['thai_places']['provinces'])})")
     return f"# PART: {tag} DIRECTORY\n{body}\n", parsed
-
-
-def processes_text(guide_part, tag):
-    """Publish G4 as a focused, edition-stamped consumer file."""
-    match = PROCESSES_SECTION.search(guide_part)
-    if not match:
-        fail("GUIDE has no bounded [G5] PROCESSES section.")
-    body = match.group(0).rstrip("\n") + "\n"
-    return f"<!-- PART: {tag} PROCESSES -->\n\n{body}"
 
 
 def guard_index(parsed):
@@ -279,10 +266,8 @@ def main():
     guard_guide_codes(src)
 
     reg_text, _ = register_yaml(parts["DIRECTORY"], tag)
-    process_text = processes_text(parts["GUIDE"], tag)
-
     open("GUIDE.txt", "w", encoding="utf-8").write(parts["GUIDE"].rstrip("\n") + "\n")
-    open("PROCESSES.txt", "w", encoding="utf-8").write(process_text)
+    open("PROCESSES.txt", "w", encoding="utf-8").write(parts["PROCESSES"].rstrip("\n") + "\n")
     open("DIRECTORY.yaml", "w", encoding="utf-8").write(reg_text)
     open("DIRECTORY.txt", "w", encoding="utf-8").write(reg_text)
     open("VERSION.txt", "w", encoding="utf-8").write(tag + "\n")

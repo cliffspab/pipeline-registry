@@ -14,18 +14,17 @@ Two peer sources: root `BLUEPRINT.txt` governs editorial work; root `CONTROL.txt
 
 Five text deliveries are derived from BLUEPRINT:
 
-- `GUIDE.txt` = EDIT + PHOTO + CHECK + PR + PROCESSES; shortlink `/guide`.
-- `PROCESSES.txt` = the focused `[G5] PROCESSES` section for compatibility.
+- `GUIDE.txt` = the complete `[G1] GUIDE`; shortlink `/guide`.
+- `PROCESSES.txt` = the complete `[P] PROCESSES`.
 - `DIRECTORY.yaml` = STATUS + REFERENCES; shortlink `/dir`.
 - `DIRECTORY.txt` = byte-identical compatibility twin for text-only surfaces.
 - `VERSION.txt` = the exact one-line edition witness; shortlink `/ver`.
 
 The Word volume and its PDF conversion are also generated artifacts.
 
-`CONTROL.txt` is the peer operational source. BLUEPRINT governs editorial work
-and contains the four complete task sections. CONTROL exposes commands and maps
-each generated skill to its bounded Blueprint section. It must not duplicate
-editorial rules.
+`CONTROL.txt` is the peer operational source. BLUEPRINT governs editorial work.
+CONTROL maps each generated skill to the bounded Guide and Process sections it
+needs. It must not duplicate editorial rules.
 
 The fenced YAML Directory inside `BLUEPRINT.txt` is load-bearing. Every source and derived part carries one matching edition tag. GPT-era editions include `_gpt_` in that tag; the first is `210826_gpt_compact`.
 
@@ -48,6 +47,7 @@ Edit the two root sources only. Never hand-edit derived files in `pipeline-regis
 
 - `BLUEPRINT.txt`
 - `GUIDE.txt`
+- `PROCESSES.txt`
 - `DIRECTORY.yaml`
 - `CONTROL.txt`
 - `BLUEPRINT.docx` (the sealed document for the current edition)
@@ -59,11 +59,15 @@ Nothing in Shift is a source. Nothing unique lives there.
 ## Drive container contract
 
 After an edition is sealed, `sync_master.py` updates two stable files in
-`D:\GoogleONE\My Drive\SYNC_MASTER`: the complete Blueprint text and its exact
-one-line version witness. `extract.py` verifies the master and emits requested
-sections for temporary use. The updater must update existing containers in
-place and refuse to create a missing target. Never refresh them from an
-unsealed candidate.
+`D:\GoogleDrive\My Drive\BKP_SYNC_MASTER`: the complete Blueprint text and its
+exact one-line version witness. `extract.py` verifies the master and emits
+requested sections for temporary use. The updater must update existing
+containers in place and refuse to create a missing target. Never refresh them
+from an unsealed candidate.
+
+GitHub and the Drive master are peer official publication surfaces. GitHub is
+the public registry and build base; Drive is the desk-controlled operational
+master. A completed publication verifies both against the sealed edition.
 
 ## Generated and historical material
 

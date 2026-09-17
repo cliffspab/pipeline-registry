@@ -14,13 +14,14 @@ SHIFT = ROOT / "Shift"
 PARTS = (
     "BLUEPRINT.txt",
     "GUIDE.txt",
+    "PROCESSES.txt",
     "DIRECTORY.yaml",
     "CONTROL.txt",
     "BLUEPRINT.docx",
 )
 TRANSPORT_HOUSEKEEPING = {".tmp.driveupload"}
-SEAMED = ("GUIDE.txt", "DIRECTORY.yaml")
-SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|DIRECTORY)")
+SEAMED = ("GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml")
+SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|PROCESSES|DIRECTORY)")
 
 
 def digest(path):
@@ -102,7 +103,7 @@ def main():
 
     if not check_only:
         os.utime(SHIFT, None)
-    print(f"\nshift ready — build {tag}; five files; refresh daily or when a newly sealed edition supersedes it")
+    print(f"\nshift ready — build {tag}; six files; refresh daily or when a newly sealed edition supersedes it")
     return 0
 
 

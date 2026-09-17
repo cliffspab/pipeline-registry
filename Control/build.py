@@ -15,28 +15,28 @@ OUT = ROOT / "plugin"
 MODULES = ("EDIT", "PHOTO", "CHECK", "PR")
 META = {
     "EDIT": {
-        "description": "Edit Bangkok Post copy through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups. Use for Bangkok Post subbing, editing, fitting, headline, deck, brief, overspill, DCX, Style Log or State Log work; paid-placement and PR copy use the PR skill.",
+        "description": "Edit Bangkok Post copy through the supplied GUIDE, COPY and VERIFICATION sections and triggered Directory lookups. Use for subbing, editing, fitting, headline, deck, brief, overspill, DCX or Style Log work; paid-placement and PR copy use the PR skill.",
         "display": "Bangkok Post Edit",
         "short": "Edit copy to Bangkok Post desk rules",
-        "prompt": "Use $edit to edit this Bangkok Post copy with the authoritative BLUEPRINT.",
+        "prompt": "Use $edit to edit this Bangkok Post copy with the supplied Blueprint sections.",
     },
     "CHECK": {
-        "description": "Check placed Bangkok Post copy before initialling through the complete authoritative BLUEPRINT, using its GUIDE workflow and DIRECTORY lookups.",
+        "description": "Check placed Bangkok Post copy before initialling through the supplied CHECKING and VERIFICATION sections and triggered Directory lookups.",
         "display": "Bangkok Post Check",
         "short": "Check placed copy before initialling",
-        "prompt": "Use $check to check this placed Bangkok Post copy with the authoritative BLUEPRINT.",
+        "prompt": "Use $check to check this placed Bangkok Post copy with the supplied Blueprint sections.",
     },
     "PR": {
-        "description": "Process Bangkok Post paid-placement, advertorial or PR copy through the complete authoritative BLUEPRINT using its minimum-intervention PR route.",
+        "description": "Process Bangkok Post paid-placement, advertorial or PR copy through the supplied minimum-intervention PR section.",
         "display": "Bangkok Post PR",
         "short": "Process paid-placement copy",
-        "prompt": "Use $pr to process this Bangkok Post paid-placement copy with the authoritative BLUEPRINT.",
+        "prompt": "Use $pr to process this Bangkok Post paid-placement copy with the supplied Blueprint section.",
     },
     "PHOTO": {
-        "description": "Handle standalone Bangkok Post headlines and captions through the complete authoritative BLUEPRINT, including visual verification and spatial fitting.",
+        "description": "Handle standalone Bangkok Post headlines and captions through the supplied PHOTOS, COPY and VERIFICATION sections.",
         "display": "Bangkok Post Photo",
         "short": "Write and fit standalone captions",
-        "prompt": "Use $photo to handle this Bangkok Post headline and caption with the authoritative BLUEPRINT.",
+        "prompt": "Use $photo to handle this Bangkok Post headline and caption with the supplied Blueprint sections.",
     },
 }
 
@@ -63,29 +63,42 @@ def expected_files(source: str) -> dict[Path, str]:
     if not re.fullmatch(r"\d{6}_control_[a-z0-9-]+", edition):
         fail(f"invalid CONTROL edition: {edition!r}")
     common = extract(source, "COMMON")
-    if "If the link is unreachable, declare the retrieval failure and stop." not in common:
-        fail("unreachable-link rule is missing")
+    if "When the supplied Blueprint cannot be read, say so." not in common:
+        fail("missing-Blueprint route is absent")
     if re.search(r"audit its completeness|compare it with a snapshot|matching .*edition", common, re.I):
         fail("model-side source audit instructions remain")
 
     if not BLUEPRINT.is_file():
         fail(f"authoritative Blueprint is missing: {BLUEPRINT}")
     blueprint = BLUEPRINT.read_text(encoding="utf-8")
-    task_bounds = {
-        "EDIT": (r"^# \[G1\] EDIT\s*$", r"^## \[G2\] PHOTO\s*$"),
-        "PHOTO": (r"^## \[G2\] PHOTO\s*$", r"^## \[G3\] CHECK\s*$"),
-        "CHECK": (r"^## \[G3\] CHECK\s*$", r"^## \[G4\] PR\s*$"),
-        "PR": (r"^## \[G4\] PR\s*$", r"^## \[G5\] PROCESSES\s*$"),
+    section_bounds = {
+        "G1": (r"^# \[G1\] GUIDE\s*$", r"^# \[P\] PROCESSES\s*$"),
+        "P1": (r"^## \[P1\] COPY\s*$", r"^## \[P2\] VERIFICATION\s*$"),
+        "P2": (r"^## \[P2\] VERIFICATION\s*$", r"^## \[P3\] PHOTOS\s*$"),
+        "P3": (r"^## \[P3\] PHOTOS\s*$", r"^## \[P4\] CHECKING\s*$"),
+        "P4": (r"^## \[P4\] CHECKING\s*$", r"^## \[P5\] PR\s*$"),
+        "P5": (r"^## \[P5\] PR\s*$", r"^<!-- PART: .* DIRECTORY -->\s*$"),
     }
-    task_sections = {}
-    for name, (start, end) in task_bounds.items():
+    sections = {}
+    for code, (start, end) in section_bounds.items():
         match = re.search(f"({start}.*?)(?={end})", blueprint, re.M | re.S)
         if not match:
-            fail(f"Blueprint task section is missing or unbounded: {name}")
-        task_sections[name] = match.group(1).rstrip() + "\n"
-        marker = f"Source section: `[{ {'EDIT': 'G1', 'PHOTO': 'G2', 'CHECK': 'G3', 'PR': 'G4'}[name]}]"
-        if marker not in extract(source, name):
-            fail(f"CONTROL route does not select the current {name} section")
+            fail(f"Blueprint section is missing or unbounded: {code}")
+        sections[code] = match.group(1).rstrip() + "\n"
+
+    routes = {
+        "EDIT": ("G1", "P1", "P2"),
+        "PHOTO": ("P3", "P1", "P2"),
+        "CHECK": ("P4", "P2"),
+        "PR": ("P5",),
+    }
+    task_sections = {}
+    for name, codes in routes.items():
+        control_module = extract(source, name)
+        for code in codes:
+            if f"`[{code}]" not in control_module:
+                fail(f"CONTROL route {name} omits [{code}]")
+        task_sections[name] = "\n".join(sections[code].rstrip() for code in codes) + "\n"
 
     files: dict[Path, str] = {}
     manifest = {
@@ -97,7 +110,7 @@ def expected_files(source: str) -> dict[Path, str]:
         "interface": {
             "displayName": "Bangkok Post Desk Control",
             "shortDescription": "Run Bangkok Post desk workflows",
-            "longDescription": "Edit, check, caption and process PR copy using the authoritative linked BLUEPRINT, its GUIDE workflow and its DIRECTORY lookups.",
+            "longDescription": "Edit, check, caption and process PR copy using generated Blueprint sections and triggered Directory lookups.",
             "developerName": "Bangkok Post desk",
             "category": "Productivity",
             "capabilities": [

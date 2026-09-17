@@ -6,6 +6,53 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-18 — 160926_gpt_editorial-authority: EDITORIAL AUTHORITY REWRITE
+
+**Editorial model.** The Guide now begins with `TELL THE STORY` and states the
+sub-editor's authority to recast filed copy while preserving facts, voice,
+legal hedges and uncertainty. Bare slug-and-copy input defaults to an EDIT;
+the copy triggers the necessary checks and receives the normal headline, deck,
+body, alternates and proportional Style Log return. One compact worked example
+demonstrates that complete contract.
+
+**Workflow and verification.** Free edits and supplied-fit edits are distinct.
+Headline and deck budgets are absolute totals, while DCX body fitting is a
+whole-story edit with measured passes. Verification supports the edit rather
+than becoming a separate performance. Release-critical uncertainty and
+unresolved apex contradictions hold copy only after the edit is completed.
+Photos, page checking and PR are bounded Process sections with task-specific
+returns.
+
+**Directory.** The edition carries 21 routed branches, 10 apex entries and all
+77 provinces. Current formal titles cap directly before full or shortened
+names; descriptive and former roles remain lower case. The To Lam ruling uses
+`Public Security Minister To Lam` during his tenure, `former public security
+minister To Lam` in current copy and `Mr Lam` on second reference. Generic
+dictionary material was pruned, date examples use month-first form, body-copy
+datelines stand as supplied and wind speed uses `kph`.
+
+**Architecture and machinery.** `160926_control_editorial-authority` keeps
+command routing separate from editorial doctrine and generates four bounded
+skills from the Blueprint. The build emits Guide, Processes, Directory and the
+edition witness from the source; CI owns the Word/PDF deliveries. The Word
+builder removes unused header/footer package parts safely and blanks the cover
+first-page header. The sealed handover includes Processes, and the guarded push
+continues to seal before refreshing Shift and the stable Drive containers.
+
+**Evidence.** Source builds pass edition, invertibility, section-code,
+routing-index and register guards. All 11 extraction modes and all four
+generated-workflow checks pass. The isolated Word candidate contains 377
+register leaves and 430 paragraphs, renders to 27 inspected pages, records zero
+accessibility findings and passes content coverage with 85 of 89 source units
+matched plus four declared presentation transformations. Its package has 25
+matched header/footer references and relationships and no stale edition text.
+
+**Verdict.** Supervisor-cleared candidate promoted locally and recorded for the
+guarded push. Shift and the Drive master remain on the last sealed edition
+until publication, CI rebuild and sealing.
+
+---
+
 ## 2026-09-15 — ONE AUTHORISATION TO SEALED HANDOVER
 
 **Machinery only.** After GitHub publication, compile-bot integration and a
