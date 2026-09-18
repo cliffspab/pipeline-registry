@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT
 
-160926_gpt_editorial-authority
+180926_gpt_word-pagination
 
 a style guide
 
@@ -27,7 +27,7 @@ a style guide
   - [P5] PR
 - [D] DIRECTORY — `DIRECTORY.yaml`
 
-<!-- PART: 160926_gpt_editorial-authority GUIDE -->
+<!-- PART: 180926_gpt_word-pagination GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -204,7 +204,7 @@ Converted Sept 16 to yesterday and 90 centimetres to 90cm; applied the Thai
 second reference; supplied the headline and deck.
 ````
 
-<!-- PART: 160926_gpt_editorial-authority PROCESSES -->
+<!-- PART: 180926_gpt_word-pagination PROCESSES -->
 
 # [P] PROCESSES
 how we do it
@@ -365,7 +365,7 @@ PR copy is supplied with case-specific return guidance because its format,
 deployment and available tools vary. Follow that guidance. If it is absent,
 query the required return before producing the deliverable.
 
-<!-- PART: 160926_gpt_editorial-authority DIRECTORY -->
+<!-- PART: 180926_gpt_word-pagination DIRECTORY -->
 
 go.fuzzylogic.page/dir
 

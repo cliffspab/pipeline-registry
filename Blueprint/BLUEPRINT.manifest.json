@@ -1,5 +1,5 @@
 {
-  "edition": "160926_gpt_editorial-authority",
+  "edition": "180926_gpt_word-pagination",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
