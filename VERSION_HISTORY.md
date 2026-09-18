@@ -6,6 +6,23 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-18 — WORD-PAGINATION CI DERIVED-FILE RECOVERY
+
+**Failure.** Publication commit `657b68a` reached `origin/main`, but CI rejected
+the push because GUIDE, PROCESSES and DIRECTORY had been copied into the clone
+before publication. Those paths are compile-bot outputs and the hand-edit guard
+correctly refused them.
+
+**Recovery.** The recovery commit does not touch any derived delivery. The
+approved `180926_gpt_word-pagination` source, Word builder repair, Control skill
+witness and edition history remain unchanged. CI will verify and rebuild the
+deliveries already generated from that source after the recovery push.
+
+**Verdict.** Bounded recovery prepared for a second guarded push. The first
+push is live but unsealed; Shift and Drive remain on the last sealed edition.
+
+---
+
 ## 2026-09-18 — 180926_gpt_word-pagination: WORD PAGINATION REPAIR
 
 **Scope.** Editorial content is byte-for-byte unchanged apart from the edition

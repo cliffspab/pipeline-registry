@@ -32,6 +32,13 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-18
+
+- 2026-09-18 | CI recovery | Retrigger compilation without changing any
+  derived Blueprint delivery. The approved source and Word builder remain at
+  `180926_gpt_word-pagination`; CI will verify and rebuild their outputs.
+
 ## Cleared 2026-09-18
 
 - 2026-09-18 | Blueprint edition | Supersede `160926_gpt_editorial-authority`
