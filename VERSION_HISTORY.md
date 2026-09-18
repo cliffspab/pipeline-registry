@@ -6,6 +6,30 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-18 — 180926_gpt_word-pagination: WORD PAGINATION REPAIR
+
+**Scope.** Editorial content is byte-for-byte unchanged apart from the edition
+witness. The Word builder gives only the compact STATUS section 0.32in more
+body depth, reduces spacing after its body entries by one point and keeps each
+entry together.
+
+**Cause.** The sealed `160926_gpt_editorial-authority` volume rendered cleanly
+to 27 pages under LibreOffice, but Microsoft Word placed the final two lines of
+the To Lam entry alone on page 13. Because part folios restart at 1, Word then
+inserted a blank page before REFS, producing 29 pages. This failed the explicit
+Word-on-Windows operator gate even though CI, accessibility, Shift and Drive
+checks passed.
+
+**Evidence.** The isolated candidate renders to 27 pages in Microsoft Word
+16.0. STATUS occupies two pages, entries do not split and REFS begins on the
+next page. The To Lam ruling remains complete and ends with `Mr Lam`.
+
+**Verdict.** Supervisor authorised a superseding pagination-only edition.
+Candidate verified in Word and promoted locally for the guarded build and
+preflight; publication, sealing and handover refresh remain outstanding.
+
+---
+
 ## 2026-09-18 — EDITORIAL-AUTHORITY CI BASELINE RECOVERY
 
 **Failure.** The publication commit reached `origin/main`, but the compile job

@@ -1,4 +1,4 @@
-<!-- PART: 160926_gpt_editorial-authority GUIDE -->
+<!-- PART: 180926_gpt_word-pagination GUIDE -->
 
 go.fuzzylogic.page/guide
 

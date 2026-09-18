@@ -1,4 +1,4 @@
-<!-- PART: 160926_gpt_editorial-authority PROCESSES -->
+<!-- PART: 180926_gpt_word-pagination PROCESSES -->
 
 # [P] PROCESSES
 how we do it

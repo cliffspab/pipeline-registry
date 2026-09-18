@@ -31,6 +31,21 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-18
+
+- 2026-09-18 | Blueprint edition | Supersede `160926_gpt_editorial-authority`
+  with pagination-only edition `180926_gpt_word-pagination`; editorial content
+  is unchanged.
+
+- 2026-09-18 | Word builder | Keep STATUS entries intact, tighten their
+  paragraph spacing by one point and give that compact section 0.32in more body
+  depth; Microsoft Word now renders 27 pages without an orphan or blank page.
+
+- 2026-09-18 | Control Edit skill | Regenerate the bounded skill so its embedded
+  Blueprint section carries the superseding witness; Control edition and routing
+  are unchanged.
+
 ## Cleared 2026-09-18
 
 - 2026-09-18 — post-push CI recovery for

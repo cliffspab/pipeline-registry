@@ -602,6 +602,10 @@ def restart_page_numbering(section, start=1):
 def add_part_opening(doc, component, part_number, subtitle=None):
     section = doc.add_section(WD_SECTION.NEW_PAGE)
     configure_page(section)
+    if component == "STATUS":
+        # STATUS is the only compact two-page part. Word needs slightly more
+        # body depth than LibreOffice to keep its final entry on page 2.
+        section.bottom_margin = Inches(0.40)
     # blank_first: the lead page of each part already carries the register
     # strip and the component title, so the running head would only repeat it.
     configure_header_footer(section, component, blank_first=True)
@@ -997,7 +1001,18 @@ def render_register(doc, data, open_section):
         if branch not in data:
             continue
         open_section(title)
+        content_start = len(doc.paragraphs)
         render_register_node(doc, data[branch], 2)
+        if branch == "status":
+            # Word lays out the compact STATUS branch fractionally taller than
+            # LibreOffice.  One trailing two-line entry then spills to a third
+            # page; because part folios restart at 1, Word inserts another
+            # blank page before REFS.  Tighten only STATUS body paragraphs by
+            # one point.  Headings and every editorial byte remain unchanged.
+            for paragraph in doc.paragraphs[content_start:]:
+                if paragraph.style.name.lower() == "normal":
+                    paragraph.paragraph_format.space_after = Pt(5.5)
+                    paragraph.paragraph_format.keep_together = True
 
     # The coverage audit matched the register as ONE unit - the fenced block,
     # verbatim. Rendered as structure it no longer appears verbatim, so that
