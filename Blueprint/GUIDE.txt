@@ -40,6 +40,9 @@ When authorities conflict, resolve them in this order:
 
 ## [G1-B] HOUSE ESSENTIALS
 
+For a current Thai minister or ministry portfolio, check the official cabinet 
+record: thaigov.go.th/en/cabinet/minister.
+
 Apply these on every edit:
 
 For a current Thai minister or ministry portfolio, check the official cabinet 
