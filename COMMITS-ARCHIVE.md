@@ -34,6 +34,12 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-21
+
+- 2026-09-21 | CI coverage guard | Recognise the approved removal of source
+  route codes from the Guide and Processes display headings.
+
 ## Cleared 2026-09-21
 
 - 2026-09-21 | Blueprint sources | Promote the approved

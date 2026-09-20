@@ -513,9 +513,15 @@ jobs:
               # Front matter is cover material. The slug goes to Word document
               # properties; the plain description is suppressed in the volume.
               r"^a style guide$",
-              # These source navigation headings become the human-facing
-              # EDITING, STATUS and REFS part openers in the volume.
-              r"^\[G1\] GUIDE$",
+              # 190926: source route codes are deliberately stripped from the
+              # display hierarchy. Their text is still rendered as the clean
+              # EDITING/Guide and PROCESSES headings verified by the builder;
+              # only the coded source forms are absent from Word extraction.
+              r"^\[G1\] EDITING$",
+              r"^\[G1-(?:A|B|C|C1|C2|D|D1|D2|D3)\] ",
+              r"^\[P\] PROCESSES$",
+              r"^\[P(?:1-A|1-B|2|3|4|5)\] ",
+              # Directory becomes the human-facing STATUS and REFS parts.
               r"^\[D\] DIRECTORY$",
               # DIRECTORY uses compact /dir running heads in the volume. The
               # full raw-delivery shortlink remains source-only.
