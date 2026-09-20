@@ -71,6 +71,9 @@ When authorities conflict, resolve them in this order:
 
 Apply these on every edit:
 
+For a current Thai minister or ministry portfolio, check the official cabinet 
+record: thaigov.go.th/en/cabinet/minister.
+
 * Use British English except in quotations and proper names.
 * Drop the Oxford comma.
 * Use metric measurements under `references.measurements`.
