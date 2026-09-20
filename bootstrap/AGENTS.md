@@ -10,7 +10,11 @@ Ask before publishing, moving or deleting material, changing the edition identit
 
 ## Current architecture
 
-Two peer sources: root `BLUEPRINT.txt` governs editorial work; root `CONTROL.txt` governs command invocation and workflow routing.
+The editable Blueprint authority is split across four root working sources:
+`BLUEPRINT.front.md`, `GUIDE.md`, `PROCESSES.md` and `DIRECTORY.yaml`.
+Root `build.py` compiles them byte-for-byte into `BLUEPRINT.txt`, which is the
+single complete editorial surface. Root `CONTROL.txt` is the peer operational
+source for command invocation and workflow routing.
 
 Five text deliveries are derived from BLUEPRINT:
 
@@ -28,15 +32,20 @@ needs. It must not duplicate editorial rules.
 
 The fenced YAML Directory inside `BLUEPRINT.txt` is load-bearing. Every source and derived part carries one matching edition tag. GPT-era editions include `_gpt_` in that tag; the first is `210826_gpt_compact`.
 
-Edit the two root sources only. Never hand-edit derived files in `pipeline-registry/Blueprint/` or `pipeline-registry/Control/plugin/`.
+Edit the four root Blueprint working sources or root `CONTROL.txt` only. Never
+hand-edit compiled or generated files in `pipeline-registry/Blueprint/` or
+`pipeline-registry/Control/plugin/`.
 
 ## Safe build and publication
 
 1. Make and test an isolated candidate.
-2. Copy the approved source to root `BLUEPRINT.txt`.
+2. Copy the approved working sources to the root source set.
 3. Run root `build.py`; all guards must pass.
 4. Keep Shift on the last sealed edition while a new edition is being built; do not refresh it from an unsealed candidate.
-5. Copy the approved editorial source to `pipeline-registry/Blueprint/BLUEPRINT.txt`, copy the approved steering source to `pipeline-registry/Control/CONTROL.txt`, and install approved machinery changes.
+5. Copy the approved working sources and compiled `BLUEPRINT.txt` to
+   `pipeline-registry/Blueprint/`, copy the approved steering source to
+   `pipeline-registry/Control/CONTROL.txt`, and install approved machinery
+   changes.
 6. Record the exact payload in `COMMITS-PENDING.md` and the edition in `VERSION_HISTORY.md`.
 7. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
 8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. The guarded push then refreshes and verifies Shift and syncs the Drive master; if either handover step fails, its named rerun remains outstanding without undoing the published push.
@@ -71,6 +80,10 @@ master. A completed publication verifies both against the sealed edition.
 
 ## Generated and historical material
 
-`Blueprint/GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.txt`, `DIRECTORY.yaml`, compatibility shims, DOCX, PDF and manifest are generated. `Control/plugin/` is generated from `Control/CONTROL.txt`. Bootstrap files are mirrors. `git add -A` publishes deletions as well as additions.
+`Blueprint/BLUEPRINT.txt`, `GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.txt`,
+compatibility shims, DOCX, PDF and manifest are generated. The registry's
+`BLUEPRINT.front.md`, `GUIDE.md`, `PROCESSES.md` and `DIRECTORY.yaml` are source
+mirrors. `Control/plugin/` is generated from `Control/CONTROL.txt`. Bootstrap
+files are mirrors. `git add -A` publishes deletions as well as additions.
 
 Keep the workspace root operational, not historical. Put superseded handoffs, candidates, probes and pre-GPT administration in the dated Archive. Do not carry old model-specific instructions forward. Keep this file short and current.

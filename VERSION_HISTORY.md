@@ -6,6 +6,42 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-21 — 190926_gpt_fit-and-access: FIT, ACCESS AND WORD HIERARCHY
+
+**Editorial result.** Supplied-fit work now treats the target as a whole-story
+footprint rather than a mechanical cut point, retains exact DCX counting when
+available and uses a visible overspill edge as the fallback witness. The
+worked example exchanges repetitive material above the edge for stronger
+reporting below it. Headline fitting retains the settled 0.5, 1.0 and 1.5
+letter weights.
+
+**Architecture.** The editable Blueprint authority is now the explicit
+`BLUEPRINT.front.md`, `GUIDE.md`, `PROCESSES.md` and `DIRECTORY.yaml` source
+set. The guarded build compiles those sources into `BLUEPRINT.txt`, then emits
+the text deliveries and edition witness. `190926_control_fit-and-access`
+routes EDIT and PHOTO to `[G1] EDITING` and regenerates the bounded skills
+without adding editorial doctrine.
+
+**Word result.** The approved volume is 25 pages. CONTENTS begins on page 2
+inside one outer box with GUIDE and DIRECTORY as equal columns. Directory
+entries expose their immediate subheads, including NUMBERS / GENERAL / ROMAN
+NUMERALS / QUANTITIES. The Guide opens directly on EDITING G1, without a
+duplicate GUIDE title. Directory entries retain bounded label/value columns;
+left-column text breaks at the barrier and right-column lines start beyond it.
+
+**Evidence.** Source assembly, dollar-pairing, edition, invertibility,
+section-code, routing-index and register guards pass. The Directory contains
+21 routed paths, 10 apex figures and 77 provinces. The Word build writes all
+377 register leaves, renders to 25 inspected pages and reports zero high or
+low accessibility findings. The 372 medium findings are documented one-row
+layout-table header exceptions.
+
+**Verdict.** Supervisor-approved candidate promoted locally with its source,
+Control and CI machinery. Publication, CI rebuild, sealing, Shift refresh and
+Drive master sync remain behind the guarded push.
+
+---
+
 ## 2026-09-18 — WORD-PAGINATION CI DERIVED-FILE RECOVERY
 
 **Failure.** Publication commit `657b68a` reached `origin/main`, but CI rejected

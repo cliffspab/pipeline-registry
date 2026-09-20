@@ -2,16 +2,19 @@
 """
 Bangkok Post Blueprint — build.
 
-ONE file is edited:
+Four accessible working sources are edited:
 
-    BLUEPRINT.txt     markdown throughout, register fenced as YAML inside it
+    BLUEPRINT.front.md  title, edition witness and contents
+    GUIDE.md            the editorial brief, part delivery for /guide
+    PROCESSES.md        the operational methods and task sections
+    DIRECTORY.yaml      the lookups, part delivery for /dir
 
-Six are derived from it and never touched by hand:
+BLUEPRINT.txt is compiled from those sources. The text deliveries are
+byte-identical compatibility twins:
 
-    GUIDE.txt         the editorial brief, part delivery for /guide
-    PROCESSES.txt     the operational methods and task sections
-    DIRECTORY.yaml    the lookups, part delivery for /dir
-    DIRECTORY.txt     DIRECTORY.yaml under a .txt extension, byte-identical
+    GUIDE.txt
+    PROCESSES.txt
+    DIRECTORY.txt
     VERSION.txt       the exact current edition for /ver
     BLUEPRINT.pdf     the rendered artifact of record
 
@@ -40,6 +43,7 @@ import tempfile
 import yaml
 
 MASTER = "BLUEPRINT.txt"
+FRONT = "BLUEPRINT.front.md"
 EXPECT = ["GUIDE", "PROCESSES", "DIRECTORY"]
 
 SEAM = re.compile(r"<!-- PART: (\S+) (\w+) -->")
@@ -50,6 +54,44 @@ CONTENTS_CODE = re.compile(r"^\s*- \[([GP](?:\d+(?:-[A-Z]\d*)?))\] \S", re.M)
 
 def fail(msg):
     sys.exit(f"FATAL: {msg}")
+
+
+def assemble_sources():
+    """Compile the complete compatibility master from the working authorities."""
+    required = (FRONT, "GUIDE.md", "PROCESSES.md", "DIRECTORY.yaml")
+    missing = [name for name in required if not os.path.exists(name)]
+    if missing:
+        fail("missing working source(s): " + ", ".join(missing))
+
+    front = open(FRONT, encoding="utf-8").read().rstrip("\n") + "\n\n"
+    edition_lines = [p.strip() for p in front.split("\n\n") if p.strip()]
+    if len(edition_lines) < 2:
+        fail(f"{FRONT} has no edition witness")
+    tag = edition_lines[1]
+
+    guide = open("GUIDE.md", encoding="utf-8").read().rstrip("\n") + "\n"
+    processes = open("PROCESSES.md", encoding="utf-8").read().rstrip("\n") + "\n"
+    for name, text, part in (("GUIDE.md", guide, "GUIDE"),
+                             ("PROCESSES.md", processes, "PROCESSES")):
+        expected = f"<!-- PART: {tag} {part} -->"
+        if not text.startswith(expected):
+            fail(f"{name} must begin with {expected}")
+
+    directory = open("DIRECTORY.yaml", encoding="utf-8").read()
+    marker = f"# PART: {tag} DIRECTORY\n"
+    if not directory.startswith(marker):
+        fail(f"DIRECTORY.yaml must begin with {marker.strip()}")
+    yaml_body = directory[len(marker):].strip("\n")
+    directory_part = (
+        f"<!-- PART: {tag} DIRECTORY -->\n\n"
+        "go.fuzzylogic.page/dir\n\n"
+        "# [D] DIRECTORY\n\n"
+        "`````yaml\n" + yaml_body + "\n```\n"
+    )
+    src = front + guide + processes + directory_part
+    open(MASTER, "w", encoding="utf-8", newline="").write(src)
+    print(f"source assembly guard: PASS ({MASTER} from Markdown/YAML authorities)")
+    return src
 
 
 # ---------- guards ----------
@@ -254,9 +296,7 @@ TAG_HOLDER = [""]
 # ---------- build ----------
 
 def main():
-    if not os.path.exists(MASTER):
-        fail(f"{MASTER} not found. It is the one file that is edited.")
-    src = open(MASTER, encoding="utf-8").read()
+    src = assemble_sources()
 
     guard_dollars(src)
     preamble, parts, tags = split(src)
@@ -266,19 +306,24 @@ def main():
     guard_guide_codes(src)
 
     reg_text, _ = register_yaml(parts["DIRECTORY"], tag)
-    open("GUIDE.txt", "w", encoding="utf-8").write(parts["GUIDE"].rstrip("\n") + "\n")
-    open("PROCESSES.txt", "w", encoding="utf-8").write(parts["PROCESSES"].rstrip("\n") + "\n")
-    open("DIRECTORY.yaml", "w", encoding="utf-8").write(reg_text)
-    open("DIRECTORY.txt", "w", encoding="utf-8").write(reg_text)
+    guide_text = parts["GUIDE"].rstrip("\n") + "\n"
+    processes_text = parts["PROCESSES"].rstrip("\n") + "\n"
+    open("GUIDE.txt", "w", encoding="utf-8").write(guide_text)
+    open("PROCESSES.txt", "w", encoding="utf-8").write(processes_text)
+    # The YAML working authority and text compatibility surface are literal
+    # byte twins, including line endings and the final newline.
+    shutil.copyfile("DIRECTORY.yaml", "DIRECTORY.txt")
     open("VERSION.txt", "w", encoding="utf-8").write(tag + "\n")
 
     pdf = render_pdf(src)
 
     print()
-    print(f"{MASTER:<15}{len(src):>8,} chars  {src.count(chr(10)) + 1:>5,} lines   SOURCE")
-    for f in ("GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml", "DIRECTORY.txt", "VERSION.txt"):
+    print(f"{MASTER:<15}{len(src):>8,} chars  {src.count(chr(10)) + 1:>5,} lines   COMPILED")
+    for f in ("GUIDE.md", "GUIDE.txt", "PROCESSES.md", "PROCESSES.txt",
+              "DIRECTORY.yaml", "DIRECTORY.txt", "VERSION.txt"):
+        role = "source" if f in ("GUIDE.md", "PROCESSES.md", "DIRECTORY.yaml") else "derived"
         print(f"{f:<15}{len(open(f, encoding='utf-8').read()):>8,} chars"
-              f"{'':>13}derived")
+              f"{'':>13}{role}")
     print(f"{'BLUEPRINT.pdf':<15}{pdf}")
 
 

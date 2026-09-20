@@ -1,6 +1,6 @@
 # BANGKOK POST DESK CONTROL
 
-160926_control_editorial-authority
+190926_control_fit-and-access
 
 This source maps each desk task to its working sections of BLUEPRINT. The
 generated skill carries those sections; CONTROL adds no editorial doctrine.
@@ -33,7 +33,7 @@ destination in the return.
 
 ## EDIT
 
-Working sections: `[G1] GUIDE`, `[P1] COPY` and `[P2] VERIFICATION`.
+Working sections: `[G1] EDITING`, `[P1] COPY` and `[P2] VERIFICATION`.
 
 ====================== MODULE EDIT — END ======================
 

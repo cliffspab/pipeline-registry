@@ -33,6 +33,33 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-21
+
+- 2026-09-21 | Blueprint sources | Promote the approved
+  `190926_gpt_fit-and-access` four-source set and exact compiled `BLUEPRINT.txt`.
+
+- 2026-09-21 | Word volume | Install the approved builder and 25-page
+  hierarchy/layout treatment.
+
+- 2026-09-21 | CI reference | Promote FINAL4 as the reference template so the
+  rebuilt 25-page layout is visually reproducible.
+
+- 2026-09-21 | CI workflow | Support four-source assembly and the audited
+  180926-to-190926 structure transition.
+
+- 2026-09-21 | Control | Promote `190926_control_fit-and-access`, its bounded
+  route correction and regenerated EDIT/PHOTO skills.
+
+- 2026-09-21 | Extraction | Replace the retired `[G1] GUIDE` route with
+  `[G1] EDITING`.
+
+- 2026-09-21 | Architecture | Update mirrors, edition history and the
+  shortlink-index twin.
+
+- 2026-09-21 | Push guard | Verify every root Blueprint source mirror during
+  guarded-push preflight.
+
 ## Cleared 2026-09-18
 
 - 2026-09-18 | CI recovery | Retrigger compilation without changing any

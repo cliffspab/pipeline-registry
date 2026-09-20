@@ -3,16 +3,20 @@ name: Split BLUEPRINT into parts and build the style guide
 # ---------------------------------------------------------------------------
 # 270726.
 #
-# TWO peer sources are edited:
-#   Blueprint/BLUEPRINT.txt
-#   Control/CONTROL.txt
+# FOUR Blueprint working sources are edited:
+#   Blueprint/BLUEPRINT.front.md
+#   Blueprint/GUIDE.md
+#   Blueprint/PROCESSES.md
+#   Blueprint/DIRECTORY.yaml
+# Control/CONTROL.txt is the peer operational source. BLUEPRINT.txt is compiled
+# from the four working sources before every guard and build.
 #
 # FIVE are derived from it on push, and never touched by hand:
 #   Blueprint/BLUEPRINT.docx   the style guide - the one document humans open
 #   Blueprint/GUIDE.txt        )  part delivery for machine consumers:
 #   Blueprint/PROCESSES.txt    )  /guide /processes /dir
-#   Blueprint/DIRECTORY.yaml   )
 #   Blueprint/DIRECTORY.txt    )
+#   Blueprint/BLUEPRINT.txt    complete compiled editorial surface
 #
 # STATUS and REFERENCES travel together as DIRECTORY. PROCESSES is again a
 # peer delivery, while GUIDE contains Editing only. The register
@@ -60,10 +64,16 @@ on:
   push:
     branches: [main]
     paths:
+      - 'Blueprint/BLUEPRINT.front.md'
+      - 'Blueprint/GUIDE.md'
+      - 'Blueprint/PROCESSES.md'
+      - 'Blueprint/DIRECTORY.yaml'
       - 'Blueprint/BLUEPRINT.txt'
       - 'Control/CONTROL.txt'
       - 'Control/build.py'
       - 'Control/plugin/**'
+      - 'bootstrap/build.py'
+      - 'tools/build_bkp_compendium.py'
       - '.github/workflows/compile.yml'
   workflow_dispatch:
 
@@ -78,6 +88,21 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Compile BLUEPRINT from working sources
+        run: |
+          python3 -m pip install --quiet pyyaml
+          (cd Blueprint && python3 ../bootstrap/build.py)
+          cp Blueprint/BLUEPRINT.txt Blueprint/COMPILED.md
+          cp Blueprint/BLUEPRINT.txt Blueprint/COMPILED.txt
+          for FILE in STATUS.yaml REFERENCES.yaml STATUS.txt REFERENCES.txt; do
+            cp Blueprint/DIRECTORY.yaml "Blueprint/$FILE"
+          done
+          if ! git diff --quiet -- Blueprint/BLUEPRINT.txt; then
+            echo "FATAL: committed Blueprint/BLUEPRINT.txt is not the exact compiled source."
+            git diff -- Blueprint/BLUEPRINT.txt
+            exit 1
+          fi
+
       - name: Guard - CONTROL plugin is current
         run: python3 Control/build.py --check
 
@@ -87,15 +112,22 @@ jobs:
           set -e
           CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} || true)
           echo "changed in this push:"; echo "$CHANGED"
-          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(GUIDE|PROCESSES|DIRECTORY)\.(txt|md|yaml)$' || true)
+          BAD=$(echo "$CHANGED" | grep -E '^Blueprint/(GUIDE|PROCESSES|DIRECTORY|VERSION)\.txt$|^Blueprint/(COMPILED\.(md|txt)|STATUS\.(yaml|txt)|REFERENCES\.(yaml|txt))$' || true)
           if [ -n "$BAD" ]; then
-            echo ""
-            echo "REJECTED - these are DERIVED files and were edited by hand:"
-            echo "$BAD"
-            echo ""
-            echo "Edit Blueprint/BLUEPRINT.txt instead. These are regenerated"
-            echo "from it; a change here would be silently overwritten."
-            exit 1
+            STALE=""
+            for FILE in $BAD; do
+              if ! git diff --quiet -- "$FILE"; then
+                STALE="$STALE$FILE\n"
+              fi
+            done
+            if [ -n "$STALE" ]; then
+              echo ""
+              echo "REJECTED - changed derived files do not match the fresh build:"
+              printf "$STALE"
+              echo "Edit Blueprint/GUIDE.md, PROCESSES.md or DIRECTORY.yaml instead."
+              exit 1
+            fi
+            echo "changed text twins match the fresh build exactly"
           fi
           echo "guard passed"
 
@@ -372,6 +404,14 @@ jobs:
                   "Header": 23,
                   "OrderedList": 2,
                   "Para": 61,
+                  "RawBlock": 3,
+              },
+              ("180926_gpt_word-pagination", "190926_gpt_fit-and-access"): {
+                  "BulletList": 3,
+                  "CodeBlock": 7,
+                  "Header": 23,
+                  "OrderedList": 1,
+                  "Para": 63,
                   "RawBlock": 3,
               },
           }

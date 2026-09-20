@@ -43,7 +43,7 @@ if exist ".git\rebase-merge" (
   echo [ABORT] unfinished rebase detected.
   pause & exit /b 1
 )
-for %%F in (AGENTS.md CONTROL.txt shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md CONTROL.txt BLUEPRINT.front.md GUIDE.md PROCESSES.md DIRECTORY.yaml BLUEPRINT.txt shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if not exist "..\%%F" (
     echo [ABORT] required workspace file missing: ..\%%F
     pause & exit /b 1
@@ -59,6 +59,13 @@ if not exist "Control\CONTROL.txt" (
 if errorlevel 1 (
   echo [ABORT] root CONTROL.txt and Control\CONTROL.txt differ.
   pause & exit /b 1
+)
+for %%F in (BLUEPRINT.front.md GUIDE.md PROCESSES.md DIRECTORY.yaml BLUEPRINT.txt) do (
+  %SystemRoot%\System32\fc.exe /b "..\%%F" "Blueprint\%%F" >nul
+  if errorlevel 1 (
+    echo [ABORT] root %%F and Blueprint\%%F differ.
+    pause & exit /b 1
+  )
 )
 python Control\build.py --check || (
   echo [ABORT] CONTROL plugin is stale or invalid.

@@ -72,7 +72,7 @@ def expected_files(source: str) -> dict[Path, str]:
         fail(f"authoritative Blueprint is missing: {BLUEPRINT}")
     blueprint = BLUEPRINT.read_text(encoding="utf-8")
     section_bounds = {
-        "G1": (r"^# \[G1\] GUIDE\s*$", r"^# \[P\] PROCESSES\s*$"),
+        "G1": (r"^# \[G1\] EDITING\s*$", r"^# \[P\] PROCESSES\s*$"),
         "P1": (r"^## \[P1\] COPY\s*$", r"^## \[P2\] VERIFICATION\s*$"),
         "P2": (r"^## \[P2\] VERIFICATION\s*$", r"^## \[P3\] PHOTOS\s*$"),
         "P3": (r"^## \[P3\] PHOTOS\s*$", r"^## \[P4\] CHECKING\s*$"),

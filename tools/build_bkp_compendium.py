@@ -57,8 +57,10 @@ KEEP_TOGETHER_MAX_LINES = 40
 # three-file delivery structure: DIRECTORY carries both STATUS and REFERENCES.
 #
 # Cell width 9360/4 = 2340 twips. Position alone says which section this is:
-# CORE hard left, PROCESSES a quarter across, STATUS half, REFS flush right.
+# GUIDE hard left, PROCESSES a quarter across, STATUS half, REFERENCES flush right.
 STRIP = ["CORE", "PROCESSES", "STATUS", "REFERENCES"]
+REGISTER_WIDTH = 9878  # 6.86in: the full page measure between the side margins
+REGISTER_CELL_WIDTH = REGISTER_WIDTH // 4
 
 # Which strip cells each part owns. The part's title sits over the first of them.
 PART_CELLS = {
@@ -77,8 +79,8 @@ SECTION_SUBTITLE = {
     "REFERENCES": "the knowledge base",
 }
 
-# REFERENCES prints as REFS: at Heading 1 size, indented to the fourth cell,
-# the full word wraps. Presentation only - canon keeps the full name.
+# Keep the compact, well-understood REFS label in section furniture. The
+# contents spells REFERENCES out where width is not constrained.
 SECTION_DISPLAY = {"REFERENCES": "REFS"}
 
 # The running head names where the text actually lives, which is the file the
@@ -115,7 +117,8 @@ REGISTER_HEADINGS = {
     "numbers_symbols": "NUMBERS AND SYMBOLS",
     "names_honorifics": "NAMES & HONORIFICS",
     "uk_us_traps": "UK VS US TRAPS",
-    "us_forms_acceptable": "US FORMS ACCEPTABLE",
+    "us_forms_acceptable": "ACCEPTABLE US FORMS",
+    "held_examples": "EXAMPLES",
     "rulings": "VOCABULARY RULINGS",
     "chinese": "CHINESE", "indonesian": "INDONESIAN",
     "myanmar_cambodian": "MYANMAR / CAMBODIAN",
@@ -138,7 +141,7 @@ RECORD_FIELDS = ["fact", "office", "ruling", "second_ref", "directive"]
 # register all key off COMPONENTS - so this is presentation only and never
 # reaches back into canon.
 COMPONENT_DISPLAY = {
-    "CORE": "EDITING",
+    "CORE": "GUIDE",
     "PROCESSES": "PROCESSES",
     "DIRECTORY": "DIRECTORY",
 }
@@ -149,7 +152,7 @@ COMPONENT_SHORTFORM = {
     "DIRECTORY": "/dir",
 }
 COMPONENT_DESCRIPTIONS = {
-    "CORE": "Bangkok Post editing and its output contract",
+    "CORE": "Bangkok Post editing guidance and its output contract",
     "PROCESSES": "Copy fitting, verification and bounded desk tasks",
     "DIRECTORY": "Current tripwires, canonical forms and exceptions",
 }
@@ -167,10 +170,9 @@ def heading_label(text):
 
 
 def section_heading(component):
-    """Keep GUIDE codes in Word titles while routing on stable labels."""
+    """Return the human title; routing codes are quiet right-edge furniture."""
     label = SECTION_DISPLAY.get(component, COMPONENT_DISPLAY.get(component, component))
-    code = SECTION_HEADING_CODE.get(component)
-    return f"[{code}] {label}" if code else label
+    return label
 
 
 def ensure_style(doc, name, base="normal"):
@@ -188,6 +190,9 @@ def configure_full_styles(doc):
     normal.paragraph_format.space_after = Pt(6.5)
     normal.paragraph_format.line_spacing = 1.1
     normal.paragraph_format.widow_control = True
+    # Editorial prose runs as ordinary paragraphs on a deliberately narrow
+    # measure. Source line wrapping must never become visible line breaks.
+    normal.paragraph_format.right_indent = Inches(1.35)
 
     h1 = doc.styles["Heading 1"]
     set_font(h1, "Arial Black", 46, True)   # section head, up from 36
@@ -195,13 +200,14 @@ def configure_full_styles(doc):
     h1.paragraph_format.space_after = Pt(12)
     h1.paragraph_format.keep_with_next = True
     h1.paragraph_format.page_break_before = False
+    h1.paragraph_format.right_indent = Inches(0)
 
     h2 = doc.styles["Heading 2"]
     set_font(h2, "Arial Black", 20, True)
     h2.font.all_caps = True
     # Much lighter: at full black this level competed with the section head
     # and blunted it in thumbnail view. Tone separates them, size alone did not.
-    h2.font.color.rgb = RGBColor(0xB0, 0xB0, 0xB0)
+    h2.font.color.rgb = RGBColor(0x55, 0x55, 0x55)
     # 270726: no rule at this level. The rule was the heaviest mark on the
     # line and made the grey heading read as a caption to it. Separation is
     # done with white space - roughly three blank lines above.
@@ -219,20 +225,23 @@ def configure_full_styles(doc):
     h2.paragraph_format.space_before = Pt(17)
     h2.paragraph_format.space_after = Pt(8)
     h2.paragraph_format.keep_with_next = True
+    h2.paragraph_format.right_indent = Inches(0)
 
     h3 = doc.styles["Heading 3"]
     set_font(h3, "Arial Black", 13.2, True)
     h3.font.all_caps = True
-    h3.font.color.rgb = RGBColor(0x55, 0x55, 0x55)
+    h3.font.color.rgb = RGBColor(0xA0, 0xA0, 0xA0)
     h3.paragraph_format.space_before = Pt(11)
     h3.paragraph_format.space_after = Pt(4.5)
     h3.paragraph_format.keep_with_next = True
+    h3.paragraph_format.right_indent = Inches(0)
 
     h4 = doc.styles["Heading 4"]
     set_font(h4, "Arial", 11.2, True)
     h4.paragraph_format.space_before = Pt(9)
     h4.paragraph_format.space_after = Pt(3.5)
     h4.paragraph_format.keep_with_next = True
+    h4.paragraph_format.right_indent = Inches(0)
 
     roles = {
         "BKP Cover Kicker": ("Arial Black", 14, True, False),
@@ -264,6 +273,9 @@ def configure_full_styles(doc):
     for name, (font, size, bold, italic) in roles.items():
         style = ensure_style(doc, name)
         set_font(style, font, size, bold, italic, "000000" if name != "BKP Footer" else "555555")
+        # Component styles inherit from Normal, but furniture, code, metadata
+        # and table copy must use their own full measure.
+        style.paragraph_format.right_indent = Inches(0)
 
     doc.styles["BKP Cover Kicker"].paragraph_format.space_after = Pt(22)
     doc.styles["BKP Cover Display"].paragraph_format.space_after = Pt(0)
@@ -294,15 +306,19 @@ def configure_full_styles(doc):
     doc.styles["BKP Axiom Label"].paragraph_format.keep_with_next = True
     doc.styles["BKP Axiom"].paragraph_format.space_after = Pt(8)
     doc.styles["BKP Axiom"].paragraph_format.left_indent = Inches(0.16)
+    doc.styles["BKP Axiom"].paragraph_format.right_indent = Inches(1.35)
     doc.styles["BKP Operator Note"].paragraph_format.left_indent = Inches(0.18)
     doc.styles["BKP Operator Note"].paragraph_format.space_before = Pt(7)
     doc.styles["BKP Operator Note"].paragraph_format.space_after = Pt(7)
     doc.styles["BKP Numbered"].paragraph_format.space_after = Pt(4.5)
     doc.styles["BKP Numbered"].paragraph_format.line_spacing = 1.06
+    doc.styles["BKP Numbered"].paragraph_format.right_indent = Inches(1.35)
     doc.styles["BKP Bullet"].paragraph_format.space_after = Pt(4)
     doc.styles["BKP Bullet"].paragraph_format.line_spacing = 1.06
+    doc.styles["BKP Bullet"].paragraph_format.right_indent = Inches(1.35)
     doc.styles["BKP List Continuation"].paragraph_format.left_indent = Inches(0.34)
     doc.styles["BKP List Continuation"].paragraph_format.space_after = Pt(4)
+    doc.styles["BKP List Continuation"].paragraph_format.right_indent = Inches(1.35)
     doc.styles["BKP Footer"].paragraph_format.space_after = Pt(0)
     doc.styles["BKP Contents Label"].paragraph_format.space_after = Pt(1)
     doc.styles["BKP Contents Title"].paragraph_format.space_after = Pt(1)
@@ -477,7 +493,8 @@ def add_register(doc, active):
     # four, so a part-count change no longer needs this edited.
     cols = len(STRIP)
     table = doc.add_table(rows=1, cols=cols)
-    widths = [9360 // cols] * cols
+    widths = [REGISTER_CELL_WIDTH] * cols
+    widths[-1] += REGISTER_WIDTH - sum(widths)
     set_repeat_table_layout(table, widths)
     for idx, name in enumerate(STRIP):
         cell = table.cell(0, idx)
@@ -514,8 +531,8 @@ def add_register(doc, active):
 
 
 def add_cover(doc, source_title, source_meta):
-    p = doc.add_paragraph("A STYLE GUIDE", style="BKP Cover Kicker")
-    p.paragraph_format.space_before = Pt(24)
+    # The tagline already establishes that this is a style guide. Repeating
+    # STYLE on the cover weakened the title and spent useful vertical space.
     for line in ("THE", "BANGKOK", "POST", "BLUEPRINT"):
         doc.add_paragraph(line, style="BKP Cover Display")
     doc.add_paragraph("2026", style="BKP Cover Year")
@@ -610,6 +627,11 @@ def add_part_opening(doc, component, part_number, subtitle=None):
     # strip and the component title, so the running head would only repeat it.
     configure_header_footer(section, component, blank_first=True)
     add_register(doc, component)
+    # GUIDE already owns the left contents panel and the active register cell.
+    # Its first real section, EDITING (G1), is therefore the page title. Printing
+    # GUIDE again here creates an unnecessary GUIDE / EDITING double opening.
+    if component == "CORE":
+        return section
     # 270726: the "PART: X" label is gone - the title states it and the
     # register strip shows position. Two "part" statements on one page was
     # the redundancy.
@@ -620,6 +642,15 @@ def add_part_opening(doc, component, part_number, subtitle=None):
     title = doc.add_paragraph(
         section_heading(component),
         style="Heading 1")
+    code = SECTION_HEADING_CODE.get(component)
+    if code:
+        title.paragraph_format.tab_stops.add_tab_stop(
+            Inches(6.86), WD_TAB_ALIGNMENT.RIGHT)
+        code_run = title.add_run("\t" + code)
+        code_run.font.name = "Arial"
+        code_run.font.size = Pt(8)
+        code_run.font.bold = False
+        code_run.font.color.rgb = RGBColor(0xA0, 0xA0, 0xA0)
     # The title sits over its own cell. 090826 — this keyed off COMPONENTS,
     # which had become two, so REGISTER counted as the LAST cell and anchored
     # flush right, over REFERENCES rather than over anything it owned. It now
@@ -630,7 +661,7 @@ def add_part_opening(doc, component, part_number, subtitle=None):
             # Last cell shares the right margin, so anchor to that edge.
             title.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         elif i > 0:
-            title.paragraph_format.left_indent = Twips(i * 2340)
+            title.paragraph_format.left_indent = Twips(i * REGISTER_CELL_WIDTH)
     # STATUS and REFERENCES come out of YAML, which carries no sub-line of its
     # own; CORE and PROCESSES take theirs from the source text as before.
     if subtitle:
@@ -649,6 +680,27 @@ def add_part_opening(doc, component, part_number, subtitle=None):
     # directly beneath it, and the rule moves below that pair - see the
     # slug post-pass in build().
     return section
+
+
+def add_source_heading(doc, level, inlines, text):
+    """Render an edition code as small right-edge navigation, not headline text."""
+    style = f"Heading {min(level, 4)}"
+    match = GUIDE_HEADING_CODE_RE.match(text)
+    if not match:
+        p = doc.add_paragraph(style=style)
+        add_inlines(p, inlines)
+        return p
+    code, label = match.groups()
+    p = doc.add_paragraph(style=style)
+    p.add_run(label)
+    p.paragraph_format.tab_stops.add_tab_stop(
+        Inches(6.86), WD_TAB_ALIGNMENT.RIGHT)
+    r = p.add_run("\t" + code)
+    r.font.name = "Arial"
+    r.font.size = Pt(7.5 if level > 2 else 8)
+    r.font.bold = False
+    r.font.color.rgb = RGBColor(0xA0, 0xA0, 0xA0)
+    return p
 
 
 def add_labeled_metadata(doc, text, labels):
@@ -917,15 +969,55 @@ def register_heading(key):
     return REGISTER_HEADINGS.get(key, key.replace("_", " ").upper())
 
 
+def register_key(key):
+    """Humanise machine keys without changing the canonical YAML."""
+    special = {
+        "mr_ms": "Mr/Ms",
+        "dcx": "DCX",
+        "us_forms_acceptable": "Acceptable US forms",
+    }
+    if str(key) in special:
+        return special[str(key)]
+    text = str(key).replace("_", " ")
+    return text[:1].upper() + text[1:]
+
+
 def add_entry(doc, key, value):
-    """One register entry: bold key, en-dash, ruling. The 310726 sweep put the
-    register on this shape - key + ruling - and converted the old tables to it.
-    It is reproduced here rather than reverted to tables."""
-    p = doc.add_paragraph()
-    run = p.add_run(str(key))
+    """One compact lookup row with two genuine, bounded text columns.
+
+    A tab stop aligns only the first line: a long key can run through the
+    apparent barrier and a hard return in the value can restart at the page
+    margin. Separate cells make the divider structural. Every line in the
+    left cell wraps before it; every line in the right cell starts after it.
+    """
+    table = doc.add_table(rows=1, cols=2)
+    set_repeat_table_layout(table, [2880, 6998])
+    row_pr = table.rows[0]._tr.get_or_add_trPr()
+    row_pr.append(OxmlElement("w:cantSplit"))
+    tbl_pr = table._tbl.tblPr
+    borders = tbl_pr.find(qn("w:tblBorders"))
+    if borders is None:
+        borders = OxmlElement("w:tblBorders")
+        tbl_pr.append(borders)
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        node = OxmlElement("w:" + edge)
+        node.set(qn("w:val"), "nil")
+        borders.append(node)
+
+    left, right = table.rows[0].cells
+    set_cell_margins(left, top=0, start=0, bottom=25, end=100)
+    set_cell_margins(right, top=0, start=0, bottom=25, end=0)
+    for cell in (left, right):
+        cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
+        p = cell.paragraphs[0]
+        p.paragraph_format.space_after = Pt(0)
+        p.paragraph_format.line_spacing = 1.02
+        p.paragraph_format.right_indent = Inches(0)
+
+    run = left.paragraphs[0].add_run(register_key(key))
     run.bold = True
-    p.add_run(" — " + str(value).strip())
-    return p
+    right.paragraphs[0].add_run(str(value).strip())
+    return table
 
 
 def compose_record(record):
@@ -947,17 +1039,22 @@ def render_register_node(doc, node, level):
       list of scalars      -> bullets
     'note' and 'convention' keys are prose and print as body, not as entries.
     """
-    heading_style = "Heading %d" % min(level, 4)
-
     if isinstance(node, dict):
         for key, value in node.items():
             if key in ("note", "convention") and not isinstance(value, (dict, list)):
-                doc.add_paragraph(str(value).strip())
+                p = doc.add_paragraph(str(value).strip())
+                p.paragraph_format.right_indent = Inches(0)
                 continue
             if isinstance(value, dict):
+                if key in ("language_forms", "hard_dates"):
+                    render_register_node(doc, value, level)
+                    continue
+                display_level = level + 1 if key == "datelines" else level
+                heading_style = "Heading %d" % min(display_level, 4)
                 doc.add_paragraph(register_heading(key), style=heading_style)
                 render_register_node(doc, value, level + 1)
             elif isinstance(value, list):
+                heading_style = "Heading %d" % min(level, 4)
                 if key == "apex":
                     doc.add_paragraph(register_heading(key), style=heading_style)
                     for item in value:
@@ -973,7 +1070,7 @@ def render_register_node(doc, node, level):
                     # A short scalar list reads better inline than as bullets;
                     # a long one is a real list. Province rosters are the long
                     # case and there are 77 of them.
-                    add_entry(doc, register_heading(key).title(),
+                    add_entry(doc, key,
                               "; ".join(str(v).strip().rstrip(".;")
                                         for v in value))
             else:
@@ -996,7 +1093,15 @@ def render_register(doc, data, open_section):
     invertible - but it is a transport wrapper, and printing the wrapper was
     never the intent. Parsed here and rendered as the original did.
     """
-    before = len(doc.paragraphs)
+    def rendered_paragraph_count():
+        return len(doc.paragraphs) + sum(
+            len(cell.paragraphs)
+            for table in doc.tables
+            for row in table.rows
+            for cell in row.cells
+        )
+
+    before = rendered_paragraph_count()
     for branch, title in (("status", "STATUS"), ("references", "REFERENCES")):
         if branch not in data:
             continue
@@ -1021,7 +1126,7 @@ def render_register(doc, data, open_section):
     # check moves here and gets finer: every leaf value in the register must
     # reach a paragraph. Counted, not sampled.
     leaves = count_register_leaves(data)
-    written = len(doc.paragraphs) - before
+    written = rendered_paragraph_count() - before
     if written < leaves:
         raise SystemExit(
             "FATAL: register render dropped content. %d leaf values in the "
@@ -1256,13 +1361,26 @@ def add_contents(doc, level4_texts):
         if para.style.name not in indexed_styles:
             continue
         text = para.text.strip()
+        if "\t" in text:
+            text = text.split("\t", 1)[0].strip()
+        if text == "REFS":
+            text = "REFERENCES"
         if para.style.name == "Heading 4" and text not in level4_texts:
             continue
         if not text:
             continue
+        # GUIDE is the left-hand container label, exactly as DIRECTORY is the
+        # right-hand container label. Repeating GUIDE as its own first entry
+        # produced GUIDE / GUIDE and obscured the intended EDITING / STATUS pair.
+        if panel == "GUIDE" and para.style.name == "Heading 1" and text == "GUIDE":
+            continue
         if text == "STATUS":
             panel = "DIRECTORY"
-        if panel == "DIRECTORY" and para.style.name in ("Heading 3", "Heading 4"):
+        # Mirror the GUIDE panel's useful depth. Directory Heading 2 entries
+        # such as NUMBERS need their immediate Heading 3 breakdown (GENERAL,
+        # ROMAN NUMERALS, QUANTITIES, etc.); only the deeper Heading 4 layer is
+        # omitted from the one-page contents.
+        if panel == "DIRECTORY" and para.style.name == "Heading 4":
             continue
         entries.append((panel, para.style.name, text, para))
     if not entries:
@@ -1297,22 +1415,23 @@ def add_contents(doc, level4_texts):
     def linked_entry(cell, index, style, text, panel):
         sizes = {
             "GUIDE": {"Heading 1": "30", "Heading 2": "22", "Heading 3": "19", "Heading 4": "17"},
-            "DIRECTORY": {"Heading 1": "32", "Heading 2": "24", "Heading 3": "20", "Heading 4": "17"},
+            "DIRECTORY": {"Heading 1": "28", "Heading 2": "20", "Heading 3": "15", "Heading 4": "15"},
         }
         spacing = {
             "GUIDE": {"Heading 1": (7, 3), "Heading 2": (4, 1.5), "Heading 3": (3, 1), "Heading 4": (1.5, 0.5)},
-            "DIRECTORY": {"Heading 1": (8, 3), "Heading 2": (5, 2), "Heading 3": (3, 1.5), "Heading 4": (1.5, 0.5)},
+            "DIRECTORY": {"Heading 1": (4, 1), "Heading 2": (1, 0), "Heading 3": (0, 0), "Heading 4": (0, 0)},
         }
         indents = {"Heading 1": 0.0, "Heading 2": 0.12, "Heading 3": 0.24, "Heading 4": 0.36}
         fonts = {"Heading 1": "Arial Black", "Heading 2": "Arial Black", "Heading 3": "Arial Black", "Heading 4": "Arial"}
-        colors = {"Heading 1": "000000", "Heading 2": "A0A0A0", "Heading 3": "555555", "Heading 4": "000000"}
+        colors = {"Heading 1": "000000", "Heading 2": "555555", "Heading 3": "A0A0A0", "Heading 4": "000000"}
 
         p = cell.add_paragraph()
         pf = p.paragraph_format
         pf.left_indent = Inches(indents[style])
+        pf.right_indent = Inches(0)
         pf.space_before = Pt(spacing[panel][style][0])
         pf.space_after = Pt(spacing[panel][style][1])
-        pf.line_spacing = 1.0
+        pf.line_spacing = 0.9 if panel == "DIRECTORY" else 1.0
 
         link = OxmlElement("w:hyperlink")
         link.set(qn("w:anchor"), "_bkp_toc_%d" % index)
@@ -1350,6 +1469,7 @@ def add_contents(doc, level4_texts):
     bp = banner_cell.paragraphs[0]
     bp.alignment = WD_ALIGN_PARAGRAPH.CENTER
     bp.paragraph_format.space_after = Pt(0)
+    bp.paragraph_format.right_indent = Inches(0)
     br = bp.add_run("CONTENTS")
     br.font.name = "Arial Black"
     br.font.size = Pt(28)
@@ -1362,6 +1482,24 @@ def add_contents(doc, level4_texts):
 
     panels = doc.add_table(rows=1, cols=3)
     set_repeat_table_layout(panels, [4500, 360, 4500])
+    # One contents object, not two competing boxes. The gutter remains open
+    # between the equal GUIDE and DIRECTORY columns while a single outer rule
+    # contains the complete index.
+    tbl_pr = panels._tbl.tblPr
+    borders = tbl_pr.find(qn("w:tblBorders"))
+    if borders is None:
+        borders = OxmlElement("w:tblBorders")
+        tbl_pr.append(borders)
+    for edge in ("top", "left", "bottom", "right"):
+        node = OxmlElement("w:" + edge)
+        node.set(qn("w:val"), "single")
+        node.set(qn("w:sz"), "12")
+        node.set(qn("w:color"), "9A9A9A")
+        borders.append(node)
+    for edge in ("insideH", "insideV"):
+        node = OxmlElement("w:" + edge)
+        node.set(qn("w:val"), "nil")
+        borders.append(node)
     row_pr = panels.rows[0]._tr.get_or_add_trPr()
     panel_repeat = OxmlElement("w:tblHeader")
     panel_repeat.set(qn("w:val"), "true")
@@ -1377,8 +1515,7 @@ def add_contents(doc, level4_texts):
     set_cell_margins(right, top=160, start=180, bottom=180, end=180)
     for cell in (left, right):
         set_cell_shading(cell, "F7F7F7")
-        box_borders(cell)
-    for cell, label in ((left, "EDITING"), (right, "DIRECTORY")):
+    for cell, label in ((left, "GUIDE"), (right, "DIRECTORY")):
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.space_after = Pt(7)
@@ -1392,7 +1529,14 @@ def add_contents(doc, level4_texts):
         linked_entry(left if panel == "GUIDE" else right,
                      index, style, text, panel)
 
-    block = [banner._tbl, spacer._p, panels._tbl]
+    # The cover is a complete page. Force the CONTENTS banner and both panels
+    # to begin together on the following page instead of leaving the banner at
+    # the foot of the cover.
+    contents_break = doc.add_paragraph()
+    contents_break.paragraph_format.page_break_before = True
+    contents_break.paragraph_format.space_after = Pt(0)
+    contents_break.add_run().font.size = Pt(1)
+    block = [contents_break._p, banner._tbl, spacer._p, panels._tbl]
     body = doc._body._element
     boundary = next(
         (child for child in body
@@ -1545,8 +1689,7 @@ def build(source, reference, output, pandoc, manifest, component=None):
                 last_heading_level = None
                 continue
             style = f"Heading {min(level, 4)}"
-            p = doc.add_paragraph(style=style)
-            add_inlines(p, inlines)
+            p = add_source_heading(doc, level, inlines, text)
             # 270726: no rule at either level. The section head carries its
             # rule under the shortlink/version pair instead, and the level
             # below is separated by white space, not by a line.
@@ -1589,8 +1732,6 @@ def build(source, reference, output, pandoc, manifest, component=None):
                     add_labeled_metadata(doc, text, ["Status:", "Purpose:"])
                 elif text.startswith("provinces:"):
                     add_province_index(doc, text)
-                elif any(item["t"] == "SoftBreak" for item in block["c"]):
-                    add_segmented_paragraph(doc, block["c"])
                 else:
                     style = "BKP Source Marker" if len(block["c"]) == 1 and block["c"][0]["t"] == "Code" else "normal"
                     p = doc.add_paragraph(style=style)

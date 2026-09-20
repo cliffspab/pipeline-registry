@@ -11,7 +11,7 @@ from pathlib import Path
 SEAM = re.compile(r"<!-- PART: (\S+) (GUIDE|PROCESSES|DIRECTORY) -->")
 FENCE = re.compile(r"```yaml\n(.*?)\n```", re.S)
 TASKS = {
-    "edit": (r"^# \[G1\] GUIDE\s*$", r"\Z"),
+    "edit": (r"^# \[G1\] EDITING\s*$", r"\Z"),
     "fit": (r"^## \[P1\] COPY\s*$", r"^## \[P2\] VERIFICATION\s*$"),
     "verify": (r"^## \[P2\] VERIFICATION\s*$", r"^## \[P3\] PHOTOS\s*$"),
     "photo": (r"^## \[P3\] PHOTOS\s*$", r"^## \[P4\] CHECKING\s*$"),

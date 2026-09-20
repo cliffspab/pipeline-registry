@@ -64,9 +64,9 @@ one-character difference between lines is a useful target, not a pass condition.
 
 Use letter weight to make the final fit:
 
-* baseline — a, e, n, o, p
-* lean — i, l, t, f, r, s, j, spaces and punctuation
-* heavy — m, w, M, W, O, Q, G, C
+* lean, 0.5 — i, l, t, f, r, s, j, spaces and punctuation
+* baseline, 1.0 — a, e, n, o, p
+* heavy, 1.5 — m, w, M, W, O, Q, G, C
 
 For overmatter, trade heavy forms for lean ones. For undermatter, do the
 reverse. Put subheads and other treatments the copy box cannot carry in the
@@ -74,24 +74,18 @@ Style Log under `Styles required`.
 
 ### [P1-B] BODY
 
-Work the whole story toward the target rather than cutting from the end.
+The target defines a container: preserve the story's strongest reporting inside
+that volume. It is a footprint, not a cut point. Edit the whole story toward it;
+never trim mechanically from the end.
 
 DCX supplies body fit as `current / target (difference)`, for example
-`2606 / 1749 (+857)`. A positive difference is the number to remove; a negative
-difference is the number to restore. A signed spill alone carries the same
-meaning.
+`2606 / 1749 (+857)`. A positive difference is the volume to remove; a negative
+difference is the volume to restore. A signed spill carries the same meaning.
 
-DCX counts characters and spaces but not paragraph breaks. Normalise breaks
-away before counting.
-
-Measure the filed body, then use two post-edit count passes:
-
-1. Count the filed body. It should match the supplied current total; if not,
-   note the mismatch and use the measured figure.
-2. Recast by editorial value, then count against the target to establish the
-   residual.
-3. Correct the residual within material already counted and count the returned
-   body.
+For an exact DCX target, count characters and spaces but not paragraph breaks.
+Measure the filed body, recast it by editorial value, count the result, then
+correct the residual within material already counted. If the filed measurement
+does not match DCX, note the mismatch and use the measured figure.
 
 ```python
 import re
@@ -102,19 +96,45 @@ print(len(text.replace('\n', '').strip()))
 
 Pass the body only, without headline, deck or output labels, to the counter.
 
-When exact counting is unavailable, use one-in/one-out substitution: replace
-sections with material of equivalent volume until the story fits, and describe
-the result as estimated rather than verified.
+When exact counting is unavailable, use the supplied `**OVERSPILL**` marker or
+visible container edge to judge the available footprint. Exchange material
+one-in/one-out until the edited story occupies about the same volume. Use glyph
+weight when it helps compare close alternatives. Report the result as estimated,
+not as a verified character count.
 
-Cut repetition, secondary incidents, disposable transitions, background
-already implied and colour that adds no fact. Protect the core event,
-named-source quotations, figures, cause, consequence and information not stated
-elsewhere. Read the final paragraph before cutting it.
+**Worked overspill.** The marker below shows the container edge; it does not
+declare that everything after it must be cut.
 
-For underfill, restore the strongest useful material removed during the edit.
-If none remains, return the story short and record the shortfall. Do not pad or
-invent. A cut point marks the new container edge; material after it remains
-available for restoration.
+```text
+The minister said talks would resume next month. The delegation included six
+officials whose names had already appeared earlier in the story.
+
+**OVERSPILL**
+
+She said the two sides had also agreed to reopen the border checkpoint, closed
+since June, once a joint inspection was complete.
+```
+
+The fitted story drops the repeated attendee list and brings the stronger border
+development above the edge:
+
+```text
+The minister said talks would resume next month. She said the two sides had also
+agreed to reopen the border checkpoint after a joint inspection.
+```
+
+The marker set the footprint, not the cut. Weaker material above it was exchanged
+for stronger reporting below it, and the whole story was edited to the available
+volume.
+
+Cut repetition, secondary incidents, disposable transitions, background already
+implied and colour that adds no fact. Protect the core event, named-source
+quotations, figures, cause, consequence and information not stated elsewhere.
+Read the final paragraph before cutting it.
+
+For underfill, restore the strongest useful material removed during the edit. If
+none remains, return the story short and record the shortfall. Do not pad or
+invent.
 ## [P2] VERIFICATION
 
 Supports the edit; it is not a separate performance.
