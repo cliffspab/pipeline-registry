@@ -1,4 +1,4 @@
-<!-- PART: 190926_gpt_fit-and-access GUIDE -->
+<!-- PART: 210926_gpt_fit-and-access GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -40,8 +40,8 @@ When authorities conflict, resolve them in this order:
 
 ## [G1-B] HOUSE ESSENTIALS
 
-For a current Thai minister or ministry portfolio, check the official cabinet 
-record: thaigov.go.th/en/cabinet/minister.
+For a current Thai minister or ministry portfolio, check the official cabinet
+record: https://thaigov.go.th/en/cabinet/minister.
 
 Apply these on every edit:
 

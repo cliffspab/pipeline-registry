@@ -1,6 +1,6 @@
 # BANGKOK POST DESK CONTROL
 
-190926_control_fit-and-access
+210926_control_fit-and-access
 
 This source maps each desk task to its working sections of BLUEPRINT. The
 generated skill carries those sections; CONTROL adds no editorial doctrine.

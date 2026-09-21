@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT
 
-190926_gpt_fit-and-access
+210926_gpt_fit-and-access
 
 a style guide
 
@@ -26,8 +26,46 @@ a style guide
   - [P4] CHECKING
   - [P5] PR
 - [D] DIRECTORY — `DIRECTORY.yaml`
+  - STATUS
+    - APEX FIGURES
+    - SECOND TIER
+      - WATCH
+      - MORTALITIES AND SUCCESSIONS
+      - CORPORATE LEADERSHIP CHANGES
+    - GLOBAL FIGURES
+  - REFERENCES
+    - NUMBERS
+      - GENERAL
+      - ROMAN NUMERALS
+      - QUANTITIES
+    - TIMES
+    - DATES
+      - DATELINES
+    - CURRENCY
+      - SYMBOLS
+    - MEASUREMENTS
+      - INDUSTRY EXCEPTIONS
+      - QUOTES
+    - NAMES & HONORIFICS
+      - TRADITIONS
+      - EXAMPLES
+    - ACRONYMS
+    - HEADLINE COUNTRY FORMS
+    - TITLE STYLING
+    - COUNTRIES
+      - PREFERRED FORMS
+      - ADJECTIVAL / DEMONYM TRAPS
+      - CAPITALS AND COUNTRY STRUCTURE
+    - FOREIGN PLACES
+    - THAI PLACES
+      - PROVINCES
+    - ORGANISATIONS
+    - VOCABULARY & SPELLING
+      - NUMBERS AND SYMBOLS
+      - UK VS US TRAPS
+      - VOCABULARY RULINGS
 
-<!-- PART: 190926_gpt_fit-and-access GUIDE -->
+<!-- PART: 210926_gpt_fit-and-access GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -69,8 +107,8 @@ When authorities conflict, resolve them in this order:
 
 ## [G1-B] HOUSE ESSENTIALS
 
-For a current Thai minister or ministry portfolio, check the official cabinet 
-record: thaigov.go.th/en/cabinet/minister.
+For a current Thai minister or ministry portfolio, check the official cabinet
+record: https://thaigov.go.th/en/cabinet/minister.
 
 Apply these on every edit:
 
@@ -206,7 +244,7 @@ STYLE LOG
 Converted Sept 16 to yesterday and 90 centimetres to 90cm; applied the Thai
 second reference; supplied the headline and deck.
 ````
-<!-- PART: 190926_gpt_fit-and-access PROCESSES -->
+<!-- PART: 210926_gpt_fit-and-access PROCESSES -->
 
 # [P] PROCESSES
 how we do it
@@ -386,7 +424,7 @@ the desk.
 PR copy is supplied with case-specific return guidance because its format,
 deployment and available tools vary. Follow that guidance. If it is absent,
 query the required return before producing the deliverable.
-<!-- PART: 190926_gpt_fit-and-access DIRECTORY -->
+<!-- PART: 210926_gpt_fit-and-access DIRECTORY -->
 
 go.fuzzylogic.page/dir
 

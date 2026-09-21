@@ -35,6 +35,17 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-21
+
+- 2026-09-21 | Blueprint sources and BLUEPRINT.txt | Promoted the supervisor-supplied `210926_gpt_fit-and-access` authority.
+
+- 2026-09-21 | GUIDE and VERSION | Added the official Thai cabinet link and advanced the exact `/ver` witness to `210926_gpt_fit-and-access`.
+
+- 2026-09-21 | CONTROL and generated EDIT skill | Advanced mechanically to `210926_control_fit-and-access` without changing routing doctrine.
+
+- 2026-09-21 | VERSION_HISTORY.md | Recorded the `210926_gpt_fit-and-access` authority, evidence and publication condition.
+
 ## Cleared 2026-09-21
 
 - 2026-09-21 | CI coverage guard | Recognise the approved removal of source

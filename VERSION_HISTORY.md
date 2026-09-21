@@ -6,6 +6,32 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-21 — 210926_gpt_fit-and-access: AUTHORITATIVE EDITION WITNESS
+
+**Scope.** The supervisor-supplied authoritative Blueprint advances the
+edition witness from `190926_gpt_fit-and-access` to
+`210926_gpt_fit-and-access` and places the official Thai cabinet record,
+`https://thaigov.go.th/en/cabinet/minister`, in House Essentials. Processes
+and Directory doctrine are unchanged. The expanded source Contents reflects
+the already approved Word hierarchy.
+
+**Authority.** The four working sources compile byte-for-byte into the
+supplied authoritative Blueprint. `VERSION.txt` is the exact one-line witness
+served by `/ver`. Control advances mechanically to
+`210926_control_fit-and-access`; no routing or operational doctrine changes.
+
+**Evidence.** Source assembly, dollar-pairing, edition, invertibility,
+section-code, routing-index and register guards pass. The Word build retains
+all 377 Directory leaves, renders to 25 inspected pages and displays both the
+`210926_gpt_fit-and-access` running witness and cabinet link. Accessibility
+reports zero high findings; the standing layout-table exceptions remain.
+
+**Verdict.** Supervisor-authorised authoritative source prepared for guarded
+publication. Final authority requires `/ver` to return exactly
+`210926_gpt_fit-and-access` after CI, sealing and handover verification.
+
+---
+
 ## 2026-09-21 — 190926_gpt_fit-and-access: FIT, ACCESS AND WORD HIERARCHY
 
 **Editorial result.** Supplied-fit work now treats the target as a whole-story
