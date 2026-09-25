@@ -1,4 +1,4 @@
-<!-- PART: 210926_gpt_fit-and-access GUIDE -->
+<!-- PART: 250926_gpt_photo-workflow GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -177,3 +177,12 @@ STYLE LOG
 Converted Sept 16 to yesterday and 90 centimetres to 90cm; applied the Thai
 second reference; supplied the headline and deck.
 ````
+
+# [G2] PHOTO
+
+Invocation: `$photo`, `/photo` or `@Photo`.
+
+The DC-X Standalone Photo Processor (also logged as the DCX 9/9 Wit skill)
+manages editorial photo tasks by extracting asset slugs (e.g., `19St-P1b`) and
+layout directives directly from the DC-X workspace without requiring manual
+uploads.

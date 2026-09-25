@@ -1,4 +1,4 @@
-# PART: 210926_gpt_fit-and-access DIRECTORY
+# PART: 250926_gpt_photo-workflow DIRECTORY
 index:
   routes:
     status:

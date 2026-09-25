@@ -1,5 +1,5 @@
 {
-  "edition": "210926_gpt_fit-and-access",
+  "edition": "250926_gpt_photo-workflow",
   "output": "/home/runner/work/pipeline-registry/pipeline-registry/Blueprint/BLUEPRINT.docx",
   "pandoc_api_version": [
     1,
@@ -7,13 +7,13 @@
     1,
     1
   ],
-  "source_blocks": 101,
+  "source_blocks": 105,
   "source_block_types": {
-    "BulletList": 3,
+    "BulletList": 7,
     "CodeBlock": 7,
-    "Header": 23,
+    "Header": 26,
     "OrderedList": 1,
-    "Para": 64,
+    "Para": 61,
     "RawBlock": 3
   },
   "suppressed_structural_separator_paragraphs": 0,

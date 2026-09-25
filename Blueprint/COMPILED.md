@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT
 
-210926_gpt_fit-and-access
+250926_gpt_photo-workflow
 
 a style guide
 
@@ -17,6 +17,7 @@ a style guide
       - [G1-D1] EDIT
       - [G1-D2] STYLE LOG
       - [G1-D3] EXAMPLE
+  - [G2] PHOTO
 - [P] PROCESSES — `PROCESSES.md`
   - [P1] COPY
     - [P1-A] HEADS AND DECKS
@@ -65,7 +66,7 @@ a style guide
       - UK VS US TRAPS
       - VOCABULARY RULINGS
 
-<!-- PART: 210926_gpt_fit-and-access GUIDE -->
+<!-- PART: 250926_gpt_photo-workflow GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -244,7 +245,16 @@ STYLE LOG
 Converted Sept 16 to yesterday and 90 centimetres to 90cm; applied the Thai
 second reference; supplied the headline and deck.
 ````
-<!-- PART: 210926_gpt_fit-and-access PROCESSES -->
+
+# [G2] PHOTO
+
+Invocation: `$photo`, `/photo` or `@Photo`.
+
+The DC-X Standalone Photo Processor (also logged as the DCX 9/9 Wit skill)
+manages editorial photo tasks by extracting asset slugs (e.g., `19St-P1b`) and
+layout directives directly from the DC-X workspace without requiring manual
+uploads.
+<!-- PART: 250926_gpt_photo-workflow PROCESSES -->
 
 # [P] PROCESSES
 how we do it
@@ -367,31 +377,56 @@ can still run; otherwise it also holds the return.
 
 ## [P3] PHOTOS
 
-Return a sharp sentence-case headline and an accurate caption grounded in the
-image and filed material. Inspect the image whenever visual precision matters;
-otherwise state the limitation and use only what the filing establishes.
-When no image is available, caption only from the filing and note the limitation
-in the Style Log.
+### EXTRACTION & CONTEXT
 
-### CAPTIONS
+* Scan the active DC-X viewport or prompt for standalone asset slugs (e.g.,
+  `19St-P1b`), spatial budgets and raw text.
+* Extract inline layout directives (e.g., `###head` or `Standcap photo:`) and
+  isolate the caption copy.
+* Inspect the image whenever visual precision matters; cross-reference the
+  visual asset with the text to ensure narrative accuracy. If no image preview
+  is available in the DC-X workspace or prompt, caption only from the filing
+  and explicitly note the limitation in the Style Log.
 
-Edit to Blueprint standards and return plain text. Use the simple present tense.
-Apply Directory conversions and the relevant name and title conventions. Strip
-wire bloat, including `FILE PHOTO` and datelines. Retain the final
-agency attribution.
+### HEADLINE GENERATION
 
-Identity, action, location, emotion, cause and credit require support from the
-image or filing. Preserve the supplied credit. Apply the relevant copy-fit and
-house-form routes.
+* Draft a short, sharp, pun-heavy, active sentence-case headline. Align with
+  the tone of the image (witty and punchy for soft news; sombre and clinical
+  for hard news).
+* Work to the supplied DC-X headline budget with the standard ±2-character
+  tolerance, allowing for letter choice and actual typesetting fit.
+* For multi-line heads, balance the lines visually within the available
+  footprint.
+* Do not use Python or other computational methods to generate, fit, count or
+  optimise photo headlines.
 
-### MUGSHOTS
+### CAPTION REFINEMENT
 
-Use `NAME: [caption]`, with no honorific. The caption describes an action taken
-by the subject or represents the subject's voice: `Saranwut: Violated voting
-rules`; `Sakhan: Locals should play role`.
+* Retain the supplied caption footprint. Tighten, recast and correct within the
+  available space rather than mechanically targeting a character count.
+* **Governance Pass:** Sweep for Apex Figure and Second Tier register changes,
+  geopolitical naming traps, transliterations and UK spelling conventions per
+  house references. Strip wire bloat, including `FILE PHOTO` and datelines.
+* **Tense & Support:** Edit to Blueprint standards using the simple present
+  tense. Identity, action, location, visible expression, cause and credit
+  require support from the image or filing. Do not infer motive, emotion or
+  circumstances from the image alone.
+* **Mugshots:** Use `NAME: [caption]`, with no honorific. The caption describes
+  an action taken by the subject or represents the subject's voice:
+  `Saranwut: Violated voting rules`; `Sakhan: Locals should play role`.
+* **Credit Line:** Preserve the supplied credit and standardise to house style:
+  `Photo: [Firstname Lastname]` or `Photo: [Agency]`.
 
-Follow the plain-text return with a proportional Style Log when an intervention,
-limitation or query needs recording.
+### DELIVERABLE STRUCTURE
+
+* Deliver a single fenced code block containing the first-choice headline
+  seated at the top, followed by the clean caption copy.
+* Provide two alternate headlines below the box that drop into the same spatial
+  footprint and meet the supplied DC-X headline budget within the standard
+  ±2-character tolerance.
+* Append a `STYLE LOG` recording material style fixes, Directory conversions,
+  queries for the desk or limitations (e.g., blind processing without an
+  image).
 
 ## [P4] CHECKING
 
@@ -424,7 +459,7 @@ the desk.
 PR copy is supplied with case-specific return guidance because its format,
 deployment and available tools vary. Follow that guidance. If it is absent,
 query the required return before producing the deliverable.
-<!-- PART: 210926_gpt_fit-and-access DIRECTORY -->
+<!-- PART: 250926_gpt_photo-workflow DIRECTORY -->
 
 go.fuzzylogic.page/dir
 
