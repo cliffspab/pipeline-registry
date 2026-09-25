@@ -37,6 +37,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-25
+
+- 2026-09-25 | CI coverage audit | Declare the new coded `[G2] PHOTO` source
+  heading as intentionally absent from the clean Word display hierarchy, matching
+  the existing declarations for `[G1]`, `[P]` and `[D]`. This repairs the failed
+  `250926_gpt_photo-workflow` compile without changing editorial content.
+
 ## Cleared 2026-09-25
 
 - 2026-09-25 | bootstrap | Add the chat-independent away-team bootstrap: root start map mirror, Codex

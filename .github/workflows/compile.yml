@@ -519,6 +519,7 @@ jobs:
               # only the coded source forms are absent from Word extraction.
               r"^\[G1\] EDITING$",
               r"^\[G1-(?:A|B|C|C1|C2|D|D1|D2|D3)\] ",
+              r"^\[G2\] PHOTO$",
               r"^\[P\] PROCESSES$",
               r"^\[P(?:1-A|1-B|2|3|4|5)\] ",
               # Directory becomes the human-facing STATUS and REFS parts.
