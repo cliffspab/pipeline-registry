@@ -72,7 +72,8 @@ def expected_files(source: str) -> dict[Path, str]:
         fail(f"authoritative Blueprint is missing: {BLUEPRINT}")
     blueprint = BLUEPRINT.read_text(encoding="utf-8")
     section_bounds = {
-        "G1": (r"^# \[G1\] EDITING\s*$", r"^# \[P\] PROCESSES\s*$"),
+        "G1": (r"^# \[G1\] EDITING\s*$", r"^# \[G2\] PHOTO\s*$"),
+        "G2": (r"^# \[G2\] PHOTO\s*$", r"^# \[P\] PROCESSES\s*$"),
         "P1": (r"^## \[P1\] COPY\s*$", r"^## \[P2\] VERIFICATION\s*$"),
         "P2": (r"^## \[P2\] VERIFICATION\s*$", r"^## \[P3\] PHOTOS\s*$"),
         "P3": (r"^## \[P3\] PHOTOS\s*$", r"^## \[P4\] CHECKING\s*$"),
@@ -88,7 +89,7 @@ def expected_files(source: str) -> dict[Path, str]:
 
     routes = {
         "EDIT": ("G1", "P1", "P2"),
-        "PHOTO": ("P3", "P1", "P2"),
+        "PHOTO": ("G2", "P3", "P1", "P2"),
         "CHECK": ("P4", "P2"),
         "PR": ("P5",),
     }

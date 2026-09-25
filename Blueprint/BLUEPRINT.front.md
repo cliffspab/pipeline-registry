@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT
 
-210926_gpt_fit-and-access
+250926_gpt_photo-workflow
 
 a style guide
 
@@ -17,6 +17,7 @@ a style guide
       - [G1-D1] EDIT
       - [G1-D2] STYLE LOG
       - [G1-D3] EXAMPLE
+  - [G2] PHOTO
 - [P] PROCESSES — `PROCESSES.md`
   - [P1] COPY
     - [P1-A] HEADS AND DECKS

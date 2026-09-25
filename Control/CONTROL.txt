@@ -1,6 +1,6 @@
 # BANGKOK POST DESK CONTROL
 
-210926_control_fit-and-access
+250926_control_photo-workflow
 
 This source maps each desk task to its working sections of BLUEPRINT. The
 generated skill carries those sections; CONTROL adds no editorial doctrine.
@@ -57,6 +57,7 @@ Working section: `[P5] PR`.
 
 ## PHOTO
 
-Working sections: `[P3] PHOTOS`, `[P1] COPY` and `[P2] VERIFICATION`.
+Working sections: `[G2] PHOTO`, `[P3] PHOTOS`, `[P1] COPY` and `[P2]
+VERIFICATION`.
 
 ====================== MODULE PHOTO — END =====================

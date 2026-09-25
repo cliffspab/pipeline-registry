@@ -198,7 +198,6 @@ STYLE LOG
 Converted Sept 16 to yesterday and 90 centimetres to 90cm; applied the Thai
 second reference; supplied the headline and deck.
 ````
-<!-- PART: 210926_gpt_fit-and-access PROCESSES -->
 ## [P1] COPY
 
 Use this process when the supervisor supplies a footprint, a DCX allowance or

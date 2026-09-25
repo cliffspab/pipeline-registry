@@ -36,6 +36,21 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-25
+
+- 2026-09-25 | bootstrap | Add the chat-independent away-team bootstrap: root start map mirror, Codex
+  cold-start instruction, Claude project-instructions cut, and registry README
+  entry points (`bootstrap/00_START-HERE.md`, `bootstrap/AGENTS.md`,
+  `bootstrap/CLAUDE.md`, `README.md`). No Blueprint edition change.
+
+- 2026-09-25 | Blueprint and Control | Publish `250926_gpt_photo-workflow` from the byte-identical sealed
+  `210926_gpt_fit-and-access` baseline: add `[G2] PHOTO`, replace `[P3] PHOTOS`
+  with the supervisor-final DC-X photo workflow, advance Control to
+  `250926_control_photo-workflow`, bound Edit before `[G2]`, and regenerate the
+  Photo and Edit skills. No contents, Directory doctrine, slug or Word-design
+  experiment is included.
+
 ## Cleared 2026-09-21
 
 - 2026-09-21 | Blueprint sources and BLUEPRINT.txt | Promoted the supervisor-supplied `210926_gpt_fit-and-access` authority.

@@ -6,6 +6,40 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-25 — 250926_gpt_photo-workflow: PHOTO WORKFLOW
+
+**Baseline.** The supervisor-supplied
+`BLUEPRINT.210926_gpt_fit-and-access.AUTHORITATIVE.md` is byte-identical to the
+sealed `210926_gpt_fit-and-access` Blueprint. The new edition therefore
+supersedes that exact authority without importing the separate contents,
+Directory, slug or Word experiments from the earlier mixed candidate.
+
+**Editorial result.** `[P3] PHOTOS` now extracts DC-X asset slugs, layout
+directives and spatial budgets; fits sharp, pun-heavy photo headlines by
+editorial and typesetting judgement within the standard ±2-character
+tolerance; preserves caption footprints; forbids computational headline
+generation or fitting; requires image-or-filing support for factual and visual
+claims; and forbids inferring motive, emotion or circumstances from an image
+alone. The return is one clean fenced block, two footprint-compatible
+alternates and a material `STYLE LOG`.
+
+**Routing.** New `[G2] PHOTO` identifies the DC-X Standalone Photo Processor and
+its `$photo`, `/photo` and `@Photo` invocations. Control advances to
+`250926_control_photo-workflow`, bounds `[G1]` before `[G2]`, and supplies
+`[G2]`, `[P3]`, `[P1]` and `[P2]` to the generated Photo skill. The Edit skill
+remains bounded to `[G1]`, `[P1]` and `[P2]`.
+
+**Evidence.** Source assembly, dollar-pairing, edition, invertibility,
+section-code, routing-index and register guards pass for the 25 September
+source set. The generated Control plugin passes its exact-output check, and the
+Photo skill contains the no-computation and no-unsupported-inference rules.
+
+**Verdict.** Supervisor-approved source and machinery prepared for guarded
+publication. Final authority requires GitHub, the sealed edition, Shift and the
+Drive master to verify as `250926_gpt_photo-workflow`.
+
+---
+
 ## 2026-09-21 — 210926_gpt_fit-and-access: AUTHORITATIVE EDITION WITNESS
 
 **Scope.** The supervisor-supplied authoritative Blueprint advances the

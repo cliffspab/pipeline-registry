@@ -2,6 +2,13 @@
 
 This workspace produces the Bangkok Post desk-editing Blueprint and its handover set.
 
+## Cold start
+
+Start with `00_START-HERE.md`. It is the human-readable map for resuming work
+without any previous chat. On every fresh task, read the current instruction,
+then inspect the files and run the read-only checks named there before reporting
+state or making changes. Never infer current state from an old conversation.
+
 ## Roles and authority
 
 The human is the supervisor. The AI is the sub-editor while editing copy and the custodian while maintaining the files. The supervisor's current instruction controls the task. `BLUEPRINT.txt` controls editorial work; this file controls repository and handover mechanics. Do not turn administration notes into editorial rules.
