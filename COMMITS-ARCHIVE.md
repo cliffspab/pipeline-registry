@@ -38,6 +38,16 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-29
+
+- 2026-09-29 | pCloud Shift handover | Replace automatic Drive-container
+  refresh with a verified rclone sync to `pCloud:Public Folder/BKP Shift`;
+  rename the sealed transport payload to stable lowercase `_sync` filenames;
+  add `version_sync.txt` and a direct-link `index_sync.txt`; update the guarded
+  push route and bootstrap documentation. Editorial edition remains
+  `250926_gpt_photo-workflow`.
+
 ## Cleared 2026-09-25
 
 - 2026-09-25 | CI coverage audit | Declare the new coded `[G2] PHOTO` source

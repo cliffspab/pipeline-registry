@@ -6,6 +6,33 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-29 — PCLOUD SHIFT HANDOVER ROUTE
+
+**Route.** The sealed operational handover moves from automatic Google Drive
+containers to a dedicated rclone mirror at `pCloud:Public Folder/BKP Shift`.
+Google Docs become optional, manually maintained reading copies and are not
+publication masters.
+
+**Payload.** Local `Shift/` now uses eight stable lowercase `_sync` transport
+names: Blueprint text and DOCX, Guide, Processes, Directory YAML, Control,
+the exact version witness and an edition-stamped direct-link index. Authoritative
+root and sealed-edition filenames remain unchanged.
+
+**Guard.** A successful seal refreshes and verifies local Shift, runs rclone
+left-to-right to the dedicated pCloud folder and then runs an exact `rclone
+check`. The remote target is deliberately narrow because `rclone sync`
+deletes remote strays. The index uses the supervisor-supplied Public Folder
+base URL.
+
+**Evidence.** An isolated eight-file candidate was generated and rechecked
+byte-for-byte. The root build passes all guards. Live Shift and pCloud were not
+changed while preparing this machinery.
+
+**Verdict.** Supervisor-approved handover machinery prepared for the guarded
+push under the existing sealed editorial edition `250926_gpt_photo-workflow`.
+
+---
+
 ## 2026-09-25 — 250926_gpt_photo-workflow: PHOTO WORKFLOW
 
 **Baseline.** The supervisor-supplied

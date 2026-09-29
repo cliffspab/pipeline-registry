@@ -33,6 +33,9 @@ run `python shift.py --check`. Run root `python build.py` when build validation
 is relevant. Report the edition, pending payload, working-tree state and any
 failed check.
 
-Do not publish, push, seal, refresh Shift or Drive, move or delete material,
+Shift is the sealed eight-file `_sync`-named handover mirrored by rclone to
+`pCloud:Public Folder/BKP Shift`; Google Docs are optional manual reading copies.
+
+Do not publish, push, seal, refresh Shift or pCloud, move or delete material,
 change edition identity, or widen a requested change without supervisor
 authority.

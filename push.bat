@@ -101,7 +101,7 @@ echo.
 echo Review every modified, deleted and untracked path above.
 echo Typing PUSH authorises the exact displayed payload, bootstrap mirrors,
 echo pending-list archival, commit, rebase, push, verification, sealing,
-echo Shift refresh and Drive master sync.
+echo Shift refresh and verified pCloud sync.
 set "BKP_CONFIRM="
 set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
 if /I not "%BKP_CONFIRM%"=="PUSH" (
@@ -236,12 +236,28 @@ if "%LH%"=="%RH%" (
       )
     )
     echo.
-    echo === refreshing Drive pipeline containers ===
-    python "..\sync_master.py"
+    echo === syncing verified Shift handover to pCloud ===
+    where rclone >nul 2>nul
     if errorlevel 1 (
       echo.
-      echo [note] edition sealed, but the Drive containers were not refreshed.
-      echo        Re-run:  python sync_master.py
+      echo [note] edition sealed, but rclone is unavailable; pCloud was not refreshed.
+      echo        Re-run after restoring rclone:  rclone sync "..\Shift" "pCloud:Public Folder/BKP Shift"
+    ) else (
+      rclone sync "..\Shift" "pCloud:Public Folder/BKP Shift"
+      if errorlevel 1 (
+        echo.
+        echo [note] edition sealed, but the pCloud Shift sync failed.
+        echo        Re-run:  rclone sync "..\Shift" "pCloud:Public Folder/BKP Shift"
+      ) else (
+        rclone check "..\Shift" "pCloud:Public Folder/BKP Shift"
+        if errorlevel 1 (
+          echo.
+          echo [note] pCloud upload ran, but verification failed.
+          echo        Re-run:  rclone check "..\Shift" "pCloud:Public Folder/BKP Shift"
+        ) else (
+          echo [ok] pCloud Shift is current and verified.
+        )
+      )
     )
   )
 ) else (

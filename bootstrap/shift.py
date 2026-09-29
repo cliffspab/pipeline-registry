@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Build or verify the exact once-daily shift handover set."""
+"""Build or verify the exact once-daily, transport-named Shift handover."""
 
+import argparse
 import hashlib
 import os
 import re
@@ -10,16 +11,22 @@ from datetime import date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-SHIFT = ROOT / "Shift"
-PARTS = (
-    "BLUEPRINT.txt",
-    "GUIDE.txt",
-    "PROCESSES.txt",
-    "DIRECTORY.yaml",
-    "CONTROL.txt",
-    "BLUEPRINT.docx",
-)
-TRANSPORT_HOUSEKEEPING = {".tmp.driveupload"}
+DEFAULT_SHIFT = ROOT / "Shift"
+PARTS = {
+    "BLUEPRINT.txt": "blueprint_sync.txt",
+    "GUIDE.txt": "guide_sync.txt",
+    "PROCESSES.txt": "processes_sync.txt",
+    "DIRECTORY.yaml": "directory_sync.yaml",
+    "CONTROL.txt": "control_sync.txt",
+    "BLUEPRINT.docx": "blueprint_sync.docx",
+    "VERSION.txt": "version_sync.txt",
+}
+INDEX_NAME = "index_sync.txt"
+PUBLIC_BASE = "https://filedn.eu/llkhskhNM5iQj7czpUFCQ8V/BKP%20Shift/"
+LEGACY_PARTS = {
+    "BLUEPRINT.txt", "GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml",
+    "CONTROL.txt", "BLUEPRINT.docx",
+}
 SEAMED = ("GUIDE.txt", "PROCESSES.txt", "DIRECTORY.yaml")
 SEAM = re.compile(r"PART:\s+(\S+)\s+(GUIDE|PROCESSES|DIRECTORY)")
 
@@ -34,8 +41,25 @@ def tag_of(path):
     return match.group(1) if match else None
 
 
+def index_bytes(tag):
+    names = list(PARTS.values()) + [INDEX_NAME]
+    lines = [
+        "BANGKOK POST SHIFT",
+        f"Edition: {tag}",
+        "",
+        *(f"{name}: {PUBLIC_BASE}{name}" for name in names),
+        "",
+    ]
+    return "\n".join(lines).encode("utf-8")
+
+
 def main():
-    check_only = "--check" in sys.argv
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--target", type=Path, default=DEFAULT_SHIFT)
+    args = parser.parse_args()
+    check_only = args.check
+    shift = args.target
     problems = []
     sources = {name: ROOT / name for name in PARTS if name != "BLUEPRINT.docx"}
 
@@ -56,38 +80,72 @@ def main():
         print(f"missing sealed document: Editions/{tag}/BLUEPRINT.docx")
         return 1
 
-    if not check_only and SHIFT.is_dir():
-        last_refresh = datetime.fromtimestamp(SHIFT.stat().st_mtime).date()
-        shift_guide = SHIFT / "GUIDE.txt"
+    # During the one-time transport-name rollout, the last sealed legacy set
+    # remains a valid read-only handover until the guarded push refreshes it.
+    if check_only and shift.is_dir() and set(p.name for p in shift.iterdir()) == LEGACY_PARTS:
+        legacy_current = all(
+            (shift / name).is_file() and digest(shift / name) == digest(sources[name])
+            for name in LEGACY_PARTS
+        )
+        if legacy_current:
+            for name in sorted(LEGACY_PARTS):
+                print(f"current (legacy name): Shift/{name}")
+            print(f"\nshift ready — build {tag}; legacy names current; `_sync` migration pending guarded push")
+            return 0
+
+    if not check_only and shift.is_dir():
+        last_refresh = datetime.fromtimestamp(shift.stat().st_mtime).date()
+        shift_guide = shift / PARTS["GUIDE.txt"]
         shift_tag = tag_of(shift_guide) if shift_guide.is_file() else None
-        if last_refresh == date.today() and shift_tag == tag:
+        exact = set(p.name for p in shift.iterdir()) == set(PARTS.values()) | {INDEX_NAME}
+        current = exact and all(
+            (shift / target).is_file() and digest(shift / target) == digest(sources[source])
+            for source, target in PARTS.items()
+        )
+        current = current and (shift / INDEX_NAME).read_bytes() == index_bytes(tag)
+        if last_refresh == date.today() and shift_tag == tag and current:
             print(f"Shift already refreshed today ({last_refresh.isoformat()}); no write")
             return 0
         if last_refresh == date.today():
             print(f"Shift carries {shift_tag or 'no edition'}; refreshing newly sealed {tag}")
 
     if not check_only:
-        SHIFT.mkdir(exist_ok=True)
+        shift.mkdir(exist_ok=True)
 
-    if not SHIFT.is_dir():
+    if not shift.is_dir():
         problems.append("Shift folder does not exist")
     else:
-        # Google Drive creates this hidden upload workspace while transporting
-        # the folder. It is not handover payload; every other stray still fails.
-        allowed = set(PARTS) | TRANSPORT_HOUSEKEEPING
-        stale = sorted(p.name for p in SHIFT.iterdir() if p.name not in allowed)
+        allowed = set(PARTS.values()) | {INDEX_NAME}
+        stale = sorted(p.name for p in shift.iterdir() if p.name not in allowed)
+        legacy = set(stale) and set(stale).issubset(LEGACY_PARTS)
+        if stale and legacy and not check_only:
+            for name in stale:
+                (shift / name).unlink()
+                print(f"retired legacy Shift/{name}")
+            stale = []
         if stale:
             problems.append("stray in Shift/: " + ", ".join(stale))
 
-    for name, src in sources.items():
-        dst = SHIFT / name
+    for source_name, src in sources.items():
+        target_name = PARTS[source_name]
+        dst = shift / target_name
         if dst.is_file() and digest(dst) == digest(src):
-            print(f"current: Shift/{name}")
+            print(f"current: Shift/{target_name}")
         else:
-            problems.append(f"stale or missing: Shift/{name}")
+            problems.append(f"stale or missing: Shift/{target_name}")
             if not check_only:
                 shutil.copy2(src, dst)
-                print(f"written: Shift/{name}")
+                print(f"written: Shift/{target_name}")
+
+    index = shift / INDEX_NAME
+    expected_index = index_bytes(tag)
+    if index.is_file() and index.read_bytes() == expected_index:
+        print(f"current: Shift/{INDEX_NAME}")
+    else:
+        problems.append(f"stale or missing: Shift/{INDEX_NAME}")
+        if not check_only:
+            index.write_bytes(expected_index)
+            print(f"written: Shift/{INDEX_NAME}")
 
     if problems and check_only:
         print("\n".join(problems))
@@ -102,8 +160,8 @@ def main():
         return 1
 
     if not check_only:
-        os.utime(SHIFT, None)
-    print(f"\nshift ready — build {tag}; six files; refresh daily or when a newly sealed edition supersedes it")
+        os.utime(shift, None)
+    print(f"\nshift ready — build {tag}; eight sync-named files; refresh daily or when a newly sealed edition supersedes it")
     return 0
 
 

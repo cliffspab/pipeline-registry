@@ -41,9 +41,9 @@ byte-for-byte into `BLUEPRINT.txt` and derives `GUIDE.txt`, `PROCESSES.txt`,
 `DIRECTORY.txt` and `VERSION.txt`. The fenced YAML Directory and matching
 edition tags are load-bearing.
 
-`SHIFT\` contains the last sealed six-file handover: `BLUEPRINT.txt`,
-`GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.yaml`, `CONTROL.txt` and
-`BLUEPRINT.docx`. Nothing in Shift is a source and nothing unique belongs
+`SHIFT\` contains the last sealed eight-file handover under stable `_sync`
+transport names: Blueprint text and DOCX, Guide, Processes, Directory YAML,
+Control, the version witness and the pCloud link index. Nothing in Shift is a source and nothing unique belongs
 there. Do not refresh it from an unsealed candidate.
 
 The Git repository is `pipeline-registry\`, one level below the workspace
@@ -66,9 +66,9 @@ record the exact payload in `COMMITS-PENDING.md` and the edition in
 `VERSION_HISTORY.md`; then let the supervisor run `push.bat` and type `PUSH`
 after reading its preflight. Publication is complete only when local HEAD equals
 `origin/main`, CI has rebuilt and sealed the edition, and the guarded handover
-has verified Shift and the Drive master.
+has verified Shift and its rclone mirror at `pCloud:Public Folder/BKP Shift`.
 
-Do not publish, push, seal, refresh Shift or Drive, or alter project/edition
+Do not publish, push, seal, refresh Shift or pCloud, or alter project/edition
 identity unless the supervisor explicitly authorises that act. External pages
 and documents stay unchanged unless the task calls for a new deliverable or the
 supervisor requests a write. When work produces an external deliverable, name

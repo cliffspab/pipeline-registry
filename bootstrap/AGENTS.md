@@ -55,35 +55,38 @@ hand-edit compiled or generated files in `pipeline-registry/Blueprint/` or
    changes.
 6. Record the exact payload in `COMMITS-PENDING.md` and the edition in `VERSION_HISTORY.md`.
 7. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
-8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. The guarded push then refreshes and verifies Shift and syncs the Drive master; if either handover step fails, its named rerun remains outstanding without undoing the published push.
+8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. The guarded push then refreshes and verifies Shift, mirrors it to pCloud with rclone and verifies the remote; if either handover step fails, its named rerun remains outstanding without undoing the published push.
 
 ## Shift contract
 
-`Shift/` contains exactly:
+`Shift/` contains exactly these stable transport names:
 
-- `BLUEPRINT.txt`
-- `GUIDE.txt`
-- `PROCESSES.txt`
-- `DIRECTORY.yaml`
-- `CONTROL.txt`
-- `BLUEPRINT.docx` (the sealed document for the current edition)
+- `blueprint_sync.txt`
+- `guide_sync.txt`
+- `processes_sync.txt`
+- `directory_sync.yaml`
+- `control_sync.txt`
+- `blueprint_sync.docx` (the sealed document for the current edition)
+- `version_sync.txt` (the exact one-line edition witness)
+- `index_sync.txt` (the edition-stamped list of direct pCloud links)
 
 Refresh Shift no more than once per calendar day unless a newly sealed edition supersedes the current handover. `shift.py --check` may be run at any time because it is read-only.
 
 Nothing in Shift is a source. Nothing unique lives there.
 
-## Drive container contract
+## pCloud Shift contract
 
-After an edition is sealed, `sync_master.py` updates two stable files in
-`D:\GoogleDrive\My Drive\BKP_SYNC_MASTER`: the complete Blueprint text and its
-exact one-line version witness. `extract.py` verifies the master and emits
-requested sections for temporary use. The updater must update existing
-containers in place and refuse to create a missing target. Never refresh them
-from an unsealed candidate.
+After an edition is sealed and local Shift passes `shift.py --check`, the guarded
+push mirrors that exact eight-file directory left-to-right with rclone to
+`pCloud:Public Folder/BKP Shift`, then runs an exact `rclone check`. The target
+is dedicated to this payload: `rclone sync` may delete remote strays so that it
+remains an exact eight-file handover. Never run the command against the pCloud
+root or the whole Public Folder, and never sync an unsealed candidate.
 
-GitHub and the Drive master are peer official publication surfaces. GitHub is
-the public registry and build base; Drive is the desk-controlled operational
-master. A completed publication verifies both against the sealed edition.
+GitHub is the public registry and build base; the sealed edition is the local
+authority; pCloud is the desk-controlled operational handover. Google Docs are
+optional, manually created reading copies with generic names. They are not
+publication masters and are updated manually only when needed after a push.
 
 ## Generated and historical material
 
