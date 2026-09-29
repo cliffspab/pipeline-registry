@@ -135,18 +135,6 @@ status:
     - name: Prince William, Prince of Wales
       fact: Prince of Wales from Sept 9, 2022, letters patent Feb 2023; Duke of Cambridge 2011-2022
 
-    - name: To Lam
-      fact: >
-        general secretary of the Communist Party of Vietnam, since 2024,
-        and 13th president of Vietnam, since 2026. Both titles current.
-      second_ref: Mr Lam
-      ruling: >
-        Capitalise formal offices: General Secretary To Lam, Communist Party Secretary General
-        To Lam and, during his tenure, Public Security Minister To Lam. In current copy, use
-        former public security minister To Lam. Appositive offices may cap: To Lam, President of
-        Vietnam and General Secretary of the Communist Party. Lower-case top leader To Lam.
-      directive: Apply title_caps and descriptive_titles; do not treat him as a named exception.
-
 references:
 
   numbers:
@@ -171,7 +159,7 @@ references:
   times:
     clock: "Use the 12-hour clock with am/pm closed up: 10am, 2.30pm, 12.34am."
     noon_midnight: Write noon and midnight; do not use 12pm or 12am.
-    foreign_events: Keep local time unless the event crosses a calendar day.
+    foreign_events: Add "(local time)" to a clock time in news reported abroad. Where readers in Thailand could attend or tune in — a broadcast, kick-off, launch or draw — convert the time in place and label it "(Thailand time)".
     races: Use colons, eg 1:23:45.
     quotations: Preserve a spoken form such as "a quarter to three".
 
@@ -308,10 +296,8 @@ references:
       instead of the normal second-reference form.
     descriptive_titles: >
       Lower-case a descriptive or house-lowercase role before a name, eg deputy spokesperson
-      Natapanu Nopakun, company president John Smith, human rights lawyer Arnon Nampa,
-      head coach Masatada Ishii or top leader To Lam. Do not demote a ministerial office to
-      a descriptive role: while To Lam held the post, the title was Public Security Minister
-      To Lam. Query an unlisted borderline role;
+      Natapanu Nopakun, company president John Smith, human rights lawyer Arnon Nampa or
+      head coach Masatada Ishii. Query an unlisted borderline role;
       do not infer capitalisation from seniority alone.
     ranks: Take ranks from copy and apply a filed rank consistently; if unclear, repeat the full name or query it.
     title_abbreviations: Against a name, use Prof, Dr, Jr, Sr, St, Mt, Corp and Co.
@@ -468,7 +454,7 @@ references:
       form nor standard RTGS, query it without alteration.
 
     transliteration_rules:
-      - Muang (not Mueang)
+      - Muang (not Mueang. Don Mueang airport is the sole exception)
       - Phra (not Pra)
       - Chai (not Chay)
       - Isan (not Isaan)
@@ -506,7 +492,7 @@ references:
       Ayutthaya: [Phra Nakhon Si Ayutthaya, Ban Phraek, Bang Ban, Bang Pahan, Bang Pa-in, Bang Sai, Lat Bua Luang, Maha Rat, Nakhon Luang, Phachi, Phak Hai, Sena, Uthai, Wang Noi]
       Bangkok: [Bang Bon, Bang Kae, Bang Kapi, Bang Khen, Bang Kholaem, Bang Khunthian, Bang Na, Bang Phlat, Bang Rak, Bang Sue, Bangkok Noi, Bangkok Yai, Bung Kum, Chatuchak, Chom Thong, Din Daeng, Don Muang, Dusit, Huai Khwang, Kannayao, Klong San, Klong Toey, Laksi, Lat Krabang, Lat Phrao, Min Buri, Nong Chok, Nong Khaem, Pathumwan, Phasicharoen, Phaya Thai, Phra Khanong, Phra Nakhon, Pomprap Sattruphai, Prawet, Rat Burana, Ratchathewi, Sai Mai, Saphan Sung, Samphanthawong, Sathon, Suan Luang, Taling Chan, Thon Buri, Thung Kru, Watthana, Yannawa]
       Bung Kan: [Muang Bung Kan, Bung Khong Long, Pak Khat, Phon Charoen, Phon Phisai, Seka, Si Wilai, So Phisai]
-      Buri Ram: [Muang Buri Ram, Ban Dan, Ban Kruat, Chamni, Chaloem Phra Kiat, Huai Rat, Khaen Dong, Khu Mueang, Krasang, Lahan Sai, Lam Plai Mat, Na Pho, Nang Rong, Non Din Daeng, Non Suwan, Pakham, Phlapphla Chai, Prakhon Chai, Phutthaisong, Satuek]
+      Buri Ram: [Muang Buri Ram, Ban Dan, Ban Kruat, Chamni, Chaloem Phra Kiat, Huai Rat, Khaen Dong, Khu Muang, Krasang, Lahan Sai, Lam Plai Mat, Na Pho, Nang Rong, Non Din Daeng, Non Suwan, Pakham, Phlapphla Chai, Prakhon Chai, Phutthaisong, Satuek]
       Chachoengsao: [Muang Chachoengsao, Ban Pho, Bang Kla, Bang Nam Priao, Bang Pakong, Klong Khuean, Phanom Sarakham, Plaeng Yao, Ratchasan, Sanam Chai Khet, Tha Takiap]
       Chai Nat: [Muang Chai Nat, Hankha, Manorom, Noen Kham, Nong Mamong, Sankhaburi, Sapphaya, Wat Sing]
       Chaiyaphum: [Muang Chaiyaphum, Bamnet Narong, Ban Khwao, Ban Thaen, Chatturat, Kaeng Khro, Kaset Sombun, Khon San, Khon Sawan, Nong Bua Daeng, Nong Bua Rawe, Phakdi Chumphon, Phu Khiao, Sap Yai, Thep Sathit]
@@ -520,7 +506,7 @@ references:
       Kanchanaburi: [Muang Kanchanaburi, Bo Phloi, Dan Makham Tia, Huai Krachao, Lao Khwan, Nong Prue, Phanom Thuan, Sai Yok, Sangkhla Buri, Si Sawat, Tha Maka, Tha Muang, Thong Pha Phum]
       Khon Kaen: [Muang Khon Kaen, Ban Fang, Ban Haet, Ban Phai, Chonnabot, Chum Phae, Khao Suan Kwang, Kranuan, Manchakhiri, Nam Phong, Non Sila, Nong Na Kham, Nong Ruea, Nong Song Hong, Phu Pha Man, Phu Wiang, Pueai Noi, Sam Sung, Si Chomphu, Ubolratana, Waeng Noi, Waeng Yai]
       Krabi: [Muang Krabi, Ao Luk, Khao Phanom, Klong Thom, Koh Lanta, Lam Thap, Nuea Klong, Plai Phraya]
-      Lampang: [Muang Lampang, Chae Hom, Hang Chat, Koh Kha, Mae Mo, Mae Phrik, Mae Tha, Mueang Pan, Ngao, Soem Ngam, Sop Prap, Thoen, Wang Nuea]
+      Lampang: [Muang Lampang, Chae Hom, Hang Chat, Koh Kha, Mae Mo, Mae Phrik, Mae Tha, Muang Pan, Ngao, Soem Ngam, Sop Prap, Thoen, Wang Nuea]
       Lamphun: [Muang Lamphun, Ban Hong, Ban Thi, Mae Tha, Pa Sang, Thung Hua Chang, Wiang Nong Long]
       Loei: [Muang Loei, Chiang Khan, Dan Sai, Erawan, Nong Hin, Na Duang, Na Haeo, Pak Chom, Pha Khao, Phu Kradueng, Phu Luang, Phu Ruea, Tha Li, Wang Saphung]
       Lop Buri: [Muang Lop Buri, Ban Mi, Chai Badan, Khok Charoen, Khok Samrong, Lam Sonthi, Nong Muang, Phatthana Nikhom, Tha Luang, Tha Wung]
@@ -530,7 +516,7 @@ references:
       Nakhon Nayok: [Muang Nakhon Nayok, Ban Na, Ongkharak, Pak Phli]
       Nakhon Pathom: [Muang Nakhon Pathom, Bang Len, Don Tum, Kamphaeng Saen, Nakhon Chai Si, Phutthamonthon, Sam Phran]
       Nakhon Phanom: [Muang Nakhon Phanom, Ban Phaeng, Na Kae, Na Thom, Na Wa, Pla Pak, Phon Sawan, Renu Nakhon, Si Songkhram, Tha Uthen, That Phanom]
-      Nakhon Ratchasima: [Muang Nakhon Ratchasima, Ban Lai, Bua Lai, Bua Yai, Chakkarat, Chaloem Phra Kiat, Chok Chai, Chum Phuang, Dan Khun Thot, Huai Thalaeng, Kaeng Sanam Nang, Kham Sakaesaeng, Kham Thale So, Khon Buri, Mueang Yang, Non Daeng, Non Thai, Non Sung, Nong Bun Mak, Pak Chong, Pak Thong Chai, Phimai, Phra Thong Kham, Prathai, Sida, Sikhio, Soeng Sang, Sung Noen, Thepharak, Wang Nam Khiao]
+      Nakhon Ratchasima: [Muang Nakhon Ratchasima, Ban Lai, Bua Lai, Bua Yai, Chakkarat, Chaloem Phra Kiat, Chok Chai, Chum Phuang, Dan Khun Thot, Huai Thalaeng, Kaeng Sanam Nang, Kham Sakaesaeng, Kham Thale So, Khon Buri, Muang Yang, Non Daeng, Non Thai, Non Sung, Nong Bun Mak, Pak Chong, Pak Thong Chai, Phimai, Phra Thong Kham, Prathai, Sida, Sikhio, Soeng Sang, Sung Noen, Thepharak, Wang Nam Khiao]
       Nakhon Sawan: [Muang Nakhon Sawan, Banphot Phisai, Chum Ta Bong, Chum Saeng, Kao Liao, Krok Phra, Lat Yao, Mae Wong, Nong Bua, Phaisali, Phayuha Khiri, Tak Fa, Takhli]
       Nakhon Si Thammarat: [Muang Nakhon Si Thammarat, Bang Khan, Cha-uat, Chaloem Phra Kiat, Chang Klang, Chian Yai, Chulabhorn, Hua Sai, Khanom, Lan Saka, Na Bon, Nopphitam, Pak Phanang, Phipun, Phrom Khiri, Ron Phibun, Sichon, Tha Sala, Thung Song, Thung Yai]
       Nan: [Muang Nan, Ban Luang, Bo Kluea, Chaloem Phra Kiat, Chiang Klang, Mae Charim, Na Noi, Na Muen, Phu Phiang, Pua, Santi Suk, Song Khwae, Tha Wang Pha, Thung Chang, Wiang Sa]
@@ -540,7 +526,7 @@ references:
       Nonthaburi: [Muang Nonthaburi, Bang Bua Thong, Bang Kruai, Bang Yai, Pak Kret, Sai Noi]
       Pathum Thani: [Muang Pathum Thani, Klong Luang, Lam Luk Ka, Lat Lum Kaeo, Nong Suea, Sam Khok, Thanyaburi]
       Pattani: [Muang Pattani, Kapho, Khok Pho, Mae Lan, Mai Kaen, Mayo, Nong Chik, Panare, Sai Buri, Thung Yang Daeng, Yarang, Yaring]
-      Phangnga: [Muang Phangnga, Kapong, Khura Buri, Koh Yao, Thap Put, Thai Mueang, Takua Pa, Takua Thung]
+      Phangnga: [Muang Phangnga, Kapong, Khura Buri, Koh Yao, Thap Put, Thai Muang, Takua Pa, Takua Thung]
       Phatthalung: [Muang Phatthalung, Bang Kaeo, Khao Chaison, Khuan Khanun, Kong Ra, Pa Bon, Pa Phayom, Pak Phayun, Srinagarindra, Tamot]
       Phayao: [Muang Phayao, Chiang Kham, Chiang Muan, Chun, Dok Khamtai, Mae Chai, Phu Kamyao, Phu Sang, Pong]
       Phetchabun: [Muang Phetchabun, Bueng Sam Phan, Chon Daen, Khao Kho, Lom Kao, Lom Sak, Nam Nao, Nong Phai, Si Thep, Wang Pong]
@@ -563,7 +549,7 @@ references:
       Saraburi: [Muang Saraburi, Ban Mo, Don Phut, Kaeng Khoi, Muak Lek, Nong Don, Nong Khae, Nong Saeng, Phra Phutthabat, Sao Hai, Wang Muang, Wihan Daeng]
       Satun: [Muang Satun, Khuan Don, Khuan Kalong, La-ngu, Manang, Tha Phae, Thung Wa]
       Sing Buri: [Muang Sing Buri, Bang Rachan, In Buri, Khai Bang Rachan, Phrom Buri, Tha Chang]
-      Si Sa Ket: [Muang Si Sa Ket, Benchalak, Bueng Bun, Huai Thap Than, Kantharalak, Kanthararom, Khukhan, Khun Han, Mueang Chan, Nam Kliang, Non Khun, Phayu, Pho Si Suwan, Phrai Bueng, Phu Sing, Prang Ku, Rasi Salai, Si Rattana, Sila Lat, Uthumphon Phisai, Wang Hin, Yang Chum Noi]
+      Si Sa Ket: [Muang Si Sa Ket, Benchalak, Bueng Bun, Huai Thap Than, Kantharalak, Kanthararom, Khukhan, Khun Han, Muang Chan, Nam Kliang, Non Khun, Phayu, Pho Si Suwan, Phrai Bueng, Phu Sing, Prang Ku, Rasi Salai, Si Rattana, Sila Lat, Uthumphon Phisai, Wang Hin, Yang Chum Noi]
       Songkhla: [Muang Songkhla, Bang Klam, Chana, Hat Yai, Klong Hoi Khong, Khuha Sawan, Na Mom, Na Thawi, Ranot, Rattaphum, Saba Yoi, Sadao, Sathing Phra, Singhanakhon, Thepha]
       Sukhothai: [Muang Sukhothai, Ban Dan Lan Hoi, Khiri Mat, Kong Krailat, Sawankhalok, Si Nakhon, Si Samrong, Si Satchanalai, Thung Saliam]
       Suphan Buri: [Muang Suphan Buri, Bang Pla Ma, Dan Chang, Doem Bang Nang Buat, Nong Ya Sai, Sam Chuk, Song Phi Nong, U Thong]

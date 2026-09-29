@@ -39,6 +39,21 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-09-29
+
+- 2026-09-29 | pCloud index convenience | Put every direct URL in
+  `index_sync.txt` on its own line beneath its filename for simple selection
+  and copying. Editorial edition remains `250926_gpt_photo-workflow`.
+
+- 2026-09-29 | Cross-edition tracked corrections | Apply the supervisor's
+  accepted DOCX revisions to the live Directory, registry/Claude deliveries
+  and every named edition: remove the To Lam status/descriptive example;
+  replace the foreign-event time rule; restore the Muang/Don Mueang rule; and
+  correct Khu Muang, Muang Pan, Muang Yang, Thai Muang and Muang Chan. Preserve
+  existing edition identities as a corrective lineage sweep; regenerate all
+  nine historical Word/PDF volume pairs from their corrected edition text.
+
 ## Cleared 2026-09-29
 
 - 2026-09-29 | pCloud Shift handover | Replace automatic Drive-container

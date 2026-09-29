@@ -43,13 +43,9 @@ def tag_of(path):
 
 def index_bytes(tag):
     names = list(PARTS.values()) + [INDEX_NAME]
-    lines = [
-        "BANGKOK POST SHIFT",
-        f"Edition: {tag}",
-        "",
-        *(f"{name}: {PUBLIC_BASE}{name}" for name in names),
-        "",
-    ]
+    lines = ["BANGKOK POST SHIFT", f"Edition: {tag}", ""]
+    for name in names:
+        lines.extend((name, f"{PUBLIC_BASE}{name}", ""))
     return "\n".join(lines).encode("utf-8")
 
 

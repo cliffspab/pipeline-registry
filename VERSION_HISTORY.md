@@ -6,6 +6,47 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-09-29 — CROSS-EDITION REGISTER CORRECTIONS
+
+**Authority.** The supervisor supplied tracked changes in
+`blueprint_sync-edit.docx` and directed that the corrections apply to every
+named edition rather than only the current delivery.
+
+**Changes.** Remove the To Lam status record and its descriptive-title example;
+replace the foreign-event time rule; restore Muang as the general BKP form with
+Don Mueang airport as the sole exception; and correct Khu Muang, Muang Pan,
+Muang Yang, Thai Muang and Muang Chan.
+
+**Scope.** The corrections are applied across the live sources and generated
+text, registry delivery, Claude Directory copy and every named edition from
+`060926_gpt_restored-rules` through `250926_gpt_photo-workflow`. Recovery
+debris and evidentiary Archive snapshots remain untouched.
+
+**Evidence.** The supplied DOCX contains 22 tracked revision objects and no
+comments. They resolve to the changes above. The current root build passes all
+guards, six source-complete historical editions rebuild with their own guards,
+and a cross-edition stale-string audit returns no affected old forms. All nine
+historical Word/PDF pairs were regenerated from the corrected edition text;
+their 227 rendered pages pass the visual layout review and DOCX text audit.
+
+**Verdict.** Supervisor-approved corrective sweep; the edition identities are
+preserved because this repairs the recorded lineage rather than creating new
+editorial doctrine.
+
+---
+
+## 2026-09-29 — PCLOUD INDEX COPY CONVENIENCE
+
+**Change.** Each `index_sync.txt` entry now puts the filename on one line and
+the bare direct pCloud URL on the next, followed by a blank line. This makes
+each URL directly selectable by double-click without changing any target or
+editorial content.
+
+**Verdict.** Supervisor-approved convenience refinement under the existing
+`250926_gpt_photo-workflow` edition.
+
+---
+
 ## 2026-09-29 — PCLOUD SHIFT HANDOVER ROUTE
 
 **Route.** The sealed operational handover moves from automatic Google Drive
