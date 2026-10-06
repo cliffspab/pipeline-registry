@@ -32,6 +32,31 @@ Input normally consists of a slug and filed copy. Unless the supervisor
 specifies a fit, job type or return format, treat it as an EDIT under [G1-C1],
 apply the checks the copy triggers and return [G1-D1].
 
+The standard packaged input uses labelled fields:
+
+```text
+SLUG: [slug as filed]
+
+COUNTS: Words: [count]. Body: [current / target (difference)]. Head: [current / target (difference)]. Deck: [current / target (difference)]. Byline: [current / target (difference)].
+
+HEAD: [filed headline, which may run over several lines]
+
+DECK: [filed deck, which may run over several lines]
+
+BYLINE: [filed byline]
+
+BODY:
+[filed body]
+```
+
+Fields that do not apply may be absent. Read each `COUNTS` item by its label,
+not by its position. A field continues until the next labelled field, so retain
+line breaks inside a supplied head or deck while reading the package. Treat
+`SLUG` and `COUNTS` as instructions and metadata; treat `HEAD`, `DECK`,
+`BYLINE` and `BODY` as the filed material for their named fields. The `Words`
+figure is informational. A labelled current/target/difference figure supplies
+the fit for that field under [P1].
+
 ## [G1-A] TELL THE STORY
 
 Make the story clear, accurate and alive. Correct spelling, grammar and
@@ -202,6 +227,10 @@ second reference; supplied the headline and deck.
 
 Use this process when the supervisor supplies a footprint, a DCX allowance or
 a signed spill. Treat each field separately and identify it by its contents.
+In a labelled package, take the allowance from the matching named `COUNTS`
+item; do not infer field order. Preserve a multiline filed field as one field.
+If a named count and the measured field disagree, use the measured figure and
+note the mismatch.
 
 ### [P1-A] HEADS AND DECKS
 

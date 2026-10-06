@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT
 
-250926_gpt_photo-workflow
+051026_gpt_job-package
 
 a style guide
 

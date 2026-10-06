@@ -31,7 +31,7 @@ The DC-X Standalone Photo Processor (also logged as the DCX 9/9 Wit skill)
 manages editorial photo tasks by extracting asset slugs (e.g., `19St-P1b`) and
 layout directives directly from the DC-X workspace without requiring manual
 uploads.
-<!-- PART: 250926_gpt_photo-workflow PROCESSES -->
+<!-- PART: 051026_gpt_job-package PROCESSES -->
 ## [P3] PHOTOS
 
 ### EXTRACTION & CONTEXT
@@ -88,6 +88,10 @@ uploads.
 
 Use this process when the supervisor supplies a footprint, a DCX allowance or
 a signed spill. Treat each field separately and identify it by its contents.
+In a labelled package, take the allowance from the matching named `COUNTS`
+item; do not infer field order. Preserve a multiline filed field as one field.
+If a named count and the measured field disagree, use the measured figure and
+note the mismatch.
 
 ### [P1-A] HEADS AND DECKS
 

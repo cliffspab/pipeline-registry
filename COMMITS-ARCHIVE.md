@@ -40,6 +40,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-06
+
+- 2026-10-05 — Blueprint `051026_gpt_job-package`: add the stable labelled job
+  package and field-named fit parsing to GUIDE and PROCESSES; mirror the four
+  working sources and compiled BLUEPRINT; rebuild the generated edit and photo
+  Control skills; record the edition in VERSION_HISTORY.
+
 ## Cleared 2026-09-29
 
 - 2026-09-29 | pCloud index convenience | Put every direct URL in

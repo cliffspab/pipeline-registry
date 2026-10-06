@@ -6,6 +6,25 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-10-05 — LABELLED JOB PACKAGE
+
+**Authority.** The supervisor supplied the stable output of the new job
+packager and approved edition `051026_gpt_job-package`.
+
+**Change.** The Guide now defines the labelled `SLUG`, `COUNTS`, `HEAD`,
+`DECK`, `BYLINE` and `BODY` package. Counts are read by field name rather than
+position; multiline fields remain intact; the word count is informational;
+and each named current/target/difference figure is the fit for that field. The
+Copy process carries the matching parsing and count-mismatch rule.
+
+**Evidence.** The change was built first as an isolated candidate. The promoted
+root build passes source assembly, dollar-pairing, edition, invertibility,
+section-code, routing-index and register-parse guards.
+
+**Verdict.** Approved working edition prepared for the guarded push. Shift and
+all remote handovers remain on the last sealed edition until publication, CI
+rebuild and sealing succeed.
+
 ## 2026-09-29 — CROSS-EDITION REGISTER CORRECTIONS
 
 **Authority.** The supervisor supplied tracked changes in
