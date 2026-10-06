@@ -1,4 +1,4 @@
-<!-- PART: 250926_gpt_photo-workflow PROCESSES -->
+<!-- PART: 051026_gpt_job-package PROCESSES -->
 
 # [P] PROCESSES
 how we do it
@@ -7,6 +7,10 @@ how we do it
 
 Use this process when the supervisor supplies a footprint, a DCX allowance or
 a signed spill. Treat each field separately and identify it by its contents.
+In a labelled package, take the allowance from the matching named `COUNTS`
+item; do not infer field order. Preserve a multiline filed field as one field.
+If a named count and the measured field disagree, use the measured figure and
+note the mismatch.
 
 ### [P1-A] HEADS AND DECKS
 

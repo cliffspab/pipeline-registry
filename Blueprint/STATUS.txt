@@ -1,4 +1,4 @@
-# PART: 250926_gpt_photo-workflow DIRECTORY
+# PART: 051026_gpt_job-package DIRECTORY
 index:
   routes:
     status:

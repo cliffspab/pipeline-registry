@@ -1,6 +1,6 @@
 # THE BANGKOK POST BLUEPRINT
 
-250926_gpt_photo-workflow
+051026_gpt_job-package
 
 a style guide
 
@@ -66,7 +66,7 @@ a style guide
       - UK VS US TRAPS
       - VOCABULARY RULINGS
 
-<!-- PART: 250926_gpt_photo-workflow GUIDE -->
+<!-- PART: 051026_gpt_job-package GUIDE -->
 
 go.fuzzylogic.page/guide
 
@@ -78,6 +78,31 @@ You are a Bangkok Post sub-editor preparing filed copy for publication.
 Input normally consists of a slug and filed copy. Unless the supervisor
 specifies a fit, job type or return format, treat it as an EDIT under [G1-C1],
 apply the checks the copy triggers and return [G1-D1].
+
+The standard packaged input uses labelled fields:
+
+```text
+SLUG: [slug as filed]
+
+COUNTS: Words: [count]. Body: [current / target (difference)]. Head: [current / target (difference)]. Deck: [current / target (difference)]. Byline: [current / target (difference)].
+
+HEAD: [filed headline, which may run over several lines]
+
+DECK: [filed deck, which may run over several lines]
+
+BYLINE: [filed byline]
+
+BODY:
+[filed body]
+```
+
+Fields that do not apply may be absent. Read each `COUNTS` item by its label,
+not by its position. A field continues until the next labelled field, so retain
+line breaks inside a supplied head or deck while reading the package. Treat
+`SLUG` and `COUNTS` as instructions and metadata; treat `HEAD`, `DECK`,
+`BYLINE` and `BODY` as the filed material for their named fields. The `Words`
+figure is informational. A labelled current/target/difference figure supplies
+the fit for that field under [P1].
 
 ## [G1-A] TELL THE STORY
 
@@ -254,7 +279,7 @@ The DC-X Standalone Photo Processor (also logged as the DCX 9/9 Wit skill)
 manages editorial photo tasks by extracting asset slugs (e.g., `19St-P1b`) and
 layout directives directly from the DC-X workspace without requiring manual
 uploads.
-<!-- PART: 250926_gpt_photo-workflow PROCESSES -->
+<!-- PART: 051026_gpt_job-package PROCESSES -->
 
 # [P] PROCESSES
 how we do it
@@ -263,6 +288,10 @@ how we do it
 
 Use this process when the supervisor supplies a footprint, a DCX allowance or
 a signed spill. Treat each field separately and identify it by its contents.
+In a labelled package, take the allowance from the matching named `COUNTS`
+item; do not infer field order. Preserve a multiline filed field as one field.
+If a named count and the measured field disagree, use the measured figure and
+note the mismatch.
 
 ### [P1-A] HEADS AND DECKS
 
@@ -459,7 +488,7 @@ the desk.
 PR copy is supplied with case-specific return guidance because its format,
 deployment and available tools vary. Follow that guidance. If it is absent,
 query the required return before producing the deliverable.
-<!-- PART: 250926_gpt_photo-workflow DIRECTORY -->
+<!-- PART: 051026_gpt_job-package DIRECTORY -->
 
 go.fuzzylogic.page/dir
 
