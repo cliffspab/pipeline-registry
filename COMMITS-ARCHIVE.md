@@ -41,6 +41,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-12
+
+- 2026-10-12 | beta AI entry hub and local upload-cache exclusion | Add the
+  supervisor-approved `index/` hub, boot instructions and `bkp`, `check`,
+  `photo` and `fit` skills; keep Directory authoritative for status and house
+  forms; exclude transient `.tmp.driveupload/` files from publication. No
+  sealed Shift file or Blueprint edition is changed by this payload.
+
 ## Cleared 2026-10-06
 
 - 2026-10-05 — Blueprint `051026_gpt_job-package`: add the stable labelled job

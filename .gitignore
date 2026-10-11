@@ -11,3 +11,4 @@ Thumbs.db
 
 # GoodSync sync metadata & PULSE logs — local only, never publish
 _gsdata_/
+.tmp.driveupload/
