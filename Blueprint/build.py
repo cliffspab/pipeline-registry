@@ -178,6 +178,8 @@ def write_upload_zips(root: Path, version: str, parts) -> None:
         with zipfile.ZipFile(upload / f"{skill}.zip", "w", zipfile.ZIP_DEFLATED) as zf:
             for name, text in entries:
                 info = zipfile.ZipInfo(name, date_time=stamp)
+                info.create_system = 3
+                info.external_attr = 0o100644 << 16
                 info.compress_type = zipfile.ZIP_DEFLATED
                 zf.writestr(info, text.encode("utf-8"))
 

@@ -43,6 +43,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-18
+
+- 2026-10-18 | Blueprint beta ZIP build | fixed archive platform metadata so
+  upload ZIPs reproduce byte-for-byte on Windows and GitHub's Linux runner.
+
+
+Nothing pending.
+
 ## Cleared 2026-10-18
 
 - 2026-10-18 | Blueprint beta registry swap | moved the complete sealed legacy payload to
