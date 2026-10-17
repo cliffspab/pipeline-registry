@@ -1,12 +1,6 @@
-# PART: 051026_gpt_job-package DIRECTORY
+# 171026d_gpt_single-source-candidate
 index:
   routes:
-    status:
-      - status.apex
-      - status.second_tier.watch
-      - status.second_tier.mortalities
-      - status.second_tier.corporate
-      - status.global
     references:
       - references.countries
       - references.foreign_places
@@ -24,117 +18,6 @@ index:
       - references.headline_country_forms
       - references.title_styling
       - references.language_forms
-status:
-
-  apex:
-
-    - HM King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua
-    - HM Queen Sirikit The Queen Mother
-    - Thaksin Shinawatra
-    - Srettha Thavisin
-    - Paetongtarn Shinawatra
-    - Pita Limjaroenrat
-    - Dr Prasert Prasarttong-Osoth
-    - HRH Princess Bajrakitiyabha Narendiradebyavati
-    - Ayatollah Ali Khamenei
-    - Mojtaba Khamenei
-
-  second_tier:
-
-    watch:
-
-      - name: Thanathorn Juangroongruangkit
-        fact: acquitted of royal defamation charges, May 2026
-
-      - name: Saksayam Chidchob
-        fact: removed for ethical misconduct March 2024; cleared by the NACC April 2026
-
-      - name: Arnon Nampa
-        fact: incarcerated, serving a multi-year sentence
-
-      - name: Rukchanok 'Ice' Srinork
-        fact: sentenced to six years, out on bail
-
-      - name: Nikorn Chamnong
-        fact: party-list MP and board member for the Bhumjaithai Party
-        directive: FLAG any reference to him as Chartthaipattana; accept BJT affiliations.
-
-      - name: Stithorn Thananithichot
-        fact: political scientist at Chulalongkorn University
-        directive: >
-          FLAG any reference to him at King Prajadhipok's Institute;
-          accept Chulalongkorn affiliations.
-
-      - name: Korn Chatikavanij
-        fact: >
-          Democrat Party list-MP and deputy leader for economic affairs; chairman of the
-          party policy committee. Named one of three Democrat prime ministerial candidates,
-          with Abhisit Vejjajiva, for the Feb 8, 2026 general election.
-        directive: >
-          FLAG any reference to him as a Chart Pattana Kla or Kla figure,
-          or as a sitting finance minister.
-
-      - name: Chaichanok Chidchob
-        fact: minister of digital economy and society
-        house_form: Chidchob, not Chidchorb
-        directive: FLAG any reference to him in another ministry role.
-
-      - name: Chadchart Sittipunt
-        fact: >
-          re-elected Bangkok governor June 28, 2026 with a record 1,537,784 votes;
-          second term began July 9, 2026. Ran as an independent after resigning early
-          in May 2026.
-        ruling: >
-          Take "incumbent" or "governor" as filed. Capped before the full name per the
-          title rule: Bangkok Governor Chadchart Sittipunt.
-        directive: FLAG "former" or any first-term framing.
-
-    mortalities:
-      Gen Suchinda Kraprayoon: died June 2025
-      Man Phatnothai: died May 2026
-      Dr Wanlop Thaineua: died April 2026
-      Chonsawat Asavahame: died 2023; triggered the Pak Nam faction power vacuum
-      Chodchoy Thavisin: died 2024
-      Pope Francis: died 2025
-      Dick Cheney: died 2025
-      Jane Goodall: died 2025
-      Charlie Kirk: died 2025
-      Pope Emeritus Benedict XVI ("Pope Benedict"): died Dec 31, 2022, aged 95; resigned the papacy 2013
-      Li Keqiang: died Oct 27, 2023
-
-    corporate:
-      Brenton Justin Mauriello: CEO of Raimon Land, from April 2024
-      Pisit Thangtanagul: CEO of PwC Thailand, from 2024
-
-  global:
-
-    - name: Donald Trump and JD Vance
-      fact: sitting president and vice-president of the United States, from Jan 20, 2025
-      second_ref: Mr Trump, Mr Vance
-      directive: FLAG any reference to them as private citizens or former officials.
-
-    - name: King Charles III
-      fact: >
-        active monarch, operating alongside a cancer treatment protocol;
-        treatment reduced Dec 2025 to precautionary monitoring
-
-    - name: King Salman bin Abdulaziz al-Saud
-      fact: king of Saudi Arabia, from Jan 23, 2015
-      house_form: '"King Salman" usually suffices.'
-
-    - name: King Jigme Khesar Namgyel Wangchuck
-      fact: king of Bhutan, reigning since 2006; crowned 2008
-      house_form: Full title on first reference.
-
-    - name: Catherine, Princess of Wales
-      fact: >
-        Princess of Wales from Sept 9, 2022, on the accession of King Charles III;
-        formerly Duchess of Cambridge
-      directive: FLAG any reference to her as Duchess of Cambridge.
-
-    - name: Prince William, Prince of Wales
-      fact: Prince of Wales from Sept 9, 2022, letters patent Feb 2023; Duke of Cambridge 2011-2022
-
 references:
 
   numbers:
@@ -235,14 +118,14 @@ references:
       Myanmar: Full name on every reference, no honorific.
       Cambodian: Full name on every reference, no honorific.
       Thai: Mr/Ms plus given name.
-      Malaysian: Mr/Ms plus given name.
+      Malaysian: Malay names take Mr/Ms plus given name; Chinese and Indian Malaysians follow their own tradition.
       Lao: Mr/Ms plus given name.
-      Arabic_without_prefix: Mr/Ms plus given name.
-      Arabic_with_prefix: Drop the prefix on second reference and use Mr/Ms plus the remaining surname; lower-case al- in personal names.
+      Arabic: Mr/Ms plus the final name component, dropping any al- or el- prefix on second reference; lower-case al- in personal names. A known preferred form or a formal honorific overrides the default.
       Korean: Family name first; hyphenate the given name and lower-case its second component; second reference Mr/Ms plus family name.
       Vietnamese: The last component is the given name used after Mr/Ms; Thi indicates female.
       Spanish: Use the paternal surname on second reference.
     held_examples:
+      Chatichai Choonhavan: Example spelling trap; not Chatchai Choonahavan. Gen is retained on every reference.
       Xi Jinping: Mr Xi
       Mao Zedong: Historical; no honorific.
       Deng Xiaoping: Historical; no honorific.
@@ -253,7 +136,6 @@ references:
       Mahathir Mohamad: Mr Mahathir
       Bashar al-Assad: Mr Assad
       Abdel Fattah el-Sissi: Mr Sissi
-      Abed Rabbo Mansour Hadi: Mr Hadi
       Kim Jong-un: Mr Kim
       Ban Ki-moon: Mr Ban
       Syngman Rhee: Historical; retain the established romanisation.
@@ -279,6 +161,7 @@ references:
       - Khunying
       - Thanphuying
       - Phra
+      - Sheikh
       - royal titles
       - police and military ranks
       - medical, papal and clerical titles
@@ -288,16 +171,15 @@ references:
     title_position: Put a title before the name.
     title_caps: >
       Capitalise a current formal title used as an official designation directly before
-      either a full or shortened name, eg Foreign Minister Maris Sangiampongsa, Foreign
-      Minister Maris, Governor Chadchart, President Trump or General Secretary To Lam.
+      either a full or shortened name, eg Foreign Minister Somchai Dee, Foreign
+      Minister Somchai, Governor Somchai or President Smith.
       Lower-case it when it stands alone or is former. A formal office name may retain
-      capitals after a name, eg To Lam, President of Vietnam and General Secretary of the
-      Communist Party. This rule governs the title if used; it does not require a title
+      capitals after a name, eg John Smith, President of Exampleland. This rule governs the title if used; it does not require a title
       instead of the normal second-reference form.
     descriptive_titles: >
       Lower-case a descriptive or house-lowercase role before a name, eg deputy spokesperson
-      Natapanu Nopakun, company president John Smith, human rights lawyer Arnon Nampa or
-      head coach Masatada Ishii. Query an unlisted borderline role;
+      Somchai Dee, company president John Smith, human rights lawyer Niran Thep or
+      head coach Ken Sato. Query an unlisted borderline role;
       do not infer capitalisation from seniority alone.
     ranks: Take ranks from copy and apply a filed rank consistently; if unclear, repeat the full name or query it.
     title_abbreviations: Against a name, use Prof, Dr, Jr, Sr, St, Mt, Corp and Co.
@@ -352,7 +234,7 @@ references:
     foreign_words: Familiar English borrowings stand plain; otherwise italicise first mention and translate when context does not supply the meaning.
     plain_foreign_examples: [soi, wat, tuk-tuk, muay Thai, ya ba, Songkran, tsunami, kamikaze, feng shui, pad Thai, som tam, sushi, lasagne]
     species: Put the bracketed Latin name after the common name on first reference; italicise it and capitalise the first word only.
-    dcx: Record required italics and quotation marks under `Styles required` in the Style Log.
+    dcx: Note required italics and quotation marks in the Style Log.
 
   language_forms:
     diacritics: Drop accents, tone marks and diacritics, including in proper names.
@@ -582,7 +464,7 @@ references:
     Moro Islamic Liberation Front: >
       MILF after first reference. Exception to the lower-case-acronym-said-as-word rule;
       avoids slang collision.
-    Pavena Foundation: Not Paveena. The founder Pavena Hongsakul is spelled the same way.
+    Pavena Foundation: Example spelling trap; not Paveena.
     sharia law: Lower case.
     Shia: Not Shi'ite or Shiite.
     Yezidis: House form.
@@ -615,10 +497,6 @@ references:
       average: Not a synonym for poor.
       Blu-ray: Trademark; cap B, hyphen, lower r.
       capital of: Bangkok IS the capital. Do not write "the Thai capital of Bangkok".
-      Chatichai Choonhavan: >
-        BKP form for the former prime minister (d.1998) — NOT Chatchai Choonahavan (trap
-        observed in filed PostBag copy, July 2026). Gen retained on all references
-        (military rank, deceased). Relay-verified against bangkokpost.com usage, May 27, 2026.
       collide: Two cars collided; vehicles hit (not collide with) stationary objects.
       comprising vs including: Comprising = full list; including = partial list.
       completely destroyed: Tautology — use destroyed.

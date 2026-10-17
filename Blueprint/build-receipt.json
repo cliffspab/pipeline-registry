@@ -1,0 +1,20 @@
+{
+  "version": "171026d_gpt_single-source-candidate",
+  "source": "BLUEPRINT.md",
+  "source_sha256": "77a4b1af3340fe55e5f50f9ff9ee14363add20a90749a168b20e4c0ce5684b60",
+  "deploy_files": 14,
+  "upload_zips": {
+    "boot.zip": "8478157169c8320cea3c51b0432b6fe395ab7a128cd98ef8f21824472353d3c3",
+    "check.zip": "66801d2e1443696a33ed4225cb96f28b843e1026fd579806f7290bb31f66986f",
+    "edit.zip": "dc715a7c16b29aee3c0844b0464d66315dbf723212127757027b1b45f501e7b5",
+    "photo.zip": "59d7f4340a8783005a5e7a7c82e4af4f3ce413a92686171f259e32e08c653082",
+    "pr.zip": "cbe71ed6623cea13bbf0b9579a76c89d48eb3d9cf435f587ea6f86d240f083b5"
+  },
+  "compatibility_files": {
+    "BLUEPRINT.txt": "80185d64bc55d8b2f0c9b7c6add64a96d3056b4c6e28f5395850c2988d3ea01a",
+    "GUIDE.txt": "a225b80f335b7fad76a86e8b2dec30c651a7b0466676d4b795bd635a2b34ce80",
+    "PROCESSES.txt": "8643a418dfbe573ea095395b5fd4e17ae2c1ed2a5534d7ce859c6c35c3dabc2f",
+    "DIRECTORY.yaml": "2410032c5bd83fb413b5a8f371ebcefc1f1123c1dfd1117acf864590cc1a1ada",
+    "VERSION.txt": "8f464ffa3b85d5bef994432c87dedaca1e7077ccb94ebc4354ae35b6afb50855"
+  }
+}

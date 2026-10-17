@@ -1,0 +1,25 @@
+# 171026d_gpt_single-source-candidate
+version: 171026d_gpt_single-source-candidate
+entrypoint: BOOT.md
+default: edit.md
+directory_source: ../DIRECTORY.txt
+modes:
+  check: modules/check.md
+  photo: modules/photo.md
+  pr: modules/pr.md
+files:
+  - path: BOOT.md
+    bytes: 3065
+    sha256: 21c171afb2ba350c5b3e317837419c52206814df85b61a744fe0b3a40ec7bf18
+  - path: edit.md
+    bytes: 22401
+    sha256: 74e7ccc1fb921fe36ca5114cd2dcc6b2a02c7588a560c272a6bfbe449af722e8
+  - path: modules/check.md
+    bytes: 2091
+    sha256: 919e39d22a5791ac3d904b08b1235f704e3dd9749c977e57b7652a9b65f3ae71
+  - path: modules/photo.md
+    bytes: 2878
+    sha256: 86ba480ce51eb5d2cb13d63cfe6611142fa0f2b8137da0bc8308c2d1fde4a1b1
+  - path: modules/pr.md
+    bytes: 1274
+    sha256: 45a27dddb7f6c4c137bab4b67fe49dd3ba67cb2ab0944d85a16a3498e4f102de

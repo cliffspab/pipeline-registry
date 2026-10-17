@@ -42,6 +42,17 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-18
+
+- 2026-10-18 | Blueprint beta registry swap | moved the complete sealed legacy payload to
+  `Blueprint fallback/` and placed candidate `171026d_gpt_single-source-candidate`
+  in `Blueprint/` with its generated `DEPLOY/` and five self-contained skill
+  ZIPs in `UPLOAD/`. Added generated compatibility deliveries at the former
+  `BLUEPRINT.txt`, `GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.yaml` and
+  `VERSION.txt` paths. Not ready to push until CI is adapted to the candidate
+  architecture.
+
 ## Cleared 2026-10-12
 
 - 2026-10-12 | beta AI entry hub and local upload-cache exclusion | Add the
