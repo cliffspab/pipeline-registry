@@ -175,12 +175,12 @@ def write_upload_zips(root: Path, version: str, parts) -> None:
                 f"{skill}/references/{UPLOAD_NAMES[ref]}",
                 watermark(ref, version, parts[ref]),
             ))
-        with zipfile.ZipFile(upload / f"{skill}.zip", "w", zipfile.ZIP_DEFLATED) as zf:
+        with zipfile.ZipFile(upload / f"{skill}.zip", "w", zipfile.ZIP_STORED) as zf:
             for name, text in entries:
                 info = zipfile.ZipInfo(name, date_time=stamp)
                 info.create_system = 3
                 info.external_attr = 0o100644 << 16
-                info.compress_type = zipfile.ZIP_DEFLATED
+                info.compress_type = zipfile.ZIP_STORED
                 zf.writestr(info, text.encode("utf-8"))
 
 

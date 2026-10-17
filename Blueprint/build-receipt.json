@@ -4,11 +4,11 @@
   "source_sha256": "77a4b1af3340fe55e5f50f9ff9ee14363add20a90749a168b20e4c0ce5684b60",
   "deploy_files": 14,
   "upload_zips": {
-    "boot.zip": "77c92bc54f80f100532a939d8ad81c7b2fff73989adbbf2e5c8c926f174c3f97",
-    "check.zip": "4322fcf12787194b609bada400f276a432b4fee41b0825cd23f93997d9825ad3",
-    "edit.zip": "26061ee746bf7774bdff2b580d5e93cec2e2909a3ddb7dce1b93a82c68f873c9",
-    "photo.zip": "0babbbd96fcb3d10c489f3fb568784a65f84fe42fdb41c7da3617b4282861fbd",
-    "pr.zip": "01771d9717bc78fa7ba062c2e7749d476b508ef3770dc7e9d3f51504e1e38bd2"
+    "boot.zip": "89578a39034694f36b60bf19b084b72f0347f736987542f26edc6899f23ecd0d",
+    "check.zip": "634cce50345078aa0d082bdbc79b6974dcf7f8b94e07656f19aeef93e7dca3fc",
+    "edit.zip": "70da635832ec23ed531bf0eace41b3a93ec4b7cc9e25e1be76fbc940b4813db8",
+    "photo.zip": "74a4722ffce9d1beba8fbd1f42ee64710dbff0902b12e272cd6b1f11156bd16c",
+    "pr.zip": "0a79acf4a48bebb22bee0a0de458f40677ef0e93ab0cf308d8785a8d4f68a665"
   },
   "compatibility_files": {
     "BLUEPRINT.txt": "80185d64bc55d8b2f0c9b7c6add64a96d3056b4c6e28f5395850c2988d3ea01a",
