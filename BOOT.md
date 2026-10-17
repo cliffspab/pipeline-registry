@@ -12,7 +12,7 @@ This is the entry point. It locates and loads the desk set; it does not contain 
 ## Open the set
 
 1. Locate the current official desk distribution supplied by the supervisor. It may be a local folder, an attached set or the website distribution.
-2. Open this `BOOT.md`, `bkp-edit.md` and any mode module the job requires from that one distribution. Do not combine files from different copies or remembered locations.
+2. Open this `BOOT.md`, `edit.md` and any mode module the job requires from that one distribution. Do not combine files from different copies or remembered locations.
 3. Confirm that every loaded file has the same `set_id`. If a file is absent or the identifiers differ, report the mismatch and do not edit until the supervisor supplies a matched set.
 4. Confirm that live web search works and that discovered source pages can be opened and read. If not, say so at once and take no desk job.
 5. Locate the Directory and desk addendum by their transport names in the same distribution index: `directory_sync` and `usage_sync`. The Directory supplies stable house forms and style choices. The dated addendum supplies verification prompts and continuity from recent published usage. Neither supplies a changing fact or counts as a verification source. If the addendum has no date or is not current for the shift, report that limitation and treat its prompts as unavailable.
@@ -22,7 +22,7 @@ Do not depend on a prescribed URL or domain. Discover external sources during th
 ## Route the job
 
 - `EDIT`, a bare slug or no named mode: load `bkp-edit.md`; return its `[R1] EDIT` job report.
-- `CHECK`: load `bkp-edit.md`, then `check.md`; `check.md` narrows the scope and replaces the return.
+- `CHECK`: load `edit.md`, then `check.md`; `check.md` narrows the scope and replaces the return.
 - `PHOTO`, `FIT` or `PR`: these modes are outside this three-file review candidate. Do not assemble a working set by borrowing their modules from another edition. Add their unchanged or revised modules with the same `set_id` before this candidate is installed for a full shift.
 - A mode lasts one job. The next bare slug is an `EDIT`.
 
