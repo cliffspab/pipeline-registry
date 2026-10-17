@@ -12,7 +12,7 @@ This is the package entry point. It locates and routes the desk materials; it do
 
 Resolve companion material by this rule, regardless of website, drive, attachment, skill store or local folder:
 
-1. For the BOOT-routed deployment, use the sibling `INDEX.yaml` and resolve its paths relative to this file.
+1. For the BOOT-routed deployment, use the sibling `INDEX.yaml` to identify the files, and resolve each one by its filename wherever it sits in the upload.
 2. For a skill deployment, use only the files deliberately bundled with that installed skill.
 3. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A deployment may bundle it under that name or a format-equivalent name suited to the target system.
 

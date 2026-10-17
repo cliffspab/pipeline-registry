@@ -164,9 +164,7 @@ def write_compatibility_files(
 def write_upload_zips(root: Path, version: str, parts) -> None:
     """Build one self-contained, ready-to-upload archive per skill."""
     upload = root / "UPLOAD"
-    if upload.exists():
-        remove_tree(upload)
-    upload.mkdir(parents=True)
+    upload.mkdir(parents=True, exist_ok=True)
     stamp = (2026, 1, 1, 0, 0, 0)
     for skill, part in SKILL_SOURCES.items():
         entries = [(f"{skill}/SKILL.md", watermark(part, version, parts[part]))]

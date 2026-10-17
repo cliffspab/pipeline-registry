@@ -14,7 +14,7 @@ Runs on top of the shared `edit` method bundled with the installed skill or name
 
 - Head and deck stay unless there is a real mistake or a clear inspiration, never straight after the chief has steered them.
 
-- A style fix is included only if it is one-shot, complete and length-neutral by character count.
+- A style fix is included only if it maintains the existing footprint.
 
 - Search a material fact you would change, or one the copy gives reason to doubt; nothing else. A fact change needs two independent sources under [P2]. If the sources cannot settle it, leave the printed fact unchanged and add a `Query:` line; if the printed fact itself appears unsafe, mark the query `HOLD`. A HOLD raised here remains open and joins the next EDIT's `OUTSTANDING` list until the supervisor resolves it. A mononym, nickname or single name alone is not a search trigger.
 
