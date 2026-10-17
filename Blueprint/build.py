@@ -36,6 +36,7 @@ COMPAT_FILES = (
     "BLUEPRINT.txt",
     "GUIDE.txt",
     "PROCESSES.txt",
+    "DIRECTORY.txt",
     "DIRECTORY.yaml",
     "VERSION.txt",
 )
@@ -157,7 +158,9 @@ def write_compatibility_files(
         root / "PROCESSES.txt",
         watermark("PROCESSES", version, bounded_section(edit, "# [P] PROCESSES", "# [R] RETURN")),
     )
-    write_text(root / "DIRECTORY.yaml", watermark("DIRECTORY", version, parts["DIRECTORY"]))
+    directory_text = watermark("DIRECTORY", version, parts["DIRECTORY"])
+    write_text(root / "DIRECTORY.txt", directory_text)
+    write_text(root / "DIRECTORY.yaml", directory_text)
     write_text(root / "VERSION.txt", version + "\n")
 
 

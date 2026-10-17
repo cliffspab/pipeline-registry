@@ -46,6 +46,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-18
+
+- 2026-10-18 | `/dir` compatibility | restored generated
+  `Blueprint/DIRECTORY.txt` while retaining the byte-identical YAML twin.
+
+
+Nothing pending.
+
 ## Cleared 2026-10-18
 
 - 2026-10-18 | Blueprint beta routing and CHECK | made routed files resilient
