@@ -10,14 +10,14 @@ files:
     bytes: 33388
     sha256: 2410032c5bd83fb413b5a8f371ebcefc1f1123c1dfd1117acf864590cc1a1ada
   - path: routed/BOOT.md
-    bytes: 3112
-    sha256: 4871f6ca2fb6397e291dd8d4384d00aaaf24f118b1a4c0036f3ca709e4387588
+    bytes: 3499
+    sha256: 559732b7f9d243da67894d042aa2b8cd7a191d514c067f29433bb64d09774add
   - path: routed/INDEX.yaml
     bytes: 821
-    sha256: 60ecc6184a50c1fc398d2f3da24fa706592be9918a589f2a132da1ad6a2e1e4a
+    sha256: 70df6ca1102bb596b0ae0a0002d30e0955e9a072abcbbcc1cb9ddd1d362f34dd
   - path: routed/edit.md
-    bytes: 22734
-    sha256: c0a7f4e87bde98df07bae69c3c51ea0ad0f8fdb3f723c34e0a557714a479f21c
+    bytes: 22730
+    sha256: a6f62d790421e7d101ab7abc912a3d3f834c1119a8952fb83159bec80bb16442
   - path: routed/modules/check.md
     bytes: 2064
     sha256: 30bc4f2f7a5117a6adcc83bd9758140ae3fafdcee51c504491cf4a38677b7584
@@ -29,16 +29,16 @@ files:
     sha256: 45a27dddb7f6c4c137bab4b67fe49dd3ba67cb2ab0944d85a16a3498e4f102de
   - path: skills/INDEX.yaml
     bytes: 898
-    sha256: d6dc2f50330255808e2c68908bbbc0fab6eb539c3e9424036a93f14c3f8590a7
+    sha256: f30c0228432d949656add7ac08370bb11c4c0230b4a874124117df5d8660ea95
   - path: skills/boot/SKILL.md
-    bytes: 3112
-    sha256: 4871f6ca2fb6397e291dd8d4384d00aaaf24f118b1a4c0036f3ca709e4387588
+    bytes: 3499
+    sha256: 559732b7f9d243da67894d042aa2b8cd7a191d514c067f29433bb64d09774add
   - path: skills/check/SKILL.md
     bytes: 2064
     sha256: 30bc4f2f7a5117a6adcc83bd9758140ae3fafdcee51c504491cf4a38677b7584
   - path: skills/edit/SKILL.md
-    bytes: 22734
-    sha256: c0a7f4e87bde98df07bae69c3c51ea0ad0f8fdb3f723c34e0a557714a479f21c
+    bytes: 22730
+    sha256: a6f62d790421e7d101ab7abc912a3d3f834c1119a8952fb83159bec80bb16442
   - path: skills/photo/SKILL.md
     bytes: 2878
     sha256: 86ba480ce51eb5d2cb13d63cfe6611142fa0f2b8137da0bc8308c2d1fde4a1b1

@@ -12,9 +12,10 @@ This is the package entry point. It locates and routes the desk materials; it do
 
 Resolve companion material by this rule, regardless of website, drive, attachment, skill store or local folder:
 
-1. For the BOOT-routed deployment, use the sibling `INDEX.yaml` to identify the files, and resolve each one by its filename wherever it sits in the upload.
-2. For a skill deployment, use only the files deliberately bundled with that installed skill.
-3. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A deployment may bundle it under that name or a format-equivalent name suited to the target system.
+1. When this `BOOT.md` is opened from a link, immediately open the sibling `INDEX.yaml` by resolving it relative to the `BOOT.md` URL. Resolve every path in that index relative to the index URL. In the same turn, load its default `edit.md` and the Directory before accepting or acting on a job; then load any mode module the job requires.
+2. When the BOOT-routed deployment is supplied as an upload or local folder, use the sibling `INDEX.yaml` in the same way and resolve each indexed path within that deployment.
+3. For a skill deployment, use only the files deliberately bundled with that installed skill.
+4. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A skill deployment bundles the same file as `references/DIRECTORY.txt`; another target system may use a format-equivalent name.
 
 Do not depend on a provider, account, prescribed URL, installation path, edition tag or version witness.
 

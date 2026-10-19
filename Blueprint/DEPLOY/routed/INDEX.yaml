@@ -9,11 +9,11 @@ modes:
   pr: modules/pr.md
 files:
   - path: BOOT.md
-    bytes: 3112
-    sha256: 4871f6ca2fb6397e291dd8d4384d00aaaf24f118b1a4c0036f3ca709e4387588
+    bytes: 3499
+    sha256: 559732b7f9d243da67894d042aa2b8cd7a191d514c067f29433bb64d09774add
   - path: edit.md
-    bytes: 22734
-    sha256: c0a7f4e87bde98df07bae69c3c51ea0ad0f8fdb3f723c34e0a557714a479f21c
+    bytes: 22730
+    sha256: a6f62d790421e7d101ab7abc912a3d3f834c1119a8952fb83159bec80bb16442
   - path: modules/check.md
     bytes: 2064
     sha256: 30bc4f2f7a5117a6adcc83bd9758140ae3fafdcee51c504491cf4a38677b7584

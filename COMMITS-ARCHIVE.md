@@ -47,6 +47,13 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-20
+
+- 2026-10-20 | Blueprint test flight | Harden linked Boot discovery, require same-turn loading of `edit.md` and the Directory, align routed and skill Directory locations, and rebuild DEPLOY indexes, upload zips and receipt without changing edition `171026d_gpt_single-source-candidate`.
+
+- 2026-10-20 | beta push guard | Validate the single-source Blueprint instead of obsolete root mirrors, fail closed on Control changes until its legacy generator is adapted, and stop after verified GitHub publication while sealing, Shift and pCloud remain paused.
+
 ## Cleared 2026-10-18
 
 - 2026-10-18 | `/dir` compatibility | restored generated

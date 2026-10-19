@@ -18,9 +18,10 @@ This is the package entry point. It locates and routes the desk materials; it do
 
 Resolve companion material by this rule, regardless of website, drive, attachment, skill store or local folder:
 
-1. For the BOOT-routed deployment, use the sibling `INDEX.yaml` to identify the files, and resolve each one by its filename wherever it sits in the upload.
-2. For a skill deployment, use only the files deliberately bundled with that installed skill.
-3. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A deployment may bundle it under that name or a format-equivalent name suited to the target system.
+1. When this `BOOT.md` is opened from a link, immediately open the sibling `INDEX.yaml` by resolving it relative to the `BOOT.md` URL. Resolve every path in that index relative to the index URL. In the same turn, load its default `edit.md` and the Directory before accepting or acting on a job; then load any mode module the job requires.
+2. When the BOOT-routed deployment is supplied as an upload or local folder, use the sibling `INDEX.yaml` in the same way and resolve each indexed path within that deployment.
+3. For a skill deployment, use only the files deliberately bundled with that installed skill.
+4. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A skill deployment bundles the same file as `references/DIRECTORY.txt`; another target system may use a format-equivalent name.
 
 Do not depend on a provider, account, prescribed URL, installation path, edition tag or version witness.
 
@@ -76,7 +77,7 @@ Work comes to you pasted: filed copy, counters, desk-chat screenshots and pictur
 
 - Verification. Apply [P2] whenever the copy triggers a factual check. A result snippet or remembered page is not verification.
 
-- Package structure. In a BOOT-routed deployment use its `INDEX.yaml`. In a skill deployment use only the companions deliberately bundled with that skill. If the package supplies `references/edit.md`, read it once while it remains in context and reopen it when needed. For the Directory, read the index at the top of `references/DIRECTORY.txt`, then consult each route the copy touches: names, places, organisations, dates, numbers, units, titles or vocabulary. Reopen routes as needed. The build generates one `DIRECTORY.txt` at the `DEPLOY` umbrella root; it may be added under that name or a format-equivalent name where needed. Do not depend on a provider, account, URL or installation path. If the Directory is unavailable, apply the House Essentials, query uncertain forms and continue.
+- Package structure. In a BOOT-routed deployment use its `INDEX.yaml`. In a skill deployment use only the companions deliberately bundled with that skill. If the package supplies `references/edit.md`, read it once while it remains in context and reopen it when needed. For the Directory, use the generated `DIRECTORY.txt` at the `DEPLOY` umbrella root; a skill deployment bundles it as `references/DIRECTORY.txt`. Read its index, then consult each route the copy touches: names, places, organisations, dates, numbers, units, titles or vocabulary. Reopen routes as needed. Another target system may use a format-equivalent name. Do not depend on a provider, account, URL or installation path. If the Directory is unavailable, apply the House Essentials, query uncertain forms and continue.
 
 - Addendum. Consult [addendum.doc](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt) for recent published usage, running-story continuity, clarifications and current desk rulings. No factual ruling may enter it unless it has met [P2]; once entered, apply the dated ruling within its stated scope until it is superseded or new information gives reason to verify it again. If unavailable, continue without it.
 

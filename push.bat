@@ -60,15 +60,13 @@ if errorlevel 1 (
   echo [ABORT] root CONTROL.txt and Control\CONTROL.txt differ.
   pause & exit /b 1
 )
-for %%F in (BLUEPRINT.front.md GUIDE.md PROCESSES.md DIRECTORY.yaml BLUEPRINT.txt) do (
-  %SystemRoot%\System32\fc.exe /b "..\%%F" "Blueprint\%%F" >nul
-  if errorlevel 1 (
-    echo [ABORT] root %%F and Blueprint\%%F differ.
-    pause & exit /b 1
-  )
+python Blueprint\build.py --check --release || (
+  echo [ABORT] Blueprint beta is stale or invalid.
+  pause & exit /b 1
 )
-python Control\build.py --check || (
-  echo [ABORT] CONTROL plugin is stale or invalid.
+for /f "delims=" %%C in ('git status --porcelain -- Control') do (
+  echo [ABORT] Control has changes, but its legacy generator is not compatible
+  echo         with the current Blueprint beta. Validate Control separately.
   pause & exit /b 1
 )
 
@@ -100,8 +98,8 @@ for %%F in (AGENTS.md shift.py sync_master.py build.py extract.py seal.py clear_
 echo.
 echo Review every modified, deleted and untracked path above.
 echo Typing PUSH authorises the exact displayed payload, bootstrap mirrors,
-echo pending-list archival, commit, rebase, push, verification, sealing,
-echo Shift refresh and verified pCloud sync.
+echo pending-list archival, commit, rebase, push and remote verification.
+echo This beta workflow does not seal an edition or refresh Shift or pCloud.
 set "BKP_CONFIRM="
 set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
 if /I not "%BKP_CONFIRM%"=="PUSH" (
@@ -161,11 +159,10 @@ if %errorlevel%==0 (
   echo [ok] commit created.
 )
 
-REM --- integrate the compile-bot's commits BEFORE pushing ---------------------
-REM compile.yml derives GUIDE/PROCESSES/DIRECTORY/docx/manifest and commits them to main on
-REM every build, so the clone is behind after every build it triggers. Pushing
-REM without integrating that is rejected as a non-fast-forward, which is what
-REM happened on 090826. Rebase keeps the desk's commit on top of the bot's.
+REM --- integrate any remote work BEFORE pushing -------------------------------
+REM The current beta workflow validates committed generated files but does not
+REM write a compile-bot commit. A rebase still protects against concurrent work
+REM reaching main between preflight and push.
 REM
 REM A conflict here is NOT auto-resolved. Derived files are the likely site and
 REM taking the wrong side by hand is exactly what the CI hand-edit guard exists
@@ -207,59 +204,8 @@ echo.
 if "%LH%"=="%RH%" (
   echo [CONFIRMED] local %LH% == origin/main %RH%.  Push is genuinely live.
   echo.
-  echo === sealing the edition ===
-  REM The Word volume is built by the compile job, not locally. seal.py waits
-  REM for compile-bot to commit, rebases onto it, checks the volume carries this
-  REM build's tag, and copies the edition into Editions\<tag>\. Ctrl+C is safe -
-  REM the push is already done and seal.py can be re-run at any time.
-  python "..\seal.py"
-  if errorlevel 1 (
-    echo.
-    echo [note] edition not sealed. The push itself is fine and live.
-    echo        Re-run:  python seal.py
-  ) else (
-    echo.
-    echo === refreshing Shift handover ===
-    python "..\shift.py"
-    if errorlevel 1 (
-      echo.
-      echo [note] edition sealed, but Shift was not refreshed.
-      echo        Re-run:  python shift.py
-    ) else (
-      python "..\shift.py" --check
-      if errorlevel 1 (
-        echo.
-        echo [note] Shift refresh ran, but verification failed.
-        echo        Re-run:  python shift.py --check
-      ) else (
-        echo [ok] Shift is current and verified.
-      )
-    )
-    echo.
-    echo === syncing verified Shift handover to pCloud ===
-    where rclone >nul 2>nul
-    if errorlevel 1 (
-      echo.
-      echo [note] edition sealed, but rclone is unavailable; pCloud was not refreshed.
-      echo        Re-run after restoring rclone:  rclone sync "..\Shift" "pCloud:Public Folder/BKP Shift"
-    ) else (
-      rclone sync "..\Shift" "pCloud:Public Folder/BKP Shift"
-      if errorlevel 1 (
-        echo.
-        echo [note] edition sealed, but the pCloud Shift sync failed.
-        echo        Re-run:  rclone sync "..\Shift" "pCloud:Public Folder/BKP Shift"
-      ) else (
-        rclone check "..\Shift" "pCloud:Public Folder/BKP Shift"
-        if errorlevel 1 (
-          echo.
-          echo [note] pCloud upload ran, but verification failed.
-          echo        Re-run:  rclone check "..\Shift" "pCloud:Public Folder/BKP Shift"
-        ) else (
-          echo [ok] pCloud Shift is current and verified.
-        )
-      )
-    )
-  )
+  echo [beta] GitHub validation will check the committed single-source build.
+  echo [beta] Edition sealing, Shift refresh and pCloud sync remain paused.
 ) else (
   echo [WARNING] local %LH% does NOT match origin/main %RH%.
   echo           Do not assume it published. Investigate before trusting.
@@ -267,6 +213,6 @@ if "%LH%"=="%RH%" (
 echo.
 echo (Verify with a cache-buster on the raw link - a bare fetch can return a)
 echo (body from a superseded commit with no error. Trap 1.)
-echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/GUIDE.txt?cb=1)
+echo (raw.githubusercontent.com/cliffspab/pipeline-registry/main/Blueprint/DEPLOY/routed/BOOT.md?cb=1)
 pause
 endlocal
