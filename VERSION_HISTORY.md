@@ -30,8 +30,12 @@ archives.
 surfaces, five deterministic upload archives and compatibility files. The
 release and byte-for-byte reproduction checks pass.
 
-**Verdict.** Supervisor-approved beta edition prepared for guarded GitHub
-publication. It does not alter the separately sealed root edition.
+**Publication.** Commit `fc0afa4` reached `origin/main`; GitHub **Validate
+Blueprint beta** succeeded and a cache-busted raw Boot fetch returned this
+edition.
+
+**Verdict.** Published and validated beta edition. It does not alter the
+separately sealed root edition.
 
 ---
 

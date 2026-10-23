@@ -7,8 +7,8 @@ governed by the applicable Blueprint delivery.
 
 ## Current position
 
-- Published beta commit: `5639cbe`.
-- Beta edition: `171026d_gpt_single-source-candidate`.
+- Published beta commit: `fc0afa4`.
+- Beta edition: `231026_gpt_return-qc-addendum`.
 - Delivery direction: installed skills are replacing Shift as the active
   handover route.
 - `Shift/` is deprecated and retained empty as a reusable stable named space.
@@ -18,8 +18,9 @@ governed by the applicable Blueprint delivery.
 
 Edition: `231026_gpt_return-qc-addendum`
 
-Status: installed in the live beta source and regenerated. The reproducibility
-and release checks pass; guarded push remains for the supervisor.
+Status: published and validated. The reproducibility and release checks pass,
+GitHub validation succeeded and a cache-busted raw Boot fetch returned the new
+edition.
 
 ### Copy-bearing returns
 

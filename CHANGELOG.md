@@ -11,7 +11,9 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-**Candidate version:** `231026_gpt_return-qc-addendum`.
+Nothing pending.
+
+## 231026_gpt_return-qc-addendum — 2026-10-23
 
 **Changed instructions:** `boot`, `edit` and `check`.
 
@@ -19,7 +21,7 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 `photo` and `pr` deliberately bundle the shared `edit` companion. Package
 indexes and receipts will also be regenerated mechanically.
 
-**User action after release:** reinstall any of the five skills currently in
+**User action:** reinstall any of the five skills currently in
 use. Users maintaining loose routed files need replace only `BOOT.md`,
 `edit.md`, `modules/check.md` and the regenerated indexes.
 
@@ -53,6 +55,11 @@ use. Users maintaining loose routed files need replace only `BOOT.md`,
 - Removed stray duplicate Directory files from `Blueprint/DEPLOY/skills/`.
 - Cleared the former Shift handover payload and two stray Obsidian directories
   from `Shift/`; nothing unique lived there under the former contract.
+
+### Validation
+
+- Published commit `fc0afa4`; GitHub **Validate Blueprint beta** completed
+  successfully, and a cache-busted raw fetch returned the new Boot edition.
 
 ## 171026d_gpt_single-source-candidate — 2026-10-20
 

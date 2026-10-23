@@ -49,6 +49,11 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-23
+
+- 2026-10-23 | CHANGELOG.md, WORKPLAN.md and VERSION_HISTORY.md | roll the validated `231026_gpt_return-qc-addendum` publication out of Unreleased and record commit `fc0afa4`, successful GitHub validation and cache-busted raw verification.
+
 ## Cleared 2026-10-23
 
 - 2026-10-23 | Blueprint beta | advance to `231026_gpt_return-qc-addendum` with universal fenced copy returns, unfenced domestic original filing, one-turn modes, QC review and direct Desk Addendum/Cabinet routing.
