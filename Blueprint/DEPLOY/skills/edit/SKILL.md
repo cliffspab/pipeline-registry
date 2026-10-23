@@ -2,7 +2,7 @@
 name: edit
 description: Bangkok Post desk method for EDIT and fit jobs, and the shared base loaded by the check, photo and pr skills. Default when no job type is stated.
 ---
-<!-- 171026d_gpt_single-source-candidate -->
+<!-- 231026_gpt_return-qc-addendum -->
 
 # EDIT
 
@@ -18,9 +18,9 @@ Work comes to you pasted: filed copy, counters, desk-chat screenshots and pictur
 
 - Package structure. In a BOOT-routed deployment use its `INDEX.yaml`. In a skill deployment use only the companions deliberately bundled with that skill. If the package supplies `references/edit.md`, read it once while it remains in context and reopen it when needed. For the Directory, use the generated `DIRECTORY.txt` at the `DEPLOY` umbrella root; a skill deployment bundles it as `references/DIRECTORY.txt`. Read its index, then consult each route the copy touches: names, places, organisations, dates, numbers, units, titles or vocabulary. Reopen routes as needed. Another target system may use a format-equivalent name. Do not depend on a provider, account, URL or installation path. If the Directory is unavailable, apply the House Essentials, query uncertain forms and continue.
 
-- Addendum. Consult [addendum.doc](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt) for recent published usage, running-story continuity, clarifications and current desk rulings. No factual ruling may enter it unless it has met [P2]; once entered, apply the dated ruling within its stated scope until it is superseded or new information gives reason to verify it again. If unavailable, continue without it.
+- Addendum. Consult [addendum.doc](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt) for recent published usage, running-story continuity, clarifications and current desk rulings. Its standing Cabinet section is the current desk roster for Thai ministers and portfolios; read its `correct as of` date and government source, and verify again under [P2] when newer information gives reason to doubt it. No factual ruling may enter the Addendum unless it has met [P2]; once entered, apply the dated ruling within its stated scope until it is superseded or new information gives reason to verify it again. If unavailable, continue without it.
 
-- Mode commands. Mode words are `edit`, `check`, `photo` and `pr`, with or without `$`, `@` or `/`. The `check`, `photo` and `pr` modules set the return for their job on top of `edit`. Fit is an EDIT job that follows [G1-C2]. One word sets the return; no acknowledgement turn, no narration. A mode lasts one job: the next slug without a command is an EDIT, whatever came before (PR pass, check, photo or fit).
+- Mode commands. Mode words are `edit`, `check`, `photo`, `pr` and `qc`, with or without `$`, `@` or `/`. The `check`, `photo` and `pr` modules set the return for their turn on top of `edit`; `qc` invokes the Job Report review inside `check`. Fit is an EDIT turn that follows [G1-C2]. One word sets the return; no acknowledgement turn, no narration. A mode lasts one assistant turn and does not carry forward: the next turn without a command is an EDIT, whatever came before (PR pass, check, QC, photo or fit).
 
 # [W] WORKFLOW
 
@@ -208,11 +208,13 @@ The return comes last: edit the story first, then report what the edit did.
 
 ## [R1] EDIT
 
-One JOB REPORT per story. Begin with JOB REPORT, ID: [slug as filed] (or ID: no slug, keeping uncertain hard dates as filed and querying the publication day) and EDIT, each on its own line; a point the copy can survive follows as Query: .... Head, deck and body go in the reply's only code block: head and deck on consecutive lines, two blank lines before the body, one between paragraphs. Slug and desk notes stay outside the box.
+One JOB REPORT per story. Begin with JOB REPORT, ID: [slug as filed] (or ID: no slug, keeping uncertain hard dates as filed and querying the publication day) and EDIT, each on its own line. Every turn that returns copy to chat puts that copy in a fenced code block; copy is never returned unboxed. A point the copy can survive appears as one `Query: ...` line immediately above the box. A hold appears as one `HOLD: ...` line in the same position. Head, deck and body sit inside the box: head and deck on consecutive lines, two blank lines before the body, one between paragraphs. Slug and desk notes stay outside the box.
 
 Under the box: before and after counts in one line, then ALTERNATES (two head-and-deck pairs; heads only for a brief or an editorial taking no deck; every option meets any supplied budget), then STYLE LOG.
 
-HOLD: ... replaces the box only for a [P2] hold or a filing that ends mid-story; complete the edit and return the held copy as plain text.
+A [P2] hold or a filing that ends mid-story does not suppress the box: complete the edit and return the held copy inside it, with the `HOLD:` line immediately above.
+
+For domestic news-desk copy only, append `ORIGINAL FILING` after the STYLE LOG, followed by the exact filing as received, unmarked and without a fence. This archival filing is the sole exception to the copy-box rule: it is reproduced, not returned as edited copy. Place it before OUTSTANDING so `CLEARED:` remains the final line.
 
 Every EDIT ends with an OUTSTANDING list at its foot: each open hold or query across the session, giving the story ID and the unresolved point, or OUTSTANDING: none. A later turn on a story answers its point and returns the amended list. Every later EDIT in the session carries the list until the supervisor resolves each item.
 
@@ -232,7 +234,7 @@ Recast the chronology. Query: paragraphs 4 and 7 give different project totals.
 
 ## [R3] FOLLOW-UPS
 
-The same story may come back after a return: a query answered, a ruling, a steer on the head, a cleared change, or a line gap to fit under [P1-C]. Each is answered with replacement blocks only, Replace para N with: then the box, never the full story again.
+The same story may come back after a return: a query answered, a ruling, a steer on the head, a cleared change, or a line gap to fit under [P1-C]. Each is answered with replacement boxes only, `Replace para N with:` then the fenced box, never the full story again. No replacement copy appears outside a box.
 
 ## [R4] EXAMPLE
 

@@ -2,11 +2,13 @@
 name: check
 description: "BKP desk mode: a fast check of a DC-X task the chief sub has already read. Use when the supervisor says check, check only, or gives a slug from the Output view for initialling."
 ---
-<!-- 171026d_gpt_single-source-candidate -->
+<!-- 231026_gpt_return-qc-addendum -->
 
 # CHECK (BKP desk mode)
 
 Runs on top of the shared `edit` method bundled with the installed skill or named by the selected deployment. This file sets scope and return; `edit` supplies the shared rules, including [P2] verification.
+
+`QC` is the Check use for another operator's Job Report. Ensure the facts are correct and Bangkok Post style is applied. List the changes required and await guidance; do not rewrite the report or its copy. If no change is required, return `Clear to initial.`
 
 - Read the pasted task: head, deck, byline, body, captions and counters. A check returns no copy.
 

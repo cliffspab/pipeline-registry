@@ -1,5 +1,5 @@
-# 171026d_gpt_single-source-candidate
-version: 171026d_gpt_single-source-candidate
+# 231026_gpt_return-qc-addendum
+version: 231026_gpt_return-qc-addendum
 directory_source: ../DIRECTORY.txt
 installation: select a skill and bundle only the companions it needs
 skills:
@@ -10,17 +10,17 @@ skills:
   pr: pr/SKILL.md
 files:
   - path: boot/SKILL.md
-    bytes: 3499
-    sha256: 559732b7f9d243da67894d042aa2b8cd7a191d514c067f29433bb64d09774add
+    bytes: 3850
+    sha256: 839916f9616ebd2c6124a165219e6588fd2b659c3f155b2be71b9fea9d4ef389
   - path: edit/SKILL.md
-    bytes: 22730
-    sha256: a6f62d790421e7d101ab7abc912a3d3f834c1119a8952fb83159bec80bb16442
+    bytes: 23656
+    sha256: 9220cba44239f2d567a1c9f24944a777b2ccbcf9693896ee09c3dcc352a09482
   - path: check/SKILL.md
-    bytes: 2064
-    sha256: 30bc4f2f7a5117a6adcc83bd9758140ae3fafdcee51c504491cf4a38677b7584
+    bytes: 2318
+    sha256: ea85d04a8dd6f8d83366877e41483161f6113e591bac01f1d91385fa98f16132
   - path: photo/SKILL.md
-    bytes: 2878
-    sha256: 86ba480ce51eb5d2cb13d63cfe6611142fa0f2b8137da0bc8308c2d1fde4a1b1
+    bytes: 2872
+    sha256: f10931c0278a7424378b6a8be9c825c7a45767daa9868d36a8ebf415de3b7fea
   - path: pr/SKILL.md
-    bytes: 1274
-    sha256: 45a27dddb7f6c4c137bab4b67fe49dd3ba67cb2ab0944d85a16a3498e4f102de
+    bytes: 1268
+    sha256: 3f5d3065a856b0f4f718ce78057fe6b93491e23601882d633ceda670acd99940

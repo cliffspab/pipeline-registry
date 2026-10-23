@@ -48,6 +48,16 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-23
+
+- 2026-10-23 | Blueprint beta | advance to `231026_gpt_return-qc-addendum` with universal fenced copy returns, unfenced domestic original filing, one-turn modes, QC review and direct Desk Addendum/Cabinet routing.
+  Regenerated the routed deployment, skill surfaces, five upload archives, compatibility files, indexes and integrity receipt; release and reproducibility checks pass.
+
+- 2026-10-23 | CHANGELOG.md, WORKPLAN.md and VERSION_HISTORY.md | add the shared update map, current plan and formal edition record for this payload.
+
+- 2026-10-23 | bootstrap/AGENTS.md | mirror the current workspace contract, including the deprecated empty Shift space and skills-based delivery direction.
+
 ## Cleared 2026-10-20
 
 - 2026-10-20 | Blueprint test flight | Harden linked Boot discovery, require same-turn loading of `edit.md` and the Directory, align routed and skill Directory locations, and rebuild DEPLOY indexes, upload zips and receipt without changing edition `171026d_gpt_single-source-candidate`.

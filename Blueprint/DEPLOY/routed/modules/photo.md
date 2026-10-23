@@ -2,7 +2,7 @@
 name: "photo"
 description: "BKP desk mode: standalone photo or mugshot job (head plus caption, or NAME: caption). Use when the supervisor says photo, gives a Pix/Stand/St slug, or pastes a picture with a caption."
 ---
-<!-- 171026d_gpt_single-source-candidate -->
+<!-- 231026_gpt_return-qc-addendum -->
 
 # PHOTO (BKP desk mode)
 

@@ -2,7 +2,7 @@
 name: boot
 description: Entry point and router for the Bangkok Post desk modules and resources.
 ---
-<!-- 171026d_gpt_single-source-candidate -->
+<!-- 231026_gpt_return-qc-addendum -->
 
 # BOOT — Bangkok Post desk
 
@@ -16,6 +16,7 @@ Resolve companion material by this rule, regardless of website, drive, attachmen
 2. When the BOOT-routed deployment is supplied as an upload or local folder, use the sibling `INDEX.yaml` in the same way and resolve each indexed path within that deployment.
 3. For a skill deployment, use only the files deliberately bundled with that installed skill.
 4. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A skill deployment bundles the same file as `references/DIRECTORY.txt`; another target system may use a format-equivalent name.
+5. The live Desk Addendum is [addendum.doc](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt). Its standing Cabinet section is the package's dated current roster; consult it when a Thai minister or portfolio is material.
 
 Do not depend on a provider, account, prescribed URL, installation path, edition tag or version witness.
 
@@ -29,7 +30,7 @@ If the Directory is unavailable, apply the House Essentials, query uncertain for
 - `CHECK`: resolve and load `edit`, then the `check` module; `check` narrows the scope and replaces the return.
 - `PHOTO`: resolve and load `edit`, then the `photo` module; `photo` owns the photo method and return.
 - `PR`: resolve and load `edit`, then the `pr` module; `pr` sets the PR scope and return.
-- Fit is an EDIT job that follows the fit rules inside `edit`. A mode lasts one job. The next bare slug is an EDIT.
+- Fit is an EDIT job that follows the fit rules inside `edit`. A mode lasts one assistant turn. It does not carry into the next turn unless the supervisor invokes it again; a later bare slug is an EDIT.
 
 Read the pasted or attached job before acting. The supervisor's current instruction controls it. Do not add an acknowledgement turn or narrate routine desk work.
 

@@ -48,45 +48,27 @@ hand-edit compiled or generated files in `pipeline-registry/Blueprint/` or
 1. Make and test an isolated candidate.
 2. Copy the approved working sources to the root source set.
 3. Run root `build.py`; all guards must pass.
-4. Keep Shift on the last sealed edition while a new edition is being built; do not refresh it from an unsealed candidate.
-5. Copy the approved working sources and compiled `BLUEPRINT.txt` to
+4. Copy the approved working sources and compiled `BLUEPRINT.txt` to
    `pipeline-registry/Blueprint/`, copy the approved steering source to
    `pipeline-registry/Control/CONTROL.txt`, and install approved machinery
    changes.
-6. Record the exact payload in `COMMITS-PENDING.md` and the edition in `VERSION_HISTORY.md`.
-7. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
-8. Treat success as confirmed only when local HEAD equals `origin/main`, CI has rebuilt the volume and the edition is sealed. The guarded push then refreshes and verifies Shift, mirrors it to pCloud with rclone and verifies the remote; if either handover step fails, its named rerun remains outstanding without undoing the published push.
+5. Record every addition or material change in the user-facing
+   `pipeline-registry/CHANGELOG.md`, naming the affected deliveries and user
+   update action; give each published version its own entry. Record the exact
+   push payload in `COMMITS-PENDING.md` and edition reasoning in
+   `VERSION_HISTORY.md`.
+6. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
+7. During the skills beta, treat publication as confirmed when local HEAD equals
+   `origin/main` and GitHub validation passes. Sealing and former Shift/pCloud
+   handover steps remain paused until the supervisor accepts a replacement.
 
-## Shift contract
+## Deprecated Shift space
 
-`Shift/` contains exactly these stable transport names:
-
-- `blueprint_sync.txt`
-- `guide_sync.txt`
-- `processes_sync.txt`
-- `directory_sync.yaml`
-- `control_sync.txt`
-- `blueprint_sync.docx` (the sealed document for the current edition)
-- `version_sync.txt` (the exact one-line edition witness)
-- `index_sync.txt` (the edition-stamped list of direct pCloud links)
-
-Refresh Shift no more than once per calendar day unless a newly sealed edition supersedes the current handover. `shift.py --check` may be run at any time because it is read-only.
-
-Nothing in Shift is a source. Nothing unique lives there.
-
-## pCloud Shift contract
-
-After an edition is sealed and local Shift passes `shift.py --check`, the guarded
-push mirrors that exact eight-file directory left-to-right with rclone to
-`pCloud:Public Folder/BKP Shift`, then runs an exact `rclone check`. The target
-is dedicated to this payload: `rclone sync` may delete remote strays so that it
-remains an exact eight-file handover. Never run the command against the pCloud
-root or the whole Public Folder, and never sync an unsealed candidate.
-
-GitHub is the public registry and build base; the sealed edition is the local
-authority; pCloud is the desk-controlled operational handover. Google Docs are
-optional, manually created reading copies with generic names. They are not
-publication masters and are updated manually only when needed after a push.
+`Shift/` is an empty, reusable named space. It is not a source, handover or
+publication target. Do not refresh it or mirror it to pCloud. Skills are the
+active delivery direction during the beta; GitHub remains the registry and
+validation base. Any future use of `Shift/` requires an express supervisor
+decision and a new contract.
 
 ## Generated and historical material
 

@@ -6,6 +6,35 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-10-23 — 231026_gpt_return-qc-addendum: RETURN AND QC CONTRACT
+
+**Authority.** The supervisor approved the skills-beta return changes, the
+one-turn mode lifetime and the Desk Addendum as the sole maintained home for a
+dated Thai Cabinet roster.
+
+**Change.** Every chat return containing copy now fences that copy, with a
+single `HOLD:` or `Query:` line immediately above it. Domestic news-desk EDIT
+returns reproduce the exact original filing, unmarked and unfenced, after the
+Style Log and before `OUTSTANDING`. `QC` reviews another operator's Job Report,
+lists required factual and Bangkok Post style changes without rewriting, and
+returns `Clear to initial.` when no change is required. Modes expire after one
+assistant turn.
+
+**Routing.** Boot links directly to the Desk Addendum. Edit routes material
+Thai minister and portfolio checks to its standing Cabinet section, whose
+government source and `correct as of` date control whether fresh verification
+is required. The volatile roster is not duplicated in Directory or the skill
+archives.
+
+**Evidence.** The single source rebuilt the routed deployment, five skill
+surfaces, five deterministic upload archives and compatibility files. The
+release and byte-for-byte reproduction checks pass.
+
+**Verdict.** Supervisor-approved beta edition prepared for guarded GitHub
+publication. It does not alter the separately sealed root edition.
+
+---
+
 ## 2026-10-05 — LABELLED JOB PACKAGE
 
 **Authority.** The supervisor supplied the stable output of the new job
