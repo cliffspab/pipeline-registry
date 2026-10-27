@@ -1,4 +1,4 @@
-# 231026_gpt_return-qc-addendum
+# 271026_gpt_bkp3-0
 index:
   routes:
     references:
@@ -6,7 +6,6 @@ index:
       - references.foreign_places
       - references.thai_places
       - references.organisations
-      - references.vocabulary
       - references.numbers
       - references.times
       - references.dates
@@ -55,12 +54,17 @@ references:
       within_seven_days: Other dates within seven days either side become the day name.
       beyond_seven_days: Retain the date.
     timeline_conflict: Record an internal or publication-date conflict in the Style Log.
+    future_tense: >
+      Avoid future tense in news. Use past-tense-as-future construction — "they were to meet
+      on Friday", not "they will meet on Friday". Applies to events scheduled after the copy
+      was filed but before publication.
     thailand_time: Use "Thailand time" only when a foreign event crosses a calendar day.
     holidays: Name a holiday only when it matters to the story.
     calendar: Use the western calendar.
     month_abbreviations: [Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec]
     month_rule: With a specific date, abbreviate month names of six letters or more; write every month in full in a general reference.
     weekdays: Use British English "on" before a weekday.
+    sept_11: Use "Sept 11", not 9/11, except in quotes.
 
   datelines:
     rule: In body copy, retain a supplied dateline exactly; do not add or localise one.
@@ -125,7 +129,6 @@ references:
       Vietnamese: The last component is the given name used after Mr/Ms; Thi indicates female.
       Spanish: Use the paternal surname on second reference.
     held_examples:
-      Chatichai Choonhavan: Example spelling trap; not Chatchai Choonahavan. Gen is retained on every reference.
       Xi Jinping: Mr Xi
       Mao Zedong: Historical; no honorific.
       Deng Xiaoping: Historical; no honorific.
@@ -234,10 +237,9 @@ references:
     foreign_words: Familiar English borrowings stand plain; otherwise italicise first mention and translate when context does not supply the meaning.
     plain_foreign_examples: [soi, wat, tuk-tuk, muay Thai, ya ba, Songkran, tsunami, kamikaze, feng shui, pad Thai, som tam, sushi, lasagne]
     species: Put the bracketed Latin name after the common name on first reference; italicise it and capitalise the first word only.
-    dcx: Note required italics and quotation marks in the Style Log.
-
   language_forms:
     diacritics: Drop accents, tone marks and diacritics, including in proper names.
+    us_forms_acceptable: [apartment, ATM, elevator, internship, public holiday, capsicum]
 
   countries:
 
@@ -372,7 +374,7 @@ references:
       Amnat Charoen: [Muang Amnat Charoen, Chanuman, Phana, Hua Thapan, Pathumrat Wongsa, Senangkhanikhom, Lue Amnat]
       Ang Thong: [Muang Ang Thong, Chaiyo, Pa Mok, Pho Thong, Samko, Sawaengha, Wiset Chai Chan]
       Ayutthaya: [Phra Nakhon Si Ayutthaya, Ban Phraek, Bang Ban, Bang Pahan, Bang Pa-in, Bang Sai, Lat Bua Luang, Maha Rat, Nakhon Luang, Phachi, Phak Hai, Sena, Uthai, Wang Noi]
-      Bangkok: [Bang Bon, Bang Kae, Bang Kapi, Bang Khen, Bang Kholaem, Bang Khunthian, Bang Na, Bang Phlat, Bang Rak, Bang Sue, Bangkok Noi, Bangkok Yai, Bung Kum, Chatuchak, Chom Thong, Din Daeng, Don Muang, Dusit, Huai Khwang, Kannayao, Klong San, Klong Toey, Laksi, Lat Krabang, Lat Phrao, Min Buri, Nong Chok, Nong Khaem, Pathumwan, Phasicharoen, Phaya Thai, Phra Khanong, Phra Nakhon, Pomprap Sattruphai, Prawet, Rat Burana, Ratchathewi, Sai Mai, Saphan Sung, Samphanthawong, Sathon, Suan Luang, Taling Chan, Thon Buri, Thung Kru, Watthana, Yannawa]
+      Bangkok: [Bang Bon, Bang Kae, Bang Kapi, Bang Khen, Bang Kholaem, Bang Khunthian, Bang Na, Bang Phlat, Bang Rak, Bang Sue, Bangkok Noi, Bangkok Yai, Bung Kum, Chatuchak, Chom Thong, Din Daeng, Don Muang, Dusit, Huai Khwang, Kannayao, Klong Sam Wa, Klong San, Klong Toey, Laksi, Lat Krabang, Lat Phrao, Min Buri, Nong Chok, Nong Khaem, Pathumwan, Phasicharoen, Phaya Thai, Phra Khanong, Phra Nakhon, Pomprap Sattruphai, Prawet, Rat Burana, Ratchathewi, Sai Mai, Saphan Sung, Samphanthawong, Sathon, Suan Luang, Taling Chan, Thawi Watthana, Thon Buri, Thung Kru, Wang Thonglang, Watthana, Yannawa]
       Bung Kan: [Muang Bung Kan, Bung Khong Long, Pak Khat, Phon Charoen, Phon Phisai, Seka, Si Wilai, So Phisai]
       Buri Ram: [Muang Buri Ram, Ban Dan, Ban Kruat, Chamni, Chaloem Phra Kiat, Huai Rat, Khaen Dong, Khu Muang, Krasang, Lahan Sai, Lam Plai Mat, Na Pho, Nang Rong, Non Din Daeng, Non Suwan, Pakham, Phlapphla Chai, Prakhon Chai, Phutthaisong, Satuek]
       Chachoengsao: [Muang Chachoengsao, Ban Pho, Bang Kla, Bang Nam Priao, Bang Pakong, Klong Khuean, Phanom Sarakham, Plaeng Yao, Ratchasan, Sanam Chai Khet, Tha Takiap]
@@ -469,62 +471,5 @@ references:
     Shia: Not Shi'ite or Shiite.
     Yezidis: House form.
     Fifa: Never FIFA, eg "2026 Fifa World Cup".
-
-  vocabulary:
-
-    note: >
-      Words with BKP-specific ruling, common UK/US traps, and recurring errors.
-      General British English usage is assumed; only divergent items listed.
-
-    numbers_symbols:
-      2D, 3D, 4D: No hyphen.
-      7-Eleven: Use exact form; not 7-11.
-      9/11: Use "Sept 11" except in quotes.
-
-    uk_us_traps:
-      bashed: Use assaulted.
-      chips: Crisps for bags; chips/fries for hot food.
-      coach: Economy class.
-      football: Football is for soccer; specify gridiron or American where needed.
-      garage: Repairs or storage only — petrol station for fuel.
-      us_forms_acceptable: [apartment, ATM, elevator, internship, public holiday, capsicum]
-
-    rulings:
-      accede: Not ascend. Accede to the throne; accession not ascension.
-      AirAsia: One word; Asia capped.
-      antivenene: Not antivenom.
-      Asia-Pacific: Hyphenated.
-      average: Not a synonym for poor.
-      Blu-ray: Trademark; cap B, hyphen, lower r.
-      capital of: Bangkok IS the capital. Do not write "the Thai capital of Bangkok".
-      collide: Two cars collided; vehicles hit (not collide with) stationary objects.
-      comprising vs including: Comprising = full list; including = partial list.
-      completely destroyed: Tautology — use destroyed.
-      czar: Use tsar (exception — "crime czar").
-      decimate: Means heavy casualties, not "almost destroy".
-      dhamma: Not dharma. (Karma is karma, not khamma.)
-      Formula 1: Cap F, numeral 1. Abbreviate to F1.
-      future tense in news: >
-        Avoid. Use past-tense-as-future construction — "they were to meet on Friday", not
-        "they will meet on Friday". Applies to events scheduled after the copy was filed
-        but before publication.
-      knots: A measure of speed, not distance. Do not say "knots per hour".
-      literally: Do not use figuratively.
-      media: Singular.
-      police: Not a countable noun. Use "police officers", not "five police".
-      protest: Specify if for or against something.
-      refute: Means disprove, not deny.
-      serial vs series: Serial = continuous plot; series = unrelated stories.
-      Thai prefix: Superfluous in most cases ("the Thai government"). Strip unless differentiating.
-      that vs which: That = definitive (no comma); which = descriptive (comma).
-      transpire: Means leak out, not occur or happen.
-      Twitter / tweet: Twitter upper; tweet lower.
-      versus / vs: Full in body text; "vs" in headlines and sports.
-      virus variant names: >
-        Cap the variant name (Delta variant, Omicron variant). Applies to Greek-letter
-        and place-name variant designations alike.
-      where: Often misused for when or in which.
-      whether: Not "whether or not" if meaning "if".
-      whilst, amongst, amidst: Drop the -st (while, among, amid).
-      widow: '"Widow of the late" is tautology.'
-      Xmas: Banned; use Christmas.
+    7-Eleven: Use exact form; not 7-11.
+    AirAsia: One word; Asia capped.

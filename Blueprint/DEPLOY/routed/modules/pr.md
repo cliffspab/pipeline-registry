@@ -2,7 +2,7 @@
 name: pr
 description: Bangkok Post desk mode for a minimum-intervention paid-placement copy pass. Use when the supervisor says PR.
 ---
-<!-- 231026_gpt_return-qc-addendum -->
+<!-- 271026_gpt_bkp3-0 -->
 
 # PR
 

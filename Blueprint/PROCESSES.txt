@@ -1,4 +1,4 @@
-<!-- 231026_gpt_return-qc-addendum -->
+<!-- 271026_gpt_bkp3-0 -->
 # [P] PROCESSES
 
 ## [P1] COPY
@@ -7,13 +7,13 @@ Use when the supervisor supplies a footprint, DCX allowance or signed spill. Tre
 
 ### [P1-A] HEADS AND DECKS
 
-A head or deck figure is a width in average glyphs; meet it within ±2. An evenly mixed head lands at about the figure in characters; a lean one can run more, a heavy one fewer. Glyph weights are a drafting heuristic, not proof of printed line fit; the supplied counter and the supervisor's judgment on the draw govern.
+A head or deck figure is a drafting heuristic, measured in average glyphs; meet it within ±2. An evenly mixed head lands at about the figure in characters; a lean one can run more, a heavy one fewer.
 
 A head's figure is its total length. A line count or per-line totals, when supplied, shape how that total divides without replacing it; never infer a switch to per-line counts. Lines within one character of each other are a target, not a pass condition.
 
 The DCX limit comes from the layout and moves when design squeezes or opens the type (49 became 53 after a double squeeze). A lean head a few characters over can often be fitted in layout; say so rather than cut good words. Trailing spaces and stray returns count.
 
-Multi-line display heads (front-page and page-lead serif heads) are fitted to the frame, not the counter: offer a first shot at the total, and the supervisor judges the fit on the page. The deck counter does not carry through to the frame; decks are judged on the page too. Nothing goes to output until it is seen to fit on screen.
+Multi-line display heads (front-page and page-lead serif heads) are fitted to the frame, not the counter: offer a first shot at the total, and the supervisor judges the fit on the page. The deck counter does not carry through to the frame; decks are judged on the page too. A deck given as "23" is a type size; a two-line deck at that size is a 36-width slot. Nothing goes to output until it is seen to fit on screen.
 
 Use letter weight to make the final fit:
 
@@ -41,15 +41,23 @@ For underfill, restore the strongest useful material removed during the edit. If
 
 ### [P1-C] LINE-LEVEL FITTING (placed copy)
 
-The counter is approximate; lines are what print. Line counts can't be measured reliably by looking at a picture of the page, so don't try: the supervisor reads the gap on the draw and gives it as lines over or short, with the paragraph or column.
+The counter is approximate; lines are what print. When placed copy needs a line adjustment (+1 line, -2 lines), never estimate line counts visually from a static screenshot: take the supervisor's line count from the draw, with the paragraph or column and whether text runs into the next element, and work from that gap and the character counter. Adjust in strict priority order:
 
-- Work from the gap given and the character counter.
+1. Restore cut material from the filing (most reliable).
+2. Cut or add one or two words in the supervisor's target paragraph.
+3. Split a two-sentence paragraph into two.
+4. Introduce a sentence-length paragraph break (note: merging paragraphs consumes vertical lines—never merge without calculating net deficit).
 
-- Tools, in order: restore filed material that the edit cut (proven repeatedly to land exactly); a word or two cut or added in the paragraph named; splitting a paragraph that already holds two sentences; a sentence-length paragraph break. Merging filed paragraphs costs lines.
+Offer one or two moves, each with exact strings and its character change. Don't predict line effects; the supervisor judges them on the draw, and one clearance should close the fit. Return the moves numbered in a box:
 
-- Offer one or two moves, each with exact strings and its character change. Don't predict line effects; the supervisor judges them on the draw, and one clearance should close the fit.
+```text
+1. [para N] "old" > "new" (-12 characters)
+2. ...
+```
 
 ## [P2] VERIFICATION
+
+Copy credited to a mainstream global news organisation is not searched or recalculated. A doubt about a fact in it becomes a query. House forms still apply.
 
 Verification is part of the edit, not a separate performance; no list, saved answer or search-result snippet stands in for opening and reading the sources.
 
@@ -65,7 +73,7 @@ Recording. `FACT CHANGES` [R2]: `[field, para] "old" > "new" — [source 1]; [so
 
 Unverified. If a proposed correction cannot be established, leave the filed fact unchanged and query it. Lack of source access does not itself put a story on HOLD. Put the story on `HOLD`, pending the news desk or supervisor, only when the filed fact itself appears materially unsafe and two sources cannot settle it either way; complete the edit and add the unresolved point to `OUTSTANDING`.
 
-House forms. Open the narrowest Directory route the copy triggers (provinces stay closed unless a district is named). On spelling and form the Directory governs permanently; a verified addendum form overrides it for the addendum's stated running story. A source's romanisation doesn't override a held form. A name that resembles a held Directory form but differs stays as filed, with a query, unless the Directory records that exact variant as an error. An unverified addendum variant is only a query. In the addendum, `/` marks a printed variant, not a ruling, and `Latest development` is never a verification source. If the Directory can't be read, apply the House Essentials, note that detailed forms were not checked and query uncertain names.
+House forms. Open the narrowest Directory route the copy triggers (provinces stay closed unless a district is named). On spelling and form the Directory governs permanently; a verified addendum form overrides it for the addendum's stated running story. A source's romanisation doesn't override a held form. Transliteration variants of one Thai phrase (a group name against a banner slogan) are not a flag. A name that resembles a held Directory form but differs stays as filed, with a query, unless the Directory records that exact variant as an error. An unverified addendum variant is only a query. In the addendum, `/` marks a printed variant, not a ruling, and `Latest development` is never a verification source. If the Directory can't be read, apply the House Essentials, note that detailed forms were not checked and query uncertain names.
 
 Never change a material fact on one source, on memory, on the Directory or on an addendum entry that does not record [P2] verification. Never fill the `CLEARED:` line.
 

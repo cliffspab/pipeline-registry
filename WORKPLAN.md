@@ -7,8 +7,8 @@ governed by the applicable Blueprint delivery.
 
 ## Current position
 
-- Published beta commit: `fc0afa4`.
-- Beta edition: `231026_gpt_return-qc-addendum`.
+- Published beta commit: pending publication of this approved release.
+- Beta edition: `271026_gpt_bkp3-0`.
 - Delivery direction: installed skills are replacing Shift as the active
   handover route.
 - `Shift/` is deprecated and retained empty as a reusable stable named space.
@@ -16,11 +16,12 @@ governed by the applicable Blueprint delivery.
 
 ## Change set in preparation
 
-Edition: `231026_gpt_return-qc-addendum`
+Edition: `271026_gpt_bkp3-0`
 
-Status: published and validated. The reproducibility and release checks pass,
-GitHub validation succeeded and a cache-busted raw Boot fetch returned the new
-edition.
+Status: approved and in publication. The source build, Word/PDF volume, five
+skill archives and permanent seven-document Google Docs set have been rebuilt.
+The content Docs were updated first and Boot last; the Drive root is now
+`BKP 3.0 Live`.
 
 ### Copy-bearing returns
 

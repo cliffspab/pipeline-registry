@@ -1,21 +1,21 @@
 {
-  "version": "231026_gpt_return-qc-addendum",
+  "version": "271026_gpt_bkp3-0",
   "source": "BLUEPRINT.md",
-  "source_sha256": "eb1ac83f8a25dd9f91aa98b55b4d1c4b576e88741c49d89bba8e7da65bcd06ed",
+  "source_sha256": "c561f726b7a25d03cba152bd8d6c4c444b4987d02ddc6e4bcc856de618f81e56",
   "deploy_files": 14,
   "upload_zips": {
-    "boot.zip": "f2239373c85a9fa32e56207582b134cf6febd2379eef2a4faa9afbcdc5f42952",
-    "check.zip": "4045b8cc11fb810f9db856e1cbaa795ed42563d5220ab8045d5e515e1b6df77b",
-    "edit.zip": "dc33d0972f859acdb16105bfc97fdf1061eb5107f93ee544fd95fe9b5fbad349",
-    "photo.zip": "000fb132a8a315c443501616adce8f3b849a1d68cb8dc68876756e2f451482bf",
-    "pr.zip": "3115736de240ed02cebe68c7cee7d31890794ebbf7e2d28a883984ba5545db4a"
+    "boot.zip": "0d00eb95758754122d33be27e8c96b8cb3bc946a30d93b878ba3adfb2b79d6a9",
+    "check.zip": "4c3150a02207c99e3a9e084b644e22516d8ba0d9df9f41dfe2a04236452db84a",
+    "edit.zip": "d8a5093199f677d225c593ffcf5c8f48d0508a1233ee044dd8b6223205765074",
+    "photo.zip": "f33a3cdf6f52f53fdb5216eda1717b47e80a2b1cc700d618668134820bdbc6c5",
+    "pr.zip": "fc87b7a9e34214c9a0dc48d3c9d342ce358cbff79499daf9099411b912e38e46"
   },
   "compatibility_files": {
-    "BLUEPRINT.txt": "2507a4e40a69294afc6e0ff922111fb4dd5f909aa55a6485a33c4d5f236d3ce1",
-    "GUIDE.txt": "2b915cda89ae051b30c5e4a0bb20297dbee2e8ca2a554b52efd376582325dd4c",
-    "PROCESSES.txt": "af26132b4907b6f47a5457be08ccb30fb74f679a3d225587665c2d724a484833",
-    "DIRECTORY.txt": "8592e34518d366e595e3b6e54b2654c5c744f44355274f7fee00838aceaa53f0",
-    "DIRECTORY.yaml": "8592e34518d366e595e3b6e54b2654c5c744f44355274f7fee00838aceaa53f0",
-    "VERSION.txt": "f085bce22373f2f2b94e82206786366fd126437e38aafbba5a8a259f161b7075"
+    "BLUEPRINT.txt": "515a650bb9ca10e1c0ed4b78584bfe008d09926f3b70a6482e93c030b2f9b06c",
+    "GUIDE.txt": "d2a7e725a60a0a579513cdbe2334a981c825b21e128353d4bfa37f5f7c86f25d",
+    "PROCESSES.txt": "b3ba4e336f3c597efb8fd14c3aa7d8e961da7036b7201f15d2472874900c36a4",
+    "DIRECTORY.txt": "9a4e4ef98ba236bcd9b12766260c043f64537211f265ab96c3bf1de620d4dbec",
+    "DIRECTORY.yaml": "9a4e4ef98ba236bcd9b12766260c043f64537211f265ab96c3bf1de620d4dbec",
+    "VERSION.txt": "c9e7f3e9e0dfc5db5f169ac15fb5aca966d4f76e15d1bdf418cc5343dc622158"
   }
 }

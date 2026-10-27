@@ -11,5 +11,5 @@ chat.
 - Operational routing: [`Control/CONTROL.txt`](Control/CONTROL.txt)
 
 Publication remains supervisor-controlled. The registry is the public source
-and build base; the workspace root holds the live editable sources and the
-sealed `SHIFT` handover.
+and build base; the workspace root holds the live editable sources. `Shift/`
+is deprecated and is not a handover or publication target.

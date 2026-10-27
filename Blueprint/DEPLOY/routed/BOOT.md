@@ -2,7 +2,7 @@
 name: boot
 description: Entry point and router for the Bangkok Post desk modules and resources.
 ---
-<!-- 231026_gpt_return-qc-addendum -->
+<!-- 271026_gpt_bkp3-0 -->
 
 # BOOT — Bangkok Post desk
 
@@ -16,7 +16,7 @@ Resolve companion material by this rule, regardless of website, drive, attachmen
 2. When the BOOT-routed deployment is supplied as an upload or local folder, use the sibling `INDEX.yaml` in the same way and resolve each indexed path within that deployment.
 3. For a skill deployment, use only the files deliberately bundled with that installed skill.
 4. The one generated Directory is `DIRECTORY.txt` at the `DEPLOY` umbrella root. A skill deployment bundles the same file as `references/DIRECTORY.txt`; another target system may use a format-equivalent name.
-5. The live Desk Addendum is [addendum.doc](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt). Its standing Cabinet section is the package's dated current roster; consult it when a Thai minister or portfolio is material.
+5. The live Desk Addendum is [addendum.doc](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt). Its `THAI CABINET` section carries the current roster of Thai ministers and portfolios. The desk's monitoring bots maintain that section and report changes. Editors use it as directed by the Edit module; it confirms copy but never alters it.
 
 Do not depend on a provider, account, prescribed URL, installation path, edition tag or version witness.
 

@@ -1326,3 +1326,21 @@ create/modify stamps and content diffs.
 Note: mass-copy sweep 2026-06-28 18:31–18:46 UTC scattered ~12
 byte-identical duplicates of the two misfire families across a dozen
 Drive folders. Duplicates are noise, not ve
+# 271026_gpt_bkp3-0 — BKP 3.0 adopted release
+
+Approved by the supervisor on 27 October 2026 as the final adopted successor to
+`231026_gpt_return-qc-addendum`. The version number follows the public BKP 3.0
+identity; the dated GPT tag remains the exact internal edition witness.
+
+This release incorporates the audited 2026 integration candidate, removes the
+duplicated Checking heading, keeps the Directory return section last, and
+retains a concise human P5 while the installed PR skill carries full closure.
+It regenerates the complete source-derived text set, five skill bundles and the
+verified `Blueprint_bkp3-0` Word/PDF volume.
+
+The same edition was written in place to the seven permanent native Google Docs
+without changing their IDs. Blueprint, Edit, Check, Photo, PR and Directory were
+updated before Boot; Boot was revision-locked and written last. The root folder
+was then promoted to `BKP 3.0 Live`. The guarded updater is now published under
+`Blueprint/unity/`. Microsoft Copilot Notebook work remains a separate future
+step so its usage can be assessed independently.

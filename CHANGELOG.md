@@ -13,6 +13,40 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 Nothing pending.
 
+## 271026_gpt_bkp3-0 — 2026-10-27
+
+**Changed instructions:** all seven Unity volumes: `boot`, `blueprint`, `edit`,
+`check`, `photo`, `pr` and `directory`.
+
+**Affected install bundles:** all five skill archives and every routed delivery.
+
+**User action:** reinstall any installed skill package. For human use, open the
+permanent `BKP 3.0 Live` Drive folder or the refreshed Click Index; existing
+Google Docs links and IDs remain unchanged.
+
+### Changed
+
+- Adopted the audited BKP 3.0 wording and current deployment vocabulary.
+- Removed the repeated `CHECKING & PR / P4 / P5 / CHECKING [P4]` presentation.
+- Kept the Directory return section last so the authority is read before return
+  handling begins.
+- Added the concise human-facing P5 while retaining full PR closure in the PR
+  skill.
+- Rebuilt the human Word/PDF volume as `Blueprint_bkp3-0` and regenerated all
+  text, routed and skill deliveries from the single source.
+- Installed guarded seven-document Unity update machinery and promoted the
+  permanent Drive set from Candidate to Live, content first and Boot last.
+
+### Validation
+
+- Reproducible release build and all source guards passed.
+- The 22-page Word/PDF render was visually inspected; links and bookmarks were
+  checked and the DOCX sanitizer passed.
+- Unity updater tests passed (34 tests); all permanent document IDs were
+  preserved and Boot now witnesses `271026_gpt_bkp3-0` as `CURRENT`.
+- Registry push and Click Index deployment are recorded when publication
+  completes.
+
 ## 231026_gpt_return-qc-addendum — 2026-10-23
 
 **Changed instructions:** `boot`, `edit` and `check`.

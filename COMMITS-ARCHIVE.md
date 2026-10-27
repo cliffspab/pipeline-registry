@@ -50,6 +50,23 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-27
+
+- 2026-10-27 | Blueprint release | Publish edition `271026_gpt_bkp3-0`, its
+  regenerated deliveries and five skill archives.
+
+- 2026-10-27 | Human volume | Add the verified `Blueprint_bkp3-0.docx` and PDF.
+
+- 2026-10-27 | Unity updater | Add guarded machinery for the permanent seven-
+  document Google Docs set and record its content-first, Boot-last promotion.
+
+- 2026-10-27 | Registry records | Refresh changelog, workplan, version history
+  and registry documentation.
+
+- 2026-10-27 | Click Index | Record the separately committed and deployed site
+  refresh against the new edition.
+
 ## Cleared 2026-10-23
 
 - 2026-10-23 | CHANGELOG.md, WORKPLAN.md and VERSION_HISTORY.md | roll the validated `231026_gpt_return-qc-addendum` publication out of Unreleased and record commit `fc0afa4`, successful GitHub validation and cache-busted raw verification.

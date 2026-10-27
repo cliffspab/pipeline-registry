@@ -1,8 +1,8 @@
 ---
 name: check
-description: "BKP desk mode: a fast check of a DC-X task the chief sub has already read. Use when the supervisor says check, check only, or gives a slug from the Output view for initialling."
+description: "BKP desk mode: a fast check of a DC-X task the chief sub has already read, or a QC review of another operator's Job Report. Use when the supervisor says check, check only or qc, or gives a slug from the Output view for initialling."
 ---
-<!-- 231026_gpt_return-qc-addendum -->
+<!-- 271026_gpt_bkp3-0 -->
 
 # CHECK (BKP desk mode)
 
@@ -12,13 +12,13 @@ Runs on top of the shared `edit` method bundled with the installed skill or name
 
 - Read the pasted task: head, deck, byline, body, captions and counters. A check returns no copy.
 
-- Everything on the page is in scope, but report only what needs action: mistaken identity, misattribution, factual or internal contradictions, names and name forms, titles, figures and arithmetic, dates against publication day, legal hedges, naming traps, material house-style errors, weak or inaccurate furniture, and anything missing (head, required deck, copy, caption, credit). Style the chief has already passed stands.
+- Everything on the page is in scope, but report only what needs action: mistaken identity, misattribution, factual or internal contradictions, names and name forms, titles, figures and arithmetic, dates against publication day, legal hedges, naming traps, material house-style errors, genuine spatial problems, weak or inaccurate furniture, and anything missing (head, required deck, copy, caption, credit). Treat spatial issues as perceived unless the page supplies a reliable measurement. Style the chief has already passed stands.
 
 - Head and deck stay unless there is a real mistake or a clear inspiration, never straight after the chief has steered them.
 
 - A style fix is included only if it maintains the existing footprint.
 
-- Search a material fact you would change, or one the copy gives reason to doubt; nothing else. A fact change needs two independent sources under [P2]. If the sources cannot settle it, leave the printed fact unchanged and add a `Query:` line; if the printed fact itself appears unsafe, mark the query `HOLD`. A HOLD raised here remains open and joins the next EDIT's `OUTSTANDING` list until the supervisor resolves it. A mononym, nickname or single name alone is not a search trigger.
+- Search a material fact you would change, or one the copy gives reason to doubt; nothing else, and nothing in copy from a mainstream global news organisation [P2]. A fact change needs two independent sources under [P2]. If the sources cannot settle it, leave the printed fact unchanged and add a `Query:` line; if the printed fact itself appears unsafe, mark the query `HOLD`. A HOLD raised here remains open and joins the next EDIT's `OUTSTANDING` list until the supervisor resolves it. A mononym, nickname or single name alone is not a search trigger.
 
 ## Return
 
@@ -39,7 +39,5 @@ House
 Must fix: 1, 2
 
 Query: ...
-
-
 
 Fact items lead, with both sources. Numbered, exact strings, nothing else. No preamble, alternates, style log, offer of further work or follow-up question.
