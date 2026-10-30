@@ -8,6 +8,8 @@ Thumbs.db
 .DS_Store
 *.tmp
 ~$*
+__pycache__/
+*.py[cod]
 
 # GoodSync sync metadata & PULSE logs — local only, never publish
 _gsdata_/

@@ -53,6 +53,12 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-30
+
+- 2026-10-30 | Registry hygiene | Removed an accidentally staged Python cache
+  file from the Unity folder and added standard Python cache exclusions.
+
 ## Cleared 2026-10-30
 
 - 2026-10-30 | 3.1 publication record | Recorded successful GitHub validation
