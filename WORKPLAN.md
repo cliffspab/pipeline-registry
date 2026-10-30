@@ -7,8 +7,8 @@ governed by the applicable Blueprint delivery.
 
 ## Current position
 
-- Published beta commit: `21fa3f8` (`271026_gpt_bkp3-0`).
-- Candidate edition: `301026_gpt_bkp3-1`.
+- Published beta commit: `bfb83cc` (`301026_gpt_bkp3-1`).
+- Live native-document edition: `301026_gpt_bkp3-1`.
 - Delivery direction: installed skills are replacing Shift as the active
   handover route.
 - `Shift/` is deprecated and retained empty as a reusable stable named space.
@@ -18,10 +18,10 @@ governed by the applicable Blueprint delivery.
 
 Edition: `301026_gpt_bkp3-1`
 
-Status: source and five skill archives rebuilt and validated; publication and
-the permanent seven-document Google Docs update remain pending supervisor
-approval. Word/PDF are deliberately out of scope. Permanent document IDs and
-their unique `*_bkp3-0` titles remain unchanged.
+Status: published and synchronized. The source, five skill archives and all
+seven permanent Google Docs passed readback; content was updated before Boot.
+Word/PDF are deliberately out of scope. Permanent document IDs and their unique
+`*_bkp3-0` titles remain unchanged.
 
 ### Copy-bearing returns
 

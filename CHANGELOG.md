@@ -11,7 +11,9 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-### 301026_gpt_bkp3-1 — candidate
+Nothing pending.
+
+## 301026_gpt_bkp3-1 — 2026-10-30
 
 **Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo` and
 `pr`. Directory content is unchanged apart from the edition witness.
@@ -43,7 +45,10 @@ unchanged.
   five deterministic upload archives.
 - Every supplied archive matches the supplied Blueprint components exactly.
 - Unity transport selectors were adjusted for the compact wording; its 34
-  updater tests pass. Live native-document synchronization remains pending.
+  updater tests pass.
+- GitHub validation passed at `bfb83cc`. All seven permanent native documents
+  were then updated in place, content first and Boot last; final readback
+  confirms the 3.1 edition, expected source hash and `CURRENT` status in each.
 
 ## 271026_gpt_bkp3-0 — 2026-10-27
 

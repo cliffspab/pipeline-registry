@@ -25,11 +25,13 @@ content hashes advance in place.
 **Evidence.** The supplied archives exactly match the supplied Blueprint
 components. The release build produces 14 deployment files and five archives
 and reproduces them byte-for-byte. Unity's compact-text selectors were updated
-and its 34 automated tests pass. GitHub publication and live native-document
-synchronization remain pending supervisor approval.
+and its 34 automated tests pass. GitHub validation passed at `bfb83cc`. The six
+content documents were updated before Boot; final readback of all seven confirms
+the 3.1 edition, expected source hash and `CURRENT` status under the unchanged
+permanent ID and title.
 
-**Verdict.** Verified publication candidate; `271026_gpt_bkp3-0` remains the
-published rollback point until push and remote validation complete.
+**Verdict.** Published and synchronized. `271026_gpt_bkp3-0` remains the prior
+rollback point.
 
 ## 2026-10-23 — 231026_gpt_return-qc-addendum: RETURN AND QC CONTRACT
 
