@@ -1,11 +1,13 @@
-# BKP 3.0 Unity updater
+# BKP 3.x Unity updater
 
 This directory holds the guarded machinery for updating the seven permanent
 native Google Docs from the generated Blueprint deployment.
 
-The locked live set is `271026_gpt_bkp3-0`. Its permanent root is
+The prepared source set is `301026_gpt_bkp3-1`. Its permanent root remains
 `BKP 3.0 Live`, and its update order is content first — Blueprint, Edit, Check,
 Photo, PR and Directory — with Boot written last as the ignition witness.
+The seven document IDs and their unique `*_bkp3-0` titles are static deployment
+names: advance the edition witness and guarded hashes without renaming files.
 
 `unity-config.json` holds protected document and folder IDs plus the expected
 edition and source hashes. `unity_update.py` compiles and validates the desired

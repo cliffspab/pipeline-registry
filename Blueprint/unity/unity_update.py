@@ -54,7 +54,7 @@ EDIT_TRANSPORT_OLD = (
     "a skill deployment use only the companions deliberately bundled with that "
     "skill. If the package supplies `references/edit.md`, read it once while it "
     "remains in context and reopen it when needed. For the Directory, use the "
-    "generated `DIRECTORY.txt` at the `DEPLOY` umbrella root; a skill deployment "
+    "generated `DIRECTORY.txt` at the DEPLOY umbrella root; a skill deployment "
     "bundles it as `references/DIRECTORY.txt`. Read its index, then consult each "
     "route the copy touches: names, places, organisations, dates, numbers, units or "
     "titles. Reopen routes as needed. Another target system may use "
@@ -74,8 +74,8 @@ EDIT_TRANSPORT_NEW = (
     "continue."
 )
 CHECK_TRANSPORT_OLD = (
-    "Runs on top of the shared `edit` method bundled with the installed skill or "
-    "named by the selected deployment. This file sets scope and return; `edit` "
+    "Runs on top of the shared edit method bundled with the installed skill or "
+    "named by the selected deployment. This file sets scope and return; edit "
     "supplies the shared rules, including [P2] verification."
 )
 CHECK_TRANSPORT_NEW = (
@@ -83,7 +83,7 @@ CHECK_TRANSPORT_NEW = (
     "return; Edit supplies the shared rules, including [P2] verification."
 )
 PHOTO_TRANSPORT_OLD = (
-    "Runs on top of the shared `edit` method bundled with the installed skill or "
+    "Runs on top of the shared edit method bundled with the installed skill or "
     "named by the selected deployment: its House Essentials, [P1] fit and [P2] "
     "verification apply. This file alone holds the photo method and return."
 )
@@ -93,7 +93,7 @@ PHOTO_TRANSPORT_NEW = (
     "and return."
 )
 PR_TRANSPORT_OLD = (
-    "Runs on top of the shared `edit` method bundled with the installed skill or "
+    "Runs on top of the shared edit method bundled with the installed skill or "
     "named by the selected deployment. This file sets PR scope and return; `edit` "
     "supplies shared house forms and [P2] verification."
 )

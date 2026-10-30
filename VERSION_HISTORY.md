@@ -6,6 +6,31 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-10-30 — 301026_gpt_bkp3-1: SUPERVISOR-SUPPLIED 3.1 CANDIDATE
+
+**Authority.** The supervisor supplied the complete Blueprint and five skill
+archives as BKP 3.1 and instructed the custodian to make the set operational.
+
+**Change.** The compact source reorganises Boot and all task modules, makes
+Edit a hard dependency, retains Directory and Addendum as soft dependencies,
+and makes `OUTSTANDING` the final Job Report line instead of the former empty
+`CLEARED:` terminator. The Directory body is unchanged. The exact internal
+edition witness advances to `301026_gpt_bkp3-1`.
+
+**Static identity.** Upload filenames remain `boot.zip`, `edit.zip`,
+`check.zip`, `photo.zip` and `pr.zip`. The seven permanent native-document IDs
+and their unique `*_bkp3-0` titles are not renamed; the guarded edition and
+content hashes advance in place.
+
+**Evidence.** The supplied archives exactly match the supplied Blueprint
+components. The release build produces 14 deployment files and five archives
+and reproduces them byte-for-byte. Unity's compact-text selectors were updated
+and its 34 automated tests pass. GitHub publication and live native-document
+synchronization remain pending supervisor approval.
+
+**Verdict.** Verified publication candidate; `271026_gpt_bkp3-0` remains the
+published rollback point until push and remote validation complete.
+
 ## 2026-10-23 — 231026_gpt_return-qc-addendum: RETURN AND QC CONTRACT
 
 **Authority.** The supervisor approved the skills-beta return changes, the

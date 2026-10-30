@@ -11,7 +11,39 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-Nothing pending.
+### 301026_gpt_bkp3-1 — candidate
+
+**Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo` and
+`pr`. Directory content is unchanged apart from the edition witness.
+
+**Affected install bundles:** all five static skill archives and every routed
+delivery.
+
+**User action after publication:** reinstall any installed skill package. The
+archive names remain `boot.zip`, `edit.zip`, `check.zip`, `photo.zip` and
+`pr.zip`. Permanent native-document IDs and unique `*_bkp3-0` titles remain
+unchanged.
+
+#### Changed
+
+- Adopted the supervisor-supplied BKP 3.1 compact source and its reorganised
+  Boot, Edit, Check, Photo and PR instructions.
+- Made the hard Edit dependency and soft Directory/Addendum fallbacks explicit
+  in Boot.
+- Consolidated setup, desk workflow, verification and return handling while
+  preserving the generated single-source deployment architecture.
+- Replaced the former empty `CLEARED:` terminator with `OUTSTANDING` as the
+  final Job Report line, as specified by the supplied 3.1 source.
+- Preserved static upload filenames and permanent Unity document names; only
+  edition witnesses, content and guarded hashes advance.
+
+#### Validation
+
+- Release build and byte-for-byte rebuild check pass: 14 deployment files and
+  five deterministic upload archives.
+- Every supplied archive matches the supplied Blueprint components exactly.
+- Unity transport selectors were adjusted for the compact wording; its 34
+  updater tests pass. Live native-document synchronization remains pending.
 
 ## 271026_gpt_bkp3-0 — 2026-10-27
 

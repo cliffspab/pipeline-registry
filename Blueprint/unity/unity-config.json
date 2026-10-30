@@ -3,9 +3,9 @@
   "family": "bkp3-0",
   "header": "BKP 3.0 UNITY",
   "status": "current",
-  "expected_edition": "271026_gpt_bkp3-0",
+  "expected_edition": "301026_gpt_bkp3-1",
   "projection_normalization": "paragraph-lf-nfc-v1",
-  "boot_projection_sha256": "0c3dc9e5bf7e29e12b564a15c40751237cc1b93acfa1b4f933bc832fdc5fba08",
+  "boot_projection_sha256": "fe442eac3f1ca3db06be671ca439df2fdaf71758b4f593f6e85fe30ae8a19c26",
   "edition_file": "VERSION.txt",
   "root_folder": {
     "id": "17KYiUX-VvCY5LWOKnENKoolGgRHT-bR6",
@@ -42,7 +42,7 @@
       "title": "Boot_bkp3-0",
       "parent_path": "DEPLOY/routed",
       "source": "DEPLOY/routed/BOOT.md",
-      "source_sha256": "d9a06fa4e0e089bbcc89a93f122988b4a36b47f19dda5456897417e4dedc4c0e"
+      "source_sha256": "7caa2f42ce9e833603820b93b823084c0d63db1cc6e0ba543459d1d7a28f9412"
     },
     {
       "role": "blueprint",
@@ -50,7 +50,7 @@
       "title": "Blueprint_bkp3-0",
       "parent_path": ".",
       "source": "BLUEPRINT.txt",
-      "source_sha256": "515a650bb9ca10e1c0ed4b78584bfe008d09926f3b70a6482e93c030b2f9b06c"
+      "source_sha256": "a9cea839a127e1233c4548b5e478f678d1c8053bcb549ef330bebfce840baf5d"
     },
     {
       "role": "edit",
@@ -58,7 +58,7 @@
       "title": "Edit_bkp3-0",
       "parent_path": "DEPLOY/routed",
       "source": "DEPLOY/routed/edit.md",
-      "source_sha256": "a63118e2356fad98b1bd4418a2b1dca267cd73b29175c50518704e6c7e742e12"
+      "source_sha256": "65c6a22ad4e416414c1c3951c5cc90135751db1278ed7eb1b39cd67ab6e33fd4"
     },
     {
       "role": "check",
@@ -66,7 +66,7 @@
       "title": "Check_bkp3-0",
       "parent_path": "DEPLOY/routed/modules",
       "source": "DEPLOY/routed/modules/check.md",
-      "source_sha256": "fa548d28b2cec77439e7980e2834947842c4e4a9d177e14381c9ff2c1b359702"
+      "source_sha256": "acc97572928d2684387bd7940f23e1b6d384020f5bba3ea186442fd521013e2e"
     },
     {
       "role": "photo",
@@ -74,7 +74,7 @@
       "title": "Photo_bkp3-0",
       "parent_path": "DEPLOY/routed/modules",
       "source": "DEPLOY/routed/modules/photo.md",
-      "source_sha256": "38f8fab011c79a5a40861eaad51c5b6f7b6c77047e5d39ba283dd8bca6406c8c",
+      "source_sha256": "c12acffa6012639f7c88b342bcb9f662d476191fa42fad96408f1155d4eb1df7",
       "native_source_projection": {
         "algorithm": "codeblock-sentinels-nonblank-lines-lf-nfc-v1",
         "strip_leading_paragraphs": 5
@@ -86,7 +86,7 @@
       "title": "PR_bkp3-0",
       "parent_path": "DEPLOY/routed/modules",
       "source": "DEPLOY/routed/modules/pr.md",
-      "source_sha256": "79a020468ac07ef8086c2e1e76d6ee8d9188f1e578234257d85d709c7e759847"
+      "source_sha256": "61ae510e760d5c496f36720757f615fe023baadf4bfa90c464a801b803d6d0d6"
     },
     {
       "role": "directory",
@@ -94,7 +94,7 @@
       "title": "Directory_bkp3-0",
       "parent_path": ".",
       "source": "DIRECTORY.txt",
-      "source_sha256": "9a4e4ef98ba236bcd9b12766260c043f64537211f265ab96c3bf1de620d4dbec",
+      "source_sha256": "f9356bc5bed5fbac90802fa31d8853f0cc1ad5a3ff2765d06c8b19fc3f66b278",
       "native_source_projection": {
         "algorithm": "nonblank-lines-lf-nfc-v1",
         "strip_leading_paragraphs": 5

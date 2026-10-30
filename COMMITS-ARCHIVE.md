@@ -51,6 +51,18 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-10-30
+
+- 2026-10-30 | Blueprint 3.1 and delivery machinery | Replaced the single
+  Blueprint source with the supervisor-supplied 3.1 text; rebuilt all 14 DEPLOY
+  files, five static upload archives, compatibility files, indexes and receipt;
+  advanced Unity's expected edition, source hashes and compact-text transport
+  selectors without changing any permanent document ID or unique `*_bkp3-0`
+  title; updated CHANGELOG, WORKPLAN, VERSION_HISTORY and Unity README. Word/PDF,
+  Shift and pCloud are excluded. Live native-document synchronization remains
+  pending.
+
 ## Cleared 2026-10-27
 
 - 2026-10-27 | Blueprint release | Publish edition `271026_gpt_bkp3-0`, its
