@@ -1371,3 +1371,27 @@ updated before Boot; Boot was revision-locked and written last. The root folder
 was then promoted to `BKP 3.0 Live`. The guarded updater is now published under
 `Blueprint/unity/`. Microsoft Copilot Notebook work remains a separate future
 step so its usage can be assessed independently.
+
+# 051126_gpt_bkp3-2 — single-document prompt and human companion
+
+Prepared for supervisor publication on 5 November 2026 as the successor to
+`301026_gpt_bkp3-1`.
+
+The edition uses one marked Markdown authority in prompt-optimised order while
+preserving a separately generated human order. Boot and the Directory are
+available before task dispatch; Check, Photo and PR remain bounded refinements;
+Edit and its governing return close the model-facing document. The same six
+component markers generate the split deliveries, installed skills and the new
+native Word/PDF volume, so no second editorial source is introduced.
+
+The supervisor deliberately removed the domestic `ORIGINAL FILING` replay
+because it duplicated the complete story token load for a QC aid, and separately
+directed deletion of the MILF entry. The Directory retains the new time,
+Google-rate currency and Islamic State rulings. Its earlier readable YAML
+spacing was restored after external tools compressed the subsection structure.
+
+The human companion follows the black, compact desk-volume design of the
+supplied HTML and Word examples without inheriting their export limitations. It
+is a 13-page A4 DOCX with native headings and paragraph styles; the derived PDF
+is tagged, searchable and paginated. `QUICK START` is two words in the
+human-facing heading; technical filenames remain unchanged.

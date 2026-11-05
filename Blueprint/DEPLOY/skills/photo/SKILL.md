@@ -5,9 +5,9 @@ name: photo
 description: "BKP desk mode: standalone photo or mugshot job (head plus caption, or NAME: caption). Use when the supervisor says photo, gives a Pix/Stand/St slug, or pastes a picture with a caption."
 
 ---
-<!-- 301026_gpt_bkp3-1 -->
+<!-- 051126_gpt_bkp3-2 -->
 
-Runs on top of the shared edit method bundled with the installed skill or named by the selected deployment: its House Essentials, [P1] fit and [P2] verification apply. This file alone holds the photo method and return.
+Refines edit for photos: holds the photo method and return.
 
 Pictures arrive pasted into the chat or in the DC-X Images tab. Take the asset slug (e.g. `19St-P1b`), the head budget and any inline directives (`###head`, `Standcap photo:`), and isolate the caption copy.
 

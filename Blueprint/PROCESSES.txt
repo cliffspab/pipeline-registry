@@ -1,4 +1,4 @@
-<!-- 301026_gpt_bkp3-1 -->
+<!-- 051126_gpt_bkp3-2 -->
 # [P] PROCESSES
 
 ## [P1] COPY
@@ -72,7 +72,7 @@ A fact change you originate needs two independent sources, both opened and read,
 </two_sources>
 
 <unsettled>
-If a correction cannot be established, leave the fact as filed and query it. HOLD, pending the news desk or supervisor, only when the filed fact itself looks materially unsafe and two sources cannot settle it; complete the edit and add the point to OUTSTANDING. Lack of access is not a hold.
+If a correction cannot be established, leave the fact as filed and query it. HOLD, pending the supervisor, only when the filed fact itself looks materially unsafe and two sources cannot settle it; complete the edit and add the point to OUTSTANDING. Lack of access is not a hold.
 </unsettled>
 
 <addendum_entries>
@@ -80,7 +80,7 @@ Format: subject — ruling — scope: [story or subject] — as of [date] — ve
 </addendum_entries>
 
 <house_forms>
-Open the narrowest Directory route the copy triggers (provinces stay closed unless a district is named). The Directory governs spelling and form against any source's romanisation; a verified addendum form overrides it for its running story only. A name resembling a held form stays as filed with a query, unless the Directory records that exact variant as an error. Transliteration variants of one Thai phrase are not a flag. If the Directory can't be read, apply the House Essentials, note forms unchecked and query uncertain names.
+Consult the narrowest Directory route the copy triggers (the provinces list only when a district is named). The Directory governs spelling and form against any source's romanisation; a verified addendum form overrides it for its running story only. A name resembling a held form stays as filed with a query, unless the Directory records that exact variant as an error. Transliteration variants of one Thai phrase are not a flag. If the Directory can't be read, apply the House Essentials, note forms unchecked and query uncertain names.
 </house_forms>
 
 <recording>
@@ -97,18 +97,12 @@ Invoked with check; the check skill sets scope and return.
 
 ## [P5] PR
 
-Give paid-placement copy a minimum-intervention style pass. Apply British spelling, house place names, honorifics, punctuation, dates, numbers, currency and plain corrections. Give captions the same pass.
-
-Add literal [Head] and [Deck] lines before the body, in sentence case. The head may run to 90 characters and the deck to 120.
-
-Retain the filed structure, order, layout, emphasis, line breaks, tone, voice, length and pictures. Retain client capitalisation of brand and product names. Add no background. Raise obvious misattribution or factual contradiction for the desk.
-
-PR copy comes with case-specific return guidance; follow it, and if it is absent, query the return before producing the deliverable.
+Invoked with pr; the pr module sets paid-placement scope and return.
 
 # [S] SOURCES
 
 - Verification. Apply [P2] whenever the copy triggers a factual check. A result snippet or remembered page is not verification.
 
-- Package structure. In a BOOT-routed deployment use its `INDEX.yaml`. In a skill deployment use only the companions deliberately bundled with that skill. If the package supplies `references/edit.md`, read it once while it remains in context and reopen it when needed. For the Directory, use the generated `DIRECTORY.txt` at the DEPLOY umbrella root; a skill deployment bundles it as `references/DIRECTORY.txt`. Read its index, then consult each route the copy touches: names, places, organisations, dates, numbers, units or titles. Reopen routes as needed. Another target system may use a format-equivalent name. Do not depend on a provider, account, URL or installation path. If the Directory is unavailable, apply the House Essentials, query uncertain forms and continue.
+- Package structure. In a single-document build every component is already in this file. In a BOOT-routed deployment use its `INDEX.yaml`. In a skill deployment use only the companions deliberately bundled with that skill. If the package supplies `references/edit.md`, read it once while it remains in context and reopen it when needed. For the Directory, use the generated `DIRECTORY.txt` at the DEPLOY umbrella root; a skill deployment bundles it as `references/DIRECTORY.txt`. Read its index, then consult each route the copy touches: names, places, organisations, dates, numbers, units or titles. Reopen routes as needed. Another target system may use a format-equivalent name. Do not depend on a provider, account, URL or installation path. If the Directory is unavailable, apply the House Essentials, query uncertain forms and continue.
 
 - Addendum. Consult [`addendum.doc`](https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt) for recent published usage, running-story continuity, clarifications and current desk rulings. Its standing Cabinet section is the desk roster for Thai ministers and portfolios, with a correct as of date and government source; it confirms copy but never alters it. No factual ruling may enter the Addendum unless it has met [P2]; once entered, apply the dated ruling within its stated scope until it is superseded or new information gives reason to verify it again. If unavailable, continue without it.

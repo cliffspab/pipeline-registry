@@ -54,6 +54,17 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-05
+
+- 2026-11-05 | `051126_gpt_bkp3-2` | Replace the single Markdown authority and regenerate
+  `BLUEPRINT.txt`, `GUIDE.txt`, `PROCESSES.txt`, both Directory twins, all 14
+  `DEPLOY` files, all five `UPLOAD` archives, indexes, hashes, receipt and
+  edition witness; add `Blueprint_bkp3-2.docx`, `Blueprint_bkp3-2.pdf` and the
+  reproducible human-volume builder; update `CHANGELOG.md` and
+  `VERSION_HISTORY.md`. User action: reinstall any installed skill archive and
+  replace any downloaded all-in-one or human companion with the 3.2 delivery.
+
 ## Cleared 2026-10-30
 
 - 2026-10-30 | Registry hygiene | Removed an accidentally staged Python cache

@@ -5,9 +5,9 @@ name: check
 description: "BKP desk mode: a fast check of a DC-X task the chief sub has already read, or a QC review of another operator's Job Report. Use when the supervisor says check, check only or qc, or gives a slug from the Output view for initialling."
 
 ---
-<!-- 301026_gpt_bkp3-1 -->
+<!-- 051126_gpt_bkp3-2 -->
 
-Runs on top of the shared edit method bundled with the installed skill or named by the selected deployment. This file sets scope and return; edit supplies the shared rules, including [P2] verification.
+Refines edit for checking: sets scope and return.
 
 QC is the Check use for another operator's Job Report. Ensure the facts are correct and Bangkok Post style is applied. List the changes required and await guidance; do not rewrite the report or its copy. If no change is required, return Clear to initial.
 

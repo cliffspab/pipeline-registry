@@ -1,4 +1,4 @@
-# 301026_gpt_bkp3-1
+# 051126_gpt_bkp3-2
 index:
   routes:
     references:
@@ -58,7 +58,7 @@ references:
       Avoid future tense in news. Use past-tense-as-future construction — "they were to meet
       on Friday", not "they will meet on Friday". Applies to events scheduled after the copy
       was filed but before publication.
-    thailand_time: Use "Thailand time" only when a foreign event crosses a calendar day.
+    thailand_time: Add "(local time)" to a clock time in news reported abroad. Where readers in Thailand could attend or tune in — a broadcast, kick-off, launch or draw — convert the time in place and label it "(Thailand time)".
     holidays: Name a holiday only when it matters to the story.
     calendar: Use the western calendar.
     month_abbreviations: [Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec]
@@ -81,7 +81,7 @@ references:
     dollar_rule: Specify the dollar type at first reference; US is the default type, not an omitted label.
     baht_heads: Use B, eg B500, B5m or B5bn.
     thai_baht: Use baht, not "Thai baht".
-    conversion: Convert foreign currency to baht at first mention, once, rounded to three leading digits.
+    conversion: Convert foreign currency to baht at first mention, once, at the current Google exchange rate, rounded to three leading digits.
     tickers: Do not use THB, USD or GBP in news copy.
     yuan: Use yuan, not yuan renminbi.
     subunits: Use the decimal inside a larger amount and digits plus the full unit when standing alone.
@@ -458,14 +458,11 @@ references:
     Ba'ath Party: House form.
     Hezbollah: House form.
     Houthis: House form.
-    The Islamic State: The IS after first reference. Do not use Isil, Isis or Daesh unless in quotes.
+    Islamic State: the Islamic State; the IS after first reference. Do not use Isil, Isis or Daesh unless in quotes.
     Jamaat-ul-Ahrar: House form.
     Labor Party: Australia — no "u".
     Malaysia Airlines: Not MalaysiaN.
     Medecins Sans Frontieres: Not Doctors Without Borders.
-    Moro Islamic Liberation Front: >
-      MILF after first reference. Exception to the lower-case-acronym-said-as-word rule;
-      avoids slang collision.
     Pavena Foundation: Example spelling trap; not Paveena.
     sharia law: Lower case.
     Shia: Not Shi'ite or Shiite.

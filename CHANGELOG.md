@@ -13,6 +13,56 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 Nothing pending.
 
+## 051126_gpt_bkp3-2 — 2026-11-05
+
+**Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo`, `pr`
+and `directory`.
+
+**Affected install bundles:** all five static skill archives and every routed
+delivery.
+
+**User action after publication:** reinstall any installed skill package. The
+archive names remain `boot.zip`, `edit.zip`, `check.zip`, `photo.zip` and
+`pr.zip`. Replace any downloaded all-in-one Blueprint with the 3.2 Markdown;
+human readers may use the new `Blueprint_bkp3-2` Word or PDF companion.
+
+### Changed
+
+- Reordered the all-in-one Markdown for a manageable single-document prompt:
+  Boot and Directory mount first, bounded task modules follow, and the shared
+  Edit method and governing return close the file.
+- Added explicit single-document routing while retaining the component markers
+  used to generate split and installed-skill deliveries.
+- Clarified supervisor routing, restricted live DC-X byline and label handling
+  to Sidebar agents, and made module-specific returns explicit.
+- Added the current time-conversion and Google-rate currency instructions and
+  revised the Islamic State house form.
+- Restored readable spacing inside the YAML Directory after an external
+  conversion had compressed its subsection boundaries.
+- Changed the human heading from `QUICKSTART` to `QUICK START`.
+- Added a native human-volume builder. It presents the same marked source in
+  human order and generates a 13-page A4 Word/PDF companion with native styles,
+  page numbers and selectable text.
+
+### Removed
+
+- Removed `ORIGINAL FILING` from Job Reports. Repeating the complete filing
+  reinjected the story's full token load for a supervisor-side QC aid.
+- Removed the Moro Islamic Liberation Front / MILF Directory entry by
+  supervisor decision.
+- Removed repeated shared Edit wording from the Check, Photo and PR modules;
+  each module now states only its bounded refinement.
+
+### Validation
+
+- Release build and byte-for-byte rebuild check pass: 14 deployment files and
+  five deterministic upload archives.
+- The source contains one balanced copy of all six marked components; generated
+  routed files and skill archives reproduce those components.
+- The Word companion was rendered to PDF and every page inspected. The final
+  PDF is tagged, searchable, A4 and has no clipping, overlap or blank trailing
+  page.
+
 ## 301026_gpt_bkp3-1 — 2026-10-30
 
 **Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo` and
