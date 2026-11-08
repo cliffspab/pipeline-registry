@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BKP Desk Hub</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+/* Layout: one narrow working column; sources as rows, pack actions below, modules folded. */
+:root {
+  --bg: #f6f7f8; --panel: #ffffff; --fg: #1d2329; --muted: #5d6873; --line: #d6dce2;
+  --accent: #0f4c6b; --accent-fg: #ffffff; --ok: #1d7a3a; --warn: #a35c08; --bad: #b3261e;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #14181c; --panel: #1c2227; --fg: #e3e8ec; --muted: #9aa6b1; --line: #313a42;
+    --accent: #6fb3d6; --accent-fg: #0b1a22; --ok: #5cc27e; --warn: #e2a554; --bad: #f08a80; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.45 var(--sans); }
+main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 18px; }
+h1 { font-size: 20px; margin: 0; letter-spacing: .01em; }
+h2 { font-size: 12px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.src { padding: 10px 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.src:first-of-type { border-top: 0; padding-top: 0; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.name { font-weight: 600; }
+.state { font: 600 11px var(--mono); letter-spacing: .04em; }
+.state.READY, .state.MANUAL { color: var(--ok); }
+.state.CACHED, .state.PARTIAL, .state.FETCHING { color: var(--warn); }
+.state.ERROR, .state.BLOCKED, .state.EMPTY, .state.NONE { color: var(--bad); }
+.meta { font: 11px/1.4 var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+.bar { display: flex; flex-wrap: wrap; gap: 6px; }
+button { font: 12px var(--sans); padding: 5px 10px; border-radius: 5px; border: 1px solid var(--line);
+  background: var(--panel); color: var(--fg); cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 600; }
+button.danger { color: var(--bad); }
+button:disabled { opacity: .45; cursor: default; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px; }
+ul.links { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+ul.links a { color: var(--accent); text-decoration: none; }
+ul.links a:hover { text-decoration: underline; }
+ul.links span { color: var(--muted); font-size: 12px; }
+details summary { cursor: pointer; font-weight: 600; }
+.mod { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-top: 1px solid var(--line); }
+.mod:first-child { border-top: 0; }
+.mod .n { flex: 1; font: 12px var(--mono); }
+#toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: var(--fg); color: var(--bg);
+  padding: 8px 14px; border-radius: 6px; font-size: 13px; max-width: 90vw; white-space: pre-line; }
+dialog { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--fg); width: min(860px, 94vw); }
+dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background: var(--bg); color: var(--fg); border: 1px solid var(--line); }
+@media (prefers-reduced-motion: no-preference) { button { transition: border-color .15s; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>BKP Desk Hub</h1>
+    <div class="sub">Bangkok Post subs desk · shift pack and reference links · <span id="ver"></span></div>
+  </header>
+
+  <section aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <div id="sources"></div>
+  </section>
+
+  <section aria-labelledby="h-pack">
+    <h2 id="h-pack">Shift pack</h2>
+    <div class="grid">
+      <button class="primary" data-act="copy">Copy full pack</button>
+      <button class="primary" data-act="download">Download full pack</button>
+      <button data-act="refresh">Refresh all</button>
+      <button data-act="separate">Download separate</button>
+      <button data-act="prompt">Copy opening prompt</button>
+      <button data-act="modellinks">Copy model links</button>
+      <button data-act="editorlinks">Copy editor links</button>
+      <button data-act="openall">Open sources</button>
+      <button class="danger" data-act="clear">Clear stored copies</button>
+    </div>
+    <details style="margin-top:12px">
+      <summary>Blueprint modules</summary>
+      <div class="sub" id="modinfo"></div>
+      <div id="modules"></div>
+      <div class="bar" style="margin-top:6px"><button id="pairsave">Save EDIT + DIRECTORY</button></div>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-links">
+    <h2 id="h-links">Links</h2>
+    <ul class="links" id="links"></ul>
+  </section>
+</main>
+
+<dialog id="paste">
+  <form method="dialog">
+    <h2 id="paste-title">Paste content</h2>
+    <p class="sub">Stored as MANUAL and checked the same way as a fetched copy.</p>
+    <textarea id="paste-text" aria-labelledby="paste-title"></textarea>
+    <div class="bar" style="margin-top:8px"><button value="ok" class="primary">Use this content</button><button value="cancel">Cancel</button></div>
+  </form>
+</dialog>
+<div id="toast" hidden></div>
+
+<script>
+'use strict';
+const VERSION = '1.0.0';
+const STORE_KEY = 'bkpDeskHubV1';
+const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
+const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
+const TRACKER_GID = '1313569477';
+const ADDENDUM_ID = '1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk';
+const ADDENDUM_PUB = 'https://docs.google.com/document/d/e/2PACX-1vRlS6VxrVmMwXAUuNhcCdD3WBCFsCWMQr4cUOYsTSIebwEhSri0B84Ew94hyFdvyQqymtaloCYfebPJ/pub';
+const TRACKER_PUB = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTY4md4NUkzdNHRVYZJQQTwJbaEygbC_JhxWvjqGjioAv4rB0yxpLmG85I0hzsWY4pfZqAHpy6J0PFj/pub?gid=' + TRACKER_GID + '&single=true&output=csv';
+
+const SOURCES = {
+  blueprint: { label: 'Blueprint', url: RAW_BP + 'BLUEPRINT.txt', versionUrl: RAW_BP + 'VERSION.txt',
+    openUrl: 'https://github.com/cliffspab/pipeline-registry/blob/main/Blueprint/BLUEPRINT.txt',
+    modelUrl: RAW_BP + 'BLUEPRINT.txt', filename: 'BLUEPRINT.txt', minChars: 20000, components: true },
+  addendum: { label: 'Desk Addendum', url: ADDENDUM_PUB, html: true,
+    openUrl: 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/edit',
+    modelUrl: ADDENDUM_PUB, filename: 'Desk_Addendum.txt', minChars: 500, markers: ['DESK ADDENDUM'] },
+  tracker: { label: 'Tracker', url: TRACKER_PUB,
+    openUrl: 'https://docs.google.com/spreadsheets/d/' + TRACKER_ID + '/edit?gid=' + TRACKER_GID + '#gid=' + TRACKER_GID,
+    modelUrl: TRACKER_PUB, filename: 'Desk_Tracker.csv', minChars: 500, header: /^"?Status"?,"?Story"?,/ }
+};
+const KEYS = Object.keys(SOURCES);
+const LINKS = [
+  ['Blueprint on GitHub', SOURCES.blueprint.openUrl],
+  ['Blueprint (plain text)', SOURCES.blueprint.modelUrl],
+  ['Desk Addendum (edit)', SOURCES.addendum.openUrl],
+  ['Desk Addendum (published)', ADDENDUM_PUB],
+  ['Tracker (edit)', SOURCES.tracker.openUrl],
+  ['Tracker (published CSV)', TRACKER_PUB],
+  ['Tracker usage', 'https://go.fuzzylogic.page/usage'],
+  ['DCX desk notes', 'https://docs.google.com/document/d/1RmwVnZ5Od4tityr6ePg1kmy8lKUmSiFIoXbdtS8chJQ/edit']
+];
+
+// ---------- storage ----------
+let state = load();
+const busy = {};
+function load() { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch (_) { return {}; } }
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (_) { toast('Could not store a local copy (browser storage blocked or full).'); } }
+
+// ---------- helpers ----------
+const $ = s => document.querySelector(s);
+function el(tag, props, ...kids) { const e = document.createElement(tag); Object.assign(e, props || {}); kids.forEach(k => e.append(k)); return e; }
+function count(s) { return [...String(s || '')].length; }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function bkkParts(d) {
+  const p = {};
+  new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Bangkok', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+    .formatToParts(d || new Date()).forEach(x => { p[x.type] = x.value; });
+  return p;
+}
+function bkk(iso) { const p = bkkParts(new Date(iso)); return p.day + '/' + p.month + ' ' + p.hour + ':' + p.minute; }
+function ago(iso) {
+  if (!iso) return '';
+  const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+  if (m < 1) return 'just now'; if (m < 60) return m + 'm ago';
+  const h = Math.floor(m / 60); return h < 48 ? h + 'h ' + (m % 60) + 'm ago' : Math.floor(h / 24) + 'd ago';
+}
+let toastTimer;
+function toast(msg, ms) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, ms || 4000); }
+async function copyText(text, label) {
+  try { await navigator.clipboard.writeText(text); toast(label + ' copied (' + count(text).toLocaleString() + ' chars).'); }
+  catch (_) {
+    const ta = el('textarea', { value: text }); ta.style.cssText = 'position:fixed;opacity:0'; document.body.append(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (_) {} ta.remove();
+    toast(ok ? label + ' copied.' : 'Copy failed: ' + label);
+  }
+}
+function download(name, text) {
+  const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+  const a = el('a', { href: url, download: name.replace(/[^A-Za-z0-9._-]+/g, '_') }); document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+
+// ---------- content checks ----------
+// Google's published Doc page to plain text: line breaks at <br> and block ends, text only from the document body.
+function docHtmlToText(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const root = doc.querySelector('.doc-content') || doc.querySelector('#contents') || doc.body;
+  root.querySelectorAll('script,style').forEach(n => n.remove());
+  root.querySelectorAll('br').forEach(n => n.replaceWith('\n'));
+  root.querySelectorAll('p,h1,h2,h3,h4,h5,h6,li,tr,div,table,hr').forEach(n => n.append('\n'));
+  root.querySelectorAll('td,th').forEach(n => n.append('\t'));
+  return root.textContent.replace(/ /g, ' ').split('\n').map(l => l.replace(/[ \t]+$/g, '').replace(/^[ ]+/, '')).join('\n')
+    .replace(/\n{3,}/g, '\n\n').trim() + '\n';
+}
+function versionOf(key, text) {
+  text = String(text || '');
+  if (key === 'blueprint') { const m = text.match(/<!--\s*MASTER\s+(\S+?)\s*-->/) || text.match(/^﻿?<!--\s*(\S+?)\s*-->/); return m ? m[1] : ''; }
+  if (key === 'addendum') { const m = text.match(/Last update:\s*([^\r\n]+)/i); return m ? 'Last update ' + m[1].trim() : ''; }
+  if (key === 'tracker') {
+    const M = 'JanFebMarAprMayJunJulAugSepOctNovDec'; let best = 0, label = '', m;
+    const re = /\b(\d{2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (20\d\d)\b/g;
+    while ((m = re.exec(text))) { const t = Date.UTC(+m[3], M.indexOf(m[2]) / 3, +m[1]); if (t > best) { best = t; label = m[0]; } }
+    return label ? 'latest row ' + label : '';
+  }
+  return '';
+}
+// Every COMPONENT line closed by its own END COMPONENT line, no overlaps, nothing after the last END
+// but blank or comment lines; an END BLUEPRINT line, when present, must close the file.
+function componentCheck(text) {
+  const PACK_END = '<!-- END BLUEPRINT -->';
+  const lines = String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n').split('\n');
+  const re = /^\s*<!--\s*(END\s+)?COMPONENT:\s*(.+?)\s*-->\s*$/;
+  const names = []; let open = null, lastEnd = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(re); if (!m) continue;
+    const name = m[2];
+    if (!m[1]) {
+      if (open) return { ok: false, detail: 'COMPONENT ' + name + ' opens before ' + open + ' is closed' };
+      if (names.includes(name)) return { ok: false, detail: 'COMPONENT ' + name + ' appears twice' };
+      open = name;
+    } else {
+      if (open !== name) return { ok: false, detail: 'END COMPONENT ' + name + (open ? ' while ' + open + ' is open' : ' with no matching COMPONENT') };
+      names.push(name); open = null; lastEnd = i;
+    }
+  }
+  if (open) return { ok: false, detail: 'COMPONENT ' + open + ' has no END COMPONENT (possibly truncated)' };
+  if (!names.length) return { ok: false, detail: 'No COMPONENT markers found' };
+  const tail = lines.slice(lastEnd + 1).map(l => l.trim()).filter(Boolean);
+  const hasEnd = lines.some(l => l.trim() === PACK_END);
+  if (hasEnd) { if (tail[tail.length - 1] !== PACK_END) return { ok: false, detail: 'END BLUEPRINT is not the last line' }; tail.pop(); }
+  const stray = tail.find(l => !/^<!--.*-->$/.test(l));
+  if (stray) return { ok: false, detail: 'Text after END COMPONENT ' + names[names.length - 1] + ': ' + stray.slice(0, 50) };
+  return { ok: true, names, detail: names.length + ' components paired; ends at ' + (hasEnd ? 'END BLUEPRINT' : 'END COMPONENT ' + names[names.length - 1]) };
+}
+function classify(key, text) {
+  const c = SOURCES[key];
+  if (!String(text).trim()) return { state: 'EMPTY', detail: 'No content returned' };
+  if (!c.html && /<(?:!doctype|html|head|body)\b/i.test(String(text).slice(0, 3000))) return { state: 'BLOCKED', detail: 'A web page came back instead of the text' };
+  if (c.minChars && text.length < c.minChars) return { state: 'PARTIAL', detail: 'Only ' + text.length + ' chars; expected at least ' + c.minChars };
+  const missing = (c.markers || []).filter(m => !text.includes(m));
+  if (missing.length) return { state: 'PARTIAL', detail: 'Missing: ' + missing.join(', ') };
+  if (c.header && !c.header.test(text.replace(/^﻿/, '').split(/\r?\n/, 1)[0])) return { state: 'PARTIAL', detail: 'Unexpected header row' };
+  if (c.components) { const r = componentCheck(text); return r.ok ? { state: 'READY', detail: r.detail } : { state: 'PARTIAL', detail: r.detail }; }
+  return { state: 'READY', detail: 'Checked' };
+}
+const usable = s => !!(s && s.text && ['READY', 'CACHED', 'PARTIAL', 'MANUAL'].includes(s.state));
+const notFresh = s => usable(s) && !(s.state === 'READY' && s.contentState === 'READY');
+
+// ---------- fetching ----------
+async function getText(url) {
+  const r = await fetch(url, { cache: 'no-store', credentials: 'omit' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.text();
+}
+async function refresh(key, quiet) {
+  const c = SOURCES[key], prev = state[key] && state[key].text ? { ...state[key] } : null;
+  busy[key] = true; render();
+  try {
+    let raw;
+    try { raw = await getText(c.url); }
+    catch (e) { return keepPrev(key, prev, 'ERROR', 'Fetch failed: ' + e.message, quiet); }
+    const text = c.html ? docHtmlToText(raw) : raw;
+    const chk = classify(key, text);
+    if (chk.state === 'READY' || (chk.state === 'PARTIAL' && !(prev && prev.contentState === 'READY'))) {
+      const fresh = { state: chk.state, contentState: chk.state, detail: chk.detail, text, retrieved: new Date().toISOString(), chars: count(text), version: versionOf(key, text) };
+      if (key === 'blueprint' && c.versionUrl && chk.state === 'READY') {
+        try { const v = (await getText(c.versionUrl)).trim().split(/\s+/)[0]; if (v && fresh.version && v !== fresh.version) fresh.detail += ' · VERSION.txt says ' + v; } catch (_) {}
+      }
+      state[key] = fresh; save();
+      if (!quiet && chk.state !== 'READY') toast(c.label + ': PARTIAL. ' + chk.detail, 7000);
+      return fresh;
+    }
+    return keepPrev(key, prev, chk.state, chk.detail, quiet);
+  } finally { busy[key] = false; render(); }
+}
+// A failed refresh never replaces a stored copy.
+function keepPrev(key, prev, failState, why, quiet) {
+  const c = SOURCES[key];
+  if (prev) state[key] = { ...prev, state: prev.state === 'MANUAL' ? 'MANUAL' : 'CACHED', lastFail: failState, detail: 'Refresh failed (' + why + '); keeping copy from ' + ago(prev.retrieved) };
+  else state[key] = { state: failState, detail: why, text: '' };
+  save(); if (!quiet) toast(c.label + ': ' + state[key].state + '. ' + state[key].detail, 8000);
+  return state[key];
+}
+async function refreshAll() {
+  await Promise.all(KEYS.map(k => refresh(k, true)));
+  toast(KEYS.map(k => SOURCES[k].label + ': ' + ((state[k] || {}).state || 'NONE')).join('\n'), 6000);
+}
+async function ensure(keys) { const need = keys.filter(k => !usable(state[k])); if (need.length) await Promise.all(need.map(k => refresh(k, true))); }
+
+// ---------- pack ----------
+function openingPrompt() {
+  return 'Bangkok Post desk package for this chat.\n\nBOOT routes each job and EDIT is the base every job builds on.';
+}
+function modelLinks() {
+  return ['Blueprint (plain text): ' + SOURCES.blueprint.modelUrl, 'Desk Addendum: ' + ADDENDUM_PUB, 'Tracker (CSV): ' + TRACKER_PUB].join('\n');
+}
+function editorLinks() {
+  return ['Blueprint: ' + SOURCES.blueprint.openUrl, 'Desk Addendum: ' + SOURCES.addendum.openUrl, 'Tracker: ' + SOURCES.tracker.openUrl, 'Tracker usage: https://go.fuzzylogic.page/usage'].join('\n');
+}
+function confirmFresh(keys) {
+  const warn = keys.filter(k => notFresh(state[k]));
+  if (!warn.length) return true;
+  return confirm('Not fresh checked copies:\n\n' + warn.map(k => '- ' + SOURCES[k].label + ': ' + state[k].state + (state[k].retrieved ? ', retrieved ' + ago(state[k].retrieved) : '')).join('\n') + '\n\nUse them anyway?');
+}
+async function buildPack() {
+  await ensure(KEYS);
+  const missing = KEYS.filter(k => !usable(state[k]));
+  if (missing.length) { toast('Unavailable: ' + missing.map(k => SOURCES[k].label + ' (' + ((state[k] || {}).state || 'NONE') + ')').join(', ') + '. Refresh, or paste the content.', 8000); return null; }
+  if (!confirmFresh(KEYS)) return null;
+  return ['===== BEGIN OPENING PROMPT =====', openingPrompt(), '===== END OPENING PROMPT =====', '',
+    '===== BEGIN BLUEPRINT =====', state.blueprint.text.trimEnd(), '===== END BLUEPRINT =====', '',
+    '===== BEGIN DESK ADDENDUM =====', state.addendum.text.trimEnd(), '===== END DESK ADDENDUM =====', '',
+    '===== BEGIN TRACKER =====', state.tracker.text.trimEnd(), '===== END TRACKER ====='].join('\n') + '\n';
+}
+
+// ---------- modules ----------
+function modules() {
+  const s = state.blueprint, out = {};
+  if (!s || !s.text) return out;
+  const r = componentCheck(s.text), names = r.names || [];
+  names.forEach(n => {
+    const esc = n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const m = s.text.match(new RegExp('<!--\\s*COMPONENT:\\s*' + esc + '\\s*-->\\r?\\n([\\s\\S]*?)\\r?\\n\\s*<!--\\s*END\\s+COMPONENT:\\s*' + esc + '\\s*-->'));
+    if (m) out[n] = (s.version ? '<!-- ' + s.version + ' -->\n' : '') + m[1] + '\n';
+  });
+  return out;
+}
+function moduleFile(n) { const v = (state.blueprint || {}).version; return n + (v ? '_' + v : '') + (n === 'DIRECTORY' ? '.txt' : '.md'); }
+async function moduleAction(names, act) {
+  await ensure(['blueprint']);
+  if (!usable(state.blueprint)) return toast('No Blueprint stored. Refresh it first.');
+  if (!confirmFresh(['blueprint'])) return;
+  const mods = modules(), missing = names.filter(n => !mods[n]);
+  if (missing.length) return toast('Not found in the stored Blueprint: ' + missing.join(', '), 7000);
+  if (act === 'copy') return copyText(mods[names[0]], names[0]);
+  for (let i = 0; i < names.length; i++) { download(moduleFile(names[i]), mods[names[i]]); if (i < names.length - 1) await sleep(900); }
+}
+
+// ---------- actions ----------
+const pasteDlg = $('#paste');
+function pasteFor(key) {
+  const c = SOURCES[key];
+  $('#paste-title').textContent = 'Paste ' + c.label;
+  $('#paste-text').value = (state[key] && state[key].text) || '';
+  pasteDlg.onclose = () => {
+    if (pasteDlg.returnValue !== 'ok') return;
+    const text = $('#paste-text').value; if (!text.trim()) return toast('Nothing pasted.');
+    const chk = classify(key, text);
+    state[key] = { state: 'MANUAL', contentState: chk.state, detail: 'Pasted · check: ' + chk.state + ' (' + chk.detail + ')', text, retrieved: new Date().toISOString(), chars: count(text), version: versionOf(key, text), manual: true };
+    save(); render(); toast(c.label + ' stored as MANUAL · check: ' + chk.state);
+  };
+  pasteDlg.returnValue = ''; pasteDlg.showModal(); $('#paste-text').focus();
+}
+async function sourceAct(key, act) {
+  const c = SOURCES[key], s = state[key] || {};
+  if (act === 'refresh') return refresh(key);
+  if (act === 'open') return window.open(c.openUrl, '_blank', 'noopener');
+  if (act === 'link') return copyText(c.modelUrl, c.label + ' link');
+  if (act === 'paste') return pasteFor(key);
+  if (!s.text) return toast(c.label + ' has no stored copy. Refresh it first.');
+  if (act === 'copy') return copyText(s.text, c.label);
+  if (act === 'save') return download(c.filename, s.text);
+}
+async function packAct(act) {
+  if (act === 'refresh') return refreshAll();
+  if (act === 'prompt') return copyText(openingPrompt(), 'Opening prompt');
+  if (act === 'modellinks') return copyText(modelLinks(), 'Model links');
+  if (act === 'editorlinks') return copyText(editorLinks(), 'Editor links');
+  if (act === 'openall') { KEYS.forEach(k => window.open(SOURCES[k].openUrl, '_blank', 'noopener')); return; }
+  if (act === 'clear') { if (confirm('Clear the stored copies in this browser?')) { state = {}; save(); render(); toast('Stored copies cleared.'); } return; }
+  if (act === 'copy') { const p = await buildPack(); if (p) copyText(p, 'Full shift pack'); return; }
+  if (act === 'download') { const p = await buildPack(); if (!p) return; const t = bkkParts(); download('BP_SHIFT_PACK_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); return; }
+  if (act === 'separate') {
+    await ensure(KEYS);
+    const ks = KEYS.filter(k => usable(state[k])); if (!ks.length) return toast('No stored copies to download.');
+    if (!confirmFresh(ks)) return;
+    for (const k of ks) { download(SOURCES[k].filename, state[k].text); await sleep(900); }
+    toast('Downloaded ' + ks.length + ' file(s). If only one arrived, allow multiple downloads for this site.', 7000);
+  }
+}
+
+// ---------- render ----------
+function render() {
+  const host = $('#sources'); host.textContent = '';
+  KEYS.forEach(key => {
+    const c = SOURCES[key], s = state[key] || {}, st = busy[key] ? 'FETCHING' : (s.state || 'NONE');
+    const meta = [s.version, s.chars ? Number(s.chars).toLocaleString() + ' chars' : '', s.retrieved ? (s.manual ? 'pasted ' : 'retrieved ') + bkk(s.retrieved) + ' (' + ago(s.retrieved) + ')' : '', s.detail].filter(Boolean).join(' · ');
+    const bar = el('div', { className: 'bar' });
+    [['Refresh', 'refresh'], ['Copy', 'copy'], ['Save', 'save'], ['Open', 'open'], ['Link', 'link'], ['Paste', 'paste']]
+      .forEach(([l, a]) => bar.append(el('button', { textContent: l, onclick: () => sourceAct(key, a) })));
+    host.append(el('div', { className: 'src' },
+      el('div', { className: 'row' }, el('span', { className: 'name', textContent: c.label }),
+        el('span', { className: 'state ' + st, textContent: st + (s.state === 'CACHED' && s.lastFail ? ' · ' + s.lastFail : '') })),
+      el('div', { className: 'meta', textContent: meta || 'Not fetched yet.' }), bar));
+  });
+  const mods = modules(), names = Object.keys(mods), mh = $('#modules'); mh.textContent = '';
+  $('#modinfo').textContent = names.length ? 'From the stored Blueprint' + (state.blueprint.version ? ' ' + state.blueprint.version : '') + ' · ' + state.blueprint.state : 'No Blueprint stored yet. Copy or Save fetches it.';
+  names.forEach(n => {
+    mh.append(el('div', { className: 'mod' }, el('span', { className: 'n', textContent: n + ' · ' + count(mods[n]).toLocaleString() }),
+      el('button', { textContent: 'Copy', onclick: () => moduleAction([n], 'copy') }),
+      el('button', { textContent: 'Save', onclick: () => moduleAction([n], 'save') })));
+  });
+  $('#pairsave').disabled = names.length > 0 && !(mods.EDIT && mods.DIRECTORY);
+}
+
+$('#ver').textContent = 'v' + VERSION;
+document.querySelectorAll('[data-act]').forEach(b => { b.onclick = () => packAct(b.dataset.act); });
+$('#pairsave').onclick = () => moduleAction(['EDIT', 'DIRECTORY'], 'save');
+LINKS.forEach(([label, url]) => $('#links').append(el('li', {}, el('a', { href: url, target: '_blank', rel: 'noopener', textContent: label }))));
+render();
+refreshAll();
+</script>
+</body>
+</html>
