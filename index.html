@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bangkok Post Desk Editor</title>
+<meta name="description" content="Bangkok Post subs desk: routed desk package (BOOT, EDIT, CHECK, PHOTO, PR), house-style Directory, Desk Addendum and Story Tracker.">
+<style>
+:root { --bg: #f6f7f8; --fg: #1d2329; --muted: #5d6873; --line: #d6dce2; --link: #0f4c6b; color-scheme: light; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #14181c; --fg: #e3e8ec; --muted: #9aa6b1; --line: #313a42; --link: #6fb3d6; color-scheme: dark; }
+}
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 720px; margin: 0 auto; padding: 28px 16px 48px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 12px; margin: 28px 0 8px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+p { margin: 0; color: var(--muted); }
+ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+li { padding: 8px 0; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+a { color: var(--link); font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+code { font: 13px ui-monospace, Consolas, monospace; color: var(--muted); }
+li span { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bangkok Post Desk Editor</h1>
+  <p>Routed desk package for the Bangkok Post subs desk. BOOT is the entry point and router.</p>
+
+  <h2>Routed package</h2>
+  <ul>
+    <li><a href="Blueprint/DEPLOY/routed/BOOT.md">BOOT.md</a><span>Entry point and router for the desk modules</span></li>
+    <li><a href="Blueprint/DEPLOY/routed/INDEX.yaml">INDEX.yaml</a><span>Routed package index: version, modes and file list</span></li>
+    <li><a href="Blueprint/DEPLOY/routed/edit.md">edit.md</a><span>EDIT method, the base for every job</span></li>
+    <li><a href="Blueprint/DEPLOY/routed/modules/check.md">modules/check.md</a><span>CHECK and QC mode</span></li>
+    <li><a href="Blueprint/DEPLOY/routed/modules/photo.md">modules/photo.md</a><span>PHOTO mode</span></li>
+    <li><a href="Blueprint/DEPLOY/routed/modules/pr.md">modules/pr.md</a><span>PR mode</span></li>
+    <li><a href="Blueprint/DEPLOY/DIRECTORY.txt">DIRECTORY.txt</a><span>House-style Directory</span></li>
+  </ul>
+
+  <h2>Live desk sources</h2>
+  <ul>
+    <li><a href="https://docs.google.com/document/d/1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk/export?format=txt">Desk Addendum</a><span>Current rulings and continuity (plain text)</span></li>
+    <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTY4md4NUkzdNHRVYZJQQTwJbaEygbC_JhxWvjqGjioAv4rB0yxpLmG85I0hzsWY4pfZqAHpy6J0PFj/pub?gid=1313569477&amp;single=true&amp;output=csv">Story Tracker</a><span>Stories, names and forms as published, latest 14 days (CSV)</span></li>
+  </ul>
+
+  <h2>Desk tools</h2>
+  <ul>
+    <li><a href="desk/">BKP Desk Hub</a><span>Shift pack builder and reference links</span></li>
+  </ul>
+
+  <h2>Repository</h2>
+  <ul>
+    <li><a href="bootstrap/00_START-HERE.md">bootstrap/00_START-HERE.md</a><span>Start here for supervisor and desk assistant</span></li>
+    <li><a href="bootstrap/AGENTS.md">bootstrap/AGENTS.md</a><span>Codex project mechanics</span></li>
+    <li><a href="bootstrap/CLAUDE.md">bootstrap/CLAUDE.md</a><span>Claude project instructions</span></li>
+    <li><a href="Control/CONTROL.txt">Control/CONTROL.txt</a><span>Operational routing</span></li>
+    <li><a href="https://github.com/cliffspab/pipeline-registry">Source on GitHub</a><span>cliffspab/pipeline-registry</span></li>
+  </ul>
+</main>
+</body>
+</html>
