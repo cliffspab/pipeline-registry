@@ -115,7 +115,7 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
 
 <script>
 'use strict';
-const VERSION = '1.2.0';
+const VERSION = '1.3.0';
 const STORE_KEY = 'bkpDeskHubV1';
 const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
@@ -344,17 +344,14 @@ function modules() {
     const m = s.text.match(new RegExp('<!--\\s*COMPONENT:\\s*' + esc + '\\s*-->\\r?\\n([\\s\\S]*?)\\r?\\n\\s*<!--\\s*END\\s+COMPONENT:\\s*' + esc + '\\s*-->'));
     if (m) out[n] = (s.version ? '<!-- ' + s.version + ' -->\n' : '') + m[1] + '\n';
   });
-  // GUIDE and PROCESSES are cut from EDIT exactly as build.py cuts GUIDE.txt and PROCESSES.txt.
-  if (out.EDIT) {
-    const edit = out.EDIT, mark = s.version ? '<!-- ' + s.version + ' -->\n' : '';
-    const cut = (a, b) => { const i = edit.indexOf(a), j = i < 0 ? -1 : edit.indexOf(b, i + a.length); return i < 0 || j < 0 ? '' : edit.slice(i, j).trimEnd() + '\n'; };
-    const guide = cut('# [G1] EDITING', '# [P] PROCESSES'), proc = cut('# [P] PROCESSES', '# [R] RETURN');
-    if (guide) out.GUIDE = mark + guide;
-    if (proc) out.PROCESSES = mark + proc;
+  // GUIDE: the whole Blueprint with the DIRECTORY component taken out, so every skill and section stays.
+  if (out.DIRECTORY) {
+    const guide = s.text.replace(/^\s*<!--\s*COMPONENT:\s*DIRECTORY\s*-->[\s\S]*?^\s*<!--\s*END\s+COMPONENT:\s*DIRECTORY\s*-->\s*\n+/m, '');
+    if (guide !== s.text) out.GUIDE = guide.trimEnd() + '\n';
   }
   return out;
 }
-function moduleFile(n) { const v = (state.blueprint || {}).version; return n + (v ? '_' + v : '') + (['DIRECTORY', 'GUIDE', 'PROCESSES'].includes(n) ? '.txt' : '.md'); }
+function moduleFile(n) { const v = (state.blueprint || {}).version; return n + (v ? '_' + v : '') + (n === 'DIRECTORY' ? '.txt' : '.md'); }
 async function moduleAction(names, act) {
   await ensure(['blueprint']);
   if (!usable(state.blueprint)) return toast('No Blueprint stored. Refresh it first.');
