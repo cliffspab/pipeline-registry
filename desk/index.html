@@ -83,6 +83,12 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
       <button data-act="openall">Open sources</button>
       <button class="danger" data-act="clear">Clear stored copies</button>
     </div>
+    <div class="sub" style="margin-top:6px">The pack is the opening prompt, the full Blueprint and links to the Addendum and Tracker.</div>
+    <h2 style="margin-top:14px">Full documents</h2>
+    <div class="grid">
+      <button data-act="docscopy">Copy Addendum + Tracker</button>
+      <button data-act="docsdownload">Download Addendum + Tracker</button>
+    </div>
     <details style="margin-top:12px">
       <summary>Blueprint modules</summary>
       <div class="sub" id="modinfo"></div>
@@ -109,14 +115,15 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
 
 <script>
 'use strict';
-const VERSION = '1.0.0';
+const VERSION = '1.2.0';
 const STORE_KEY = 'bkpDeskHubV1';
 const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
 const TRACKER_GID = '1313569477';
 const ADDENDUM_ID = '1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk';
 const ADDENDUM_PUB = 'https://docs.google.com/document/d/e/2PACX-1vRlS6VxrVmMwXAUuNhcCdD3WBCFsCWMQr4cUOYsTSIebwEhSri0B84Ew94hyFdvyQqymtaloCYfebPJ/pub';
-const TRACKER_PUB = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTY4md4NUkzdNHRVYZJQQTwJbaEygbC_JhxWvjqGjioAv4rB0yxpLmG85I0hzsWY4pfZqAHpy6J0PFj/pub?gid=' + TRACKER_GID + '&single=true&output=csv';
+const ADDENDUM_TXT = 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/export?format=txt';
+const TRACKER_PUB ='https://docs.google.com/spreadsheets/d/e/2PACX-1vTY4md4NUkzdNHRVYZJQQTwJbaEygbC_JhxWvjqGjioAv4rB0yxpLmG85I0hzsWY4pfZqAHpy6J0PFj/pub?gid=' + TRACKER_GID + '&single=true&output=csv';
 
 const SOURCES = {
   blueprint: { label: 'Blueprint', url: RAW_BP + 'BLUEPRINT.txt', versionUrl: RAW_BP + 'VERSION.txt',
@@ -293,7 +300,7 @@ function openingPrompt() {
   return 'Bangkok Post desk package for this chat.\n\nBOOT routes each job and EDIT is the base every job builds on.';
 }
 function modelLinks() {
-  return ['Blueprint (plain text): ' + SOURCES.blueprint.modelUrl, 'Desk Addendum: ' + ADDENDUM_PUB, 'Tracker (CSV): ' + TRACKER_PUB].join('\n');
+  return ['Blueprint (plain text): ' + SOURCES.blueprint.modelUrl, sourceLinks()].join('\n');
 }
 function editorLinks() {
   return ['Blueprint: ' + SOURCES.blueprint.openUrl, 'Desk Addendum: ' + SOURCES.addendum.openUrl, 'Tracker: ' + SOURCES.tracker.openUrl, 'Tracker usage: https://go.fuzzylogic.page/usage'].join('\n');
@@ -303,14 +310,27 @@ function confirmFresh(keys) {
   if (!warn.length) return true;
   return confirm('Not fresh checked copies:\n\n' + warn.map(k => '- ' + SOURCES[k].label + ': ' + state[k].state + (state[k].retrieved ? ', retrieved ' + ago(state[k].retrieved) : '')).join('\n') + '\n\nUse them anyway?');
 }
+// The pack carries the Blueprint in full; the Addendum and Tracker go in as links only.
+const PACK_KEYS = ['blueprint'];
+const DOC_KEYS = ['addendum', 'tracker'];
+function sourceLinks() {
+  return ['Desk Addendum (plain text): ' + ADDENDUM_TXT, 'Tracker (CSV): ' + TRACKER_PUB].join('\n');
+}
 async function buildPack() {
-  await ensure(KEYS);
-  const missing = KEYS.filter(k => !usable(state[k]));
-  if (missing.length) { toast('Unavailable: ' + missing.map(k => SOURCES[k].label + ' (' + ((state[k] || {}).state || 'NONE') + ')').join(', ') + '. Refresh, or paste the content.', 8000); return null; }
-  if (!confirmFresh(KEYS)) return null;
+  await ensure(PACK_KEYS);
+  if (!usable(state.blueprint)) { toast('Blueprint unavailable (' + ((state.blueprint || {}).state || 'NONE') + '). Refresh, or paste it.', 8000); return null; }
+  if (!confirmFresh(PACK_KEYS)) return null;
   return ['===== BEGIN OPENING PROMPT =====', openingPrompt(), '===== END OPENING PROMPT =====', '',
     '===== BEGIN BLUEPRINT =====', state.blueprint.text.trimEnd(), '===== END BLUEPRINT =====', '',
-    '===== BEGIN DESK ADDENDUM =====', state.addendum.text.trimEnd(), '===== END DESK ADDENDUM =====', '',
+    '===== BEGIN SOURCE LINKS =====', sourceLinks(), '===== END SOURCE LINKS ====='].join('\n') + '\n';
+}
+// Full Addendum and Tracker as one document, generated on request.
+async function buildDocs() {
+  await ensure(DOC_KEYS);
+  const missing = DOC_KEYS.filter(k => !usable(state[k]));
+  if (missing.length) { toast('Unavailable: ' + missing.map(k => SOURCES[k].label + ' (' + ((state[k] || {}).state || 'NONE') + ')').join(', ') + '. Refresh, or paste the content.', 8000); return null; }
+  if (!confirmFresh(DOC_KEYS)) return null;
+  return ['===== BEGIN DESK ADDENDUM =====', state.addendum.text.trimEnd(), '===== END DESK ADDENDUM =====', '',
     '===== BEGIN TRACKER =====', state.tracker.text.trimEnd(), '===== END TRACKER ====='].join('\n') + '\n';
 }
 
@@ -324,9 +344,17 @@ function modules() {
     const m = s.text.match(new RegExp('<!--\\s*COMPONENT:\\s*' + esc + '\\s*-->\\r?\\n([\\s\\S]*?)\\r?\\n\\s*<!--\\s*END\\s+COMPONENT:\\s*' + esc + '\\s*-->'));
     if (m) out[n] = (s.version ? '<!-- ' + s.version + ' -->\n' : '') + m[1] + '\n';
   });
+  // GUIDE and PROCESSES are cut from EDIT exactly as build.py cuts GUIDE.txt and PROCESSES.txt.
+  if (out.EDIT) {
+    const edit = out.EDIT, mark = s.version ? '<!-- ' + s.version + ' -->\n' : '';
+    const cut = (a, b) => { const i = edit.indexOf(a), j = i < 0 ? -1 : edit.indexOf(b, i + a.length); return i < 0 || j < 0 ? '' : edit.slice(i, j).trimEnd() + '\n'; };
+    const guide = cut('# [G1] EDITING', '# [P] PROCESSES'), proc = cut('# [P] PROCESSES', '# [R] RETURN');
+    if (guide) out.GUIDE = mark + guide;
+    if (proc) out.PROCESSES = mark + proc;
+  }
   return out;
 }
-function moduleFile(n) { const v = (state.blueprint || {}).version; return n + (v ? '_' + v : '') + (n === 'DIRECTORY' ? '.txt' : '.md'); }
+function moduleFile(n) { const v = (state.blueprint || {}).version; return n + (v ? '_' + v : '') + (['DIRECTORY', 'GUIDE', 'PROCESSES'].includes(n) ? '.txt' : '.md'); }
 async function moduleAction(names, act) {
   await ensure(['blueprint']);
   if (!usable(state.blueprint)) return toast('No Blueprint stored. Refresh it first.');
@@ -371,6 +399,8 @@ async function packAct(act) {
   if (act === 'clear') { if (confirm('Clear the stored copies in this browser?')) { state = {}; save(); render(); toast('Stored copies cleared.'); } return; }
   if (act === 'copy') { const p = await buildPack(); if (p) copyText(p, 'Full shift pack'); return; }
   if (act === 'download') { const p = await buildPack(); if (!p) return; const t = bkkParts(); download('BP_SHIFT_PACK_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); return; }
+  if (act === 'docscopy') { const p = await buildDocs(); if (p) copyText(p, 'Addendum + Tracker'); return; }
+  if (act === 'docsdownload') { const p = await buildDocs(); if (!p) return; const t = bkkParts(); download('BP_DESK_DOCS_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); return; }
   if (act === 'separate') {
     await ensure(KEYS);
     const ks = KEYS.filter(k => usable(state[k])); if (!ks.length) return toast('No stored copies to download.');
@@ -409,7 +439,7 @@ document.querySelectorAll('[data-act]').forEach(b => { b.onclick = () => packAct
 $('#pairsave').onclick = () => moduleAction(['EDIT', 'DIRECTORY'], 'save');
 LINKS.forEach(([label, url]) => $('#links').append(el('li', {}, el('a', { href: url, target: '_blank', rel: 'noopener', textContent: label }))));
 render();
-refreshAll();
+refresh('blueprint', true); // Addendum and Tracker are fetched only when asked for
 </script>
 </body>
 </html>
