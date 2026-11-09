@@ -1,5 +1,5 @@
-# 091126b_gpt_bangkok-time-repair
-version: 091126b_gpt_bangkok-time-repair
+# 091126c_gpt_time-crossref-cleanup
+version: 091126c_gpt_time-crossref-cleanup
 entrypoint: BOOT.md
 default: edit.md
 directory_source: ../DIRECTORY.txt
@@ -9,17 +9,17 @@ modes:
   pr: modules/pr.md
 files:
   - path: BOOT.md
-    bytes: 1678
-    sha256: 79357c09b8c4cc0703dbca4e22f3be1fb9d5ef2d826024b34cad7455a084a290
+    bytes: 1680
+    sha256: e7efe274b8e086f57690d4e79b082fe933e2c5229782bda797a787298d3750fb
   - path: edit.md
-    bytes: 21987
-    sha256: fab23c70abd508928ca87170d854c0425c9390c73a557c948c35e7fe7a110623
+    bytes: 21852
+    sha256: 972d8d4651b4f1a3819057aa52d1486764c8acc1237734fe5dfbd72224fd8f6c
   - path: modules/check.md
-    bytes: 2359
-    sha256: bf899166a2ddab7bad8f46ce0a8e9a42ffdead7c3b3e9ea52ba5b2774a072d6d
+    bytes: 2361
+    sha256: 623869368c96fac00050be402ba404c49215bab91af4f33020c1a81e66cc8de7
   - path: modules/photo.md
-    bytes: 2470
-    sha256: ecc483c3f3006adf9890b2483f85ca78563e9d5e7c74de6d33eeba5ad42dd203
+    bytes: 2472
+    sha256: a4690065456237370c4375e49ab469c34a66baa0cf8db6d02145a6ed9ec4ce7b
   - path: modules/pr.md
-    bytes: 1112
-    sha256: f7fef5305f966b1e357d5cb49206b7f37bb0785faff4522d055785240f2a82a6
+    bytes: 1114
+    sha256: 27ea11b34a60737d8b17328ff984c9d10faf46da0bb7235cc359a5fff0e48623

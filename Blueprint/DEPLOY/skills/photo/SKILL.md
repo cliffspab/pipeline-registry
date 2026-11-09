@@ -5,7 +5,7 @@ name: photo
 description: "BKP desk mode: standalone photo or mugshot job (head plus caption, or NAME: caption). Use when the supervisor says photo, gives a Pix/Stand/St slug, or pastes a picture with a caption."
 
 ---
-<!-- 091126b_gpt_bangkok-time-repair -->
+<!-- 091126c_gpt_time-crossref-cleanup -->
 
 Refines edit for photos: holds the photo method and return.
 

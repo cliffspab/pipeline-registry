@@ -11,7 +11,23 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-### 091126b_gpt_bangkok-time-repair
+### 091126c_gpt_time-crossref-cleanup
+
+**Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo` and
+`pr`.
+
+**Affected install bundles:** all five static skill archives and every routed
+delivery, because the edition witness advances throughout the set.
+
+**User action after publication:** reinstall any installed skill package and
+replace downloaded Blueprint copies. Permanent archive filenames remain
+unchanged.
+
+- Replaced `dates.thailand_time` with the exact cross-reference to
+  `references.times.foreign_events`.
+- Removed the chief-pitching “speed is the instruction” line.
+
+## 091126b_gpt_bangkok-time-repair — 2026-11-09
 
 **Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo`, `pr`
 and `directory`.
@@ -19,7 +35,7 @@ and `directory`.
 **Affected install bundles:** all five static skill archives and every routed
 delivery, because the edition witness advances throughout the set.
 
-**User action after publication:** reinstall any installed skill package and
+**User action:** reinstall any installed skill package and
 replace downloaded Blueprint or Directory copies. Permanent archive filenames
 remain unchanged.
 

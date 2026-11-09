@@ -1,21 +1,21 @@
 {
-  "version": "091126b_gpt_bangkok-time-repair",
+  "version": "091126c_gpt_time-crossref-cleanup",
   "source": "BLUEPRINT.md",
-  "source_sha256": "b9e9d4835e0baff241877799e2ebf73da3f5c9d8a0a299064bc06ef21c52d407",
+  "source_sha256": "38347a74a7622d30a587f92cb33a443f9344d6e8bf64548317b1010580d8a299",
   "deploy_files": 14,
   "upload_zips": {
-    "boot.zip": "ec1204e7f0d63a46f63856c080304673a5caa90ad56237594f0dff727bf5be71",
-    "check.zip": "4d6ed99faf5289096fc206d93313196019a0cacde48e648811c74b4a57974e37",
-    "edit.zip": "9a9928db55d4031d1aadd2886a51f32c6fb21d44d6c560000309ae1a65554bfd",
-    "photo.zip": "eed79039a05305fcb2a004ac8ac97618c73a0f37284ecac09b55054289a0da21",
-    "pr.zip": "ce121293647a2d9d9b49f33304be40b4bfe73058cf8f6956c2f4bcc85ae3efab"
+    "boot.zip": "bc5fbb16f9182d650ced20700c9cc8cd1ed380edfee471076a11fa1af7b342bd",
+    "check.zip": "61c1f8f709e82f41b2330f79e43cab79e90d85626958f54f087869eb56e25d0b",
+    "edit.zip": "4b206d8f1629f372bc5f237dd24ef0b027b1bcf4e7df5b796d5537b4696eb957",
+    "photo.zip": "16ea6dddd9e9e77be12342e8a8ee5482aa1078da088ef3a107d42fb9ac99791b",
+    "pr.zip": "1f7d2c0532a93c35f350589d1c4f1917a2180d199cc9016358a51d257bb6c358"
   },
   "compatibility_files": {
-    "BLUEPRINT.txt": "5ce1ae5ca835448890e437fba824e99c1af5e9872b51e16cab657ed7ae9c0c39",
-    "GUIDE.txt": "a08a64d227097c496e5396c977bee79833bb512294860efb825c54b24e082220",
-    "PROCESSES.txt": "0cb9f10130c6f1627da2d335cd8ff47e46c1ed464f888e79e488e843a807a9ee",
-    "DIRECTORY.txt": "bb7f76a5d6e75a3365e5467bb3df3ca40c52600d562414e4ed424d0f4f76e8f3",
-    "DIRECTORY.yaml": "bb7f76a5d6e75a3365e5467bb3df3ca40c52600d562414e4ed424d0f4f76e8f3",
-    "VERSION.txt": "9fe563b941c66030412401b590007faa956da11241f96bcfbe1dbe2d654e4acd"
+    "BLUEPRINT.txt": "79a8267c84d360cd00e3dde0663ff2ae4cb8088249527b8c6974d4138619ef82",
+    "GUIDE.txt": "3a75fe2560bd2011ffff30ce59e3e1983e47801c13c916d4e8cc62dd6ec53e3b",
+    "PROCESSES.txt": "7315272ae13c66d6dab4742b24f0c3bd88f0372b93b08ddebd3dc5a2bbaab43e",
+    "DIRECTORY.txt": "b40386258d00434456aef4b77b866c49ef87f26810bd4d993644e9651b384d93",
+    "DIRECTORY.yaml": "b40386258d00434456aef4b77b866c49ef87f26810bd4d993644e9651b384d93",
+    "VERSION.txt": "6ddaa88af55dc20d003fb82407ccadb122d1ae16ec5f993f25b0831f0f32e8d5"
   }
 }

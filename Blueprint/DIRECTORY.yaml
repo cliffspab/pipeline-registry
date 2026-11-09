@@ -1,4 +1,4 @@
-# 091126b_gpt_bangkok-time-repair
+# 091126c_gpt_time-crossref-cleanup
 index:
   routes:
     references:
@@ -58,7 +58,7 @@ references:
       Avoid future tense in news. Use past-tense-as-future construction — "they were to meet
       on Friday", not "they will meet on Friday". Applies to events scheduled after the copy
       was filed but before publication.
-    thailand_time: Use "Thailand time" only when a foreign event crosses a calendar day.
+    thailand_time: For a foreign event, see references.times.foreign_events.
     holidays: Name a holiday only when it matters to the story.
     calendar: Use the western calendar.
     month_abbreviations: [Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec]

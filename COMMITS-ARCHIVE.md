@@ -57,6 +57,16 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-09
+
+- 2026-11-09 | Blueprint release `091126c_gpt_time-crossref-cleanup` | Replaced
+  `dates.thailand_time` with the exact cross-reference to
+  `references.times.foreign_events` and removed the chief-pitching speed line;
+  regenerated 14 deployment files, five static upload archives, compatibility
+  deliveries and the build receipt; updated the changelog and version history;
+  permanent filenames remain unchanged.
+
 ## Cleared 2026-11-09
 
 - 2026-11-09 | Blueprint release `091126b_gpt_bangkok-time-repair` | Restored

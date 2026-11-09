@@ -6,6 +6,23 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-09 — 091126c_gpt_time-crossref-cleanup: EXACT RULE REPAIR
+
+**Authority.** The supervisor supplied the exact replacement for
+`dates.thailand_time` and directed deletion of the chief-pitching speed line.
+
+**Change.** `dates.thailand_time` now directs foreign events to
+`references.times.foreign_events`. The separate instruction beginning “When
+the chief starts pitching” is removed in full.
+
+**Evidence.** The release build reproduces 14 deployment files and five upload
+archives byte-for-byte under `--check --release`.
+
+**Verdict.** Exact two-line repair prepared locally for the supervisor's
+guarded push. Publication and GitHub validation remain pending.
+
+---
+
 ## 2026-11-09 — 091126b_gpt_bangkok-time-repair: DIRECTORY REPAIR
 
 **Authority.** The supervisor clarified that Bangkok districts belong in a

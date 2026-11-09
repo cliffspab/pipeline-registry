@@ -5,7 +5,7 @@ name: pr
 description: Bangkok Post desk mode for a minimum-intervention paid-placement copy pass. Use when the supervisor says PR.
 
 ---
-<!-- 091126b_gpt_bangkok-time-repair -->
+<!-- 091126c_gpt_time-crossref-cleanup -->
 
 Refines edit for PR copy: sets scope and return.
 

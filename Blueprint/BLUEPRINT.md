@@ -1,4 +1,4 @@
-<!-- MASTER 091126b_gpt_bangkok-time-repair -->
+<!-- MASTER 091126c_gpt_time-crossref-cleanup -->
 
 # Bangkok Post Blueprint
 
@@ -94,7 +94,7 @@ references:
       Avoid future tense in news. Use past-tense-as-future construction — "they were to meet
       on Friday", not "they will meet on Friday". Applies to events scheduled after the copy
       was filed but before publication.
-    thailand_time: Use "Thailand time" only when a foreign event crosses a calendar day.
+    thailand_time: For a foreign event, see references.times.foreign_events.
     holidays: Name a holiday only when it matters to the story.
     calendar: Use the western calendar.
     month_abbreviations: [Jan, Feb, March, April, May, June, July, Aug, Sept, Oct, Nov, Dec]
@@ -690,8 +690,6 @@ Mode commands. `@edit` loads the shared desk method; each job then comes as a ba
 Packaged input may carry SLUG, COUNTS, HEAD, DECK, BYLINE and BODY. Fields that do not apply may be absent. Read each COUNTS item by its label, not its position; a field continues until the next labelled field, so retain line breaks inside a supplied head or deck. SLUG and COUNTS are metadata; the other labelled fields are filed material.
 
 A ruling stated mid-shift gets a one-line confirmation and applies from the next story.
-
-When the chief starts pitching heads or edits in the desk chat, speed is the instruction: take the steer, return once, no option lists.
 
 # [P] PROCESSES
 
