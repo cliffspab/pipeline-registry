@@ -11,7 +11,23 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-Nothing pending.
+### 091126_gpt_sunday-brief-provinces
+
+**Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo`, `pr`
+and `directory`.
+
+**Affected install bundles:** all five static skill archives and every routed
+delivery, because the edition witness advances throughout the set.
+
+**User action after publication:** reinstall any installed skill package and
+replace downloaded Blueprint or Directory copies. Permanent archive filenames
+remain unchanged.
+
+- Added the Sunday-brief headline treatment and fit guidance to House
+  Essentials.
+- Restored the complete 76-province desk-bulletin list, excluding Bangkok, in
+  place of the standardised romanisation list.
+- Added an explicit end-of-Blueprint marker for complete-copy detection.
 
 ## 051126_gpt_bkp3-2 — 2026-11-05
 

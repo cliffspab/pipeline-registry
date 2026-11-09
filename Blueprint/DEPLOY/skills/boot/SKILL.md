@@ -5,7 +5,7 @@ name: boot
 description: Entry point and router for the Bangkok Post desk modules and resources.
 
 ---
-<!-- 051126_gpt_bkp3-2 -->
+<!-- 091126_gpt_sunday-brief-provinces -->
 
 ***
 

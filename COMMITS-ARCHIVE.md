@@ -55,6 +55,15 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-09
+
+- 2026-11-09 | Blueprint release `091126_gpt_sunday-brief-provinces` | Restored
+  the supplied 76-province desk list, added Sunday-brief head guidance and the
+  explicit end marker; regenerated 14 deployment files, five static upload
+  archives, compatibility deliveries and the build receipt; updated the
+  changelog and version history; permanent filenames remain unchanged.
+
 ## Cleared 2026-11-05
 
 - 2026-11-05 | `051126_gpt_bkp3-2` | Replace the single Markdown authority and regenerate

@@ -1,5 +1,5 @@
-# 051126_gpt_bkp3-2
-version: 051126_gpt_bkp3-2
+# 091126_gpt_sunday-brief-provinces
+version: 091126_gpt_sunday-brief-provinces
 entrypoint: BOOT.md
 default: edit.md
 directory_source: ../DIRECTORY.txt
@@ -9,17 +9,17 @@ modes:
   pr: modules/pr.md
 files:
   - path: BOOT.md
-    bytes: 1664
-    sha256: 02c7438e94dc8d15614dfb9ee5e1d0b588f577b9d8f18088cb0b08bf6daa512a
+    bytes: 1680
+    sha256: 6075fda9c11dd126ed32fe1d1119a61115aa5ec7b9ecd86323fd124eee34b5a6
   - path: edit.md
-    bytes: 21806
-    sha256: a9719971676a90e5c32dadf6b5c029637fd3bb5e84ff1b6ca41c9f4d6216a87e
+    bytes: 21989
+    sha256: b0aa5c6f58fab86f0d41bfe391726d811f82f02cf411140635778309761518a0
   - path: modules/check.md
-    bytes: 2345
-    sha256: 58db4156350c472ea8cc6f7f436e06aec328b494c46ecca99df0638a463aada5
+    bytes: 2361
+    sha256: e986375a6e333d8976ce8318276dc52933cdb7ee0b242edf8b29fdef889ef44a
   - path: modules/photo.md
-    bytes: 2456
-    sha256: 7abf9f09fee7817f3c1a8787e819d8ed37c6d3eb30dc87f209102030064a0a3e
+    bytes: 2472
+    sha256: 53c1c2d35f9d659789cc07e1024698cbc72d2b72ef83935f574d5f192ca11c27
   - path: modules/pr.md
-    bytes: 1098
-    sha256: 1705fd5cfe2419f276f5b8448b1e7e047828af5c97b4cfdeaba6083859371634
+    bytes: 1114
+    sha256: 9864859b2089d4f2389f126ea7996ce335e78a8bf83003f4c8f0fa07bab87e0f

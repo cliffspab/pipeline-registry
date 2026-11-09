@@ -5,7 +5,7 @@ name: check
 description: "BKP desk mode: a fast check of a DC-X task the chief sub has already read, or a QC review of another operator's Job Report. Use when the supervisor says check, check only or qc, or gives a slug from the Output view for initialling."
 
 ---
-<!-- 051126_gpt_bkp3-2 -->
+<!-- 091126_gpt_sunday-brief-provinces -->
 
 Refines edit for checking: sets scope and return.
 

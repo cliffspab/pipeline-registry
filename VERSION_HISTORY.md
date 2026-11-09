@@ -6,6 +6,30 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-09 — 091126_gpt_sunday-brief-provinces: DESK FORMS RESTORED
+
+**Authority.** The supervisor supplied the desk-bulletin province list, the
+Sunday-brief headline ruling and the agreed end marker, and confirmed that the
+substantive update must receive its own edition witness.
+
+**Change.** House Essentials now specifies sentence-case Sunday brief heads,
+set all-caps on page, at [P1-A] weight 23 or less and normally 24–30
+characters. The Directory replaces the standardised province register with
+the supplied 76-province desk list, excluding Bangkok. The all-in-one source
+ends with `<!-- END BLUEPRINT -->`.
+
+**Static identity.** Permanent delivery and archive filenames do not change;
+the internal edition witness and generated hashes advance in place.
+
+**Evidence.** The release build reproduces 14 deployment files and five upload
+archives byte-for-byte under `--check --release`. The parsed Directory contains
+76 province entries.
+
+**Verdict.** Candidate prepared locally for the supervisor's guarded push.
+Publication and GitHub validation remain pending.
+
+---
+
 ## 2026-10-30 — 301026_gpt_bkp3-1: SUPERVISOR-SUPPLIED 3.1 CANDIDATE
 
 **Authority.** The supervisor supplied the complete Blueprint and five skill

@@ -1,21 +1,21 @@
 {
-  "version": "051126_gpt_bkp3-2",
+  "version": "091126_gpt_sunday-brief-provinces",
   "source": "BLUEPRINT.md",
-  "source_sha256": "03c107f4d91c8f7c9fdbc26c00bd3e3322babb091b57707e885c6dc0597bff5c",
+  "source_sha256": "0e7b53ff01f596058a35d06b06b3fae0c1804e9afdd76c51c454049440965a8a",
   "deploy_files": 14,
   "upload_zips": {
-    "boot.zip": "8fe3b98a94ba8498befe47e0312787b7363d20b2ea359c35cfccf26a198c6888",
-    "check.zip": "1b9be79ac43e4760354663dc7fc55cdbaec4a18a60984b08162fc8fab483546a",
-    "edit.zip": "78a4b33efcdb4742cc011554f9bd107a0846a51897c1ead1e0b3fd4492ff3882",
-    "photo.zip": "e4be54d0f238208e50ddbca402a21c393d591ed5e96132a2f1ae9f76e9f1ae3a",
-    "pr.zip": "bb4faec9f9e9d5e1ed21a7651ca108566a7f0cfb6357f44be40c9c013b87cc38"
+    "boot.zip": "998558b1cd2d2617f7155230d3821637ff9fa0734522de3b9186a84278d675ef",
+    "check.zip": "bef9e93bde7fd82e528d25c1d963093bba2d6831dbfca934a535fd73b4ddfbaf",
+    "edit.zip": "f3be6fba542fcfc7a1864a91c5bc86e52fd67a435b3041eff8b9609b439d90af",
+    "photo.zip": "bcf50b8f0d1c1f3525918102f5af8a57bb9acd8b87d0e55feadcaf1f00830be1",
+    "pr.zip": "7cb67edb49d99ac348f8d709b4fa21cf35b911cc0f1ada81db3742130d1723c8"
   },
   "compatibility_files": {
-    "BLUEPRINT.txt": "71134bae71f54156679ba2315b51c77109a906907d34e9056a275a21103ce159",
-    "GUIDE.txt": "49d17995134ebdd0b9ff5d4e0a0c28556c052e778756ece55f3bf8dd0024dff4",
-    "PROCESSES.txt": "f164ec368da4f6d1f88b35e2748635f569c7c56f690e87a1c1523ff50392c3b6",
-    "DIRECTORY.txt": "48c97340b10fcdaa9009da7e3665453a828ef85626abeb2656e7fc69f53e07b8",
-    "DIRECTORY.yaml": "48c97340b10fcdaa9009da7e3665453a828ef85626abeb2656e7fc69f53e07b8",
-    "VERSION.txt": "8b4e4c88e2d91d4c6aca385e772c29718714467b334cb37ed3052cd18a901032"
+    "BLUEPRINT.txt": "84777bc9127ac2603d831a37ff177788a5d82c4be8394eb6c3f8ab0d94f2ae9f",
+    "GUIDE.txt": "d5063c91198b22a13f37a5cfb739d0481f261a6454835a0d0c4a52c0d6a51eea",
+    "PROCESSES.txt": "73410e3d506b96bcc5f5df701a5fa553e37c58e6f6d0058444c2c123d12af814",
+    "DIRECTORY.txt": "a387dce8c63880b356484362d5ceca0cd3519b10d6fa472d996ed9b82e35b870",
+    "DIRECTORY.yaml": "a387dce8c63880b356484362d5ceca0cd3519b10d6fa472d996ed9b82e35b870",
+    "VERSION.txt": "3242ebfe8211fece3baf27b5bc34fb1fb6945bc870c03eaeaed7f85d03b90719"
   }
 }
