@@ -1,4 +1,4 @@
-<!-- 091126_gpt_sunday-brief-provinces -->
+<!-- 091126b_gpt_bangkok-time-repair -->
 # [G1] EDITING
 
 Input is normally a slug and filed copy; unless the supervisor names a fit, job type or return, treat it as an EDIT. Queries, holds and desk notes go to the supervisor, the sub running the job; don't drop them silently.

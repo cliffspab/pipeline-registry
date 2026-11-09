@@ -56,6 +56,17 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-09
+
+- 2026-11-09 | Blueprint release `091126b_gpt_bangkok-time-repair` | Restored
+  Bangkok's 50 districts as a separate Directory branch, applied the supplied
+  corrected 76-province list, separated six non-district place forms and
+  restored the calendar-day `dates.thailand_time` rule; regenerated 14
+  deployment files, five static upload archives, compatibility deliveries and
+  the build receipt; updated the changelog and version history; permanent
+  filenames remain unchanged.
+
 ## Cleared 2026-11-09
 
 - 2026-11-09 | Blueprint release `091126_gpt_sunday-brief-provinces` | Restored

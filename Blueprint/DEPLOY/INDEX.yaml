@@ -1,5 +1,5 @@
-# 091126_gpt_sunday-brief-provinces
-version: 091126_gpt_sunday-brief-provinces
+# 091126b_gpt_bangkok-time-repair
+version: 091126b_gpt_bangkok-time-repair
 directory: DIRECTORY.txt
 deployments:
   routed: routed/INDEX.yaml
@@ -7,41 +7,41 @@ deployments:
 instruction: choose one deployment; do not ingest the whole umbrella
 files:
   - path: DIRECTORY.txt
-    bytes: 40668
-    sha256: a387dce8c63880b356484362d5ceca0cd3519b10d6fa472d996ed9b82e35b870
+    bytes: 31582
+    sha256: bb7f76a5d6e75a3365e5467bb3df3ca40c52600d562414e4ed424d0f4f76e8f3
   - path: routed/BOOT.md
-    bytes: 1680
-    sha256: 6075fda9c11dd126ed32fe1d1119a61115aa5ec7b9ecd86323fd124eee34b5a6
+    bytes: 1678
+    sha256: 79357c09b8c4cc0703dbca4e22f3be1fb9d5ef2d826024b34cad7455a084a290
   - path: routed/INDEX.yaml
-    bytes: 817
-    sha256: c6b3f8a12f26955281cedeafa1976804ce0be24ac462644f65aa119d1fbbaa8d
+    bytes: 813
+    sha256: 2efe2a7525e63f5765477058528e145f5a32ab8bf16098c28505c0217b9498a3
   - path: routed/edit.md
-    bytes: 21989
-    sha256: b0aa5c6f58fab86f0d41bfe391726d811f82f02cf411140635778309761518a0
+    bytes: 21987
+    sha256: fab23c70abd508928ca87170d854c0425c9390c73a557c948c35e7fe7a110623
   - path: routed/modules/check.md
-    bytes: 2361
-    sha256: e986375a6e333d8976ce8318276dc52933cdb7ee0b242edf8b29fdef889ef44a
+    bytes: 2359
+    sha256: bf899166a2ddab7bad8f46ce0a8e9a42ffdead7c3b3e9ea52ba5b2774a072d6d
   - path: routed/modules/photo.md
-    bytes: 2472
-    sha256: 53c1c2d35f9d659789cc07e1024698cbc72d2b72ef83935f574d5f192ca11c27
+    bytes: 2470
+    sha256: ecc483c3f3006adf9890b2483f85ca78563e9d5e7c74de6d33eeba5ad42dd203
   - path: routed/modules/pr.md
-    bytes: 1114
-    sha256: 9864859b2089d4f2389f126ea7996ce335e78a8bf83003f4c8f0fa07bab87e0f
+    bytes: 1112
+    sha256: f7fef5305f966b1e357d5cb49206b7f37bb0785faff4522d055785240f2a82a6
   - path: skills/INDEX.yaml
-    bytes: 894
-    sha256: e18b66306835d09b0d4cbcadb712644aaab7c45950f647f9f22385d52ceca9a5
+    bytes: 890
+    sha256: add30fef0a9ac966ffc090ac42cb23d0d19479c9222c8fa95bdf064d0f163586
   - path: skills/boot/SKILL.md
-    bytes: 1680
-    sha256: 6075fda9c11dd126ed32fe1d1119a61115aa5ec7b9ecd86323fd124eee34b5a6
+    bytes: 1678
+    sha256: 79357c09b8c4cc0703dbca4e22f3be1fb9d5ef2d826024b34cad7455a084a290
   - path: skills/check/SKILL.md
-    bytes: 2361
-    sha256: e986375a6e333d8976ce8318276dc52933cdb7ee0b242edf8b29fdef889ef44a
+    bytes: 2359
+    sha256: bf899166a2ddab7bad8f46ce0a8e9a42ffdead7c3b3e9ea52ba5b2774a072d6d
   - path: skills/edit/SKILL.md
-    bytes: 21989
-    sha256: b0aa5c6f58fab86f0d41bfe391726d811f82f02cf411140635778309761518a0
+    bytes: 21987
+    sha256: fab23c70abd508928ca87170d854c0425c9390c73a557c948c35e7fe7a110623
   - path: skills/photo/SKILL.md
-    bytes: 2472
-    sha256: 53c1c2d35f9d659789cc07e1024698cbc72d2b72ef83935f574d5f192ca11c27
+    bytes: 2470
+    sha256: ecc483c3f3006adf9890b2483f85ca78563e9d5e7c74de6d33eeba5ad42dd203
   - path: skills/pr/SKILL.md
-    bytes: 1114
-    sha256: 9864859b2089d4f2389f126ea7996ce335e78a8bf83003f4c8f0fa07bab87e0f
+    bytes: 1112
+    sha256: f7fef5305f966b1e357d5cb49206b7f37bb0785faff4522d055785240f2a82a6

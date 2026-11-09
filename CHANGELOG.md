@@ -11,7 +11,7 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-### 091126_gpt_sunday-brief-provinces
+### 091126b_gpt_bangkok-time-repair
 
 **Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo`, `pr`
 and `directory`.
@@ -20,6 +20,26 @@ and `directory`.
 delivery, because the edition witness advances throughout the set.
 
 **User action after publication:** reinstall any installed skill package and
+replace downloaded Blueprint or Directory copies. Permanent archive filenames
+remain unchanged.
+
+- Restored Bangkok's 50 districts as a separate `bangkok_districts` branch,
+  and applied the supervisor-supplied corrected list of 76 provinces excluding
+  Bangkok.
+- Separated six held non-district forms into `other_places` for Bangkok, Chon
+  Buri, Satun and Songkhla.
+- Restored the calendar-day rule under `dates.thailand_time` and removed the
+  accidental duplicate of `times.foreign_events`.
+
+## 091126_gpt_sunday-brief-provinces — 2026-11-09
+
+**Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo`, `pr`
+and `directory`.
+
+**Affected install bundles:** all five static skill archives and every routed
+delivery, because the edition witness advances throughout the set.
+
+**User action:** reinstall any installed skill package and
 replace downloaded Blueprint or Directory copies. Permanent archive filenames
 remain unchanged.
 

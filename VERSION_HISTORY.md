@@ -6,6 +6,30 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-09 — 091126b_gpt_bangkok-time-repair: DIRECTORY REPAIR
+
+**Authority.** The supervisor clarified that Bangkok districts belong in a
+separate section from the bulletin's provinces list. Argon identified an
+unrelated duplicated time rule in the same Directory.
+
+**Change.** The Directory restores all 50 Bangkok districts under a separate
+`bangkok_districts` branch and applies the supervisor-supplied corrected list
+of 76 provinces excluding Bangkok. Six held forms that are not districts move
+to `other_places` under their locations.
+`dates.thailand_time` again says to use “Thailand time” only when a foreign
+event crosses a calendar day; the fuller clock-time instruction remains only
+under `times.foreign_events`.
+
+**Evidence.** A parsed comparison against the supplied YAML passes exactly for
+all 76 provinces, 50 Bangkok districts and six other-place forms. The release
+build reproduces 14 deployment files and five upload archives byte-for-byte
+under `--check --release`.
+
+**Verdict.** Bounded repair prepared locally for the supervisor's guarded
+push. Publication and GitHub validation remain pending.
+
+---
+
 ## 2026-11-09 — 091126_gpt_sunday-brief-provinces: DESK FORMS RESTORED
 
 **Authority.** The supervisor supplied the desk-bulletin province list, the
