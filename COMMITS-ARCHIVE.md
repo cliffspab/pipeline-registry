@@ -59,6 +59,18 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Linux routed-name repair | Generate the routed Boot file as
+  `BOOT.md` on every platform and update the Shift source path, preventing the
+  case-sensitive CI build from seeing both historical `BOOT.md` and generated
+  `boot.md`; regenerate indexes and receipts without changing skill content or
+  edition identity.
+
+
+Nothing pending.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Blueprint edition `151126_gpt_modular-routes` | Publish the

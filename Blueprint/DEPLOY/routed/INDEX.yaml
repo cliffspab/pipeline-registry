@@ -1,6 +1,6 @@
 version: 151126_gpt_modular-routes
 files:
-- path: boot.md
+- path: BOOT.md
   bytes: 12073
   sha256: b9f630e135c91efa8d9308591bc2b71c6b93ac6c944770fa25cc25127f80dbc0
 - path: edit.md

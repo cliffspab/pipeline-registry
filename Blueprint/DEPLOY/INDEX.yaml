@@ -6,7 +6,7 @@ files:
 - path: DIRECTORY.yaml
   bytes: 37839
   sha256: 2804fb8f507a08bb24065a1ce619883ce170881f696c9239eb574bcb6ff5d093
-- path: routed/boot.md
+- path: routed/BOOT.md
   bytes: 12073
   sha256: b9f630e135c91efa8d9308591bc2b71c6b93ac6c944770fa25cc25127f80dbc0
 - path: routed/edit.md
@@ -14,7 +14,7 @@ files:
   sha256: c92c61de7773295436403edb2e67bbdc3ef6054c1bbf80dc0cbb324990eeb7dd
 - path: routed/INDEX.yaml
   bytes: 706
-  sha256: e16f19e69de691530c97bcfe60e9b9fb04fb156e968a3330a985576b4d34d1a5
+  sha256: df88fe4480fa128926c6226f1b349ebdb84b57b3618f12f1802b86e086a6fc0e
 - path: routed/modules/check.md
   bytes: 2483
   sha256: 1d2bee2632bf7a687c6c41dbc882a6eceb4345aa8bfaef2f404995fef934c204

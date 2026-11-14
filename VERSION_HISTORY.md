@@ -6,6 +6,25 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — 151126_gpt_modular-routes: ROUTED-NAME PORTABILITY REPAIR
+
+**Authority.** Post-push GitHub validation exposed a filesystem case mismatch
+that Windows cannot reproduce locally.
+
+**Change.** The generator now emits the established routed filename
+`BOOT.md` explicitly, and the generated Shift pickup reads that exact source
+while retaining its requested loose destination name `boot.md`.
+
+**Evidence.** The failed GitHub run reported only a generated-inventory
+difference. A Linux-equivalent case audit identified the otherwise hidden
+`BOOT.md`/`boot.md` duplicate; local rebuild, byte comparison and Shift checks
+pass after the repair.
+
+**Verdict.** Bounded machinery repair prepared for a corrective guarded push;
+edition content and identity are unchanged.
+
+---
+
 ## 2026-11-15 — 151126_gpt_modular-routes: MODULAR ROUTES AND SIX-SKILL SET
 
 **Authority.** The supervisor supplied the revised modular skill set and

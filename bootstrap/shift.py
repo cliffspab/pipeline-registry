@@ -19,7 +19,7 @@ SKILLS = ("boot", "edit", "check", "photo", "pr", "thai-places")
 LOOSE = {
     "BLUEPRINT.md": REGISTRY / "BLUEPRINT.md",
     "DIRECTORY.yaml": REGISTRY / "DIRECTORY.yaml",
-    "boot.md": REGISTRY / "DEPLOY" / "routed" / "boot.md",
+    "boot.md": REGISTRY / "DEPLOY" / "routed" / "BOOT.md",
     "edit.md": REGISTRY / "DEPLOY" / "routed" / "edit.md",
     "check.md": REGISTRY / "DEPLOY" / "routed" / "modules" / "check.md",
     "photo.md": REGISTRY / "DEPLOY" / "routed" / "modules" / "photo.md",

@@ -168,7 +168,8 @@ def build(source: Path, root: Path) -> None:
     for marker, skill in PARTS.items():
         text = parts[marker].rstrip() + "\n"
         skill_path = deploy / "skills" / skill / "SKILL.md"
-        routed_path = deploy / "routed" / ("modules" if skill in {"check", "photo", "pr"} else "") / f"{skill}.md"
+        routed_name = "BOOT.md" if skill == "boot" else f"{skill}.md"
+        routed_path = deploy / "routed" / ("modules" if skill in {"check", "photo", "pr"} else "") / routed_name
         write(skill_path, text)
         write(routed_path, text)
         skill_files.append(skill_path)
