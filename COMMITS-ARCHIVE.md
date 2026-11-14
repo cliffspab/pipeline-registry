@@ -60,6 +60,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Cross-platform inventory order | Sort the generated deployment
+  inventory explicitly and case-neutrally so Windows and Linux produce the
+  same top-level `INDEX.yaml`; regenerate its receipt data without changing
+  skill content or edition identity.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Linux routed-name repair | Generate the routed Boot file as

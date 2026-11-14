@@ -12,13 +12,15 @@ Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 that Windows cannot reproduce locally.
 
 **Change.** The generator now emits the established routed filename
-`BOOT.md` explicitly, and the generated Shift pickup reads that exact source
-while retaining its requested loose destination name `boot.md`.
+`BOOT.md` explicitly, the generated Shift pickup reads that exact source while
+retaining its requested loose destination name `boot.md`, and the top-level
+inventory uses an explicit case-neutral sort rather than platform-native path
+ordering.
 
-**Evidence.** The failed GitHub run reported only a generated-inventory
-difference. A Linux-equivalent case audit identified the otherwise hidden
-`BOOT.md`/`boot.md` duplicate; local rebuild, byte comparison and Shift checks
-pass after the repair.
+**Evidence.** The two failed GitHub runs isolated the case-sensitive filename
+collision and then the Windows/Linux ordering difference in `INDEX.yaml`.
+Local rebuild, byte comparison and Shift checks pass after both bounded
+repairs.
 
 **Verdict.** Bounded machinery repair prepared for a corrective guarded push;
 edition content and identity are unchanged.

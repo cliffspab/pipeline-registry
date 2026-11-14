@@ -184,7 +184,10 @@ def build(source: Path, root: Path) -> None:
 
     write(deploy / "skills" / "INDEX.yaml", index_yaml(version, skill_files, deploy / "skills"))
     write(deploy / "routed" / "INDEX.yaml", index_yaml(version, routed_files, deploy / "routed"))
-    deploy_files = sorted(p for p in deploy.rglob("*") if p.is_file())
+    deploy_files = sorted(
+        (p for p in deploy.rglob("*") if p.is_file()),
+        key=lambda p: p.relative_to(deploy).as_posix().casefold(),
+    )
     write(deploy / "INDEX.yaml", index_yaml(version, deploy_files, deploy))
 
     edit = strip_frontmatter(parts["EDIT"])
