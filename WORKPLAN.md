@@ -16,6 +16,9 @@ governed by the applicable Blueprint delivery.
   registry. It is not a source. Every confirmed distribution separately copies
   and verifies the complete registry Blueprint tree on pCloud, Google Drive
   and the Bangkok Post OneDrive.
+- `PORTABILITY/` is the independently exportable cold-reconstruction and
+  mechanism-audit surface. Audits are repeated only after significant
+  machinery changes and never modify authority directly.
 
 ## Change set in preparation
 

@@ -3,12 +3,6 @@ name: Validate Blueprint beta
 on:
   push:
     branches: [main]
-    paths:
-      - 'Blueprint/**'
-      - 'Control/**'
-      - 'bootstrap/distribute_blueprint.py'
-      - 'push.bat'
-      - '.github/workflows/compile.yml'
   workflow_dispatch:
 
 permissions:

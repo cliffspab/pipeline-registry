@@ -9,6 +9,7 @@ chat.
 - Claude project instructions: [`bootstrap/CLAUDE.md`](bootstrap/CLAUDE.md)
 - Complete editorial authority: [`Blueprint/BLUEPRINT.txt`](Blueprint/BLUEPRINT.txt)
 - Operational routing: [`Control/CONTROL.txt`](Control/CONTROL.txt)
+- Cold reconstruction and mechanism audits: [`PORTABILITY/README.md`](PORTABILITY/README.md)
 
 Publication remains supervisor-controlled. The registry is the public source
 and build base; the workspace root holds the live editable sources. `Shift/`

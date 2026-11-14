@@ -43,6 +43,9 @@ pickup may instead take the complete generated set from `Shift/`.
 - Added automatic post-validation distribution of the complete `Blueprint/`
   tree to pCloud, Google Drive and the Bangkok Post OneDrive. Each destination
   is copied without remote deletion and verified against the local source.
+- Added a self-verifying portability bundle with cold reconstruction, release
+  and recovery runbooks plus a frozen, readable mechanism snapshot and neutral
+  multi-model audit kit.
 
 ## 091126b_gpt_bangkok-time-repair — 2026-11-09
 

@@ -6,6 +6,31 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — PORTABILITY AND MULTI-MODEL MECHANISM AUDIT KIT
+
+**Authority.** The supervisor approved two bounded continuity measures: a
+cold-start reconstruction package usable outside the project folder, and
+independent multi-model audits whenever the mechanism changes significantly.
+
+**Change.** `PORTABILITY/` now documents authority, architecture, dependencies,
+cold reconstruction, guarded release, failure recovery and cloud semantics. A
+deterministic export includes a frozen readable snapshot of the eight relevant
+mechanism files, a neutral audit brief, findings format and decision ledger.
+Auditors propose changes only; the supervisor retains acceptance authority and
+normal candidate, validation and publication rules still apply.
+
+**Evidence.** The package manifest verifies 20 files. Its ZIP was extracted to
+an isolated folder and passed verification without the repository. The stronger
+live check proves every frozen mechanism file matches the current published
+source. The ZIP's independent Bangkok Post OneDrive copy has a matching SHA-256
+hash. GitHub validation now runs on every push to `main`, matching the guarded
+publisher's exact-commit wait instead of relying on a narrower path filter.
+
+**Verdict.** Portability and audit material prepared for guarded publication;
+no editorial content or edition identity changes.
+
+---
+
 ## 2026-11-15 — AUTOMATIC THREE-CLOUD BLUEPRINT DISTRIBUTION
 
 **Authority.** The supervisor directed that every distribution duplicate the

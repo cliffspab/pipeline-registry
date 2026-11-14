@@ -63,6 +63,19 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Portability and mechanism-audit kit | Add `PORTABILITY/` with a
+  cold reconstruction manual, architecture and dependency map, guarded release
+  and recovery runbooks, self-verifying manifest and deterministic ZIP; include
+  a frozen readable snapshot of the eight relevant live machinery files plus a
+  model-neutral audit brief, findings template and supervisor decision ledger.
+  Record and verify an independent ZIP copy outside the project on the Bangkok
+  Post OneDrive volume. Run Blueprint validation on every `main` push so the
+  guarded publisher's exact-commit CI wait cannot stall on documentation-only
+  or machinery-only distributions.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Three-cloud Blueprint distribution | Add the guarded
