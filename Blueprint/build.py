@@ -137,11 +137,11 @@ def bounded(text: str, start: str, end: str) -> str:
 
 def zip_skill(path: Path, skill: str, skill_file: Path) -> None:
     stamp = (2026, 1, 1, 0, 0, 0)
-    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as archive:
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_STORED) as archive:
         info = zipfile.ZipInfo(f"{skill}/SKILL.md", date_time=stamp)
         info.create_system = 3
         info.external_attr = 0o100644 << 16
-        info.compress_type = zipfile.ZIP_DEFLATED
+        info.compress_type = zipfile.ZIP_STORED
         archive.writestr(info, skill_file.read_bytes())
 
 

@@ -9,12 +9,12 @@
   },
   "deploy_files": 17,
   "upload_zips": {
-    "boot.zip": "c1965429eb426329e35f3464b50fac812f731919f1c954f30c8e1f6e046869d7",
-    "check.zip": "b8c183aaa2668a136de27f0259d2dcf2eb957d21a30fa34bfbad5a2b7ee6864a",
-    "edit.zip": "115d0c320488117d80e0472822033d5dd775a9c64f8eb52db0db3e490cbe49bb",
-    "photo.zip": "111d5ca8f018ce1cd542182150a2047d1e82e320354e790320f7540bf267a252",
-    "pr.zip": "3cda655a2b7c7e4f37b15a84de86c836354aa7968684341e48862d49ebe4e217",
-    "thai-places.zip": "e665d3110c2a9e4142018ef67f2ada3888503351bc729eb7e9df73641248a7cd"
+    "boot.zip": "733fa1069cdf6a66009ed8754df04ceaa20fde37e3c77b2711e021296b54bb4a",
+    "check.zip": "b83066cef3e868a315cb0e06e616bc63a49b1612a103827fa36123459df8b1fc",
+    "edit.zip": "6488ea1557b3f208983e402c6ee187f3af02d5dc0794eda3fd725a0beb182534",
+    "photo.zip": "ffc30bda1f85fa27bb2693483e3c395db36ff42fbcf691bd1d3c36ce75851fd7",
+    "pr.zip": "05ec17014d50535756a5a72acd14cf1624a70c2001f328cfd431f67fd56fb13a",
+    "thai-places.zip": "906c3d31a8bef9d4c4c22d48d93e422de52e053759d21f96ae9c52a2381c28ef"
   },
   "compatibility_files": {
     "BLUEPRINT.txt": "215298dedeb26aee77a816ba507fad60641b69d957b2d72ff97dcde93557bf7d",

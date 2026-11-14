@@ -6,6 +6,24 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — 151126_gpt_modular-routes: ZIP REPRODUCIBILITY REPAIR
+
+**Authority.** The third post-push GitHub validation passed the filename and
+inventory stages, then isolated a byte difference in `boot.zip` between the
+Windows and Linux Python/zlib builds.
+
+**Change.** The six small Markdown skill packages now use deterministic ZIP
+storage rather than version-dependent DEFLATE output. Archive paths, member
+paths, timestamps, permissions and content remain unchanged.
+
+**Evidence.** Local regeneration and byte-for-byte rebuild checks pass for all
+six archives, as does the exact Shift pickup check.
+
+**Verdict.** Bounded transport-only repair prepared for a corrective guarded
+push; edition content and identity are unchanged.
+
+---
+
 ## 2026-11-15 — 151126_gpt_modular-routes: ROUTED-NAME PORTABILITY REPAIR
 
 **Authority.** Post-push GitHub validation exposed a filesystem case mismatch

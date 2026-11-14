@@ -61,6 +61,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Cross-platform ZIP reproducibility | Store the six small text
+  skill packages without DEFLATE so different Python/zlib builds produce
+  byte-identical ZIPs; regenerate archives and receipt without changing their
+  paths, contents, skill behaviour or edition identity.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Cross-platform inventory order | Sort the generated deployment
