@@ -1,13 +1,11 @@
 ---
-
 name: pr
-
-description: Bangkok Post desk mode for a minimum-intervention paid-placement copy pass. Use when the supervisor says PR.
-
+description: Bangkok Post minimum-intervention paid-placement, advertorial or PR copy pass. Use when the supervisor says PR or supplies paid-placement copy for house-style correction.
 ---
-<!-- 091126c_gpt_time-crossref-cleanup -->
 
-Refines edit for PR copy: sets scope and return.
+# [P5] PR COPY
+
+Runs on `[G1-A] HOUSE ESSENTIALS` and on `edit`, which is in context for the session. This file sets PR scope and return.
 
 Give paid-placement copy a minimum-intervention style pass. Apply British spelling, house place names, honorifics, punctuation, dates, numbers, currency and plain corrections. Give captions the same pass.
 

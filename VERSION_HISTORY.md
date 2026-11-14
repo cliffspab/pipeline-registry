@@ -6,6 +6,33 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — 151126_gpt_modular-routes: MODULAR ROUTES AND SIX-SKILL SET
+
+**Authority.** The supervisor supplied the revised modular skill set and
+approved the semantic route expansion, the restored `[P5] PR COPY` heading,
+the edition identity and the exact generated Shift pickup contract.
+
+**Change.** Boot becomes the compact front-end router and sole copy of House
+Essentials and the hard invariants; Edit remains the common work method; Thai
+geography becomes a sixth, conditionally invoked skill. Boot's index now maps
+21 procedure headings and 16 `references.*` branches without restating their
+rules. The build emits one complete master, one complete Directory, six
+skills, six archives and the Word reading volume. Shift is restored as a
+generated pickup containing nine loose documents plus the six `SKILL.md`
+folders and six ZIPs under `skillmd/`.
+
+**Evidence.** `build.py --check --release` reproduces all generated files
+byte-for-byte; all six skills pass the skill validator; the semantic index has
+37 unique routes and the Thai register has 76 provinces. The 16-page Word
+volume was rendered and inspected page by page with no clipping, overlap or
+blank trailing page. `shift.py --check` verifies the exact pickup inventory and
+source hashes.
+
+**Verdict.** Approved edition prepared locally for the supervisor's guarded
+push. Publication and GitHub validation remain pending.
+
+---
+
 ## 2026-11-09 — 091126c_gpt_time-crossref-cleanup: EXACT RULE REPAIR
 
 **Authority.** The supervisor supplied the exact replacement for

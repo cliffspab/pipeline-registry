@@ -64,6 +64,11 @@ python Blueprint\build.py --check --release || (
   echo [ABORT] Blueprint beta is stale or invalid.
   pause & exit /b 1
 )
+python "..\shift.py" --check || (
+  echo [ABORT] generated Shift pickup is stale or invalid.
+  echo         Run python shift.py from the workspace root and review it.
+  pause & exit /b 1
+)
 for /f "delims=" %%C in ('git status --porcelain -- Control') do (
   echo [ABORT] Control has changes, but its legacy generator is not compatible
   echo         with the current Blueprint beta. Validate Control separately.
@@ -99,7 +104,8 @@ echo.
 echo Review every modified, deleted and untracked path above.
 echo Typing PUSH authorises the exact displayed payload, bootstrap mirrors,
 echo pending-list archival, commit, rebase, push and remote verification.
-echo This beta workflow does not seal an edition or refresh Shift or pCloud.
+echo This beta workflow refreshes the generated Shift pickup after confirmed
+echo publication. It does not seal an edition or refresh pCloud.
 set "BKP_CONFIRM="
 set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
 if /I not "%BKP_CONFIRM%"=="PUSH" (
@@ -205,7 +211,9 @@ if "%LH%"=="%RH%" (
   echo [CONFIRMED] local %LH% == origin/main %RH%.  Push is genuinely live.
   echo.
   echo [beta] GitHub validation will check the committed single-source build.
-  echo [beta] Edition sealing, Shift refresh and pCloud sync remain paused.
+  echo [beta] Refreshing the generated local Shift pickup.
+  python "..\shift.py" || echo [WARNING] Push succeeded but Shift refresh failed.
+  echo [beta] Edition sealing and pCloud sync remain paused.
 ) else (
   echo [WARNING] local %LH% does NOT match origin/main %RH%.
   echo           Do not assume it published. Investigate before trusting.

@@ -59,16 +59,19 @@ hand-edit compiled or generated files in `pipeline-registry/Blueprint/` or
    `VERSION_HISTORY.md`.
 6. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
 7. During the skills beta, treat publication as confirmed when local HEAD equals
-   `origin/main` and GitHub validation passes. Sealing and former Shift/pCloud
-   handover steps remain paused until the supervisor accepts a replacement.
+   `origin/main` and GitHub validation passes. Refresh the generated Shift
+   pickup set only from the validated registry build. Sealing and pCloud
+   handover remain paused until the supervisor accepts replacements.
 
-## Deprecated Shift space
+## Generated Shift pickup
 
-`Shift/` is an empty, reusable named space. It is not a source, handover or
-publication target. Do not refresh it or mirror it to pCloud. Skills are the
-active delivery direction during the beta; GitHub remains the registry and
-validation base. Any future use of `Shift/` requires an express supervisor
-decision and a new contract.
+`Shift/` is a generated local pickup set, never an editable authority or a
+publication target. Root `shift.py` replaces it from the current validated
+`pipeline-registry/Blueprint/` outputs and verifies exact hashes. It contains
+nine loose documents (`BLUEPRINT.md`, `DIRECTORY.yaml`, the six module Markdown
+files and the Word volume) plus `skillmd/`, whose six named skill folders each
+hold one `SKILL.md` and whose `zips/` folder holds the six upload archives.
+Do not add hand-maintained files, edit material in place or mirror it to pCloud.
 
 ## Generated and historical material
 

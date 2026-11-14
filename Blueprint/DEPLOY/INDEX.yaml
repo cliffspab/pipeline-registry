@@ -1,47 +1,50 @@
-# 091126c_gpt_time-crossref-cleanup
-version: 091126c_gpt_time-crossref-cleanup
-directory: DIRECTORY.txt
-deployments:
-  routed: routed/INDEX.yaml
-  skills: skills/INDEX.yaml
-instruction: choose one deployment; do not ingest the whole umbrella
+version: 151126_gpt_modular-routes
 files:
-  - path: DIRECTORY.txt
-    bytes: 31572
-    sha256: b40386258d00434456aef4b77b866c49ef87f26810bd4d993644e9651b384d93
-  - path: routed/BOOT.md
-    bytes: 1680
-    sha256: e7efe274b8e086f57690d4e79b082fe933e2c5229782bda797a787298d3750fb
-  - path: routed/INDEX.yaml
-    bytes: 817
-    sha256: c6f71856dff9093d3773b074580805eb0f3ed508d57995661106f208b1a8dd83
-  - path: routed/edit.md
-    bytes: 21852
-    sha256: 972d8d4651b4f1a3819057aa52d1486764c8acc1237734fe5dfbd72224fd8f6c
-  - path: routed/modules/check.md
-    bytes: 2361
-    sha256: 623869368c96fac00050be402ba404c49215bab91af4f33020c1a81e66cc8de7
-  - path: routed/modules/photo.md
-    bytes: 2472
-    sha256: a4690065456237370c4375e49ab469c34a66baa0cf8db6d02145a6ed9ec4ce7b
-  - path: routed/modules/pr.md
-    bytes: 1114
-    sha256: 27ea11b34a60737d8b17328ff984c9d10faf46da0bb7235cc359a5fff0e48623
-  - path: skills/INDEX.yaml
-    bytes: 894
-    sha256: fbe644c991444b48da2152d1054d7b0d2ccd343bbcd29dc00be0d0a61f4958b7
-  - path: skills/boot/SKILL.md
-    bytes: 1680
-    sha256: e7efe274b8e086f57690d4e79b082fe933e2c5229782bda797a787298d3750fb
-  - path: skills/check/SKILL.md
-    bytes: 2361
-    sha256: 623869368c96fac00050be402ba404c49215bab91af4f33020c1a81e66cc8de7
-  - path: skills/edit/SKILL.md
-    bytes: 21852
-    sha256: 972d8d4651b4f1a3819057aa52d1486764c8acc1237734fe5dfbd72224fd8f6c
-  - path: skills/photo/SKILL.md
-    bytes: 2472
-    sha256: a4690065456237370c4375e49ab469c34a66baa0cf8db6d02145a6ed9ec4ce7b
-  - path: skills/pr/SKILL.md
-    bytes: 1114
-    sha256: 27ea11b34a60737d8b17328ff984c9d10faf46da0bb7235cc359a5fff0e48623
+- path: DIRECTORY.txt
+  bytes: 37839
+  sha256: 2804fb8f507a08bb24065a1ce619883ce170881f696c9239eb574bcb6ff5d093
+- path: DIRECTORY.yaml
+  bytes: 37839
+  sha256: 2804fb8f507a08bb24065a1ce619883ce170881f696c9239eb574bcb6ff5d093
+- path: routed/boot.md
+  bytes: 12073
+  sha256: b9f630e135c91efa8d9308591bc2b71c6b93ac6c944770fa25cc25127f80dbc0
+- path: routed/edit.md
+  bytes: 35746
+  sha256: c92c61de7773295436403edb2e67bbdc3ef6054c1bbf80dc0cbb324990eeb7dd
+- path: routed/INDEX.yaml
+  bytes: 706
+  sha256: e16f19e69de691530c97bcfe60e9b9fb04fb156e968a3330a985576b4d34d1a5
+- path: routed/modules/check.md
+  bytes: 2483
+  sha256: 1d2bee2632bf7a687c6c41dbc882a6eceb4345aa8bfaef2f404995fef934c204
+- path: routed/modules/photo.md
+  bytes: 2574
+  sha256: 6829b03bd55a036d1b1d7bdd82299c078072eec46a01a02663102fce7082f69c
+- path: routed/modules/pr.md
+  bytes: 1219
+  sha256: 465991c88c99826f94e5fa612571ff8402d4fd0290eb590365197b375d7df3f0
+- path: routed/thai-places.md
+  bytes: 14315
+  sha256: 6ea316b6c242abd7117cc9d655026752d196bc8eb0d64220f43771c5a9e9fabe
+- path: skills/boot/SKILL.md
+  bytes: 12073
+  sha256: b9f630e135c91efa8d9308591bc2b71c6b93ac6c944770fa25cc25127f80dbc0
+- path: skills/check/SKILL.md
+  bytes: 2483
+  sha256: 1d2bee2632bf7a687c6c41dbc882a6eceb4345aa8bfaef2f404995fef934c204
+- path: skills/edit/SKILL.md
+  bytes: 35746
+  sha256: c92c61de7773295436403edb2e67bbdc3ef6054c1bbf80dc0cbb324990eeb7dd
+- path: skills/INDEX.yaml
+  bytes: 718
+  sha256: 9ae30a2e649624190da5ed27d65bc59beb817c21942d518d910cf90e60f87252
+- path: skills/photo/SKILL.md
+  bytes: 2574
+  sha256: 6829b03bd55a036d1b1d7bdd82299c078072eec46a01a02663102fce7082f69c
+- path: skills/pr/SKILL.md
+  bytes: 1219
+  sha256: 465991c88c99826f94e5fa612571ff8402d4fd0290eb590365197b375d7df3f0
+- path: skills/thai-places/SKILL.md
+  bytes: 14315
+  sha256: 6ea316b6c242abd7117cc9d655026752d196bc8eb0d64220f43771c5a9e9fabe

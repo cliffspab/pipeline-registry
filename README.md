@@ -12,4 +12,5 @@ chat.
 
 Publication remains supervisor-controlled. The registry is the public source
 and build base; the workspace root holds the live editable sources. `Shift/`
-is deprecated and is not a handover or publication target.
+is a generated local pickup, not a source or publication target. Its exact
+inventory is rebuilt from the validated registry by the root `shift.py`.

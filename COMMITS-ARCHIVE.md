@@ -58,6 +58,28 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Blueprint edition `151126_gpt_modular-routes` | Publish the
+  approved complete modular master, complete Directory and generated routed
+  set; add the sixth `thai-places` skill; regenerate all six install surfaces,
+  ZIP archives, indexes, compatibility files, hashes and receipt; include the
+  versioned Word reading volume.
+
+- 2026-11-15 | Routing and headings | Make Boot the sole House Essentials
+  source; add its 37-entry semantic procedure/reference index; standardise
+  `[P3] PHOTO TASKS`, `[P4] PAGE CHECKS AND QC` and `[P5] PR COPY`.
+
+- 2026-11-15 | Generated Shift pickup | Publish the new `shift.py`, guarded
+  push integration and bootstrap mirrors; generate exactly nine loose
+  documents plus six `skillmd/<name>/SKILL.md` folders and six ZIPs under
+  `skillmd/zips/`; do not restore sealing or pCloud mirroring.
+
+- 2026-11-15 | Handover records | Update `AGENTS.md`, `00_START-HERE.md`,
+  `README.md`, `WORKPLAN.md`, `CHANGELOG.md`, `VERSION_HISTORY.md` and this
+  pending ledger for the approved architecture and user update action.
+
 ## Cleared 2026-11-09
 
 - 2026-11-09 | Blueprint release `091126c_gpt_time-crossref-cleanup` | Replaced

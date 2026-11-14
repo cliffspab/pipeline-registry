@@ -11,21 +11,35 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-### 091126c_gpt_time-crossref-cleanup
+### 151126_gpt_modular-routes
 
-**Changed instructions:** `boot`, `blueprint`, `edit`, `check`, `photo` and
-`pr`.
+**Changed instructions:** the complete Blueprint, Directory, Word volume and
+all six skills: `boot`, `edit`, `check`, `photo`, `pr` and `thai-places`.
 
-**Affected install bundles:** all five static skill archives and every routed
-delivery, because the edition witness advances throughout the set.
+**Affected install bundles:** all six static skill archives and every routed
+delivery. This edition supersedes the unpublished
+`091126c_gpt_time-crossref-cleanup` candidate and includes its two corrections.
 
-**User action after publication:** reinstall any installed skill package and
-replace downloaded Blueprint copies. Permanent archive filenames remain
-unchanged.
+**User action after publication:** reinstall all six skill packages and
+replace downloaded Blueprint, Directory and Word copies. Users of the local
+pickup may instead take the complete generated set from `Shift/`.
 
+- Made Boot the compact front-end router and sole home of House Essentials and
+  hard invariants; Edit remains the common working method.
+- Added a 37-entry semantic route index: 21 exact procedural headings and 16
+  `references.*` branches, without duplicating the underlying rules.
+- Split Thai geography into the conditional `thai-places` skill and retained
+  all 76 province forms in its own reference branch.
+- Standardised the bounded module headings as `[P3] PHOTO TASKS`, `[P4] PAGE
+  CHECKS AND QC` and `[P5] PR COPY`.
+- Generate the complete master Blueprint, complete Directory, six loose skill
+  files, six install folders, six ZIPs and the Word reading volume from the
+  approved modular source.
+- Restored `Shift/` as a generated pickup only: nine loose documents plus
+  `skillmd/` containing the six `SKILL.md` folders and its `zips/` folder.
 - Replaced `dates.thailand_time` with the exact cross-reference to
-  `references.times.foreign_events`.
-- Removed the chief-pitching “speed is the instruction” line.
+  `references.times.foreign_events`, and removed the chief-pitching “speed is
+  the instruction” line.
 
 ## 091126b_gpt_bangkok-time-repair — 2026-11-09
 

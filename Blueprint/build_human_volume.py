@@ -14,9 +14,9 @@ from docx.shared import Cm, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "BLUEPRINT.md"
-OUTPUT = ROOT / "Blueprint_bkp3-2.docx"
+OUTPUT = ROOT / "Bangkok_Post_Blueprint_151126_gpt_modular-routes.docx"
 PART_RE = re.compile(
-    r"<!-- COMPONENT: ([A-Z]+) -->\n(.*?)\n<!-- END COMPONENT: \1 -->",
+    r"<!-- COMPONENT: ([A-Z_]+) -->\n(.*?)\n<!-- END COMPONENT: \1 -->",
     re.S,
 )
 
@@ -196,6 +196,16 @@ def configure(doc: Document) -> None:
     normal.font.size = Pt(9.2)
     normal.font.color.rgb = RGBColor(0, 0, 0)
 
+    title = doc.styles["Title"]
+    title.font.name = "Arial Black"
+    title.font.size = Pt(30)
+    title.font.bold = True
+    title.font.color.rgb = RGBColor(0, 0, 0)
+    title_ppr = title._element.get_or_add_pPr()
+    title_border = title_ppr.find(qn("w:pBdr"))
+    if title_border is not None:
+        title_ppr.remove(title_border)
+
     body = doc.styles["Body Text"]
     body.font.name = "Arial"
     body.font.size = Pt(9.2)
@@ -255,9 +265,9 @@ def main() -> None:
     doc = Document()
     configure(doc)
     doc.core_properties.title = "Bangkok Post Blueprint"
-    doc.core_properties.subject = "Desk edition 3.2"
+    doc.core_properties.subject = "Complete modular desk edition"
     doc.core_properties.author = "Bangkok Post"
-    doc.core_properties.comments = "Generated from the 051126_gpt_bkp3-2 Markdown authority"
+    doc.core_properties.comments = "Generated from the 151126_gpt_modular-routes Markdown authority"
 
     title = doc.add_paragraph()
     title.style = doc.styles["Title"]
@@ -266,19 +276,17 @@ def main() -> None:
     title.runs[0].font.size = Pt(30)
     title.runs[0].font.bold = True
     title.runs[0].font.color.rgb = RGBColor(0, 0, 0)
-    border_bottom(title, 38)
     render_markdown(doc, re.sub(r"^# Bangkok Post Blueprint\s*", "", preface))
 
-    for index, name in enumerate(("BOOT", "EDIT", "CHECK", "PHOTO", "PR")):
+    for index, name in enumerate(("BOOT", "EDIT", "CHECK", "PHOTO", "PR", "THAI_PLACES")):
         if name == "EDIT":
             doc.add_page_break()
         render_markdown(doc, parts[name])
-    render_directory(doc, parts["DIRECTORY"])
 
     footer = doc.sections[0].footer.paragraphs[0]
     footer.style = doc.styles["Normal"]
     footer.runs.clear()
-    footer.add_run("051126_gpt_bkp3-2   •   ")
+    footer.add_run("151126_gpt_modular-routes   •   ")
     add_page_number(footer)
 
     settings = doc.settings._element

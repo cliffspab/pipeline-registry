@@ -7,21 +7,22 @@ governed by the applicable Blueprint delivery.
 
 ## Current position
 
-- Published beta commit: `bfb83cc` (`301026_gpt_bkp3-1`).
-- Live native-document edition: `301026_gpt_bkp3-1`.
-- Delivery direction: installed skills are replacing Shift as the active
-  handover route.
-- `Shift/` is deprecated and retained empty as a reusable stable named space.
-  It is not to be refreshed or mirrored.
+- Published beta commit: `bfb83cc` (`301026_gpt_bkp3-1`); later approved local
+  editions remain pending publication.
+- Candidate edition: `151126_gpt_modular-routes`.
+- Delivery direction: six installed skills, with the complete Blueprint and
+  Directory retained as the all-in-one authority and lookup surface.
+- `Shift/` is a generated local pickup rebuilt only from the validated
+  registry. It is not a source and is not mirrored to pCloud.
 
 ## Change set in preparation
 
-Edition: `301026_gpt_bkp3-1`
+Edition: `151126_gpt_modular-routes`
 
-Status: published and synchronized. The source, five skill archives and all
-seven permanent Google Docs passed readback; content was updated before Boot.
-Word/PDF are deliberately out of scope. Permanent document IDs and their unique
-`*_bkp3-0` titles remain unchanged.
+Status: approved and built locally, awaiting the supervisor's guarded push.
+The complete master, Directory, six skill archives, Word volume and exact
+generated Shift pickup pass their local guards. GitHub validation remains
+pending.
 
 ### Copy-bearing returns
 
@@ -85,5 +86,6 @@ with an empty or partial fetch.
 - Rebuild all generated deployments and upload archives.
 - Record the exact approved payload in `COMMITS-PENDING.md`.
 - The supervisor reviews the guarded preflight and performs the push.
-- During the beta, GitHub validation runs; edition sealing, Shift refresh and
-  pCloud sync remain paused.
+- During the beta, GitHub validation runs and the guarded workflow refreshes
+  the generated local Shift pickup after confirmed publication. Edition
+  sealing and pCloud sync remain paused.

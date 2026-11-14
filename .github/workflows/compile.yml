@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Blueprint build dependency
+        run: python3 -m pip install PyYAML
+
       - name: Rebuild and verify single-source Blueprint
         working-directory: Blueprint
         run: |
@@ -32,5 +35,5 @@ jobs:
           cat Blueprint/VERSION.txt
           find Blueprint/UPLOAD -maxdepth 1 -type f -name '*.zip' -print | sort
 
-# Beta validation only. Word/PDF generation, sealing, Shift refresh and pCloud
-# publication remain deliberately paused until the trial is accepted.
+# Beta validation only. The committed Word volume is not regenerated in CI;
+# sealing, local Shift refresh and pCloud publication are outside this job.
