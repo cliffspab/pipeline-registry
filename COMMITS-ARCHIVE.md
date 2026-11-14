@@ -62,6 +62,18 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Three-cloud Blueprint distribution | Add the guarded
+  `distribute_blueprint.py` route; after origin equality and successful GitHub
+  validation, refresh Shift then copy and verify the complete `Blueprint/`
+  tree at `pCloud:Public Folder/pipeline-registry/Blueprint`,
+  `GDrive:pipeline-registry/Blueprint` and
+  `onedrivebkp:pipeline-registry/Blueprint`; use copy-only semantics and never
+  delete remote extras; exclude ignored Python caches. Update push, CI triggers,
+  bootstrap and handover notes.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Cross-platform ZIP reproducibility | Store the six small text

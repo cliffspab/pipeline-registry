@@ -6,6 +6,30 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — AUTOMATIC THREE-CLOUD BLUEPRINT DISTRIBUTION
+
+**Authority.** The supervisor directed that every distribution duplicate the
+complete registry Blueprint folder to the established public pCloud, Google
+Drive and Bangkok Post OneDrive remotes.
+
+**Change.** The guarded push now waits for its exact GitHub validation run,
+refreshes Shift, then performs `rclone copy` to all three approved destinations
+and runs a one-way `rclone check` against each. Copy semantics update and add
+files but never delete remote extras. Ignored Python bytecode caches are
+excluded. The preflight requires the Blueprint source, rclone executable, all
+three configured remotes and live read access.
+
+**Evidence.** Rclone 1.76.0 is installed from its official Winget package. The
+first distribution and one-way checks report 45 matching files and zero
+differences at each destination. Duplicate Google Drive objects created during
+an interrupted initial run were confirmed byte-identical, deduplicated with
+supervisor approval and verified clean afterward.
+
+**Verdict.** First three-cloud distribution verified; permanent automation is
+prepared for its guarded push. Edition content and identity are unchanged.
+
+---
+
 ## 2026-11-15 — 151126_gpt_modular-routes: ZIP REPRODUCIBILITY REPAIR
 
 **Authority.** The third post-push GitHub validation passed the filename and

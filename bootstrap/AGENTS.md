@@ -60,8 +60,10 @@ hand-edit compiled or generated files in `pipeline-registry/Blueprint/` or
 6. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
 7. During the skills beta, treat publication as confirmed when local HEAD equals
    `origin/main` and GitHub validation passes. Refresh the generated Shift
-   pickup set only from the validated registry build. Sealing and pCloud
-   handover remain paused until the supervisor accepts replacements.
+   pickup set only from the validated registry build, then use
+   `distribute_blueprint.py` to copy and verify the complete registry Blueprint
+   tree at all three approved cloud destinations. Edition sealing remains
+   paused.
 
 ## Generated Shift pickup
 
@@ -71,7 +73,11 @@ publication target. Root `shift.py` replaces it from the current validated
 nine loose documents (`BLUEPRINT.md`, `DIRECTORY.yaml`, the six module Markdown
 files and the Word volume) plus `skillmd/`, whose six named skill folders each
 hold one `SKILL.md` and whose `zips/` folder holds the six upload archives.
-Do not add hand-maintained files, edit material in place or mirror it to pCloud.
+Do not add hand-maintained files or edit material in place. Shift itself is not
+mirrored; the validated registry `Blueprint/` tree is copied separately to
+`pCloud:Public Folder/pipeline-registry/Blueprint` and
+`GDrive:pipeline-registry/Blueprint` and
+`onedrivebkp:pipeline-registry/Blueprint` after every confirmed distribution.
 
 ## Generated and historical material
 

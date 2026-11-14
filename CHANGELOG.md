@@ -40,6 +40,9 @@ pickup may instead take the complete generated set from `Shift/`.
 - Replaced `dates.thailand_time` with the exact cross-reference to
   `references.times.foreign_events`, and removed the chief-pitching “speed is
   the instruction” line.
+- Added automatic post-validation distribution of the complete `Blueprint/`
+  tree to pCloud, Google Drive and the Bangkok Post OneDrive. Each destination
+  is copied without remote deletion and verified against the local source.
 
 ## 091126b_gpt_bangkok-time-repair — 2026-11-09
 

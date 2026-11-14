@@ -14,3 +14,6 @@ Publication remains supervisor-controlled. The registry is the public source
 and build base; the workspace root holds the live editable sources. `Shift/`
 is a generated local pickup, not a source or publication target. Its exact
 inventory is rebuilt from the validated registry by the root `shift.py`.
+After validation, `distribute_blueprint.py` copies and verifies the complete
+`Blueprint/` tree at the approved pCloud, Google Drive and Bangkok Post
+OneDrive destinations without deleting remote extras.

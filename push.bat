@@ -43,7 +43,7 @@ if exist ".git\rebase-merge" (
   echo [ABORT] unfinished rebase detected.
   pause & exit /b 1
 )
-for %%F in (AGENTS.md CONTROL.txt BLUEPRINT.front.md GUIDE.md PROCESSES.md DIRECTORY.yaml BLUEPRINT.txt shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md CONTROL.txt BLUEPRINT.front.md GUIDE.md PROCESSES.md DIRECTORY.yaml BLUEPRINT.txt shift.py distribute_blueprint.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if not exist "..\%%F" (
     echo [ABORT] required workspace file missing: ..\%%F
     pause & exit /b 1
@@ -69,6 +69,10 @@ python "..\shift.py" --check || (
   echo         Run python shift.py from the workspace root and review it.
   pause & exit /b 1
 )
+python "..\distribute_blueprint.py" --preflight || (
+  echo [ABORT] Blueprint cloud distribution is not ready.
+  pause & exit /b 1
+)
 for /f "delims=" %%C in ('git status --porcelain -- Control') do (
   echo [ABORT] Control has changes, but its legacy generator is not compatible
   echo         with the current Blueprint beta. Validate Control separately.
@@ -91,7 +95,7 @@ type COMMITS-PENDING.md
 
 echo.
 echo --- bootstrap files that will change ---
-for %%F in (AGENTS.md shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md shift.py distribute_blueprint.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if not exist "bootstrap\%%F" (
     echo   ADD bootstrap\%%F
   ) else (
@@ -104,8 +108,8 @@ echo.
 echo Review every modified, deleted and untracked path above.
 echo Typing PUSH authorises the exact displayed payload, bootstrap mirrors,
 echo pending-list archival, commit, rebase, push and remote verification.
-echo This beta workflow refreshes the generated Shift pickup after confirmed
-echo publication. It does not seal an edition or refresh pCloud.
+echo This workflow waits for GitHub validation, refreshes Shift and copies the
+echo Blueprint tree to pCloud, Google Drive and OneDrive. It does not seal.
 set "BKP_CONFIRM="
 set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
 if /I not "%BKP_CONFIRM%"=="PUSH" (
@@ -128,7 +132,7 @@ echo === mirroring bootstrap set ===
 if not exist "bootstrap" mkdir "bootstrap"
 REM 100826: seal.py and clear_pending.py added. push.bat CALLS both, so a repo
 REM that does not hold them carries a push script it cannot run after a restore.
-for %%F in (AGENTS.md shift.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
+for %%F in (AGENTS.md shift.py distribute_blueprint.py sync_master.py build.py extract.py seal.py clear_pending.py) do (
   if exist "..\%%F" (
     copy /Y "..\%%F" "bootstrap\%%F" >nul
     echo   mirrored %%F
@@ -201,8 +205,8 @@ echo.
 echo === verifying against origin ===
 git fetch origin >nul 2>&1
 git --no-pager status -sb
-git rev-parse --short HEAD > "%temp%\_lh.txt"
-git rev-parse --short origin/main > "%temp%\_rh.txt"
+git rev-parse HEAD > "%temp%\_lh.txt"
+git rev-parse origin/main > "%temp%\_rh.txt"
 set /p LH=<"%temp%\_lh.txt"
 set /p RH=<"%temp%\_rh.txt"
 
@@ -210,10 +214,22 @@ echo.
 if "%LH%"=="%RH%" (
   echo [CONFIRMED] local %LH% == origin/main %RH%.  Push is genuinely live.
   echo.
-  echo [beta] GitHub validation will check the committed single-source build.
+  echo [beta] Waiting for GitHub validation of %LH%.
+  python "..\distribute_blueprint.py" --wait-validation "%LH%" || (
+    echo [WARNING] Push succeeded but GitHub validation did not pass.
+    pause & exit /b 1
+  )
   echo [beta] Refreshing the generated local Shift pickup.
-  python "..\shift.py" || echo [WARNING] Push succeeded but Shift refresh failed.
-  echo [beta] Edition sealing and pCloud sync remain paused.
+  python "..\shift.py" || (
+    echo [WARNING] Push succeeded but Shift refresh failed.
+    pause & exit /b 1
+  )
+  echo [distribution] Copying and verifying Blueprint on all three cloud mirrors.
+  python "..\distribute_blueprint.py" --publish || (
+    echo [WARNING] Push and validation succeeded but cloud distribution failed.
+    pause & exit /b 1
+  )
+  echo [beta] Edition sealing remains paused.
 ) else (
   echo [WARNING] local %LH% does NOT match origin/main %RH%.
   echo           Do not assume it published. Investigate before trusting.

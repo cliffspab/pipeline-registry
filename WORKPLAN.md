@@ -13,7 +13,9 @@ governed by the applicable Blueprint delivery.
 - Delivery direction: six installed skills, with the complete Blueprint and
   Directory retained as the all-in-one authority and lookup surface.
 - `Shift/` is a generated local pickup rebuilt only from the validated
-  registry. It is not a source and is not mirrored to pCloud.
+  registry. It is not a source. Every confirmed distribution separately copies
+  and verifies the complete registry Blueprint tree on pCloud, Google Drive
+  and the Bangkok Post OneDrive.
 
 ## Change set in preparation
 
