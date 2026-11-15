@@ -14,3 +14,6 @@ __pycache__/
 # GoodSync sync metadata & PULSE logs — local only, never publish
 _gsdata_/
 .tmp.driveupload/
+
+# Local machine-readable publication receipt
+.publication/

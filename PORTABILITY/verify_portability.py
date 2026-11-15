@@ -27,7 +27,8 @@ LIVE = (
     "Blueprint/build_human_volume.py",
     "push.bat",
     "bootstrap/AGENTS.md",
-    "bootstrap/shift.py",
+    "bootstrap/00_START-HERE.md",
+    "bootstrap/clear_pending.py",
     "bootstrap/distribute_blueprint.py",
     ".github/workflows/compile.yml",
 )

@@ -64,6 +64,22 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Lean mechanism hardening | Align the registry, bootstrap and
+  portability authority; add component, route, Word and distribution guards;
+  publish only the validated commit; simplify the guarded push; pin runtime
+  requirements; retire six obsolete bootstrap programs; add eight regression
+  tests; automate the OneDrive portability backup; and record the audit
+  decisions.
+
+- 2026-11-15 | Audit dispatch completion | Add a model-neutral dispatch prompt
+  and comparison sheet to `PORTABILITY/audit/`; regenerate the manifest,
+  readable machinery snapshot and deterministic ZIP against published commit
+  `60e3c28`; back up and verify the ZIP, manifest and snapshot directly at
+  `onedrivebkp:BKPDE-Portability` without a mounted drive.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Portability and mechanism-audit kit | Add `PORTABILITY/` with a

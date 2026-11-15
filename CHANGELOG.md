@@ -21,8 +21,8 @@ delivery. This edition supersedes the unpublished
 `091126c_gpt_time-crossref-cleanup` candidate and includes its two corrections.
 
 **User action after publication:** reinstall all six skill packages and
-replace downloaded Blueprint, Directory and Word copies. Users of the local
-pickup may instead take the complete generated set from `Shift/`.
+replace downloaded Blueprint, Directory and Word copies from GitHub or an
+approved cloud mirror.
 
 - Made Boot the compact front-end router and sole home of House Essentials and
   hard invariants; Edit remains the common working method.
@@ -35,17 +35,25 @@ pickup may instead take the complete generated set from `Shift/`.
 - Generate the complete master Blueprint, complete Directory, six loose skill
   files, six install folders, six ZIPs and the Word reading volume from the
   approved modular source.
-- Restored `Shift/` as a generated pickup only: nine loose documents plus
-  `skillmd/` containing the six `SKILL.md` folders and its `zips/` folder.
+- Made the registry self-contained for build, guarded push, recovery and
+  three-cloud publication; `Shift/` is not part of the active mechanism.
 - Replaced `dates.thailand_time` with the exact cross-reference to
   `references.times.foreign_events`, and removed the chief-pitching “speed is
   the instruction” line.
 - Added automatic post-validation distribution of the complete `Blueprint/`
   tree to pCloud, Google Drive and the Bangkok Post OneDrive. Each destination
-  is copied without remote deletion and verified against the local source.
+  is copied from the exact validated commit without remote deletion and
+  verified automatically.
+- Added guards against duplicate components, unmarked lost content, false
+  route targets, stale Word identity and body horizontal-rule loss.
+- Made successful publication write a concise local receipt and report remote
+  duplicates or stale extras without deleting anything.
 - Added a self-verifying portability bundle with cold reconstruction, release
   and recovery runbooks plus a frozen, readable mechanism snapshot and neutral
   multi-model audit kit.
+- Added a single reusable audit dispatch prompt and a post-audit comparison
+  sheet so models review the same frozen evidence independently before their
+  findings are consolidated.
 
 ## 091126b_gpt_bangkok-time-repair — 2026-11-09
 

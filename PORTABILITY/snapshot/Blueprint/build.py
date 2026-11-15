@@ -14,6 +14,10 @@ from pathlib import Path
 import yaml
 
 
+if tuple(__import__("sys").version_info) < (3, 12):
+    raise SystemExit("FATAL: Blueprint builds require Python 3.12 or newer")
+
+
 VERSION_RE = re.compile(r"^<!-- MASTER ([A-Za-z0-9_.-]+) -->$", re.M)
 PART_RE = re.compile(r"^<!-- COMPONENT: ([A-Z_]+) -->\n(.*?)\n<!-- END COMPONENT: \1 -->$", re.M | re.S)
 PARTS = {
@@ -58,6 +62,17 @@ def frontmatter_name(text: str) -> str:
     return match.group(1).strip()
 
 
+def validate_release(source: Path) -> None:
+    _master, _version, parts = load(source)
+    for marker, skill in PARTS.items():
+        match = re.match(r"^---\n(.*?)\n---\n", parts[marker], re.S)
+        metadata = yaml.safe_load(match.group(1)) if match else None
+        if not isinstance(metadata, dict) or set(metadata) != {"name", "description"}:
+            raise SystemExit(f"FATAL: {marker} skill metadata must contain only name and description")
+        if metadata["name"] != skill or not isinstance(metadata["description"], str) or not metadata["description"].strip():
+            raise SystemExit(f"FATAL: {marker} skill metadata is invalid")
+
+
 def yaml_blocks(text: str) -> list[str]:
     return re.findall(r"```yaml\s*\n(.*?)```", text, re.S)
 
@@ -67,9 +82,16 @@ def load(source: Path):
     version_match = VERSION_RE.search(text)
     if not version_match:
         raise SystemExit("FATAL: master edition mark missing")
-    parts = dict(PART_RE.findall(text))
-    if set(parts) != set(PARTS):
-        raise SystemExit(f"FATAL: component inventory differs: {sorted(parts)}")
+    found = PART_RE.findall(text)
+    names = [name for name, _body in found]
+    if len(names) != len(PARTS) or set(names) != set(PARTS):
+        raise SystemExit(f"FATAL: component inventory differs or contains duplicates: {names}")
+    first = text.find("<!-- COMPONENT: ")
+    residue = PART_RE.sub("", text[first:]) if first >= 0 else text
+    if residue.strip():
+        preview = residue.strip().splitlines()[0][:80]
+        raise SystemExit(f"FATAL: unmarked content outside components: {preview}")
+    parts = dict(found)
     for marker, skill in PARTS.items():
         if frontmatter_name(parts[marker]) != skill:
             raise SystemExit(f"FATAL: {marker} front-matter name differs")
@@ -110,7 +132,8 @@ def validate_routes(parts: dict[str, str], directory: dict) -> dict:
             if route["heading"] != semantic:
                 raise SystemExit(f"FATAL: reference target differs: {semantic}")
         else:
-            if route["heading"] not in bodies[resource]:
+            heading_pattern = rf"^#{{1,6}}\s+{re.escape(route['heading'])}\s*$"
+            if not re.search(heading_pattern, bodies[resource], re.M):
                 raise SystemExit(f"FATAL: route target missing: {semantic}")
             match = re.match(r"\[([^]]+)\]", route["heading"])
             if not match:
@@ -220,7 +243,7 @@ def compare_trees(expected: Path, actual: Path) -> None:
 
 
 def check(source: Path, root: Path) -> None:
-    with tempfile.TemporaryDirectory(dir=root) as temp_name:
+    with tempfile.TemporaryDirectory() as temp_name:
         temp = Path(temp_name)
         build(source, temp)
         compare_trees(root / "DEPLOY", temp / "DEPLOY")
@@ -238,4 +261,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     here = Path(__file__).resolve().parent
     source = here / "BLUEPRINT.md"
+    if args.release:
+        validate_release(source)
     check(source, here) if args.check else build(source, here)

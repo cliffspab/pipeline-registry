@@ -1,90 +1,76 @@
-# BKPDE workspace
++# BKPDE workspace
 
-This workspace produces the Bangkok Post desk-editing Blueprint and its handover set.
+This workspace produces the Bangkok Post desk-editing Blueprint and its six-skill delivery.
 
 ## Cold start
 
-Start with `00_START-HERE.md`. It is the human-readable map for resuming work
-without any previous chat. On every fresh task, read the current instruction,
-then inspect the files and run the read-only checks named there before reporting
-state or making changes. Never infer current state from an old conversation.
+Start with `00_START-HERE.md`. On every fresh maintenance task, read the
+supervisor's current instruction, inspect the live files and run the named
+read-only checks before reporting state or changing anything. Current files
+outrank old conversations.
 
 ## Roles and authority
 
-The human is the supervisor. The AI is the sub-editor while editing copy and the custodian while maintaining the files. The supervisor's current instruction controls the task. `BLUEPRINT.txt` controls editorial work; this file controls repository and handover mechanics. Do not turn administration notes into editorial rules.
+The human is the supervisor. The AI is the sub-editor for copy and the custodian
+for this mechanism. The supervisor controls scope, edition identity and
+publication. Repository instructions must not become editorial rules.
 
-Ask before publishing, moving or deleting material, changing the edition identity, or widening an agreed change. Prefer an isolated candidate and verified comparison before touching the live set.
+Ask before publishing, moving or deleting material, changing edition identity
+or widening an agreed change. Use an isolated candidate for substantive
+machinery changes.
 
 ## Current architecture
 
-The editable Blueprint authority is split across four root working sources:
-`BLUEPRINT.front.md`, `GUIDE.md`, `PROCESSES.md` and `DIRECTORY.yaml`.
-Root `build.py` compiles them byte-for-byte into `BLUEPRINT.txt`, which is the
-single complete editorial surface. Root `CONTROL.txt` is the peer operational
-source for command invocation and workflow routing.
+`pipeline-registry/Blueprint/BLUEPRINT.md` is the single editable modular
+authority. It contains Boot, Edit, Check, Photo, PR and Thai Places components.
+`Blueprint/build.py` validates that source and generates the complete
+`BLUEPRINT.txt`, compatibility texts, routed Markdown, skill folders, ZIP
+packages, indexes and build receipt.
 
-Five text deliveries are derived from BLUEPRINT:
+`Blueprint/build_human_volume.py` generates the edition-named Word reading
+volume directly from the same authority. Never hand-edit generated outputs.
 
-- `GUIDE.txt` = the complete `[G1] GUIDE`; shortlink `/guide`.
-- `PROCESSES.txt` = the complete `[P] PROCESSES`.
-- `DIRECTORY.yaml` = STATUS + REFERENCES; shortlink `/dir`.
-- `DIRECTORY.txt` = byte-identical compatibility twin for text-only surfaces.
-- `VERSION.txt` = the exact one-line edition witness; shortlink `/ver`.
-
-The Word volume and its PDF conversion are also generated artifacts.
-
-`CONTROL.txt` is the peer operational source. BLUEPRINT governs editorial work.
-CONTROL maps each generated skill to the bounded Guide and Process sections it
-needs. It must not duplicate editorial rules.
-
-The fenced YAML Directory inside `BLUEPRINT.txt` is load-bearing. Every source and derived part carries one matching edition tag. GPT-era editions include `_gpt_` in that tag; the first is `210826_gpt_compact`.
-
-Edit the four root Blueprint working sources or root `CONTROL.txt` only. Never
-hand-edit compiled or generated files in `pipeline-registry/Blueprint/` or
-`pipeline-registry/Control/plugin/`.
+Boot is the front-end router and carries House Essentials. Edit carries the
+common editing method and embedded Directory data. Thai Places is a separate,
+conditional lookup. Check, Photo and PR remain bounded task modules.
 
 ## Safe build and publication
 
 1. Make and test an isolated candidate.
-2. Copy the approved working sources to the root source set.
-3. Run root `build.py`; all guards must pass.
-4. Copy the approved working sources and compiled `BLUEPRINT.txt` to
-   `pipeline-registry/Blueprint/`, copy the approved steering source to
-   `pipeline-registry/Control/CONTROL.txt`, and install approved machinery
-   changes.
-5. Record every addition or material change in the user-facing
-   `pipeline-registry/CHANGELOG.md`, naming the affected deliveries and user
-   update action; give each published version its own entry. Record the exact
-   push payload in `COMMITS-PENDING.md` and edition reasoning in
-   `VERSION_HISTORY.md`.
-6. The supervisor runs `push.bat`. Its preflight must be read before typing `PUSH`.
-7. During the skills beta, treat publication as confirmed when local HEAD equals
-   `origin/main` and GitHub validation passes. Refresh the generated Shift
-   pickup set only from the validated registry build, then use
-   `distribute_blueprint.py` to copy and verify the complete registry Blueprint
-   tree at all three approved cloud destinations. Edition sealing remains
-   paused.
+2. Install the approved source or machinery changes in the registry.
+3. Run `python Blueprint/build.py` and regenerate the Word volume when its
+   source or builder changes.
+4. Run the read-only build and Word checks.
+5. Record material changes in `CHANGELOG.md`, the exact payload in
+   `COMMITS-PENDING.md` and edition reasoning in `VERSION_HISTORY.md`.
+6. The supervisor runs `push.bat` and types `PUSH` only after reading its
+   preflight.
+7. Publication is complete only when local HEAD equals `origin/main`, GitHub
+   validation succeeds, and the exact validated commit has been copied and
+   verified on pCloud, Google Drive and OneDrive.
 
-## Generated Shift pickup
+The guarded push never rebases after validation. If upstream has advanced, it
+stops and requires the combined state to be reviewed and validated again.
 
-`Shift/` is a generated local pickup set, never an editable authority or a
-publication target. Root `shift.py` replaces it from the current validated
-`pipeline-registry/Blueprint/` outputs and verifies exact hashes. It contains
-nine loose documents (`BLUEPRINT.md`, `DIRECTORY.yaml`, the six module Markdown
-files and the Word volume) plus `skillmd/`, whose six named skill folders each
-hold one `SKILL.md` and whose `zips/` folder holds the six upload archives.
-Do not add hand-maintained files or edit material in place. Shift itself is not
-mirrored; the validated registry `Blueprint/` tree is copied separately to
-`pCloud:Public Folder/pipeline-registry/Blueprint` and
-`GDrive:pipeline-registry/Blueprint` and
-`onedrivebkp:pipeline-registry/Blueprint` after every confirmed distribution.
+## Distribution and recovery
+
+Cloud mirrors are generated delivery surfaces, never sources. Distribution
+uses `rclone copy`, never `sync`; it does not delete remote-only files. The
+publisher extracts the exact validated Git commit to a temporary directory,
+copies that immutable Blueprint tree, verifies each destination and writes a
+small local receipt under `.publication/`. The committed portability ZIP,
+manifest and snapshot are also copied to its separate OneDrive backup.
+
+`Shift/` is an empty, reusable named space. It is not a source, handover or
+publication target. Do not refresh or mirror it unless the supervisor creates a
+new contract for it.
+
+The self-contained recovery and audit material lives in
+`pipeline-registry/PORTABILITY/`. GitHub is the registry and validation base.
+Credentials and rclone configuration remain outside the project.
 
 ## Generated and historical material
 
-`Blueprint/BLUEPRINT.txt`, `GUIDE.txt`, `PROCESSES.txt`, `DIRECTORY.txt`,
-compatibility shims, DOCX, PDF and manifest are generated. The registry's
-`BLUEPRINT.front.md`, `GUIDE.md`, `PROCESSES.md` and `DIRECTORY.yaml` are source
-mirrors. `Control/plugin/` is generated from `Control/CONTROL.txt`. Bootstrap
-files are mirrors. `git add -A` publishes deletions as well as additions.
-
-Keep the workspace root operational, not historical. Put superseded handoffs, candidates, probes and pre-GPT administration in the dated Archive. Do not carry old model-specific instructions forward. Keep this file short and current.
+Keep the workspace root operational. Put candidates, probes and superseded
+handoffs in dated archive or temporary space. Do not carry old model-specific
+instructions forward. `git add -A` publishes deletions as well as additions.

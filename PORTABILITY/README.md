@@ -17,5 +17,8 @@ and begin with `audit/AUDIT-BRIEF.md`. The ZIP carries frozen readable machinery
 under `snapshot/`. Auditors propose findings; they do not edit the live
 repository or redefine editorial rules.
 
+For repeatable multi-model review, use `audit/DISPATCH-PROMPT.md` unchanged for
+each model and consolidate only afterward in `audit/COMPARISON-TABLE.md`.
+
 The kit deliberately excludes credentials, rclone tokens, browser sessions and
 machine-specific secrets. `DEPENDENCIES.md` explains how to restore access.

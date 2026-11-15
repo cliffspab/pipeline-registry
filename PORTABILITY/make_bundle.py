@@ -8,7 +8,6 @@ import json
 import os
 import shutil
 import stat
-import subprocess
 import zipfile
 from pathlib import Path
 
@@ -18,8 +17,9 @@ EXCLUDE = {"MANIFEST.json", "BKPDE-Portability.zip"}
 SNAPSHOT = (
     "Blueprint/BLUEPRINT.md", "Blueprint/build.py",
     "Blueprint/build_human_volume.py", "push.bat",
-    "bootstrap/AGENTS.md", "bootstrap/shift.py",
-    "bootstrap/distribute_blueprint.py", ".github/workflows/compile.yml",
+    "bootstrap/AGENTS.md", "bootstrap/00_START-HERE.md",
+    "bootstrap/clear_pending.py", "bootstrap/distribute_blueprint.py",
+    ".github/workflows/compile.yml",
 )
 
 
@@ -38,8 +38,7 @@ def clear_readonly(function, target, _error) -> None:
 
 
 def main() -> None:
-    commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO,
-                            check=True, text=True, capture_output=True).stdout.strip()
+    edition = (REPO / "Blueprint" / "VERSION.txt").read_text(encoding="utf-8").strip()
     snapshot_root = ROOT / "snapshot"
     if snapshot_root.exists():
         if snapshot_root.parent != ROOT or snapshot_root.name != "snapshot":
@@ -53,7 +52,7 @@ def main() -> None:
         target.write_bytes(source.read_bytes())
         snapshot[name] = digest(source)
     (ROOT / "AUDIT-SNAPSHOT.json").write_text(
-        json.dumps({"commit": commit, "files": snapshot}, indent=2) + "\n",
+        json.dumps({"edition": edition, "files": snapshot}, indent=2) + "\n",
         encoding="utf-8", newline="\n")
     manifest_files = {p.relative_to(ROOT).as_posix(): digest(p) for p in files()}
     (ROOT / "MANIFEST.json").write_text(

@@ -1,41 +1,49 @@
-# BKP Desk — start here
++# BKP Desk — start here
 
-This page is the permanent handover point for the supervisor and the assistant.
-A previous chat is optional context, not operational memory.
+This is the cold-start map for editorial work and mechanism maintenance.
 
-## Start
+## Establish live state
 
-1. Open the project at `D:\Documents\BANGKOK POST DESK EDITOR`.
-2. Read root `00_START-HERE.md` and `AGENTS.md`.
-3. Establish current state from live files and checks; never assume an old chat
-   is current.
-4. Use `BLUEPRINT.txt` for complete editorial authority and `CONTROL.txt` for
-   task routing.
+Read the supervisor's current instruction and `AGENTS.md`, then inspect:
 
-The pinned Codex task is named **BKP Desk — Start Here**. If it is unavailable,
-start a new task in the project: the root files supply the whole cold start.
+- `pipeline-registry/Blueprint/VERSION.txt`
+- `pipeline-registry/COMMITS-PENDING.md`
+- the repository working tree and local/origin commit identity.
 
-Codex tasks are host-backed. To continue the pinned task away from home, pair
-Codex Remote from the home desktop app's **Settings → Connections → Control
-this PC** using the same account and workspace, and keep the host awake and
-online. QR/device approval is a human-only step. An office computer does not
-automatically receive the home host's local task or files; use this bootstrap
-against an available project copy when the host cannot be reached.
+For a read-only mechanism check, run from `pipeline-registry`:
 
-For Claude, use the complete adjacent `CLAUDE.md` as the project's instruction
-text and keep the root copy beside `AGENTS.md` in the live workspace.
+```powershell
+python Blueprint/build.py --check --release
+python Blueprint/build_human_volume.py --check
+python PORTABILITY/verify_portability.py --live
+```
 
-## Live-state proof
+Report any failed check plainly. Do not infer state from an old conversation.
 
-Before reporting readiness, read `VERSION.txt` and
-`pipeline-registry\COMMITS-PENDING.md`, inspect the registry working tree, and
-run `python shift.py --check`. Run root `python build.py` when build validation
-is relevant. Report the edition, pending payload, working-tree state and any
-failed check.
+## Editorial work
 
-Shift is the sealed eight-file `_sync`-named handover mirrored by rclone to
-`pCloud:Public Folder/BKP Shift`; Google Docs are optional manual reading copies.
+`Blueprint/BLUEPRINT.md` is the editable modular authority.
+`Blueprint/BLUEPRINT.txt` is its complete generated reading surface.
+The generated skills route Edit, Check, Photo, PR and Thai Places work; Boot is
+the front-end router and holds House Essentials.
 
-Do not publish, push, seal, refresh Shift or pCloud, move or delete material,
-change edition identity, or widen a requested change without supervisor
-authority.
+Never hand-edit generated deployment files.
+
+## Maintenance
+
+Use an isolated candidate for substantive machinery changes. Record approved
+material changes in `CHANGELOG.md`, `VERSION_HISTORY.md` and
+`COMMITS-PENDING.md`. Publication is separate: the supervisor reads
+`push.bat` preflight and types `PUSH`.
+
+A successful guarded push commits and validates the exact payload, copies the
+validated commit's Blueprint tree to pCloud, Google Drive and OneDrive, verifies
+the destinations and writes `.publication/last.json`.
+
+## Recovery
+
+The clone plus `PORTABILITY/` is the cold-recovery set. Follow
+`PORTABILITY/COLD-REBUILD.md`. Account credentials, GitHub authentication and
+rclone configuration are restored separately and must never be committed.
+
+`Shift/` is unused and is not part of build, publication or recovery.

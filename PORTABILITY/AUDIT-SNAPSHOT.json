@@ -1,13 +1,14 @@
 {
-  "commit": "206efcefd5ccc45bf7a13431524a1eadb256dfc6",
+  "edition": "151126_gpt_modular-routes",
   "files": {
     "Blueprint/BLUEPRINT.md": "215298dedeb26aee77a816ba507fad60641b69d957b2d72ff97dcde93557bf7d",
-    "Blueprint/build.py": "841e6989de4fc5029ebb8f671356befed7f141e1ee10a8fd0026dab7268108e9",
-    "Blueprint/build_human_volume.py": "4bf8ed80e88cd84a1ec54bd56c976b97d61207f14668408f59c5a9217bf92f0b",
-    "push.bat": "eb0e2470fa912d6722b24ff70a7d9301d77bdb82016499c68706b2d4ee76616b",
-    "bootstrap/AGENTS.md": "0f72d7ed40399bbc789803a497d996f28f6eb30e18a0c7367126f0d3d0c138e2",
-    "bootstrap/shift.py": "a97510654ccdcdcc0e0899fc7db3a17d390e4bf601a36372dde1f1d0ab8fd31d",
-    "bootstrap/distribute_blueprint.py": "a80ac5dab3354957e0e01ff5f5feac37021765df215a5a99679d5c2fe9de997d",
-    ".github/workflows/compile.yml": "19d7516891907d8d9b4c1a006100a02bdaf7dbc83c647b3dba5cac6957a9b103"
+    "Blueprint/build.py": "f168f1ff69ce9b0be098a661205ce8a61515fc72c11d1fa07b021c98b8db70eb",
+    "Blueprint/build_human_volume.py": "d4b8a43532c87f5ffc39e8d9b1db1493e04ea5912795092b47aa4b36ea8e38e2",
+    "push.bat": "5552d565dfd853f78a2879f83d735fee7868de36742000a6ea9d45b37439be58",
+    "bootstrap/AGENTS.md": "9f8a000a20a1579a7c72f9a759accc83750d2ae34c037c8a4f06fc403506a63a",
+    "bootstrap/00_START-HERE.md": "db6850ba8968e1b5a7902d5f0c8bc046a99db097db2a49f830fa4dae2f4ba207",
+    "bootstrap/clear_pending.py": "58474ecb748d9fa33fa313decfb40500eff3595685a525a3b6a54b897c72839c",
+    "bootstrap/distribute_blueprint.py": "ff217f38b9b112470f1d8ea44368da3b146c232dfdfb795efebb4f1ec535d3d1",
+    ".github/workflows/compile.yml": "7dae811fb87b252fa99c27a6b743f5c3f46bbf26fc87beb1bf56c0bdfe9cd402"
   }
 }

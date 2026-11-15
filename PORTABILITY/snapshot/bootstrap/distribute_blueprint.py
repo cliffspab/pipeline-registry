@@ -1,28 +1,38 @@
 #!/usr/bin/env python3
-"""Copy the published Blueprint tree to the two approved cloud mirrors."""
+"""Publish the validated Blueprint commit and back up its portability kit."""
 
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import json
+import re
 import shutil
 import subprocess
 import time
+import tempfile
+import zipfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-SOURCE = ROOT / "pipeline-registry" / "Blueprint"
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parent
+SOURCE = REPO / "Blueprint"
 DESTINATIONS = (
     "pCloud:Public Folder/pipeline-registry/Blueprint",
     "GDrive:pipeline-registry/Blueprint",
     "onedrivebkp:pipeline-registry/Blueprint",
 )
+PORTABILITY_DESTINATION = "onedrivebkp:BKPDE-Portability"
+PORTABILITY_FILES = ("BKPDE-Portability.zip", "MANIFEST.json", "AUDIT-SNAPSHOT.json")
 WORKFLOW = "Validate Blueprint beta"
 RCLONE_FILTERS = ("--exclude", "**/__pycache__/**", "--exclude", "**/*.pyc")
 
 
 def executable(name: str) -> str:
     found = shutil.which(name)
+    if not found and name == "rclone":
+        bundled = Path(r"C:\Program Files\RcloneView\rclone.exe")
+        found = str(bundled) if bundled.is_file() else None
     if not found:
         raise SystemExit(f"FATAL: {name} is not installed or is not on PATH")
     return found
@@ -30,7 +40,7 @@ def executable(name: str) -> str:
 
 def run(args: list[str], *, capture: bool = False) -> subprocess.CompletedProcess[str]:
     return subprocess.run(args, check=True, text=True, encoding="utf-8",
-                          cwd=ROOT / "pipeline-registry",
+                          cwd=REPO,
                           stdout=subprocess.PIPE if capture else None,
                           stderr=subprocess.STDOUT if capture else None)
 
@@ -66,30 +76,92 @@ def wait_validation(commit: str) -> None:
     print(f"GitHub validation: PASS - run {run_id}")
 
 
-def publish() -> None:
+def confirmed_validation(commit: str) -> int:
+    gh = executable("gh")
+    result = run([gh, "run", "list", "--commit", commit, "--workflow", WORKFLOW,
+                  "--limit", "1", "--json", "databaseId,status,conclusion"], capture=True)
+    rows = json.loads(result.stdout or "[]")
+    if not rows or rows[0].get("status") != "completed" or rows[0].get("conclusion") != "success":
+        raise SystemExit(f"FATAL: no successful completed validation for {commit}")
+    return int(rows[0]["databaseId"])
+
+
+def committed_tree(commit: str, temporary: Path) -> Path:
+    if not re.fullmatch(r"[0-9a-fA-F]{40}", commit):
+        raise SystemExit("FATAL: publish requires a full 40-character commit SHA")
+    head = run(["git", "rev-parse", "HEAD"], capture=True).stdout.strip()
+    if head.lower() != commit.lower():
+        raise SystemExit(f"FATAL: validated commit {commit} is not current HEAD {head}")
+    archive = temporary / "blueprint.zip"
+    paths = ["Blueprint", *(f"PORTABILITY/{name}" for name in PORTABILITY_FILES)]
+    run(["git", "archive", "--format=zip", f"--output={archive}", commit, *paths])
+    with zipfile.ZipFile(archive) as package:
+        package.extractall(temporary / "tree")
+    tree = temporary / "tree"
+    if not (tree / "Blueprint" / "VERSION.txt").is_file():
+        raise SystemExit("FATAL: committed Blueprint archive is incomplete")
+    if any(not (tree / "PORTABILITY" / name).is_file() for name in PORTABILITY_FILES):
+        raise SystemExit("FATAL: committed portability backup is incomplete")
+    return tree
+
+
+def remote_inventory(rclone: str, destination: str, source: Path) -> tuple[int, int]:
+    result = run([rclone, "lsf", "-R", "--files-only", destination, *RCLONE_FILTERS], capture=True)
+    remote_paths = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    duplicates = sorted(path for path, count in Counter(remote_paths).items() if count > 1)
+    if duplicates:
+        raise SystemExit(f"FATAL: duplicate remote paths at {destination}: {duplicates}")
+    local_paths = {p.relative_to(source).as_posix() for p in source.rglob("*") if p.is_file()}
+    extras = sorted(set(remote_paths) - local_paths)
+    if extras:
+        print(f"notice: {destination} has {len(extras)} remote-only file(s); none deleted")
+    return len(local_paths), len(extras)
+
+
+def write_receipt(commit: str, version: str, run_id: int, results: list[dict]) -> None:
+    receipt_dir = REPO / ".publication"
+    receipt_dir.mkdir(exist_ok=True)
+    payload = {"edition": version, "commit": commit, "github_run": run_id,
+               "github_conclusion": "success", "destinations": results}
+    (receipt_dir / "last.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
+def publish(commit: str) -> None:
     preflight()
+    run_id = confirmed_validation(commit)
     rclone = executable("rclone")
-    for destination in DESTINATIONS:
-        print(f"copying Blueprint -> {destination}")
-        run([rclone, "copy", str(SOURCE), destination, "--create-empty-src-dirs",
-             "--progress", *RCLONE_FILTERS])
-        run([rclone, "check", str(SOURCE), destination, "--one-way", *RCLONE_FILTERS])
-        print(f"verified: {destination}")
-    print("distribution: PASS - pCloud, Google Drive and OneDrive mirrors verified")
+    results = []
+    with tempfile.TemporaryDirectory() as temporary_name:
+        tree = committed_tree(commit, Path(temporary_name))
+        source = tree / "Blueprint"
+        version = (source / "VERSION.txt").read_text(encoding="utf-8").strip()
+        for destination in DESTINATIONS:
+            run([rclone, "copy", str(source), destination, "--create-empty-src-dirs", *RCLONE_FILTERS])
+            run([rclone, "check", str(source), destination, "--one-way", *RCLONE_FILTERS])
+            files, extras = remote_inventory(rclone, destination, source)
+            results.append({"destination": destination, "files": files, "remote_extras": extras})
+        portability = tree / "PORTABILITY"
+        run([rclone, "copy", str(portability), PORTABILITY_DESTINATION])
+        run([rclone, "check", str(portability), PORTABILITY_DESTINATION, "--one-way"])
+        files, extras = remote_inventory(rclone, PORTABILITY_DESTINATION, portability)
+        results.append({"destination": PORTABILITY_DESTINATION, "files": files,
+                        "remote_extras": extras, "scope": "portability backup"})
+    write_receipt(commit, version, run_id, results)
+    print(f"distribution: PASS - 3 Blueprint mirrors and portability backup verified from {commit[:12]}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--preflight", action="store_true")
-    group.add_argument("--publish", action="store_true")
+    group.add_argument("--publish", metavar="COMMIT")
     group.add_argument("--wait-validation", metavar="COMMIT")
     args = parser.parse_args()
     try:
         if args.preflight:
             preflight()
         elif args.publish:
-            publish()
+            publish(args.publish)
         else:
             wait_validation(args.wait_validation)
     except subprocess.CalledProcessError as exc:

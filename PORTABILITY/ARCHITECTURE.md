@@ -1,73 +1,39 @@
 # Architecture and authority
 
-## Purpose
-
-The mechanism turns one approved modular Blueprint into reproducible skill,
-lookup, reading and cloud-delivery surfaces. It keeps editorial authority,
-build machinery and transport separate.
-
 ## Authority chain
 
-1. The human supervisor authorises scope, edition identity and publication.
-2. `Blueprint/BLUEPRINT.md` is the modular beta source for the six-skill set.
-3. `Blueprint/build.py` validates and generates the deployment.
-4. Generated files are evidence and delivery surfaces, never independent
-   editorial authority.
+1. The supervisor controls scope, edition identity and publication.
+2. `Blueprint/BLUEPRINT.md` is the single editable modular authority.
+3. `Blueprint/build.py` validates and generates all text, routed, skill, ZIP
+   and receipt surfaces.
+4. `Blueprint/build_human_volume.py` generates the Word reading volume from
+   the same source and embeds its edition and source hash.
 5. Git commit identity plus successful GitHub validation confirms publication.
-6. `Shift/` and the three cloud trees are generated pickup or mirror surfaces.
+6. The exact validated commit is copied to the three cloud destinations.
 
-Repository administration must not become an editorial rule. Editorial content
-must not be silently changed to accommodate transport machinery.
+Generated outputs and cloud mirrors are never independent authority.
 
-## Source and generated layout
+## Components and invariants
 
-`Blueprint/BLUEPRINT.md` contains six marked components:
+The master contains exactly one each of Boot, Edit, Check, Photo, PR and Thai
+Places. Unmarked content between components is invalid. Boot contains the sole
+House Essentials copy and the semantic routing table. Edit contains the common
+method and embedded Directory. Thai Places remains a conditional lookup.
 
-- Boot: front-end router, House Essentials and hard invariants.
-- Edit: common desk method and embedded Directory reference source.
-- Check, Photo and PR: bounded task modules.
-- Thai Places: conditional Thai-geography lookup.
+The build enforces six components, 37 routes, 21 real Markdown heading targets,
+16 reference routes, 76 Thai provinces, deterministic ZIPs and matching edition
+witnesses.
 
-`Blueprint/build.py` produces:
+## Publication boundary
 
-- complete `BLUEPRINT.txt` and Directory compatibility files;
-- six routed Markdown files;
-- six installable `SKILL.md` folders;
-- six deterministic ZIP packages;
-- indexes, hashes and a build receipt.
+The cloud publisher does not copy the mutable working tree. It extracts
+`Blueprint/` from the full commit SHA that passed GitHub validation into a
+temporary directory, copies that immutable tree with `rclone copy`, performs a
+one-way content check and inventories duplicate or remote-only paths. Remote
+extras are reported and never deleted.
 
-`Blueprint/build_human_volume.py` produces the Word reading volume. Root
-`shift.py` creates the exact local pickup. Root `distribute_blueprint.py` waits
-for GitHub validation and copies the complete registry `Blueprint/` tree to the
-three approved cloud destinations.
+The same committed archive carries the portability ZIP, manifest and audit
+snapshot to the separate Bangkok Post OneDrive portability backup.
 
-## Distribution sequence
-
-```text
-approved source
-    -> local build and byte comparison
-    -> supervisor-reviewed push preflight
-    -> Git commit and origin/main equality
-    -> GitHub Linux validation
-    -> exact local Shift refresh
-    -> copy-only pCloud, Google Drive and OneDrive mirrors
-    -> one-way source-to-remote verification
-```
-
-No cloud mirror is a source. `rclone copy`, not `rclone sync`, is intentional:
-distribution may add or update source paths but does not delete remote extras.
-
-## Hard invariants
-
-- Edition identity matches across the complete generated set.
-- The source contains exactly six recognised components.
-- House Essentials occurs exactly once, in Boot.
-- The semantic index has 37 routes: 21 heading routes and 16 reference routes.
-- Thai Places contains the held 76-province register.
-- Every generated skill passes the skill validator.
-- Rebuilding produces byte-identical files on Windows and Linux.
-- Publication requires local `HEAD == origin/main` and successful GitHub CI.
-- Shift is regenerated only from the validated registry.
-- Cloud copies exclude `__pycache__` and `*.pyc`, never contain credentials,
-  and must pass one-way `rclone check`.
-
+A successful run writes `.publication/last.json`. Normal success output is
+short; detailed command output is reserved for failures.

@@ -1,20 +1,19 @@
-# Bangkok Post Desk Editor
+# Bangkok Post desk editor registry
 
-The durable entry point for the supervisor and the desk assistant is
-[`bootstrap/00_START-HERE.md`](bootstrap/00_START-HERE.md). It explains which
-files to use and how a fresh assistant establishes live state without an old
-chat.
+The current modular Blueprint lives under [Blueprint](Blueprint/).
 
-- Codex/project mechanics: [`bootstrap/AGENTS.md`](bootstrap/AGENTS.md)
-- Claude project instructions: [`bootstrap/CLAUDE.md`](bootstrap/CLAUDE.md)
-- Complete editorial authority: [`Blueprint/BLUEPRINT.txt`](Blueprint/BLUEPRINT.txt)
-- Operational routing: [`Control/CONTROL.txt`](Control/CONTROL.txt)
-- Cold reconstruction and mechanism audits: [`PORTABILITY/README.md`](PORTABILITY/README.md)
+- Editable authority: [Blueprint/BLUEPRINT.md](Blueprint/BLUEPRINT.md)
+- Complete generated surface: [Blueprint/BLUEPRINT.txt](Blueprint/BLUEPRINT.txt)
+- Generated skills and routed files: [Blueprint/DEPLOY](Blueprint/DEPLOY/)
+- Uploadable skill ZIPs: [Blueprint/UPLOAD](Blueprint/UPLOAD/)
+- Cold recovery and mechanism audit: [PORTABILITY](PORTABILITY/)
+- Operational recovery mirrors: [bootstrap](bootstrap/)
 
-Publication remains supervisor-controlled. The registry is the public source
-and build base; the workspace root holds the live editable sources. `Shift/`
-is a generated local pickup, not a source or publication target. Its exact
-inventory is rebuilt from the validated registry by the root `shift.py`.
-After validation, `distribute_blueprint.py` copies and verifies the complete
-`Blueprint/` tree at the approved pCloud, Google Drive and Bangkok Post
-OneDrive destinations without deleting remote extras.
+Run `python Blueprint/build.py --check --release` to prove generated text and
+skill outputs. Run `python Blueprint/build_human_volume.py --check` to prove
+that the edition-named Word volume matches the master source.
+
+`push.bat` is the guarded publication entry point. It validates and displays
+the payload before confirmation, pushes without rebasing, waits for GitHub
+validation, then copies the exact validated commit to pCloud, Google Drive and
+OneDrive. Cloud mirrors are delivery surfaces, not sources.

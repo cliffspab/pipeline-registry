@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+import hashlib
 import re
 from pathlib import Path
 
@@ -14,7 +16,8 @@ from docx.shared import Cm, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "BLUEPRINT.md"
-OUTPUT = ROOT / "Bangkok_Post_Blueprint_151126_gpt_modular-routes.docx"
+VERSION_RE = re.compile(r"^<!-- MASTER ([A-Za-z0-9_.-]+) -->$", re.M)
+PART_NAMES = ("BOOT", "EDIT", "CHECK", "PHOTO", "PR", "THAI_PLACES")
 PART_RE = re.compile(
     r"<!-- COMPONENT: ([A-Z_]+) -->\n(.*?)\n<!-- END COMPONENT: \1 -->",
     re.S,
@@ -117,7 +120,7 @@ def render_markdown(doc: Document, body: str) -> None:
             code_lines.append(raw)
             i += 1
             continue
-        if stripped == "---":
+        if stripped == "---" and (i == 0 or in_front):
             flush_paragraph()
             if in_front:
                 add_frontmatter(doc, front)
@@ -129,7 +132,7 @@ def render_markdown(doc: Document, body: str) -> None:
             front.append(raw)
             i += 1
             continue
-        if stripped in {"***", "___"}:
+        if stripped in {"---", "***", "___"}:
             flush_paragraph()
             i += 1
             continue
@@ -137,9 +140,9 @@ def render_markdown(doc: Document, body: str) -> None:
         if heading:
             flush_paragraph()
             level = len(heading.group(1))
-            text = heading.group(2).replace("`", "")
+            text = heading.group(2)
             p = doc.add_paragraph(style=f"Heading {level}")
-            p.add_run(text)
+            add_inline(p, text)
             border_bottom(p, 28 if level == 1 else 12 if level == 2 else 0)
             keep_with_next(p)
             i += 1
@@ -256,9 +259,46 @@ def add_page_number(paragraph) -> None:
     run._r.extend([begin, instr, end])
 
 
+def source_identity(text: str) -> tuple[str, str]:
+    match = VERSION_RE.search(text)
+    if not match:
+        raise SystemExit("FATAL: master edition mark missing")
+    return match.group(1), hashlib.sha256(SOURCE.read_bytes()).hexdigest()
+
+
+def output_path(version: str) -> Path:
+    return ROOT / f"Bangkok_Post_Blueprint_{version}.docx"
+
+
+def check_existing(version: str, source_sha: str) -> None:
+    output = output_path(version)
+    if not output.is_file():
+        raise SystemExit(f"FATAL: Word volume missing: {output.name}")
+    doc = Document(output)
+    witness = f"edition={version}; source_sha256={source_sha}"
+    if doc.core_properties.comments != witness:
+        raise SystemExit("FATAL: Word volume does not match the current Blueprint source")
+    footer = "".join(p.text for section in doc.sections for p in section.footer.paragraphs)
+    if version not in footer:
+        raise SystemExit("FATAL: Word footer edition differs")
+    print(f"Word volume: PASS - {output.name} matches source")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
     text = SOURCE.read_text(encoding="utf-8-sig").replace("\r\n", "\n")
-    parts = dict(PART_RE.findall(text))
+    version, source_sha = source_identity(text)
+    found = PART_RE.findall(text)
+    names = [name for name, _body in found]
+    if names != list(PART_NAMES):
+        raise SystemExit(f"FATAL: Word component sequence differs: {names}")
+    parts = dict(found)
+    if args.check:
+        check_existing(version, source_sha)
+        return
+    output = output_path(version)
     preface = text.split("<!-- COMPONENT: BOOT -->", 1)[0]
     preface = re.sub(r"<!-- MASTER .*? -->\s*", "", preface)
 
@@ -267,7 +307,7 @@ def main() -> None:
     doc.core_properties.title = "Bangkok Post Blueprint"
     doc.core_properties.subject = "Complete modular desk edition"
     doc.core_properties.author = "Bangkok Post"
-    doc.core_properties.comments = "Generated from the 151126_gpt_modular-routes Markdown authority"
+    doc.core_properties.comments = f"edition={version}; source_sha256={source_sha}"
 
     title = doc.add_paragraph()
     title.style = doc.styles["Title"]
@@ -286,15 +326,15 @@ def main() -> None:
     footer = doc.sections[0].footer.paragraphs[0]
     footer.style = doc.styles["Normal"]
     footer.runs.clear()
-    footer.add_run("151126_gpt_modular-routes   •   ")
+    footer.add_run(f"{version}   •   ")
     add_page_number(footer)
 
     settings = doc.settings._element
     update = OxmlElement("w:updateFields")
     update.set(qn("w:val"), "true")
     settings.append(update)
-    doc.save(OUTPUT)
-    print(OUTPUT)
+    doc.save(output)
+    print(output)
 
 
 if __name__ == "__main__":

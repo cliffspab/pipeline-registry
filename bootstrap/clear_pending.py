@@ -27,7 +27,8 @@ import sys
 from datetime import date
 from pathlib import Path
 
-CLONE = Path(__file__).resolve().parent / "pipeline-registry"
+HERE = Path(__file__).resolve().parent
+CLONE = HERE.parent if HERE.name == "bootstrap" else HERE / "pipeline-registry"
 PENDING = CLONE / "COMMITS-PENDING.md"
 ARCHIVE = CLONE / "COMMITS-ARCHIVE.md"
 

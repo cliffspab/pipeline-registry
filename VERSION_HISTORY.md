@@ -6,6 +6,35 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — LEAN MECHANISM HARDENING
+
+**Authority.** Following independent Claude and Gemini audits, the supervisor
+delegated mechanism governance with two priorities: deterministic automation
+and low recurring model usage. Editorial content and edition identity remain
+unchanged.
+
+**Change.** The registry is now the self-contained source, build and guarded
+publication surface. Component and route guards prevent demonstrated silent
+loss cases. The Word volume derives and verifies its edition plus source hash.
+The push displays staged and unpublished work, stops if upstream advances and
+never removes an index lock or rebases a validated tree. Cloud publication
+extracts the exact validated commit, verifies three copy-only destinations,
+reports duplicates and extras, and writes a concise local receipt.
+Six obsolete bootstrap programs for the retired four-source, Shift and sealing
+path were removed; Git history retains them if historical diagnosis is needed.
+
+**Evidence.** The unchanged master and complete generated text retain matching
+SHA-256 hashes. Eight permanent regression tests pass, the build reproduces
+byte-for-byte, the Word witness passes, the 16-page DOCX render is intact, the
+guarded preflight reaches a clean no-write stop, immutable commit extraction
+passes and all three rclone remotes pass read-only preflight.
+
+**Verdict.** Candidate approved for installation and guarded publication under
+the existing `151126_gpt_modular-routes` edition; no reinstall is caused solely
+by the mechanism hardening.
+
+---
+
 ## 2026-11-15 — PORTABILITY AND MULTI-MODEL MECHANISM AUDIT KIT
 
 **Authority.** The supervisor approved two bounded continuity measures: a
@@ -18,6 +47,11 @@ deterministic export includes a frozen readable snapshot of the eight relevant
 mechanism files, a neutral audit brief, findings format and decision ledger.
 Auditors propose changes only; the supervisor retains acceptance authority and
 normal candidate, validation and publication rules still apply.
+
+The completed dispatch layer supplies one prompt to send unchanged to every
+model and one comparison sheet used only after independent responses return.
+The resulting audit ZIP identifies published commit `60e3c28` and is backed up
+directly through rclone at `onedrivebkp:BKPDE-Portability`.
 
 **Evidence.** The package manifest verifies 20 files. Its ZIP was extracted to
 an isolated folder and passed verification without the repository. The stronger
