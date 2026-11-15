@@ -109,6 +109,7 @@ class MechanismGuards(unittest.TestCase):
         self.assertEqual(len(loose), 8)
         self.assertEqual(len(skillmd), 12)
         self.assertNotIn(Path("Bangkok_Post_Blueprint.docx"), loose)
+        self.assertEqual(shift.DEFAULT_SHIFT, REPO / "Blueprint" / "Shift")
 
 
 if __name__ == "__main__":

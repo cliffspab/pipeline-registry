@@ -46,5 +46,5 @@ The clone plus `PORTABILITY/` is the cold-recovery set. Follow
 `PORTABILITY/COLD-REBUILD.md`. Account credentials, GitHub authentication and
 rclone configuration are restored separately and must never be committed.
 
-`Shift/` is the automatically refreshed local pickup: eight loose documents,
-six skill folders and six ZIPs. It is a convenience surface, not authority.
+`pipeline-registry/Blueprint/Shift/` is the automatically refreshed and mirrored pickup:
+eight loose documents, six skill folders and six ZIPs. It is not authority.

@@ -21,9 +21,9 @@ The script then:
 4. pushes without rebasing;
 5. proves local HEAD equals `origin/main`;
 6. waits for successful GitHub validation;
-7. refreshes and verifies the bounded local Shift pickup;
+7. refreshes and verifies the bounded Git-ignored `Blueprint/Shift/` pickup;
 8. extracts `Blueprint/` from that exact commit;
-9. copies and verifies it on pCloud, Google Drive and OneDrive;
+9. copies and verifies Blueprint, including Shift, on pCloud, Google Drive and OneDrive;
 10. backs up the committed portability ZIP, manifest and snapshot on OneDrive;
 11. writes `.publication/last.json`.
 

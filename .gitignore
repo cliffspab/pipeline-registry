@@ -17,3 +17,6 @@ _gsdata_/
 
 # Local machine-readable publication receipt
 .publication/
+
+# Generated local pickup; included in Blueprint syncs but never committed
+/Blueprint/Shift/

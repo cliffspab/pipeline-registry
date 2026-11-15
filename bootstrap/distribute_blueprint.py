@@ -9,6 +9,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 import time
 import tempfile
 import zipfile
@@ -24,6 +25,7 @@ DESTINATIONS = (
 )
 PORTABILITY_DESTINATION = "onedrivebkp:BKPDE-Portability"
 PORTABILITY_FILES = ("BKPDE-Portability.zip", "MANIFEST.json", "AUDIT-SNAPSHOT.json")
+SHIFT = SOURCE / "Shift"
 WORKFLOW = "Validate Blueprint beta"
 RCLONE_FILTERS = ("--exclude", "**/__pycache__/**", "--exclude", "**/*.pyc")
 
@@ -129,11 +131,13 @@ def write_receipt(commit: str, version: str, run_id: int, results: list[dict]) -
 def publish(commit: str) -> None:
     preflight()
     run_id = confirmed_validation(commit)
+    run([sys.executable, str(HERE / "shift.py"), "--check"])
     rclone = executable("rclone")
     results = []
     with tempfile.TemporaryDirectory() as temporary_name:
         tree = committed_tree(commit, Path(temporary_name))
         source = tree / "Blueprint"
+        shutil.copytree(SHIFT, source / "Shift")
         version = (source / "VERSION.txt").read_text(encoding="utf-8").strip()
         for destination in DESTINATIONS:
             run([rclone, "copy", str(source), destination, "--create-empty-src-dirs", *RCLONE_FILTERS])
@@ -147,7 +151,7 @@ def publish(commit: str) -> None:
         results.append({"destination": PORTABILITY_DESTINATION, "files": files,
                         "remote_extras": extras, "scope": "portability backup"})
     write_receipt(commit, version, run_id, results)
-    print(f"distribution: PASS - 3 Blueprint mirrors and portability backup verified from {commit[:12]}")
+    print(f"distribution: PASS - Blueprint, including Shift, on 3 mirrors plus portability backup verified from {commit[:12]}")
 
 
 def main() -> None:

@@ -61,11 +61,11 @@ copies that immutable Blueprint tree, verifies each destination and writes a
 small local receipt under `.publication/`. The committed portability ZIP,
 manifest and snapshot are also copied to its separate OneDrive backup.
 
-`Shift/` is a generated local pickup convenience, never authority or a cloud
-publication target. After GitHub validation, `bootstrap/shift.py` refreshes
+`pipeline-registry/Blueprint/Shift/` is a generated pickup convenience, never authority.
+After GitHub validation, `bootstrap/shift.py` refreshes
 exactly eight loose documents plus six `SKILL.md` folders and six ZIPs under
-`skillmd/`. It preserves unrelated top-level conveniences. The Word volume is
-not part of this contract.
+`skillmd/`. It preserves unrelated top-level conveniences, is Git-ignored and
+travels inside the Blueprint copy to all three cloud mirrors. The Word volume is not part of this contract.
 
 The self-contained recovery and audit material lives in
 `pipeline-registry/PORTABILITY/`. GitHub is the registry and validation base.

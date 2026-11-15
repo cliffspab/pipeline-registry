@@ -13,7 +13,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 BLUEPRINT = REPO / "Blueprint"
-DEFAULT_SHIFT = REPO.parent / "Shift"
+DEFAULT_SHIFT = BLUEPRINT / "Shift"
 SKILLS = ("boot", "edit", "check", "photo", "pr", "thai-places")
 LOOSE = {
     "BLUEPRINT.md": BLUEPRINT / "BLUEPRINT.md",
@@ -61,7 +61,7 @@ def verify(target: Path, files: dict[Path, Path]) -> list[str]:
 
 
 def refresh(target: Path, files: dict[Path, Path]) -> None:
-    if target.resolve().parent != REPO.parent.resolve() or target.name.casefold() != "shift":
+    if target.resolve().parent != BLUEPRINT.resolve() or target.name.casefold() != "shift":
         raise SystemExit(f"FATAL: refusing unexpected Shift target: {target}")
     missing = [source for source in files.values() if not source.is_file()]
     if missing:

@@ -6,6 +6,22 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — SHIFT MOVED INSIDE THE REGISTRY AND MIRRORED
+
+**Direction.** The supervisor placed the generated pickup inside
+`pipeline-registry/Blueprint/` so Blueprint sync and AI discovery naturally
+encounter it.
+
+**Mechanism.** `pipeline-registry/Blueprint/Shift/` remains generated and
+Git-ignored. After validation it refreshes locally and is included in the same
+copy and verification pass as the Blueprint tree on pCloud, Google Drive and
+OneDrive.
+
+**Verdict.** Location and transport change only; pickup contents, editorial
+authority and edition identity are unchanged.
+
+---
+
 ## 2026-11-15 — BOUNDED SHIFT PICKUP RESTORED
 
 **Correction.** The prior hardening pass incorrectly treated removal of Shift's

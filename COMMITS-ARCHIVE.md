@@ -66,6 +66,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Move and mirror Shift pickup | Move the generated pickup into
+  `pipeline-registry/Blueprint/Shift/`, keep it outside Git, and include and
+  verify its exact tree in the existing pCloud, Google Drive and OneDrive
+  Blueprint syncs after validation.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Restore bounded Shift pickup | Restore the approved eight loose
