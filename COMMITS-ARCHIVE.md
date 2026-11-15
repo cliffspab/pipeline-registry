@@ -65,6 +65,14 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-15
+
+- 2026-11-15 | Restore bounded Shift pickup | Restore the approved eight loose
+  documents, six skill folders and six ZIPs; exclude the Word volume, preserve
+  unrelated top-level conveniences, refresh after validation and add a contract
+  regression test.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Lean mechanism hardening | Align the registry, bootstrap and

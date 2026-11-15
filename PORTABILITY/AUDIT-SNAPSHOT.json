@@ -4,11 +4,12 @@
     "Blueprint/BLUEPRINT.md": "215298dedeb26aee77a816ba507fad60641b69d957b2d72ff97dcde93557bf7d",
     "Blueprint/build.py": "f168f1ff69ce9b0be098a661205ce8a61515fc72c11d1fa07b021c98b8db70eb",
     "Blueprint/build_human_volume.py": "d4b8a43532c87f5ffc39e8d9b1db1493e04ea5912795092b47aa4b36ea8e38e2",
-    "push.bat": "5552d565dfd853f78a2879f83d735fee7868de36742000a6ea9d45b37439be58",
-    "bootstrap/AGENTS.md": "9f8a000a20a1579a7c72f9a759accc83750d2ae34c037c8a4f06fc403506a63a",
-    "bootstrap/00_START-HERE.md": "db6850ba8968e1b5a7902d5f0c8bc046a99db097db2a49f830fa4dae2f4ba207",
+    "push.bat": "c0d13be3e578ed720b42dd79a3fdc0f47b00da8172787239a6c72cc891ac1f1f",
+    "bootstrap/AGENTS.md": "1cc37f6671f47ca335d13b68a0500b6315392cc2cc7cab361fd643ca52b555a2",
+    "bootstrap/00_START-HERE.md": "33b1ac342d65a414ccf55f405ae40e5ea5c561112d237011b1cd5f4159b24f18",
     "bootstrap/clear_pending.py": "58474ecb748d9fa33fa313decfb40500eff3595685a525a3b6a54b897c72839c",
     "bootstrap/distribute_blueprint.py": "ff217f38b9b112470f1d8ea44368da3b146c232dfdfb795efebb4f1ec535d3d1",
+    "bootstrap/shift.py": "445289fc22d4bdd6603545ad41e206b72fdc97657f30752418d486af27dc6cff",
     ".github/workflows/compile.yml": "7dae811fb87b252fa99c27a6b743f5c3f46bbf26fc87beb1bf56c0bdfe9cd402"
   }
 }

@@ -24,6 +24,7 @@ def load_module(name: str, path: Path):
 build = load_module("blueprint_build", REPO / "Blueprint" / "build.py")
 word = load_module("word_build", REPO / "Blueprint" / "build_human_volume.py")
 distribution = load_module("distribution", REPO / "bootstrap" / "distribute_blueprint.py")
+shift = load_module("shift", REPO / "bootstrap" / "shift.py")
 
 
 class MechanismGuards(unittest.TestCase):
@@ -100,6 +101,14 @@ class MechanismGuards(unittest.TestCase):
                 self.assertEqual((files, extras), (1, 1))
         finally:
             distribution.run = original_run
+
+    def test_shift_contract_is_exactly_eight_loose_and_twelve_skill_files(self):
+        files = shift.expected_files()
+        loose = {path for path in files if path.parts[0] != "skillmd"}
+        skillmd = {path for path in files if path.parts[0] == "skillmd"}
+        self.assertEqual(len(loose), 8)
+        self.assertEqual(len(skillmd), 12)
+        self.assertNotIn(Path("Bangkok_Post_Blueprint.docx"), loose)
 
 
 if __name__ == "__main__":

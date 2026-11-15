@@ -21,7 +21,7 @@ if exist ".git\rebase-merge" (
   echo [ABORT] unfinished rebase detected.
   pause & exit /b 1
 )
-for %%F in (Blueprint\BLUEPRINT.md Blueprint\build.py Blueprint\build_human_volume.py bootstrap\clear_pending.py bootstrap\distribute_blueprint.py COMMITS-PENDING.md) do (
+for %%F in (Blueprint\BLUEPRINT.md Blueprint\build.py Blueprint\build_human_volume.py bootstrap\clear_pending.py bootstrap\distribute_blueprint.py bootstrap\shift.py COMMITS-PENDING.md) do (
   if not exist "%%F" (
     echo [ABORT] required file missing: %%F
     pause & exit /b 1
@@ -86,9 +86,9 @@ echo --- pending record ---
 type COMMITS-PENDING.md
 echo.
 echo Typing PUSH authorises exactly the displayed payload. The script will
-echo commit, push, wait for GitHub validation, copy the validated commit to
-echo pCloud, Google Drive and OneDrive, back up the portability kit, verify
-echo every destination and write a local receipt.
+echo commit, push, wait for GitHub validation, refresh Shift, copy the validated
+echo commit to pCloud, Google Drive and OneDrive, back up the portability kit,
+echo verify every destination and write a local receipt.
 set "BKP_CONFIRM="
 set /p "BKP_CONFIRM=Type PUSH to continue, or press Enter to stop: "
 if /I not "%BKP_CONFIRM%"=="PUSH" (
@@ -136,12 +136,16 @@ python bootstrap\distribute_blueprint.py --wait-validation "%LH%" || (
   echo [FAIL] GitHub validation did not pass. Cloud publication stopped.
   pause & exit /b 1
 )
+python bootstrap\shift.py || (
+  echo [FAIL] GitHub is current, but the local Shift pickup refresh failed.
+  pause & exit /b 1
+)
 python bootstrap\distribute_blueprint.py --publish "%LH%" || (
   echo [FAIL] GitHub is current, but cloud distribution failed.
   pause & exit /b 1
 )
 
-echo [PASS] %LH% validated and distributed to all three mirrors.
+echo [PASS] %LH% validated; Shift and all three mirrors are current.
 echo        Receipt: .publication\last.json
 pause
 exit /b 0

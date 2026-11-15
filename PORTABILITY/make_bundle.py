@@ -19,6 +19,7 @@ SNAPSHOT = (
     "Blueprint/build_human_volume.py", "push.bat",
     "bootstrap/AGENTS.md", "bootstrap/00_START-HERE.md",
     "bootstrap/clear_pending.py", "bootstrap/distribute_blueprint.py",
+    "bootstrap/shift.py",
     ".github/workflows/compile.yml",
 )
 

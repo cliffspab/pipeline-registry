@@ -20,5 +20,6 @@ changes rather than routine content updates.
 
 Publication is complete only after local/origin equality, successful GitHub
 validation, immutable-commit distribution to all three remotes and a local
-publication receipt. The workflow never refreshes Shift, rebases after
-validation, deletes remote extras or runs `rclone sync`.
+publication receipt. The workflow refreshes only Shift's bounded pickup
+contract; it never rebases after validation, deletes remote extras or runs
+`rclone sync`.

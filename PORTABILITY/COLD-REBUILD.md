@@ -34,10 +34,11 @@ python Blueprint/build.py --check --release
 python Blueprint/build_human_volume.py --check
 python PORTABILITY/verify_portability.py --live
 python bootstrap/distribute_blueprint.py --preflight
+python bootstrap/shift.py --check
 ```
 
-All commands must pass. The Word check proves that its edition and embedded
-source hash match `BLUEPRINT.md`.
+All commands must pass. If Shift has not yet been created on the recovery
+machine, run `python bootstrap/shift.py` once, then rerun its check.
 
 ## Recreate the workspace shell
 

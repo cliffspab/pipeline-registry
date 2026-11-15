@@ -35,5 +35,9 @@ extras are reported and never deleted.
 The same committed archive carries the portability ZIP, manifest and audit
 snapshot to the separate Bangkok Post OneDrive portability backup.
 
+After validation, the local Shift pickup is refreshed from generated outputs:
+eight loose documents, six installable skill folders and six ZIPs. It is not
+authority and is not mirrored as a separate cloud tree.
+
 A successful run writes `.publication/last.json`. Normal success output is
 short; detailed command output is reserved for failures.

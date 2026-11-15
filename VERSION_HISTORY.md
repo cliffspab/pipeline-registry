@@ -6,6 +6,26 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-15 — BOUNDED SHIFT PICKUP RESTORED
+
+**Correction.** The prior hardening pass incorrectly treated removal of Shift's
+authority role as removal of its pickup function. The supervisor restated the
+approved contract: eight loose documents, six installable skill folders and six
+ZIPs, with `edit.md` as the operational work view and no Word volume.
+
+**Mechanism.** `bootstrap/shift.py` now refreshes that exact managed set after
+GitHub validation, verifies hashes, replaces only `skillmd/`, removes the
+obsolete Word pickup and preserves unrelated top-level conveniences.
+
+**Evidence.** The live Shift set passes its read-only check and a ninth permanent
+regression test fixes the inventory at eight loose and twelve skill-package
+files.
+
+**Verdict.** Bounded correction prepared for one final guarded push; editorial
+content and edition identity remain unchanged.
+
+---
+
 ## 2026-11-15 — LEAN MECHANISM HARDENING
 
 **Authority.** Following independent Claude and Gemini audits, the supervisor

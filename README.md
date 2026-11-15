@@ -15,5 +15,6 @@ that the edition-named Word volume matches the master source.
 
 `push.bat` is the guarded publication entry point. It validates and displays
 the payload before confirmation, pushes without rebasing, waits for GitHub
-validation, then copies the exact validated commit to pCloud, Google Drive and
-OneDrive. Cloud mirrors are delivery surfaces, not sources.
+validation, refreshes the bounded local `Shift/` pickup, then copies the exact
+validated commit to pCloud, Google Drive and OneDrive. Cloud mirrors and Shift
+are delivery conveniences, not sources.

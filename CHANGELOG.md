@@ -36,7 +36,8 @@ approved cloud mirror.
   files, six install folders, six ZIPs and the Word reading volume from the
   approved modular source.
 - Made the registry self-contained for build, guarded push, recovery and
-  three-cloud publication; `Shift/` is not part of the active mechanism.
+  three-cloud publication; the bounded eight-document `Shift/` pickup refreshes
+  automatically after validation.
 - Replaced `dates.thailand_time` with the exact cross-reference to
   `references.times.foreign_events`, and removed the chief-pitching “speed is
   the instruction” line.

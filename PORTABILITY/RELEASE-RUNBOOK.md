@@ -21,10 +21,11 @@ The script then:
 4. pushes without rebasing;
 5. proves local HEAD equals `origin/main`;
 6. waits for successful GitHub validation;
-7. extracts `Blueprint/` from that exact commit;
-8. copies and verifies it on pCloud, Google Drive and OneDrive;
-9. backs up the committed portability ZIP, manifest and snapshot on OneDrive;
-10. writes `.publication/last.json`.
+7. refreshes and verifies the bounded local Shift pickup;
+8. extracts `Blueprint/` from that exact commit;
+9. copies and verifies it on pCloud, Google Drive and OneDrive;
+10. backs up the committed portability ZIP, manifest and snapshot on OneDrive;
+11. writes `.publication/last.json`.
 
 It stops on the first failed guard. It never runs `rclone sync`, removes
 remote extras, deletes `.git/index.lock` or rebases an already validated tree.

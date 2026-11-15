@@ -46,4 +46,5 @@ The clone plus `PORTABILITY/` is the cold-recovery set. Follow
 `PORTABILITY/COLD-REBUILD.md`. Account credentials, GitHub authentication and
 rclone configuration are restored separately and must never be committed.
 
-`Shift/` is unused and is not part of build, publication or recovery.
+`Shift/` is the automatically refreshed local pickup: eight loose documents,
+six skill folders and six ZIPs. It is a convenience surface, not authority.

@@ -30,6 +30,7 @@ LIVE = (
     "bootstrap/00_START-HERE.md",
     "bootstrap/clear_pending.py",
     "bootstrap/distribute_blueprint.py",
+    "bootstrap/shift.py",
     ".github/workflows/compile.yml",
 )
 
