@@ -68,6 +68,16 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-17
+
+- 2026-11-17 | Windows Shift refresh repair | After the validated
+  `171126_gpt_resequenced` push exposed a read-only legacy
+  `Shift/skillmd/zips/edit` directory, make the bounded refresher clear a
+  blocking Windows read-only attribute and retry removal; add regression
+  coverage and record the incident. Blueprint content and edition identity are
+  unchanged.
+
 ## Cleared 2026-11-17
 
 - 2026-11-17 | Blueprint authority and generated deliveries | Replace the live

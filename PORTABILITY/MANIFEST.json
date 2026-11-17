@@ -7,7 +7,7 @@
     "audit/DECISION-LOG.md": "9f5e78ba5a03de2ec0cec1502cf3780352b47ca36cfa9c654cdaa45555507b66",
     "audit/DISPATCH-PROMPT.md": "06e11dc20e182010c3dd5b18a237e999ec17ceac425913b14c8644af78a87d0b",
     "audit/FINDINGS-TEMPLATE.md": "0151a16e11a0320ecbb1732d5cca68b1e0a1905c2fd439b1f6ec47e9822b613a",
-    "AUDIT-SNAPSHOT.json": "0ef3e07078984cb60a85eb0d3c5f64a6a01c38b3b1ce28c55b164b84c12d54b9",
+    "AUDIT-SNAPSHOT.json": "2c8b80c32714975486b68b302ed9e466f9c00de02a96b44a787ccfe4b7a52fba",
     "BKPDE-mechanism-audit-claude-opus-5.5-151126.md": "96138186c4ef06409e7b11341ca94f8c7c7c6ac703d41edc89892261fb156385",
     "BKPDE-mechanism-audit-Gemini_4.0_Carbon.md": "9993b9e7b120dd32cfcb60b0b0a9ec4ba6d5c10b52ce146c57ae320665c2ddca",
     "COLD-REBUILD.md": "0af2a24c659da0133773f17bb719d5694a292d89f9c7d3d9fc077f87c53e0145",
@@ -24,7 +24,7 @@
     "snapshot/bootstrap/AGENTS.md": "aa15b84f6cec62f82c8e9a1e0a262dd71d43e7b7c975ed293237ef1b3c2b9f63",
     "snapshot/bootstrap/clear_pending.py": "58474ecb748d9fa33fa313decfb40500eff3595685a525a3b6a54b897c72839c",
     "snapshot/bootstrap/distribute_blueprint.py": "5eafae8fcbb01d64c21513939f02c63ca7ef432a5eb1bd904018ae797bc66e58",
-    "snapshot/bootstrap/shift.py": "38344e2a69a3a06a485f5712dcc2ac1b48efa7d6c355ad253110a518ec0618ad",
+    "snapshot/bootstrap/shift.py": "a075161e2837b154f1bb4c401aea4be523786e14e61da4f0e484dd608d4f14fc",
     "snapshot/push.bat": "c0d13be3e578ed720b42dd79a3fdc0f47b00da8172787239a6c72cc891ac1f1f",
     "verify_portability.py": "08a37b243c7eac88a24f3d9a8ffd323a44b3ca47e94d47baebe0da22974b8b82"
   }

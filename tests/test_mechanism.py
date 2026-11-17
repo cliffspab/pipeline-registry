@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import re
+import stat
 import tempfile
 import unittest
 from pathlib import Path
@@ -145,6 +146,15 @@ class MechanismGuards(unittest.TestCase):
         self.assertEqual(len(skillmd), 12)
         self.assertNotIn(Path("Bangkok_Post_Blueprint.docx"), loose)
         self.assertEqual(shift.DEFAULT_SHIFT, REPO / "Blueprint" / "Shift")
+
+    def test_shift_removes_readonly_legacy_directory(self):
+        with tempfile.TemporaryDirectory() as folder:
+            tree = Path(folder) / "skillmd"
+            legacy = tree / "zips" / "edit"
+            legacy.mkdir(parents=True)
+            legacy.chmod(stat.S_IREAD)
+            shift.remove_tree(tree)
+            self.assertFalse(tree.exists())
 
 
 if __name__ == "__main__":

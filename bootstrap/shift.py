@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import shutil
+import stat
 import tempfile
 from pathlib import Path
 
@@ -30,6 +32,16 @@ OBSOLETE = ("Bangkok_Post_Blueprint.docx",)
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def remove_tree(path: Path) -> None:
+    """Remove a managed tree, clearing Windows read-only attributes if needed."""
+
+    def clear_readonly(function, blocked_path, _exception_info):
+        os.chmod(blocked_path, stat.S_IWRITE)
+        function(blocked_path)
+
+    shutil.rmtree(path, onerror=clear_readonly)
 
 
 def expected_files() -> dict[Path, Path]:
@@ -75,7 +87,7 @@ def refresh(target: Path, files: dict[Path, Path]) -> None:
             shutil.copy2(source, destination)
         skillmd = target / "skillmd"
         if skillmd.exists():
-            shutil.rmtree(skillmd)
+            remove_tree(skillmd)
         shutil.copytree(staged, skillmd)
     for name in OBSOLETE:
         obsolete = target / name

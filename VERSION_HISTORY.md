@@ -6,6 +6,21 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-17 — WINDOWS SHIFT REFRESH REPAIR
+
+**Incident.** GitHub validation succeeded for `171126_gpt_resequenced`, but
+the post-validation local Shift refresh stopped on an empty legacy
+`skillmd/zips/edit` directory carrying the Windows read-only attribute.
+
+**Repair.** The bounded Shift tree remover now clears a blocking read-only
+attribute and retries the failed removal. A regression test constructs the
+same legacy shape and proves it can be replaced.
+
+**Scope.** This changes only local pickup maintenance. The validated Blueprint
+edition and its editorial content are unchanged.
+
+---
+
 ## 2026-11-17 — MODEL-FACING RESEQUENCE AND DIRECTORY NAMESPACE
 
 **Direction.** The supervisor supplied the replacement complete authority and

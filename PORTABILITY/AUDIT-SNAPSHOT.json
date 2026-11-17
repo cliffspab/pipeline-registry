@@ -9,7 +9,7 @@
     "bootstrap/00_START-HERE.md": "79665d819c41a62720e478f596717c40faeef68d91e9f7714a9ebb3ae15bf06c",
     "bootstrap/clear_pending.py": "58474ecb748d9fa33fa313decfb40500eff3595685a525a3b6a54b897c72839c",
     "bootstrap/distribute_blueprint.py": "5eafae8fcbb01d64c21513939f02c63ca7ef432a5eb1bd904018ae797bc66e58",
-    "bootstrap/shift.py": "38344e2a69a3a06a485f5712dcc2ac1b48efa7d6c355ad253110a518ec0618ad",
+    "bootstrap/shift.py": "a075161e2837b154f1bb4c401aea4be523786e14e61da4f0e484dd608d4f14fc",
     ".github/workflows/compile.yml": "7dae811fb87b252fa99c27a6b743f5c3f46bbf26fc87beb1bf56c0bdfe9cd402"
   }
 }

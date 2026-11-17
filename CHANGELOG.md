@@ -36,6 +36,9 @@ approved cloud mirror.
   `references:` to `directory.*` and `directory:` throughout the live edition.
 - Made the exact edition identity visible in Boot and added a build guard that
   rejects any mismatch with the master edition mark.
+- Made the local Shift refresher clear Windows read-only attributes when it
+  replaces its managed `skillmd` tree, preventing legacy folders from blocking
+  the post-validation pickup refresh.
 - Split Thai geography into the conditional `thai-places` skill and retained
   all 76 province forms in its own reference branch.
 - Standardised the bounded module headings as `[P3] PHOTO TASKS`, `[P4] PAGE
