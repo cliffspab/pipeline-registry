@@ -9,5 +9,8 @@ desk commit. Clear each line once pushed.
 
 ## Pending
 
-
-Nothing pending.
+- 2026-11-17 | Four-source Shift index | Add `SYNC-MASTER.md` for the exact
+  20-file pickup using the supervisor-supplied OneDrive inventory, current
+  Google Drive object links, authenticated OneDrive/SharePoint links, public
+  pCloud links and tracked GitHub sources; link it from the repository index
+  and DC-X Desk Hub 2.0.7. Blueprint content and edition identity are unchanged.

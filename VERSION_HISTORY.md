@@ -6,6 +6,23 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-17 — FOUR-SOURCE SHIFT SYNC MASTER
+
+**Direction.** The supervisor supplied an UltraSearch CSV of the verified
+OneDrive Shift mirror and requested a common index in the Desk Hub.
+
+**Index.** `SYNC-MASTER.md` maps the exact 20-file pickup across tracked GitHub
+sources, authenticated Google Drive objects, authenticated OneDrive/SharePoint
+objects and public pCloud links. The supplied CSV accounts for all eight loose
+documents, six skill files and six ZIPs; the supervisor's completed index
+supplies the corresponding OneDrive web links. Remote-only conveniences remain
+outside the contract.
+
+**Desk Hub.** Userscript 2.0.7 adds a Sync master index button and userscript
+menu command. Blueprint content and edition identity are unchanged.
+
+---
+
 ## 2026-11-17 — WINDOWS SHIFT REFRESH REPAIR
 
 **Incident.** GitHub validation succeeded for `171126_gpt_resequenced`, but

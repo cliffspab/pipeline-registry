@@ -156,6 +156,20 @@ class MechanismGuards(unittest.TestCase):
             shift.remove_tree(tree)
             self.assertFalse(tree.exists())
 
+    def test_sync_master_covers_exact_shift_contract(self):
+        index = (REPO / "SYNC-MASTER.md").read_text(encoding="utf-8")
+        files = shift.expected_files()
+        rows = re.findall(r"^\| `([^`]+)`\s+\|", index, re.M)
+        self.assertEqual(set(rows), {path.as_posix() for path in files})
+        self.assertEqual(len(rows), 20)
+        indexed_rows = re.findall(r"^\| `[^`]+`.*$", index, re.M)
+        self.assertEqual(len(indexed_rows), 20)
+        self.assertTrue(all("postpublishing-my.sharepoint.com" in row for row in indexed_rows))
+        self.assertNotIn(
+            "github.com/cliffspab/pipeline-registry/tree/main/Blueprint/Shift",
+            index,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

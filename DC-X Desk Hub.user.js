@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.0.6
+// @version      2.0.7
 // @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and verified Blueprint/Addendum/Tracker shift-pack building.
 // @match        https://dcx.bangkokpost.co.th/*
 // @match        http://dcx.bangkokpost.co.th/*
@@ -22,6 +22,9 @@
 // ==/UserScript==
 
 /*
+  2.0.7: adds a Sync master index control for the 20-file Shift pickup across
+  GitHub, Google Drive, OneDrive and pCloud.
+
   2.0.6: Copy/Download full pack and Download separate fetch any Blueprint or
   Addendum not yet stored before building, instead of stopping with
   NOT FETCHED. Module Copy/Save does the same for the Blueprint.
@@ -70,7 +73,8 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.0.6';
+  const VERSION = '2.0.7';
+  const SYNC_MASTER_URL = 'https://github.com/cliffspab/pipeline-registry/blob/main/SYNC-MASTER.md';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
@@ -537,6 +541,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       if (action === 'prompt') return copy(openingPrompt(), ok => notify(ok ? 'Opening prompt copied.' : 'Copy failed.'));
       if (action === 'modellinks') return copy(modelLinks(), ok => notify(ok ? 'Public model links copied.' : 'Copy failed.'));
       if (action === 'links') return copy(editorLinks(), ok => notify(ok ? 'Editor links copied.' : 'Copy failed.'));
+      if (action === 'syncmaster') return openTab(SYNC_MASTER_URL, true);
       if (action === 'open') { const c = getConfig(); KEYS.forEach(k => openTab(c[k].openUrl || c[k].url, false)); return; }
       if (action === 'usage') return openTab(getConfig().tracker.usageUrl, true);
       if (action === 'copy') { const p = await buildPack(); if (p === null) return; return copy(p, ok => notify(ok ? 'Complete shift pack copied (' + textCount(p).toLocaleString() + ' chars).' : 'Copy failed.')); }
@@ -616,6 +621,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
      ['Copy opening prompt','prompt','#0b5a7a'],['Copy model links','modellinks','#475569'],
      ['Copy editor links','links','#475569'],
      ['Download separate','separate','#475569'],['Open sources','open','#475569'],
+     ['Sync master index','syncmaster','#475569'],
      ['Tracker usage','usage','#475569'],['Clear cache','clear','#b91c1c']].forEach(([l,a,c])=>actions.appendChild(button(l,()=>packAction(a),c)));p.appendChild(actions);
     const note=document.createElement('div');note.textContent='DCX 4 remains the broad team-history sweep. Narrow broad views before DCX 5. A failed refresh never replaces a stored copy; CACHED, PARTIAL and MANUAL components are labelled and need confirmation before they go into a pack. The pack carries the Tracker as links only.';note.style.cssText='font-size:10px;color:#64748b;margin-top:8px;line-height:1.3';p.appendChild(note);document.body.appendChild(p);document.getElementById('dcxhub-close').onclick=closePanel;renderPackPanel();
   }
@@ -624,6 +630,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   if(typeof GM_registerMenuCommand==='function'){
     GM_registerMenuCommand('Grab open story (Alt+B)',grab);for(let i=0;i<=5;i++)GM_registerMenuCommand('DCX '+i+' '+TOOL_NAMES[i],()=>runTool(i));
     GM_registerMenuCommand('Shift Pack: refresh all',refreshAll);GM_registerMenuCommand('Shift Pack: copy opening prompt',()=>packAction('prompt'));GM_registerMenuCommand('Shift Pack: copy model links',()=>packAction('modellinks'));GM_registerMenuCommand('Shift Pack: copy full pack',()=>packAction('copy'));GM_registerMenuCommand('Shift Pack: download full pack',()=>packAction('download'));
+    GM_registerMenuCommand('Shift Pack: open sync master index',()=>packAction('syncmaster'));
   }
   document.addEventListener('keydown',e=>{if(e.altKey&&!e.shiftKey&&!e.ctrlKey&&e.code==='KeyB'){e.preventDefault();grab();}if(e.altKey&&e.shiftKey&&!e.ctrlKey&&e.code==='KeyX'){e.preventDefault();document.getElementById(PANEL_ID)?closePanel():openPanel();}},true);
   setInterval(()=>{if(!window.tinymce||!tinymce.editors)return;for(const ed of tinymce.editors){if(ed._deskHubHooked)continue;ed._deskHubHooked=true;ed.on('keydown',e=>{if(e.altKey&&!e.shiftKey&&!e.ctrlKey&&e.code==='KeyB'){e.preventDefault();grab();}});}},1500);

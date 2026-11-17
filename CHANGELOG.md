@@ -39,6 +39,8 @@ approved cloud mirror.
 - Made the local Shift refresher clear Windows read-only attributes when it
   replaces its managed `skillmd` tree, preventing legacy folders from blocking
   the post-validation pickup refresh.
+- Added one 20-file Shift sync master covering GitHub, Google Drive, the local
+  OneDrive mirror and pCloud, with a direct control in DC-X Desk Hub 2.0.7.
 - Split Thai geography into the conditional `thai-places` skill and retained
   all 76 province forms in its own reference branch.
 - Standardised the bounded module headings as `[P3] PHOTO TASKS`, `[P4] PAGE
