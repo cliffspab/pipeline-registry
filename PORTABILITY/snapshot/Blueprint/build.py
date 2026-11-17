@@ -22,11 +22,18 @@ VERSION_RE = re.compile(r"^<!-- MASTER ([A-Za-z0-9_.-]+) -->$", re.M)
 PART_RE = re.compile(r"^<!-- COMPONENT: ([A-Z_]+) -->\n(.*?)\n<!-- END COMPONENT: \1 -->$", re.M | re.S)
 PARTS = {
     "BOOT": "boot",
-    "EDIT": "edit",
+    "THAI_PLACES": "thai-places",
     "CHECK": "check",
     "PHOTO": "photo",
     "PR": "pr",
-    "THAI_PLACES": "thai-places",
+    "EDIT": "edit",
+}
+EDITION_WRAPPERS = {
+    "THAI_PLACES": "# THAI PLACES",
+    "CHECK": "# [P4] PAGE CHECKS AND QC",
+    "PHOTO": "# [P3] PHOTO TASKS",
+    "PR": "# [P5] PR COPY",
+    "EDIT": "# EDITING",
 }
 COMPAT_FILES = ("BLUEPRINT.txt", "GUIDE.txt", "PROCESSES.txt", "DIRECTORY.txt", "DIRECTORY.yaml", "VERSION.txt")
 
@@ -82,19 +89,26 @@ def load(source: Path):
     version_match = VERSION_RE.search(text)
     if not version_match:
         raise SystemExit("FATAL: master edition mark missing")
-    found = PART_RE.findall(text)
+    matches = list(PART_RE.finditer(text))
+    found = [(match.group(1), match.group(2).lstrip("\n")) for match in matches]
     names = [name for name, _body in found]
-    if len(names) != len(PARTS) or set(names) != set(PARTS):
+    if names != list(PARTS):
         raise SystemExit(f"FATAL: component inventory differs or contains duplicates: {names}")
-    first = text.find("<!-- COMPONENT: ")
-    residue = PART_RE.sub("", text[first:]) if first >= 0 else text
-    if residue.strip():
-        preview = residue.strip().splitlines()[0][:80]
-        raise SystemExit(f"FATAL: unmarked content outside components: {preview}")
+    for previous, current in zip(matches, matches[1:]):
+        marker = current.group(1)
+        residue = text[previous.end():current.start()].strip()
+        if residue != EDITION_WRAPPERS[marker]:
+            preview = residue.splitlines()[0][:80] if residue else "<missing wrapper>"
+            raise SystemExit(f"FATAL: invalid edition wrapper before {marker}: {preview}")
+    if text[matches[-1].end():].strip():
+        raise SystemExit("FATAL: unmarked content after final component")
     parts = dict(found)
     for marker, skill in PARTS.items():
         if frontmatter_name(parts[marker]) != skill:
             raise SystemExit(f"FATAL: {marker} front-matter name differs")
+    edition_line = f"Edition: `{version_match.group(1)}`"
+    if parts["BOOT"].count(edition_line) != 1:
+        raise SystemExit("FATAL: visible Boot edition differs from master edition")
     return text, version_match.group(1), parts
 
 
@@ -105,13 +119,12 @@ def build_directory(parts: dict[str, str]) -> tuple[str, dict]:
         raise SystemExit("FATAL: edit and Thai Places must each carry one YAML block")
     edit = yaml.safe_load(edit_blocks[0])
     thai = yaml.safe_load(thai_blocks[0])
-    refs = dict(edit["references"])
-    if "thai_places" in refs or set(thai["references"]) != {"thai_places"}:
+    branches = dict(edit["directory"])
+    if "thai_places" in branches or set(thai["directory"]) != {"thai_places"}:
         raise SystemExit("FATAL: Thai Places split is invalid")
-    refs["thai_places"] = thai["references"]["thai_places"]
-    routes = list(edit["index"]["routes"]["references"]) + ["references.thai_places"]
-    directory = {"index": {"routes": {"references": routes}}, "references": refs}
-    if len(directory["references"]["thai_places"]["provinces"]) != 76:
+    branches = {"thai_places": thai["directory"]["thai_places"], **branches}
+    directory = {"directory": branches}
+    if len(directory["directory"]["thai_places"]["provinces"]) != 76:
         raise SystemExit("FATAL: Thai Places does not contain 76 provinces")
     return yaml.safe_dump(directory, sort_keys=False, allow_unicode=True, width=1000), directory
 
@@ -122,24 +135,26 @@ def validate_routes(parts: dict[str, str], directory: dict) -> dict:
         raise SystemExit("FATAL: boot must carry one semantic route map")
     routes = yaml.safe_load(boot_blocks[0])["routes"]
     bodies = {PARTS[k]: strip_frontmatter(v) for k, v in parts.items()}
-    resources = {"boot / system instructions": "boot", **{name: name for name in PARTS.values()}}
+    edition_headings = {PARTS[marker]: heading for marker, heading in EDITION_WRAPPERS.items()}
+    resources = {"boot / desk-agent": "boot", **{name: name for name in PARTS.values()}}
     codes = []
     reference_routes = set()
     for semantic, route in routes.items():
         resource = resources[route["resource"]]
-        if semantic.startswith("references."):
+        if semantic.startswith("directory."):
             reference_routes.add(semantic)
             if route["heading"] != semantic:
                 raise SystemExit(f"FATAL: reference target differs: {semantic}")
         else:
             heading_pattern = rf"^#{{1,6}}\s+{re.escape(route['heading'])}\s*$"
-            if not re.search(heading_pattern, bodies[resource], re.M):
+            target = bodies[resource] + "\n" + edition_headings.get(resource, "")
+            if not re.search(heading_pattern, target, re.M):
                 raise SystemExit(f"FATAL: route target missing: {semantic}")
             match = re.match(r"\[([^]]+)\]", route["heading"])
             if not match:
                 raise SystemExit(f"FATAL: procedural route lacks heading code: {semantic}")
             codes.append(match.group(1))
-    expected_refs = {f"references.{name}" for name in directory["references"]}
+    expected_refs = {f"directory.{name}" for name in directory["directory"]}
     if reference_routes != expected_refs:
         raise SystemExit("FATAL: semantic reference routes differ from Directory")
     if len(routes) != 37 or len(codes) != 21 or len(set(codes)) != 21:
@@ -215,7 +230,7 @@ def build(source: Path, root: Path) -> None:
 
     edit = strip_frontmatter(parts["EDIT"])
     write(root / "BLUEPRINT.txt", master.rstrip() + "\n")
-    write(root / "GUIDE.txt", f"<!-- {version} -->\n" + bounded(edit, "# [G1] EDITING", "# [P] PROCESSES"))
+    write(root / "GUIDE.txt", f"<!-- {version} -->\n" + bounded(edit, "# [G1] INPUT", "# [P] PROCESSES"))
     write(root / "PROCESSES.txt", f"<!-- {version} -->\n" + bounded(edit, "# [P] PROCESSES", "# [R] RETURN"))
     write(root / "VERSION.txt", version + "\n")
 
@@ -229,7 +244,7 @@ def build(source: Path, root: Path) -> None:
         "compatibility_files": {name: sha(root / name) for name in COMPAT_FILES},
     }
     write(root / "build-receipt.json", json.dumps(receipt, indent=2) + "\n")
-    print(f"built {version}: 6 skills, 37 routes, 16 reference branches, 6 zips")
+    print(f"built {version}: 6 skills, 37 routes, 16 Directory branches, 6 zips")
 
 
 def compare_trees(expected: Path, actual: Path) -> None:

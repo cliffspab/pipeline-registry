@@ -1,20 +1,20 @@
-version: 151126_gpt_modular-routes
+version: 171126_gpt_resequenced
 files:
 - path: boot/SKILL.md
-  bytes: 12073
-  sha256: b9f630e135c91efa8d9308591bc2b71c6b93ac6c944770fa25cc25127f80dbc0
-- path: edit/SKILL.md
-  bytes: 35746
-  sha256: c92c61de7773295436403edb2e67bbdc3ef6054c1bbf80dc0cbb324990eeb7dd
-- path: check/SKILL.md
-  bytes: 2483
-  sha256: 1d2bee2632bf7a687c6c41dbc882a6eceb4345aa8bfaef2f404995fef934c204
-- path: photo/SKILL.md
-  bytes: 2574
-  sha256: 6829b03bd55a036d1b1d7bdd82299c078072eec46a01a02663102fce7082f69c
-- path: pr/SKILL.md
-  bytes: 1219
-  sha256: 465991c88c99826f94e5fa612571ff8402d4fd0290eb590365197b375d7df3f0
+  bytes: 9767
+  sha256: cad5d51d7955d55070958ab4c38119faeb7bbb5266eb563ea4605db7b5b613f8
 - path: thai-places/SKILL.md
-  bytes: 14315
-  sha256: 6ea316b6c242abd7117cc9d655026752d196bc8eb0d64220f43771c5a9e9fabe
+  bytes: 14305
+  sha256: 220680f1c32b2f11839b93b6af3eb1881ce3b92ea010008c5325bba9c645a2a5
+- path: check/SKILL.md
+  bytes: 2458
+  sha256: a1e7699d6a6fb9174052bb569ad7235929c1f023ff09fb2c8a6f62e956ecfdcf
+- path: photo/SKILL.md
+  bytes: 2556
+  sha256: afb0e5b73642efc0314024f065ed6e448f462de771238ebe140e814fcf284ada
+- path: pr/SKILL.md
+  bytes: 1205
+  sha256: 88d6bb2b228850724e8de290feac428646446fdbbbceff2665afa4ac81addbbf
+- path: edit/SKILL.md
+  bytes: 35365
+  sha256: 978b7c64ac822aea1a2fbb82a652e0040360f45a68334d95671ec45929df328c

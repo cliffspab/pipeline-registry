@@ -1,1 +1,0 @@
-Get-ChildItem *.yaml | Rename-Item -NewName { $_.Name -replace '\.yaml$', '.txt' }

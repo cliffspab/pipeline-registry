@@ -67,6 +67,38 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 
 
+
+## Cleared 2026-11-17
+
+- 2026-11-17 | Blueprint authority and generated deliveries | Replace the live
+  authority from the supervisor-supplied `171126_resequenced.md`; preserve the
+  AirAsia ruling; resequence the complete edition as Desk Agent, Thai Places,
+  Check, Photo, PR and Editing; rename `references.*`/`references:` to
+  `directory.*`/`directory:`; advance the visible edition identity to
+  `171126_gpt_resequenced`; regenerate the complete Blueprint, Directory,
+  routed files, six skills, six ZIPs, indexes, receipt and Word volume; replace
+  the superseded `151126_gpt_modular-routes` Word volume with the edition-named
+  `171126_gpt_resequenced` volume.
+
+- 2026-11-17 | Build, Word and tests | Allow only the exact edition-only
+  inter-component headings, discard them from generated skills, follow the new
+  source sequence and title in Word, and add regression coverage for wrapper
+  rejection, wrapper exclusion, the Directory namespace, visible Boot edition
+  identity and exact Word numbering.
+
+- 2026-11-17 | Registry cleanup | Publish the 70 already-queued deletions of
+  superseded fallback, Control, sidebar, index, old document and obsolete tool
+  material; remove the corresponding retired links from `index.html`.
+
+- 2026-11-17 | Standalone conveniences | Add `DC-X Desk Hub.user.js` and
+  `pCloud.md` at repository root and link both from `index.html`. The pCloud
+  document is an index of unchanged Shift content maintained by rclone, not a
+  new distribution authority.
+
+- 2026-11-17 | Records and recovery | Update CHANGELOG, VERSION_HISTORY,
+  COMMITS-PENDING and the portability snapshot/manifest/ZIP for the exact
+  combined payload.
+
 ## Cleared 2026-11-15
 
 - 2026-11-15 | Move and mirror Shift pickup | Move the generated pickup into

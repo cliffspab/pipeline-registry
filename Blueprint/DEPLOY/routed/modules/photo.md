@@ -1,9 +1,9 @@
 ---
 name: photo
-description: Bangkok Post standalone photo or mugshot work, returning a head plus caption or NAME caption. Use when the supervisor says photo, gives a Pix, Stand or St slug, or pastes a picture with a caption.
----
 
-# [P3] PHOTO TASKS
+description: Bangkok Post standalone photo or mugshot work, returning a head plus caption or NAME caption. Use when the supervisor says photo, gives a Pix, Stand or St slug, or pastes a picture with a caption.
+
+---
 
 Runs on `[G1-A] HOUSE ESSENTIALS` and on `edit`, which is in context for the session. This file holds the photo method and return.
 

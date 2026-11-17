@@ -1,7 +1,7 @@
 {
-  "version": "151126_gpt_modular-routes",
+  "version": "171126_gpt_resequenced",
   "source": "BLUEPRINT.md",
-  "source_sha256": "215298dedeb26aee77a816ba507fad60641b69d957b2d72ff97dcde93557bf7d",
+  "source_sha256": "ffb7e36c50a4891695051d817ebd0d6bfac3b71f4650ba76b68edca24543093f",
   "checks": {
     "semantic_routes": 37,
     "heading_codes": 21,
@@ -9,19 +9,19 @@
   },
   "deploy_files": 17,
   "upload_zips": {
-    "boot.zip": "733fa1069cdf6a66009ed8754df04ceaa20fde37e3c77b2711e021296b54bb4a",
-    "check.zip": "b83066cef3e868a315cb0e06e616bc63a49b1612a103827fa36123459df8b1fc",
-    "edit.zip": "6488ea1557b3f208983e402c6ee187f3af02d5dc0794eda3fd725a0beb182534",
-    "photo.zip": "ffc30bda1f85fa27bb2693483e3c395db36ff42fbcf691bd1d3c36ce75851fd7",
-    "pr.zip": "05ec17014d50535756a5a72acd14cf1624a70c2001f328cfd431f67fd56fb13a",
-    "thai-places.zip": "906c3d31a8bef9d4c4c22d48d93e422de52e053759d21f96ae9c52a2381c28ef"
+    "boot.zip": "75099430cb80ea4eaaa612268b5c960b53587b85d8887e49eec47e12441422bc",
+    "check.zip": "6a49421559413855aceb95aa2d02c4d65e785438a2058a35583a479a39bb4d75",
+    "edit.zip": "770d1ec07f375f92e9cfe737563eb0f6f6076c56dfacb401dace63b3237d1016",
+    "photo.zip": "a5bd777447afadc58169060073fdcca97173f071bbb2e85796b76414ff346550",
+    "pr.zip": "0b5443ccf6afbb4e907bb7acf93317a5839007401c856ce5fe532e7e33952fd6",
+    "thai-places.zip": "51a2fc46d1cd94986b85d248571b8d264137395e0fb5940da8a0bc37bea246ae"
   },
   "compatibility_files": {
-    "BLUEPRINT.txt": "215298dedeb26aee77a816ba507fad60641b69d957b2d72ff97dcde93557bf7d",
-    "GUIDE.txt": "f2884859c00716ad3526f1c4cccb53b771dd622b98be0b93c528e917b27523f1",
-    "PROCESSES.txt": "e82f47efab08642fedd3bb39bb093291cf53728873448e67819ce255021d6573",
-    "DIRECTORY.txt": "2804fb8f507a08bb24065a1ce619883ce170881f696c9239eb574bcb6ff5d093",
-    "DIRECTORY.yaml": "2804fb8f507a08bb24065a1ce619883ce170881f696c9239eb574bcb6ff5d093",
-    "VERSION.txt": "d9980afb876a3b452e88c83047ecb5e921da940fe2a7ec90be66eeef8e7dfb51"
+    "BLUEPRINT.txt": "ffb7e36c50a4891695051d817ebd0d6bfac3b71f4650ba76b68edca24543093f",
+    "GUIDE.txt": "1f9609ee5b900f90fbffc3cb7026c16f9cfa8b11b723c7524e53ca03d796fa80",
+    "PROCESSES.txt": "fa00cad5a410f3b432718e1e3b3a1ce3f625fb6f7eadfd2781635ee2d0d3ce4e",
+    "DIRECTORY.txt": "b57d0cc8ac990730e301cd990d72f7950aa30e0143f763c78f43f015ff2ae47e",
+    "DIRECTORY.yaml": "b57d0cc8ac990730e301cd990d72f7950aa30e0143f763c78f43f015ff2ae47e",
+    "VERSION.txt": "9da2b56e646a0ef8529abb31a1015373ff421a4685db2ba9221b90c8d5953283"
   }
 }

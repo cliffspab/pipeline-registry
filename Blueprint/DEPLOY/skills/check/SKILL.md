@@ -1,9 +1,9 @@
 ---
 name: check
-description: Fast Bangkok Post check of a DC-X task the chief sub has already read, or a QC review of another operator's Job Report. Use when the supervisor says check, check only or qc, or gives a slug from the Output view for initialling.
----
 
-# [P4] PAGE CHECKS AND QC
+description: Fast Bangkok Post check of a DC-X task the chief sub has already read, or a QC review of another operator's Job Report. Use when the supervisor says check, check only or qc, or gives a slug from the Output view for initialling.
+
+---
 
 Runs on `[G1-A] HOUSE ESSENTIALS` and on `edit`, which is in context for the session. This file sets scope and return.
 

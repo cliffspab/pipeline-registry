@@ -47,17 +47,44 @@ class MechanismGuards(unittest.TestCase):
 
     def test_unmarked_component_residue_is_rejected(self):
         damaged = self.master.replace(
-            "<!-- END COMPONENT: PR -->\n\n<!-- COMPONENT: THAI_PLACES -->",
-            "<!-- END COMPONENT: PR -->\nLOST RULE\n<!-- COMPONENT: THAI_PLACES -->",
+            "<!-- END COMPONENT: CHECK -->\n# [P3] PHOTO TASKS\n<!-- COMPONENT: PHOTO -->",
+            "<!-- END COMPONENT: CHECK -->\nLOST RULE\n# [P3] PHOTO TASKS\n<!-- COMPONENT: PHOTO -->",
         )
         with self.assertRaises(SystemExit):
             self.load_text(damaged)
+
+    def test_edition_wrapper_is_required_exactly(self):
+        damaged = self.master.replace("# EDITING\n<!-- COMPONENT: EDIT -->", "# EDIT\n<!-- COMPONENT: EDIT -->")
+        with self.assertRaises(SystemExit):
+            self.load_text(damaged)
+
+    def test_visible_boot_edition_matches_master(self):
+        damaged = self.master.replace("Edition: `171126_gpt_resequenced`", "Edition: `wrong-edition`")
+        with self.assertRaises(SystemExit):
+            self.load_text(damaged)
+
+    def test_edition_wrappers_are_not_written_into_skills(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / "BLUEPRINT.md"
+            source.write_text(self.master, encoding="utf-8", newline="\n")
+            build.build(source, root)
+            skill_text = "\n".join(path.read_text(encoding="utf-8") for path in (root / "DEPLOY" / "skills").glob("*/SKILL.md"))
+            for heading in build.EDITION_WRAPPERS.values():
+                self.assertNotIn(heading, skill_text)
+
+    def test_directory_routes_use_current_name(self):
+        _master, _version, parts = self.load_text(self.master)
+        _directory_text, directory = build.build_directory(parts)
+        self.assertIn("directory", directory)
+        self.assertNotIn("references", directory)
+        self.assertNotIn("references.", self.master)
 
     def test_route_requires_a_real_heading(self):
         master, _version, parts = self.load_text(self.master)
         directory_text, directory = build.build_directory(parts)
         del directory_text
-        parts["PR"] = parts["PR"].replace("# [P5] PR COPY", "[P5] PR COPY", 1)
+        parts["EDIT"] = parts["EDIT"].replace("## [P2] VERIFICATION", "[P2] VERIFICATION", 1)
         with self.assertRaises(SystemExit):
             build.validate_routes(parts, directory)
 
@@ -75,6 +102,14 @@ class MechanismGuards(unittest.TestCase):
         word.render_markdown(doc, "---\nname: fixture\ndescription: fixture\n---\n\nBefore\n\n---\n\nAFTER TOKEN")
         visible = "\n".join(p.text for p in doc.paragraphs)
         self.assertIn("AFTER TOKEN", visible)
+
+    def test_word_numbered_examples_restart_from_source(self):
+        doc = Document()
+        word.configure(doc)
+        word.render_markdown(doc, "1. First\n2. Second")
+        word.render_markdown(doc, "1. Restarted")
+        visible = [p.text for p in doc.paragraphs if p.text]
+        self.assertEqual(visible, ["1. First", "2. Second", "1. Restarted"])
 
     def test_release_metadata_is_valid(self):
         build.validate_release(REPO / "Blueprint" / "BLUEPRINT.md")

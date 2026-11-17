@@ -1,14 +1,12 @@
 ---
 name: thai-places
-description: Lookup of Bangkok Post held forms for Thai districts, provinces and other Thai places under references.thai_places. Use only when a Thai district or an unfamiliar Thai place name needs its form checked during edit, check, photo or PR work.
+
+description: Lookup of Bangkok Post held forms for Thai districts, provinces and other Thai places under directory.thai_places. Use only when a Thai district or an unfamiliar Thai place name needs its form checked during edit, check, photo or PR work.
+
 ---
-
-# THAI PLACES
-
-A lookup on top of `edit`. The listed form governs: each entry is a held form in its own right, and no entry sets a rule for another. Thai style conventions (Muang, sois, roads, postcodes, airports) are in `references.thai_conventions` in `edit`. Recent, consistent usage on the story tracker may be preferred to a listed form (SHIFT FILES). Consult the whole of the relevant branch.
-
+A lookup on top of `edit`. The listed form governs: each entry is a held form in its own right, and no entry sets a rule for another. Thai style conventions (Muang, sois, roads, postcodes, airports) are in `directory.thai_conventions` in `edit`. Recent, consistent usage on the story tracker may be preferred to a listed form (RESOURCES in `boot`). Consult the whole of the relevant branch.
 ```yaml
-references:
+directory:
   thai_places:
 
     note: >

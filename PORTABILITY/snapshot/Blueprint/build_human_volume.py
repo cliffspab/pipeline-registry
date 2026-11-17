@@ -17,7 +17,14 @@ from docx.shared import Cm, Pt, RGBColor
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "BLUEPRINT.md"
 VERSION_RE = re.compile(r"^<!-- MASTER ([A-Za-z0-9_.-]+) -->$", re.M)
-PART_NAMES = ("BOOT", "EDIT", "CHECK", "PHOTO", "PR", "THAI_PLACES")
+PART_NAMES = ("BOOT", "THAI_PLACES", "CHECK", "PHOTO", "PR", "EDIT")
+EDITION_WRAPPERS = {
+    "THAI_PLACES": "# THAI PLACES",
+    "CHECK": "# [P4] PAGE CHECKS AND QC",
+    "PHOTO": "# [P3] PHOTO TASKS",
+    "PR": "# [P5] PR COPY",
+    "EDIT": "# EDITING",
+}
 PART_RE = re.compile(
     r"<!-- COMPONENT: ([A-Z_]+) -->\n(.*?)\n<!-- END COMPONENT: \1 -->",
     re.S,
@@ -148,16 +155,16 @@ def render_markdown(doc: Document, body: str) -> None:
             i += 1
             continue
         bullet = re.match(r"^(\s*)[-*]\s+(.+)$", raw)
-        number = re.match(r"^(\s*)\d+\.\s+(.+)$", raw)
+        number = re.match(r"^(\s*)(\d+)\.\s+(.+)$", raw)
         if bullet or number:
             flush_paragraph()
             match = bullet or number
             level = min(len(match.group(1)) // 2, 2)
-            style = "List Bullet" if bullet else "List Number"
+            style = "List Bullet" if bullet else "Body Text"
             p = doc.add_paragraph(style=style)
             p.paragraph_format.left_indent = Cm(0.55 + level * 0.45)
             p.paragraph_format.first_line_indent = Cm(-0.25)
-            add_inline(p, match.group(2))
+            add_inline(p, match.group(2) if bullet else f"{match.group(2)}. {match.group(3)}")
             i += 1
             continue
         if not stripped:
@@ -304,23 +311,25 @@ def main() -> None:
 
     doc = Document()
     configure(doc)
-    doc.core_properties.title = "Bangkok Post Blueprint"
+    doc.core_properties.title = "The Blueprint"
     doc.core_properties.subject = "Complete modular desk edition"
     doc.core_properties.author = "Bangkok Post"
     doc.core_properties.comments = f"edition={version}; source_sha256={source_sha}"
 
     title = doc.add_paragraph()
     title.style = doc.styles["Title"]
-    title.add_run("Bangkok Post Blueprint")
+    title.add_run("The Blueprint")
     title.runs[0].font.name = "Arial Black"
     title.runs[0].font.size = Pt(30)
     title.runs[0].font.bold = True
     title.runs[0].font.color.rgb = RGBColor(0, 0, 0)
-    render_markdown(doc, re.sub(r"^# Bangkok Post Blueprint\s*", "", preface))
+    render_markdown(doc, re.sub(r"^# The Blueprint\s*", "", preface))
 
-    for index, name in enumerate(("BOOT", "EDIT", "CHECK", "PHOTO", "PR", "THAI_PLACES")):
+    for index, name in enumerate(PART_NAMES):
         if name == "EDIT":
             doc.add_page_break()
+        if name in EDITION_WRAPPERS:
+            render_markdown(doc, EDITION_WRAPPERS[name])
         render_markdown(doc, parts[name])
 
     footer = doc.sections[0].footer.paragraphs[0]

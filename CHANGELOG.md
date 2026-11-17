@@ -11,7 +11,7 @@ for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
 ## Unreleased
 
-### 151126_gpt_modular-routes
+### 171126_gpt_resequenced
 
 **Changed instructions:** the complete Blueprint, Directory, Word volume and
 all six skills: `boot`, `edit`, `check`, `photo`, `pr` and `thai-places`.
@@ -27,7 +27,15 @@ approved cloud mirror.
 - Made Boot the compact front-end router and sole home of House Essentials and
   hard invariants; Edit remains the common working method.
 - Added a 37-entry semantic route index: 21 exact procedural headings and 16
-  `references.*` branches, without duplicating the underlying rules.
+  `directory.*` branches, without duplicating the underlying rules.
+- Resequenced the complete model-facing edition as Desk Agent, Thai Places,
+  Check, Photo, PR and Editing, with the Directory at the start of Editing and
+  the full editing method last for recency. Edition-only component headings are
+  retained in the complete Blueprint but omitted from generated skills.
+- Renamed the Directory route and YAML namespace from `references.*` and
+  `references:` to `directory.*` and `directory:` throughout the live edition.
+- Made the exact edition identity visible in Boot and added a build guard that
+  rejects any mismatch with the master edition mark.
 - Split Thai geography into the conditional `thai-places` skill and retained
   all 76 province forms in its own reference branch.
 - Standardised the bounded module headings as `[P3] PHOTO TASKS`, `[P4] PAGE

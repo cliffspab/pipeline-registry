@@ -1,9 +1,9 @@
 ---
 name: pr
-description: Bangkok Post minimum-intervention paid-placement, advertorial or PR copy pass. Use when the supervisor says PR or supplies paid-placement copy for house-style correction.
----
 
-# [P5] PR COPY
+description: Bangkok Post minimum-intervention paid-placement, advertorial or PR copy pass. Use when the supervisor says PR or supplies paid-placement copy for house-style correction.
+
+---
 
 Runs on `[G1-A] HOUSE ESSENTIALS` and on `edit`, which is in context for the session. This file sets PR scope and return.
 

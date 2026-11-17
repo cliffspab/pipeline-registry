@@ -6,6 +6,44 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-17 — MODEL-FACING RESEQUENCE AND DIRECTORY NAMESPACE
+
+**Direction.** The supervisor supplied the replacement complete authority and
+confirmed that it supersedes the prior live wording except that the held
+AirAsia form must remain. The edition advances to
+`171126_gpt_resequenced`, identifying the replacement authority and its
+intended component sequence.
+
+**Order and naming.** The complete model-facing edition now runs Desk Agent,
+Thai Places, Check, Photo, PR and Editing. The Directory opens the final Edit
+component and the general editing method is the most recent instruction layer.
+The former `references.*`/`references:` namespace is now
+`directory.*`/`directory:` throughout the live authority and generated
+Directory.
+
+**Mechanism.** A fixed allow-list admits the edition-only inter-component
+headings needed for readable sizing while rejecting any other unmarked text.
+Those headings remain in the complete Blueprint and are deliberately discarded
+before standalone skills are written. Regression tests fix their exact forms,
+their exclusion from all six skills and the Directory namespace. The exact
+edition is visible in Boot and guarded against the master edition mark. The
+Word builder follows the source sequence and title.
+
+**Conveniences.** The root index links the standalone DC-X Desk Hub userscript
+and `pCloud.md`, a non-authoritative index of the Shift files maintained by the
+rclone publication run. Neither changes the Blueprint or distribution
+contract.
+
+**Evidence.** The isolated candidate and installed registry reproduce all six
+skills, 37 routes, 16 Directory branches and six ZIPs; all edition-only
+headings occur once in the complete Blueprint and zero times in skills;
+AirAsia occurs once; the Word witness and full mechanism tests pass.
+
+**Verdict.** Approved for the next guarded supervisor push with the queued
+repository cleanup and convenience files.
+
+---
+
 ## 2026-11-15 — SHIFT MOVED INSIDE THE REGISTRY AND MIRRORED
 
 **Direction.** The supervisor placed the generated pickup inside

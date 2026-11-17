@@ -1,9 +1,9 @@
 {
-  "edition": "151126_gpt_modular-routes",
+  "edition": "171126_gpt_resequenced",
   "files": {
-    "Blueprint/BLUEPRINT.md": "215298dedeb26aee77a816ba507fad60641b69d957b2d72ff97dcde93557bf7d",
-    "Blueprint/build.py": "f168f1ff69ce9b0be098a661205ce8a61515fc72c11d1fa07b021c98b8db70eb",
-    "Blueprint/build_human_volume.py": "d4b8a43532c87f5ffc39e8d9b1db1493e04ea5912795092b47aa4b36ea8e38e2",
+    "Blueprint/BLUEPRINT.md": "ffb7e36c50a4891695051d817ebd0d6bfac3b71f4650ba76b68edca24543093f",
+    "Blueprint/build.py": "b2abba8237263174766b200f1febfb50cc85537816ae211a414d04456673445f",
+    "Blueprint/build_human_volume.py": "881516b890a7238a75b582dc1019a31107b28b52e68d6401468b3185bd9d46fb",
     "push.bat": "c0d13be3e578ed720b42dd79a3fdc0f47b00da8172787239a6c72cc891ac1f1f",
     "bootstrap/AGENTS.md": "aa15b84f6cec62f82c8e9a1e0a262dd71d43e7b7c975ed293237ef1b3c2b9f63",
     "bootstrap/00_START-HERE.md": "79665d819c41a62720e478f596717c40faeef68d91e9f7714a9ebb3ae15bf06c",
