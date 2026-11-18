@@ -1,4 +1,4 @@
-# Bangkok Post desk editor registry
+# Desk editor registry
 
 The current modular Blueprint lives under [Blueprint](Blueprint/).
 
