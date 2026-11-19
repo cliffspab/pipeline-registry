@@ -4,9 +4,9 @@ This workspace maintains the Bangkok Post desk master and its at-use assembler.
 
 ## Cold start
 
-Read `00_START-HERE.md`, the supervisor's current instruction, the live files
-and `COMMITS-PENDING.md`. Inspect the working tree and local/origin commit
-identity before changing anything. Current files outrank old conversations.
+Read `00_START-HERE.md`, the supervisor's current instruction and the live
+files. Inspect the working tree and local/origin commit identity before
+changing anything. Current files outrank old conversations.
 
 ## Authority and scope
 
@@ -26,8 +26,8 @@ include Word material in routine maintenance, recovery or release checks.
 
 Exercise every declared output, deployment and custom part through
 `assemble.js`; validate `directoryText()`, JavaScript syntax and `git diff
---check`. Run `python PORTABILITY/verify_portability.py --live` after rebuilding
-the portability kit.
+--check`. Rebuild the portability ZIP only when process machinery or its
+recovery instructions change, never for a content-only edit to `MASTER.md`.
 
 ## Publication
 
@@ -47,10 +47,9 @@ from the site.
 `live/DIRECTORY.txt` and `live/DIRECTORY.yaml` are deployment-time copies made
 from the Directory block in `MASTER.md`. Do not restore static root copies.
 
-`PORTABILITY/` is the self-contained recovery and audit kit. Rebuild it with
-`python PORTABILITY/make_bundle.py`; verify it with `python
-PORTABILITY/verify_portability.py --live`.
+GitHub history is the content and change archive. `PORTABILITY/` is a tools-only
+recovery kit and contains no master snapshot. Rebuild it with `python
+PORTABILITY/make_bundle.py` only after process changes.
 
-Record material changes in `CHANGELOG.md`, `VERSION_HISTORY.md` and
-`COMMITS-PENDING.md`. Archive cleared pending entries when their exact commit is
-published.
+The commit message and GitHub commit page are the change record. Do not maintain
+parallel changelog, version-history, pending or archive ledgers.

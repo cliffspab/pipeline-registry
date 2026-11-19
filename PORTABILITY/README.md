@@ -1,22 +1,24 @@
 # BKPDE portability kit
 
-This directory is the self-contained recovery and audit kit for the
-single-master desk mechanism.
+This directory is the tools-only recovery kit for the single-master desk
+mechanism. GitHub history is the content archive.
 
-The live authority is `Blueprint/MASTER.md`; `Blueprint/assemble.js` renders
-operational outputs at the point of use. The snapshot records the exact files
-needed to understand, test and restore that mechanism without relying on the
-retired publisher, cloud mirrors or Shift tree.
+`Blueprint/MASTER.md` is deliberately absent from the kit. Recover content by
+checking out the required Git commit. The ZIP contains the assembler,
+publication workflow, desk tools, bootstrap instructions and these recovery
+documents at their repository-relative paths.
 
 ## Commands
 
-From the repository root:
+Rebuild from the repository root only when the process changes:
 
 ```powershell
 python PORTABILITY/make_bundle.py
-python PORTABILITY/verify_portability.py --live
 ```
 
-`make_bundle.py` refreshes `snapshot/`, `AUDIT-SNAPSHOT.json`, `MANIFEST.json`
-and `BKPDE-Portability.zip`. The verifier checks the kit, the snapshot against
-the live files and the assembler itself.
+Run `make_bundle.py` only when the process machinery or portability documents
+change. A content-only edit to `Blueprint/MASTER.md` does not rebuild the kit.
+
+`make_bundle.py` refreshes `BKPDE-Portability.zip`. GitHub Actions exercises the
+live assembler against the current master on every push; portability does not
+duplicate that check or preserve content.

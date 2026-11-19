@@ -11,8 +11,8 @@
 #     or observed incident + date), type, dates, verdict: PENDING.
 #   - Operator sweeps the list periodically. Ruled entries are executed
 #     (deployed to both homes or discarded), the sweep is logged in
-#     VERSION_HISTORY.md, and closed entries are pruned from this file.
-#     History lives in the log and the archived batch files, not here.
+#     the resolving GitHub commit or issue, and closed entries are pruned.
+#     History lives in the resolving GitHub commit or issue, not here.
 #
 # next-keys: LEN-14 NAM-15 ARC-18 OUT-08 VER-08 STA-04 OTH-16
 # carried-over open threads from the 2026-07-02 register sweep below.

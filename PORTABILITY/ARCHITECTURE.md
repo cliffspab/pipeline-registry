@@ -15,6 +15,10 @@ files under `live/`. `live/DIRECTORY.txt` and `live/DIRECTORY.yaml` come from
 Word production is outside this architecture, portability kit and publication
 process.
 
+GitHub commit history is the archive for `Blueprint/MASTER.md` and all other
+content. The portability kit contains process tools only; it neither snapshots
+content nor changes for a content-only commit.
+
 The former guarded batch publisher, cloud distribution, Shift refresher and
 static Directory copies are retired. GitHub is the registry and publication
 base.

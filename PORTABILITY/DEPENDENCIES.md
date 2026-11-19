@@ -9,3 +9,5 @@ Required for maintenance and recovery:
 
 No rclone remotes or cloud-mirror credentials are part of this architecture.
 Browser and GitHub credentials stay outside the repository and portability ZIP.
+The ZIP contains no Blueprint content; Git history supplies the selected
+`Blueprint/MASTER.md` revision.

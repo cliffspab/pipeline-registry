@@ -7,7 +7,6 @@ This is the cold-start map for desk-mechanism maintenance.
 Read the supervisor's current instruction and `AGENTS.md`, then inspect:
 
 - `pipeline-registry/Blueprint/MASTER.md`
-- `pipeline-registry/COMMITS-PENDING.md`
 - the repository working tree and local/origin commit identity.
 
 From `pipeline-registry`, run the read-only mechanism checks appropriate to the
@@ -16,7 +15,6 @@ single-master architecture:
 ```powershell
 node --check Blueprint/assemble.js
 node --check "DC-X Desk Hub.user.js"
-python PORTABILITY/verify_portability.py --live
 git diff --check
 ```
 
@@ -33,8 +31,12 @@ Word production is outside this mechanism and its checks.
 
 ## Maintenance and publication
 
-Use an isolated candidate for substantive machinery changes. Record approved
-changes in `CHANGELOG.md`, `VERSION_HISTORY.md` and `COMMITS-PENDING.md`.
+Use an isolated candidate for substantive machinery changes. GitHub commit
+history is the complete change record.
+
+A routine content commit changes `Blueprint/MASTER.md` only. It does not
+rebuild portability. GitHub's commit page is the exact archival record of
+changed files and lines.
 
 The old guarded publisher, cloud distributor and Shift refresher are retired.
 Publication is a reviewed Git commit and push followed by a successful GitHub
@@ -43,6 +45,7 @@ an operational model input.
 
 ## Recovery
 
-The GitHub repository plus `PORTABILITY/` is the cold-recovery set. Follow
+GitHub history recovers content. `PORTABILITY/` recovers process tools and is
+rebuilt only when those tools or their recovery instructions change. Follow
 `PORTABILITY/COLD-REBUILD.md`. Credentials and browser sessions remain outside
 the project.
