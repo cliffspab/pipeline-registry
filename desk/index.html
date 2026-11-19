@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BKP Desk Hub</title>
+<title>Desk Hub</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
-/* Layout: one narrow working column; sources as rows, pack actions below, outputs folded. */
+/* Layout: one narrow working column; sources as rows, pack actions and downloads below. */
 :root {
   --bg: #f6f7f8; --panel: #ffffff; --fg: #1d2329; --muted: #5d6873; --line: #d6dce2;
   --accent: #0f4c6b; --accent-fg: #ffffff; --ok: #1d7a3a; --warn: #a35c08; --bad: #b3261e;
@@ -47,22 +47,28 @@ ul.links { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 ul.links a { color: var(--accent); text-decoration: none; }
 ul.links a:hover { text-decoration: underline; }
 ul.links span { color: var(--muted); font-size: 12px; }
-details summary { cursor: pointer; font-weight: 600; }
 .mod { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-top: 1px solid var(--line); }
 .mod:first-child { border-top: 0; }
-.mod .n { flex: 1; font: 12px var(--mono); }
+.mod .n { flex: 1; min-width: 120px; font: 12px var(--mono); }
+#deploys { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#deploys button { width: 100%; }
 #toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: var(--fg); color: var(--bg);
   padding: 8px 14px; border-radius: 6px; font-size: 13px; max-width: 90vw; white-space: pre-line; }
 dialog { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--fg); width: min(860px, 94vw); }
 dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background: var(--bg); color: var(--fg); border: 1px solid var(--line); }
 @media (prefers-reduced-motion: no-preference) { button { transition: border-color .15s; } }
+@media (max-width: 560px) {
+  #deploys { grid-template-columns: 1fr; }
+  .mod { flex-wrap: wrap; }
+  .mod .n { flex-basis: 100%; }
+}
 </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>BKP Desk Hub</h1>
-    <div class="sub">Bangkok Post subs desk · shift pack and reference links · <span id="ver"></span></div>
+    <h1>Desk Hub</h1>
+    <div class="sub">Shift pack, downloads and reference links · <span id="ver"></span></div>
   </header>
 
   <section aria-labelledby="h-src">
@@ -89,17 +95,18 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
       <button data-act="docscopy">Copy Addendum + Tracker</button>
       <button data-act="docsdownload">Download Addendum + Tracker</button>
     </div>
-    <details style="margin-top:12px">
-      <summary>Outputs</summary>
-      <div class="sub" id="modinfo"></div>
-      <h2 style="margin-top:10px">Deployments</h2>
-      <div class="grid" id="deploys"></div>
-      <h2 style="margin-top:10px">Single outputs</h2>
-      <div id="modules"></div>
-      <h2 style="margin-top:10px">Custom single document</h2>
-      <div class="grid" id="units"></div>
-      <div class="bar" style="margin-top:6px"><button id="customcopy">Copy custom</button><button id="customsave">Save custom</button></div>
-    </details>
+  </section>
+
+  <section aria-labelledby="h-downloads">
+    <h2 id="h-downloads">Downloads</h2>
+    <div class="sub" id="modinfo"></div>
+    <h2 style="margin-top:10px">Documents and sets</h2>
+    <div class="grid" id="deploys"></div>
+    <h2 style="margin-top:10px">Individual files and skill ZIPs</h2>
+    <div id="modules"></div>
+    <h2 style="margin-top:10px">Custom single document</h2>
+    <div class="grid" id="units"></div>
+    <div class="bar" style="margin-top:6px"><button id="customcopy">Copy custom</button><button id="customsave">Download custom</button></div>
   </section>
 
   <section aria-labelledby="h-links">
@@ -121,7 +128,7 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
 <script src="../Blueprint/assemble.js"></script>
 <script>
 'use strict';
-const VERSION = '1.4.0';
+const VERSION = '1.5.0';
 const STORE_KEY = 'bkpDeskHubV2';
 const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
@@ -277,7 +284,7 @@ async function ensure(keys) { const need = keys.filter(k => !usable(state[k])); 
 
 // ---------- pack ----------
 function openingPrompt() {
-  return 'Bangkok Post desk package for this chat.\n\nBOOT routes each job and EDIT is the base every job builds on.';
+  return 'Desk package for this chat.\n\nBOOT routes each job and EDIT is the base every job builds on.';
 }
 function modelLinks() {
   return ['Blueprint (plain text): ' + LIVE + 'blueprint.md', sourceLinks()].join('\n');
@@ -318,7 +325,7 @@ async function buildDocs() {
 // ---------- outputs (assembled from the master) ----------
 const OUTPUT_LABELS = { blueprint: 'blueprint.md', boot: 'boot', 'thai-places': 'thai-places', check: 'check', photo: 'photo', pr: 'pr',
   edit: 'edit', 'edit-section': 'edit section (no Directory)', directory: 'directory' };
-const DEPLOYS = [['Portable', 'portable'], ['Skills', 'skills'], ['Skill ZIP set', 'skillsgen'], ['GUIDE', 'guide'], ['REFS', 'refs']];
+const DEPLOYS = [['Download Portable', 'portable'], ['Download skill files', 'skills'], ['Download Skill ZIP set', 'skillsgen'], ['Download GUIDE', 'guide'], ['Download REFS', 'refs']];
 function master() {
   if (typeof BKPAssemble === 'undefined') throw new Error('Assembler not loaded');
   if (!state.master || !state.master.text) throw new Error('No master stored');
@@ -357,7 +364,8 @@ async function deployAct(key) {
     }
     const files = BKPAssemble.deployment(master(), key, opts());
     for (let i = 0; i < files.length; i++) { download(files[i].file, files[i].text); if (i < files.length - 1) await sleep(900); }
-    toast('Saved ' + files.map(f => f.file).join(', ') + '. If only one arrived, allow multiple downloads for this site.', 8000);
+    const saved = 'Saved ' + files.map(f => f.file).join(', ') + '.';
+    toast(files.length > 1 ? saved + ' If only one arrived, allow multiple downloads for this site.' : saved, 8000);
   } catch (e) { toast('Deploy failed: ' + e.message, 8000); }
 }
 async function customAct(act) {
@@ -430,8 +438,8 @@ function render() {
   (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
     const parts = [el('span', { className: 'n', textContent: OUTPUT_LABELS[n] || n }),
       el('button', { textContent: 'Copy', onclick: () => outputAct(n, 'copy') }),
-      el('button', { textContent: 'Save', onclick: () => outputAct(n, 'save') })];
-    if (m && m.meta.deployments.skillsgen.zips.includes(n)) parts.push(el('button', { textContent: 'ZIP', onclick: () => outputAct(n, 'zip') }));
+      el('button', { textContent: 'Download', onclick: () => outputAct(n, 'save') })];
+    if (m && m.meta.deployments.skillsgen.zips.includes(n)) parts.push(el('button', { textContent: 'Download ZIP', onclick: () => outputAct(n, 'zip') }));
     mh.append(el('div', { className: 'mod' }, ...parts));
   });
   const uh = $('#units'), ticked = new Set([...uh.querySelectorAll('input:checked')].map(x => x.dataset.unit)); uh.textContent = '';
