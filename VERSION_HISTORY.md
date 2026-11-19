@@ -6,13 +6,25 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-19 - NAME-FORM BULLET RETIRED; ERROR-LOG PROCESS CONFIRMED
+
+**Direction.** Delete “One story, one name form: captions and body must agree.”
+from the master. Remove the seventh migration decision concerning a Claude
+error-log review; the supervisor confirmed that the existing process is fine.
+
+**Evidence.** The sentence is absent from `Blueprint/MASTER.md` and the
+portability snapshot. The repository issue raised for the seventh decision is
+closed without a process change.
+
+**Verdict.** The deletion applies to every assembled output that includes the
+shared Style block. No error-log instruction changes.
+
 ## 2026-11-19 - SINGLE-MASTER MIGRATION APPROVED AND VALIDATED
 
 **Supervisor rulings.** Retire the old publisher and Shift machinery; keep Word
 entirely outside this process; rebuild portability; replace the static Directory
 files with generated hosted copies; retire the old root handover documents;
-configure publication and install the new Desk Hub; and refer the remaining
-error-log wording question to Claude through the repository issue.
+and configure publication and install the new Desk Hub.
 
 **Mechanism.** GitHub Pages now assembles the declared hosted outputs directly
 from `Blueprint/MASTER.md` with `Blueprint/assemble.js` and additionally emits

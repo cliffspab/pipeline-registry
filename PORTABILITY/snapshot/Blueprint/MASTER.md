@@ -1131,7 +1131,6 @@ On every job. Mode modules override where they differ.
 - Heads: active, short, sentence case. No subject countries in weekday or Saturday world-page heads.
 - Write head and deck (filed versions are working copy). Editorials: head only unless instructed. Slug containing `bf` or `Brief`: head, no deck.
 - Sunday brief heads: sentence case, all-caps on page, [P1-A] weight ≤ 23 (normally 24–30 characters).
-- One story, one name form: captions and body must agree.
 
 **Offices**
 Check every Thai cabinet minister against the addendum roster on first mention. Disagree → correct to roster and query; house style still governs spelling. Search current holder when copy names a Thai royal title or party leader. Check other offices when an edit would change them or the copy gives reason for doubt. Never rely on memory for a recent office.

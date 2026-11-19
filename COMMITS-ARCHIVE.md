@@ -10,6 +10,10 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 These reviewed pending items were incorporated into the approved single-master
 migration. The Shift-index item was superseded and retired by the same change.
 
+- 2026-11-19 | Name-form rule | Remove “One story, one name form: captions and
+  body must agree.” from the master and withdraw the proposed Claude error-log
+  review because the existing process is fine.
+
 - 2026-11-19 | Single-master handoff | Install the supervisor-supplied handoff:
   add `Blueprint/MASTER.md`, `Blueprint/assemble.js` and the Pages workflow;
   update DC-X Desk Hub to 2.1.0 and the desk page; retire the tracked-output

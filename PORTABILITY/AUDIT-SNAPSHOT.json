@@ -1,7 +1,7 @@
 {
   "edition": "171126_gpt_resequenced",
   "files": {
-    "Blueprint/MASTER.md": "e1684befa9acf72efb9a08ba45c72312db5b61a8f7903ffa509f1d6c455dd33f",
+    "Blueprint/MASTER.md": "c0e76cd9db4a210569cc61c5fa452782e724a4112a0015ddf789c58f5c19be12",
     "Blueprint/assemble.js": "9cfe07384575c45eea416d3da49b20e665b9378b1b29de20bf682b8a174f5585",
     ".github/workflows/pages.yml": "adffc11cfbb56feff92c72a212f97e1da4ee5a2b9f16f0662b0dba26ad9cc7a3",
     "desk/index.html": "8d5a1825d87d610505123ac148254e870899e73e65bae577840475dfd02219a0",

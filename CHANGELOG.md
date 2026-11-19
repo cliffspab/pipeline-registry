@@ -9,6 +9,13 @@ Each released entry names the version, date, affected deliveries and required
 user action. This is a change summary, not editorial authority or a substitute
 for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
+## 2026-11-19 - Name-form rule removal
+
+Removed “One story, one name form: captions and body must agree.” from the
+single master and therefore from every assembled output containing the shared
+Style block. The proposed Claude error-log review was withdrawn because the
+existing process is fine.
+
 ## 2026-11-19 - Single-master architecture
 
 Adopted the supervisor-supplied single-master handoff without changing the
