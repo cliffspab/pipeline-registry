@@ -6,6 +6,65 @@ anointment, supersession, deletion sweep and audit gets an entry.
 
 Convention per entry: date (YYYY-MM-DD), event, evidence, verdict.
 
+## 2026-11-19 - SINGLE-MASTER MIGRATION APPROVED AND VALIDATED
+
+**Supervisor rulings.** Retire the old publisher and Shift machinery; keep Word
+entirely outside this process; rebuild portability; replace the static Directory
+files with generated hosted copies; retire the old root handover documents;
+configure publication and install the new Desk Hub; and refer the remaining
+error-log wording question to Claude through the repository issue.
+
+**Mechanism.** GitHub Pages now assembles the declared hosted outputs directly
+from `Blueprint/MASTER.md` with `Blueprint/assemble.js` and additionally emits
+`live/DIRECTORY.txt` and `live/DIRECTORY.yaml`. The master is not published.
+The retired build, publisher, cloud-copy, Shift and Sync Master paths have been
+removed. The portability bundle snapshots and verifies the new authority,
+assembler, Pages workflow, hub and recovery instructions. Word is excluded.
+
+**Evidence.** The assembler produced all 10 outputs, five deployments, 37
+routes, eight hosted outputs and both Directory copies. JavaScript and Python
+syntax checks passed. The new portability manifest and ZIP pass their live
+exercise.
+
+**Verdict.** Edition identity remains `171126_gpt_resequenced`. The migration
+is approved for direct publication, GitHub Pages configuration and Desk Hub
+2.1.0 installation. Cloud mirrors and Shift are no longer publication gates.
+
+## 2026-11-19 - SINGLE-MASTER HANDOFF INSTALLED LOCALLY
+
+**Direction.** The supervisor supplied `master-handoff.zip` and instructed the
+desk to install it. The handoff replaces the committed generated-output model
+with one non-operational `Blueprint/MASTER.md` and an at-use JavaScript
+assembler. Edition identity remains `171126_gpt_resequenced`.
+
+**Installation.** Applied the handoff first to an isolated clone, then copied
+its five added or replaced files into the live registry and made the exact
+deletions in `DELETE.txt`. The pending [R4] example-spacing correction was
+carried from `BLUEPRINT.md` into `MASTER.md`. Upload ZIPs, the Word volume,
+root Directory files, portability, bootstrap and publisher machinery were left
+as found, as required by the handoff.
+
+**Evidence.** The patch applied cleanly to the isolated clone. The new
+assembler parsed the master and successfully built all 10 declared outputs,
+five deployments, 37 routes, eight hosted outputs and all eight custom parts.
+The assembler and Desk Hub passed JavaScript syntax checks, the combined diff
+passed whitespace checking, and the assembled Edit output retained the [R4]
+two-blank-line body gap. The post-install compatibility audit also confirmed
+the handoff's stated legacy break: the Word check cannot find the deleted
+`BLUEPRINT.md`, and the portability live check reports `BLUEPRINT.md`,
+`build.py` and `compile.yml` missing.
+
+**Boundary and verdict.** Local installation only. No commit, push, Pages
+setting change, Desk Hub installation or cloud publication was performed. The
+handoff's publisher/distribution, Directory freshness, documentation,
+portability and error-log wording decisions remain open for the supervisor.
+The single-master candidate is installed and locally validated; it is not
+published.
+
+## 2026-11-18 - EDIT EXAMPLE SPACING
+
+Corrected the [R4] example to match [R1] in the current edition.
+
 ## 2026-11-17 — FOUR-SOURCE SHIFT SYNC MASTER
 
 **Direction.** The supervisor supplied an UltraSearch CSV of the verified

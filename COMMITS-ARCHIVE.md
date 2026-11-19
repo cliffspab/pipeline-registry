@@ -5,6 +5,23 @@ This is a receipt, not a lineage - VERSION_HISTORY.md holds the reasoning.
 
 ---
 
+## Cleared 2026-11-19
+
+These reviewed pending items were incorporated into the approved single-master
+migration. The Shift-index item was superseded and retired by the same change.
+
+- 2026-11-19 | Single-master handoff | Install the supervisor-supplied handoff:
+  add `Blueprint/MASTER.md`, `Blueprint/assemble.js` and the Pages workflow;
+  update DC-X Desk Hub to 2.1.0 and the desk page; retire the tracked-output
+  build; and carry the pending [R4] spacing correction into the master.
+
+- 2026-11-18 | Edit example spacing | Add the missing blank line before the
+  [R4] example body and reproduce it through the new assembler.
+
+- 2026-11-17 | Four-source Shift index | The Sync Master and its Desk Hub
+  route are retired because the supervisor retired the Shift and cloud-copy
+  publication machinery.
+
 
 
 

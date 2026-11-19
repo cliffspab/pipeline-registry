@@ -9,6 +9,29 @@ Each released entry names the version, date, affected deliveries and required
 user action. This is a change summary, not editorial authority or a substitute
 for `VERSION_HISTORY.md`, `COMMITS-PENDING.md` or the detailed shared workplan.
 
+## 2026-11-19 - Single-master architecture
+
+Adopted the supervisor-supplied single-master handoff without changing the
+edition identity. `Blueprint/MASTER.md` now holds the desk content and assembly
+metadata; `Blueprint/assemble.js` builds desk outputs at the point of use. The
+Pages workflow publishes the declared hosted outputs plus generated Directory
+text and YAML copies, while excluding the master. The desk page and Desk Hub
+were updated, and the pending [R4] spacing correction was carried into the
+master.
+
+Retired the former tracked-output build, guarded publisher, cloud distribution,
+Shift refresher, Sync Master, static Directory copies and superseded root
+handover documents. Rebuilt the self-contained portability kit around the new
+authority and hosted delivery model. Word production is outside this process.
+
+**User action:** reinstall DC-X Desk Hub 2.1.0. Consume the six skills,
+complete Blueprint and Directory copies from the hosted `live/` surface; do
+not use `MASTER.md` as a desk prompt.
+
+## 2026-11-18 - Edit example spacing
+
+Match the Edit example to the existing two-blank-line gap above the body.
+
 ## Unreleased
 
 ### 171126_gpt_resequenced

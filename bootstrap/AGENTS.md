@@ -1,78 +1,56 @@
-+# BKPDE workspace
+# BKPDE workspace
 
-This workspace produces the Bangkok Post desk-editing Blueprint and its six-skill delivery.
+This workspace maintains the Bangkok Post desk master and its at-use assembler.
 
 ## Cold start
 
-Start with `00_START-HERE.md`. On every fresh maintenance task, read the
-supervisor's current instruction, inspect the live files and run the named
-read-only checks before reporting state or changing anything. Current files
-outrank old conversations.
+Read `00_START-HERE.md`, the supervisor's current instruction, the live files
+and `COMMITS-PENDING.md`. Inspect the working tree and local/origin commit
+identity before changing anything. Current files outrank old conversations.
 
-## Roles and authority
+## Authority and scope
 
-The human is the supervisor. The AI is the sub-editor for copy and the custodian
-for this mechanism. The supervisor controls scope, edition identity and
-publication. Repository instructions must not become editorial rules.
+The human is the supervisor. Ask before changing edition identity, publishing
+or widening the agreed change. Use an isolated candidate for substantive
+machinery work.
 
-Ask before publishing, moving or deleting material, changing edition identity
-or widening an agreed change. Use an isolated candidate for substantive
-machinery changes.
+`Blueprint/MASTER.md` is the only editable desk-content authority. It contains
+metadata and tagged content blocks. `Blueprint/assemble.js` produces the
+Blueprint, skills, deployments and Directory copies at the point of use.
+Generated outputs are not committed as parallel authorities.
 
-## Current architecture
+Word production is outside this mechanism. Do not build, validate, publish or
+include Word material in routine maintenance, recovery or release checks.
 
-`pipeline-registry/Blueprint/BLUEPRINT.md` is the single editable modular
-authority. It contains Boot, Edit, Check, Photo, PR and Thai Places components.
-`Blueprint/build.py` validates that source and generates the complete
-`BLUEPRINT.txt`, compatibility texts, routed Markdown, skill folders, ZIP
-packages, indexes and build receipt.
+## Validation
 
-`Blueprint/build_human_volume.py` generates the edition-named Word reading
-volume directly from the same authority. Never hand-edit generated outputs.
+Exercise every declared output, deployment and custom part through
+`assemble.js`; validate `directoryText()`, JavaScript syntax and `git diff
+--check`. Run `python PORTABILITY/verify_portability.py --live` after rebuilding
+the portability kit.
 
-Boot is the front-end router and carries House Essentials. Edit carries the
-common editing method and embedded Directory data. Thai Places is a separate,
-conditional lookup. Check, Photo and PR remain bounded task modules.
+## Publication
 
-## Safe build and publication
+The retired `push.bat`, cloud distributor and Shift refresher are not part of
+the architecture. After supervisor approval, commit the exact reviewed tree and
+push it without rebasing. If upstream has advanced, stop, combine the state in
+an isolated candidate and validate again.
 
-1. Make and test an isolated candidate.
-2. Install the approved source or machinery changes in the registry.
-3. Run `python Blueprint/build.py` and regenerate the Word volume when its
-   source or builder changes.
-4. Run the read-only build and Word checks.
-5. Record material changes in `CHANGELOG.md`, the exact payload in
-   `COMMITS-PENDING.md` and edition reasoning in `VERSION_HISTORY.md`.
-6. The supervisor runs `push.bat` and types `PUSH` only after reading its
-   preflight.
-7. Publication is complete only when local HEAD equals `origin/main`, GitHub
-   validation succeeds, and the exact validated commit has been copied and
-   verified on pCloud, Google Drive and OneDrive.
+GitHub Actions publishes the repository and the assembled `live/` outputs.
+GitHub Pages must use **GitHub Actions** as its source. Publication is complete
+only when local HEAD equals `origin/main`, the Pages workflow succeeds, the
+hosted outputs show the committed edition and `Blueprint/MASTER.md` is absent
+from the site.
 
-The guarded push never rebases after validation. If upstream has advanced, it
-stops and requires the combined state to be reviewed and validated again.
+## Directory, recovery and history
 
-## Distribution and recovery
+`live/DIRECTORY.txt` and `live/DIRECTORY.yaml` are deployment-time copies made
+from the Directory block in `MASTER.md`. Do not restore static root copies.
 
-Cloud mirrors are generated delivery surfaces, never sources. Distribution
-uses `rclone copy`, never `sync`; it does not delete remote-only files. The
-publisher extracts the exact validated Git commit to a temporary directory,
-copies that immutable Blueprint tree, verifies each destination and writes a
-small local receipt under `.publication/`. The committed portability ZIP,
-manifest and snapshot are also copied to its separate OneDrive backup.
+`PORTABILITY/` is the self-contained recovery and audit kit. Rebuild it with
+`python PORTABILITY/make_bundle.py`; verify it with `python
+PORTABILITY/verify_portability.py --live`.
 
-`pipeline-registry/Blueprint/Shift/` is a generated pickup convenience, never authority.
-After GitHub validation, `bootstrap/shift.py` refreshes
-exactly eight loose documents plus six `SKILL.md` folders and six ZIPs under
-`skillmd/`. It preserves unrelated top-level conveniences, is Git-ignored and
-travels inside the Blueprint copy to all three cloud mirrors. The Word volume is not part of this contract.
-
-The self-contained recovery and audit material lives in
-`pipeline-registry/PORTABILITY/`. GitHub is the registry and validation base.
-Credentials and rclone configuration remain outside the project.
-
-## Generated and historical material
-
-Keep the workspace root operational. Put candidates, probes and superseded
-handoffs in dated archive or temporary space. Do not carry old model-specific
-instructions forward. `git add -A` publishes deletions as well as additions.
+Record material changes in `CHANGELOG.md`, `VERSION_HISTORY.md` and
+`COMMITS-PENDING.md`. Archive cleared pending entries when their exact commit is
+published.

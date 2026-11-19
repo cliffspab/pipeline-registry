@@ -1,50 +1,48 @@
-+# BKP Desk — start here
+# BKP Desk — start here
 
-This is the cold-start map for editorial work and mechanism maintenance.
+This is the cold-start map for desk-mechanism maintenance.
 
 ## Establish live state
 
 Read the supervisor's current instruction and `AGENTS.md`, then inspect:
 
-- `pipeline-registry/Blueprint/VERSION.txt`
+- `pipeline-registry/Blueprint/MASTER.md`
 - `pipeline-registry/COMMITS-PENDING.md`
 - the repository working tree and local/origin commit identity.
 
-For a read-only mechanism check, run from `pipeline-registry`:
+From `pipeline-registry`, run the read-only mechanism checks appropriate to the
+single-master architecture:
 
 ```powershell
-python Blueprint/build.py --check --release
-python Blueprint/build_human_volume.py --check
+node --check Blueprint/assemble.js
+node --check "DC-X Desk Hub.user.js"
 python PORTABILITY/verify_portability.py --live
+git diff --check
 ```
 
-Report any failed check plainly. Do not infer state from an old conversation.
+Report any failure plainly. Do not infer state from an old conversation.
 
-## Editorial work
+## Architecture
 
-`Blueprint/BLUEPRINT.md` is the editable modular authority.
-`Blueprint/BLUEPRINT.txt` is its complete generated reading surface.
-The generated skills route Edit, Check, Photo, PR and Thai Places work; Boot is
-the front-end router and holds House Essentials.
+`Blueprint/MASTER.md` is the one editable desk-content authority.
+`Blueprint/assemble.js` builds every operational output at the point of use.
+GitHub Actions publishes the assembled outputs under `live/` and generates
+`DIRECTORY.txt` and `DIRECTORY.yaml` from the same master block.
 
-Never hand-edit generated deployment files.
+Word production is outside this mechanism and its checks.
 
-## Maintenance
+## Maintenance and publication
 
 Use an isolated candidate for substantive machinery changes. Record approved
-material changes in `CHANGELOG.md`, `VERSION_HISTORY.md` and
-`COMMITS-PENDING.md`. Publication is separate: the supervisor reads
-`push.bat` preflight and types `PUSH`.
+changes in `CHANGELOG.md`, `VERSION_HISTORY.md` and `COMMITS-PENDING.md`.
 
-A successful guarded push commits and validates the exact payload, copies the
-validated commit's Blueprint tree to pCloud, Google Drive and OneDrive, verifies
-the destinations and writes `.publication/last.json`.
+The old guarded publisher, cloud distributor and Shift refresher are retired.
+Publication is a reviewed Git commit and push followed by a successful GitHub
+Pages Actions run and hosted-output verification. Never publish `MASTER.md` as
+an operational model input.
 
 ## Recovery
 
-The clone plus `PORTABILITY/` is the cold-recovery set. Follow
-`PORTABILITY/COLD-REBUILD.md`. Account credentials, GitHub authentication and
-rclone configuration are restored separately and must never be committed.
-
-`pipeline-registry/Blueprint/Shift/` is the automatically refreshed and mirrored pickup:
-eight loose documents, six skill folders and six ZIPs. It is not authority.
+The GitHub repository plus `PORTABILITY/` is the cold-recovery set. Follow
+`PORTABILITY/COLD-REBUILD.md`. Credentials and browser sessions remain outside
+the project.

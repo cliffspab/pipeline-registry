@@ -6,7 +6,7 @@
 <title>BKP Desk Hub</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
-/* Layout: one narrow working column; sources as rows, pack actions below, modules folded. */
+/* Layout: one narrow working column; sources as rows, pack actions below, outputs folded. */
 :root {
   --bg: #f6f7f8; --panel: #ffffff; --fg: #1d2329; --muted: #5d6873; --line: #d6dce2;
   --accent: #0f4c6b; --accent-fg: #ffffff; --ok: #1d7a3a; --warn: #a35c08; --bad: #b3261e;
@@ -76,7 +76,7 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
       <button class="primary" data-act="copy">Copy full pack</button>
       <button class="primary" data-act="download">Download full pack</button>
       <button data-act="refresh">Refresh all</button>
-      <button data-act="separate">Download separate</button>
+      <button data-act="separate">Download Portable</button>
       <button data-act="prompt">Copy opening prompt</button>
       <button data-act="modellinks">Copy model links</button>
       <button data-act="editorlinks">Copy editor links</button>
@@ -90,10 +90,15 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
       <button data-act="docsdownload">Download Addendum + Tracker</button>
     </div>
     <details style="margin-top:12px">
-      <summary>Blueprint modules</summary>
+      <summary>Outputs</summary>
       <div class="sub" id="modinfo"></div>
+      <h2 style="margin-top:10px">Deployments</h2>
+      <div class="grid" id="deploys"></div>
+      <h2 style="margin-top:10px">Single outputs</h2>
       <div id="modules"></div>
-      <div class="bar" style="margin-top:6px"><button id="pairsave">Save EDIT + DIRECTORY</button></div>
+      <h2 style="margin-top:10px">Custom single document</h2>
+      <div class="grid" id="units"></div>
+      <div class="bar" style="margin-top:6px"><button id="customcopy">Copy custom</button><button id="customsave">Save custom</button></div>
     </details>
   </section>
 
@@ -113,10 +118,11 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
 </dialog>
 <div id="toast" hidden></div>
 
+<script src="../Blueprint/assemble.js"></script>
 <script>
 'use strict';
-const VERSION = '1.3.0';
-const STORE_KEY = 'bkpDeskHubV1';
+const VERSION = '1.4.0';
+const STORE_KEY = 'bkpDeskHubV2';
 const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
 const TRACKER_GID = '1313569477';
@@ -126,9 +132,9 @@ const ADDENDUM_TXT = 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/exp
 const TRACKER_PUB ='https://docs.google.com/spreadsheets/d/e/2PACX-1vTY4md4NUkzdNHRVYZJQQTwJbaEygbC_JhxWvjqGjioAv4rB0yxpLmG85I0hzsWY4pfZqAHpy6J0PFj/pub?gid=' + TRACKER_GID + '&single=true&output=csv';
 
 const SOURCES = {
-  blueprint: { label: 'Blueprint', url: RAW_BP + 'BLUEPRINT.txt', versionUrl: RAW_BP + 'VERSION.txt',
-    openUrl: 'https://github.com/cliffspab/pipeline-registry/blob/main/Blueprint/BLUEPRINT.txt',
-    modelUrl: RAW_BP + 'BLUEPRINT.txt', filename: 'BLUEPRINT.txt', minChars: 20000, components: true },
+  master: { label: 'Master', url: RAW_BP + 'MASTER.md',
+    openUrl: 'https://github.com/cliffspab/pipeline-registry/blob/main/Blueprint/MASTER.md',
+    minChars: 20000, markers: ['NOT FOR EDITORIAL USE', '<!-- @meta'], assemble: true },
   addendum: { label: 'Desk Addendum', url: ADDENDUM_PUB, html: true,
     openUrl: 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/edit',
     modelUrl: ADDENDUM_PUB, filename: 'Desk_Addendum.txt', minChars: 500, markers: ['DESK ADDENDUM'] },
@@ -137,9 +143,10 @@ const SOURCES = {
     modelUrl: TRACKER_PUB, filename: 'Desk_Tracker.csv', minChars: 500, header: /^"?Status"?,"?Story"?,/ }
 };
 const KEYS = Object.keys(SOURCES);
+const LIVE = 'https://cliffspab.github.io/pipeline-registry/live/'; // hosted builds, rebuilt on every push
 const LINKS = [
-  ['Blueprint on GitHub', SOURCES.blueprint.openUrl],
-  ['Blueprint (plain text)', SOURCES.blueprint.modelUrl],
+  ['Blueprint (hosted build)', LIVE + 'blueprint.md'],
+  ['Directory (hosted build)', LIVE + 'directory.md'],
   ['Desk Addendum (edit)', SOURCES.addendum.openUrl],
   ['Desk Addendum (published)', ADDENDUM_PUB],
   ['Tracker (edit)', SOURCES.tracker.openUrl],
@@ -202,7 +209,7 @@ function docHtmlToText(html) {
 }
 function versionOf(key, text) {
   text = String(text || '');
-  if (key === 'blueprint') { const m = text.match(/<!--\s*MASTER\s+(\S+?)\s*-->/) || text.match(/^﻿?<!--\s*(\S+?)\s*-->/); return m ? m[1] : ''; }
+  if (key === 'master') { const m = text.match(/"edition":\s*"([^"]+)"/); return m ? m[1] : ''; }
   if (key === 'addendum') { const m = text.match(/Last update:\s*([^\r\n]+)/i); return m ? 'Last update ' + m[1].trim() : ''; }
   if (key === 'tracker') {
     const M = 'JanFebMarAprMayJunJulAugSepOctNovDec'; let best = 0, label = '', m;
@@ -212,34 +219,6 @@ function versionOf(key, text) {
   }
   return '';
 }
-// Every COMPONENT line closed by its own END COMPONENT line, no overlaps, nothing after the last END
-// but blank or comment lines; an END BLUEPRINT line, when present, must close the file.
-function componentCheck(text) {
-  const PACK_END = '<!-- END BLUEPRINT -->';
-  const lines = String(text).replace(/^﻿/, '').replace(/\r\n?/g, '\n').split('\n');
-  const re = /^\s*<!--\s*(END\s+)?COMPONENT:\s*(.+?)\s*-->\s*$/;
-  const names = []; let open = null, lastEnd = -1;
-  for (let i = 0; i < lines.length; i++) {
-    const m = lines[i].match(re); if (!m) continue;
-    const name = m[2];
-    if (!m[1]) {
-      if (open) return { ok: false, detail: 'COMPONENT ' + name + ' opens before ' + open + ' is closed' };
-      if (names.includes(name)) return { ok: false, detail: 'COMPONENT ' + name + ' appears twice' };
-      open = name;
-    } else {
-      if (open !== name) return { ok: false, detail: 'END COMPONENT ' + name + (open ? ' while ' + open + ' is open' : ' with no matching COMPONENT') };
-      names.push(name); open = null; lastEnd = i;
-    }
-  }
-  if (open) return { ok: false, detail: 'COMPONENT ' + open + ' has no END COMPONENT (possibly truncated)' };
-  if (!names.length) return { ok: false, detail: 'No COMPONENT markers found' };
-  const tail = lines.slice(lastEnd + 1).map(l => l.trim()).filter(Boolean);
-  const hasEnd = lines.some(l => l.trim() === PACK_END);
-  if (hasEnd) { if (tail[tail.length - 1] !== PACK_END) return { ok: false, detail: 'END BLUEPRINT is not the last line' }; tail.pop(); }
-  const stray = tail.find(l => !/^<!--.*-->$/.test(l));
-  if (stray) return { ok: false, detail: 'Text after END COMPONENT ' + names[names.length - 1] + ': ' + stray.slice(0, 50) };
-  return { ok: true, names, detail: names.length + ' components paired; ends at ' + (hasEnd ? 'END BLUEPRINT' : 'END COMPONENT ' + names[names.length - 1]) };
-}
 function classify(key, text) {
   const c = SOURCES[key];
   if (!String(text).trim()) return { state: 'EMPTY', detail: 'No content returned' };
@@ -248,7 +227,11 @@ function classify(key, text) {
   const missing = (c.markers || []).filter(m => !text.includes(m));
   if (missing.length) return { state: 'PARTIAL', detail: 'Missing: ' + missing.join(', ') };
   if (c.header && !c.header.test(text.replace(/^﻿/, '').split(/\r?\n/, 1)[0])) return { state: 'PARTIAL', detail: 'Unexpected header row' };
-  if (c.components) { const r = componentCheck(text); return r.ok ? { state: 'READY', detail: r.detail } : { state: 'PARTIAL', detail: r.detail }; }
+  if (c.assemble) {
+    if (typeof BKPAssemble === 'undefined') return { state: 'PARTIAL', detail: 'Assembler (assemble.js) not loaded' };
+    try { const m = BKPAssemble.parse(text), outs = BKPAssemble.outputs(m).filter(n => n !== 'addendum'); outs.forEach(n => BKPAssemble.render(m, n)); return { state: 'READY', detail: outs.length + ' outputs assemble' }; }
+    catch (e) { return { state: 'PARTIAL', detail: 'Does not assemble: ' + e.message }; }
+  }
   return { state: 'READY', detail: 'Checked' };
 }
 const usable = s => !!(s && s.text && ['READY', 'CACHED', 'PARTIAL', 'MANUAL'].includes(s.state));
@@ -271,9 +254,6 @@ async function refresh(key, quiet) {
     const chk = classify(key, text);
     if (chk.state === 'READY' || (chk.state === 'PARTIAL' && !(prev && prev.contentState === 'READY'))) {
       const fresh = { state: chk.state, contentState: chk.state, detail: chk.detail, text, retrieved: new Date().toISOString(), chars: count(text), version: versionOf(key, text) };
-      if (key === 'blueprint' && c.versionUrl && chk.state === 'READY') {
-        try { const v = (await getText(c.versionUrl)).trim().split(/\s+/)[0]; if (v && fresh.version && v !== fresh.version) fresh.detail += ' · VERSION.txt says ' + v; } catch (_) {}
-      }
       state[key] = fresh; save();
       if (!quiet && chk.state !== 'READY') toast(c.label + ': PARTIAL. ' + chk.detail, 7000);
       return fresh;
@@ -300,28 +280,29 @@ function openingPrompt() {
   return 'Bangkok Post desk package for this chat.\n\nBOOT routes each job and EDIT is the base every job builds on.';
 }
 function modelLinks() {
-  return ['Blueprint (plain text): ' + SOURCES.blueprint.modelUrl, sourceLinks()].join('\n');
+  return ['Blueprint (plain text): ' + LIVE + 'blueprint.md', sourceLinks()].join('\n');
 }
 function editorLinks() {
-  return ['Blueprint: ' + SOURCES.blueprint.openUrl, 'Desk Addendum: ' + SOURCES.addendum.openUrl, 'Tracker: ' + SOURCES.tracker.openUrl, 'Tracker usage: https://go.fuzzylogic.page/usage'].join('\n');
+  return ['Master: ' + SOURCES.master.openUrl, 'Desk Addendum: ' + SOURCES.addendum.openUrl, 'Tracker: ' + SOURCES.tracker.openUrl, 'Tracker usage: https://go.fuzzylogic.page/usage'].join('\n');
 }
 function confirmFresh(keys) {
   const warn = keys.filter(k => notFresh(state[k]));
   if (!warn.length) return true;
   return confirm('Not fresh checked copies:\n\n' + warn.map(k => '- ' + SOURCES[k].label + ': ' + state[k].state + (state[k].retrieved ? ', retrieved ' + ago(state[k].retrieved) : '')).join('\n') + '\n\nUse them anyway?');
 }
-// The pack carries the Blueprint in full; the Addendum and Tracker go in as links only.
-const PACK_KEYS = ['blueprint'];
+// The pack carries the Blueprint (assembled from the master) in full; the Addendum and Tracker go in as links only.
+const PACK_KEYS = ['master'];
 const DOC_KEYS = ['addendum', 'tracker'];
 function sourceLinks() {
   return ['Desk Addendum (plain text): ' + ADDENDUM_TXT, 'Tracker (CSV): ' + TRACKER_PUB].join('\n');
 }
 async function buildPack() {
   await ensure(PACK_KEYS);
-  if (!usable(state.blueprint)) { toast('Blueprint unavailable (' + ((state.blueprint || {}).state || 'NONE') + '). Refresh, or paste it.', 8000); return null; }
+  if (!usable(state.master)) { toast('Master unavailable (' + ((state.master || {}).state || 'NONE') + '). Refresh, or paste it.', 8000); return null; }
   if (!confirmFresh(PACK_KEYS)) return null;
+  let blueprint; try { blueprint = BKPAssemble.render(master(), 'blueprint'); } catch (e) { toast('Blueprint did not assemble: ' + e.message, 8000); return null; }
   return ['===== BEGIN OPENING PROMPT =====', openingPrompt(), '===== END OPENING PROMPT =====', '',
-    '===== BEGIN BLUEPRINT =====', state.blueprint.text.trimEnd(), '===== END BLUEPRINT =====', '',
+    '===== BEGIN BLUEPRINT =====', blueprint.trimEnd(), '===== END BLUEPRINT =====', '',
     '===== BEGIN SOURCE LINKS =====', sourceLinks(), '===== END SOURCE LINKS ====='].join('\n') + '\n';
 }
 // Full Addendum and Tracker as one document, generated on request.
@@ -334,32 +315,51 @@ async function buildDocs() {
     '===== BEGIN TRACKER =====', state.tracker.text.trimEnd(), '===== END TRACKER ====='].join('\n') + '\n';
 }
 
-// ---------- modules ----------
-function modules() {
-  const s = state.blueprint, out = {};
-  if (!s || !s.text) return out;
-  const r = componentCheck(s.text), names = r.names || [];
-  names.forEach(n => {
-    const esc = n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const m = s.text.match(new RegExp('<!--\\s*COMPONENT:\\s*' + esc + '\\s*-->\\r?\\n([\\s\\S]*?)\\r?\\n\\s*<!--\\s*END\\s+COMPONENT:\\s*' + esc + '\\s*-->'));
-    if (m) out[n] = (s.version ? '<!-- ' + s.version + ' -->\n' : '') + m[1] + '\n';
-  });
-  // GUIDE: the whole Blueprint with the DIRECTORY component taken out, so every skill and section stays.
-  if (out.DIRECTORY) {
-    const guide = s.text.replace(/^\s*<!--\s*COMPONENT:\s*DIRECTORY\s*-->[\s\S]*?^\s*<!--\s*END\s+COMPONENT:\s*DIRECTORY\s*-->\s*\n+/m, '');
-    if (guide !== s.text) out.GUIDE = guide.trimEnd() + '\n';
-  }
-  return out;
+// ---------- outputs (assembled from the master) ----------
+const OUTPUT_LABELS = { blueprint: 'blueprint.md', boot: 'boot', 'thai-places': 'thai-places', check: 'check', photo: 'photo', pr: 'pr',
+  edit: 'edit', 'edit-section': 'edit section (no Directory)', directory: 'directory' };
+const DEPLOYS = [['Portable', 'portable'], ['Skills', 'skills'], ['Skillsgen', 'skillsgen'], ['GUIDE', 'guide'], ['REFS', 'refs']];
+const UPLOAD_URL = 'https://github.com/cliffspab/pipeline-registry/tree/main/Blueprint/UPLOAD';
+function master() {
+  if (typeof BKPAssemble === 'undefined') throw new Error('Assembler not loaded');
+  if (!state.master || !state.master.text) throw new Error('No master stored');
+  return BKPAssemble.parse(state.master.text);
 }
-function moduleFile(n) { const v = (state.blueprint || {}).version; return n + (v ? '_' + v : '') + (n === 'DIRECTORY' ? '.txt' : '.md'); }
-async function moduleAction(names, act) {
-  await ensure(['blueprint']);
-  if (!usable(state.blueprint)) return toast('No Blueprint stored. Refresh it first.');
-  if (!confirmFresh(['blueprint'])) return;
-  const mods = modules(), missing = names.filter(n => !mods[n]);
-  if (missing.length) return toast('Not found in the stored Blueprint: ' + missing.join(', '), 7000);
-  if (act === 'copy') return copyText(mods[names[0]], names[0]);
-  for (let i = 0; i < names.length; i++) { download(moduleFile(names[i]), mods[names[i]]); if (i < names.length - 1) await sleep(900); }
+function masterOrNull() { try { return master(); } catch (_) { return null; } }
+async function ready(keys) {
+  await ensure(keys);
+  const missing = keys.filter(k => !usable(state[k]));
+  if (missing.length) { toast('Unavailable: ' + missing.map(k => SOURCES[k].label + ' (' + ((state[k] || {}).state || 'NONE') + ')').join(', ') + '. Refresh, or paste it.', 8000); return false; }
+  return confirmFresh(keys);
+}
+const opts = () => ({ addendum: (state.addendum && state.addendum.text) || '' });
+async function outputAct(name, act) {
+  if (!await ready(['master'])) return;
+  try {
+    const m = master(), text = BKPAssemble.render(m, name);
+    if (act === 'copy') return copyText(text, BKPAssemble.file(m, name));
+    download(BKPAssemble.file(m, name), text);
+  } catch (e) { toast('Output failed: ' + e.message, 8000); }
+}
+async function deployAct(key) {
+  if (key === 'skillsgen') return window.open(UPLOAD_URL, '_blank', 'noopener');
+  const m0 = masterOrNull(), needAdd = !m0 || (m0.meta.deployments[key].outputs || []).includes('addendum');
+  if (!await ready(needAdd ? ['master', 'addendum'] : ['master'])) return;
+  try {
+    const files = BKPAssemble.deployment(master(), key, opts());
+    for (let i = 0; i < files.length; i++) { download(files[i].file, files[i].text); if (i < files.length - 1) await sleep(900); }
+    toast('Saved ' + files.map(f => f.file).join(', ') + '. If only one arrived, allow multiple downloads for this site.', 8000);
+  } catch (e) { toast('Deploy failed: ' + e.message, 8000); }
+}
+async function customAct(act) {
+  const picks = [...document.querySelectorAll('#units input:checked')].map(x => x.dataset.unit);
+  if (!picks.length) return toast('Tick at least one part.');
+  if (!await ready(picks.includes('7') ? ['master', 'addendum'] : ['master'])) return;
+  try {
+    const text = BKPAssemble.custom(master(), picks, opts());
+    if (act === 'copy') return copyText(text, 'Custom document');
+    download('custom_' + picks.join('') + '.md', text);
+  } catch (e) { toast('Custom failed: ' + e.message, 8000); }
 }
 
 // ---------- actions ----------
@@ -379,6 +379,7 @@ function pasteFor(key) {
 }
 async function sourceAct(key, act) {
   const c = SOURCES[key], s = state[key] || {};
+  if (key === 'master' && !['refresh', 'open', 'paste'].includes(act)) return toast('The master is not for editorial use; use Outputs.');
   if (act === 'refresh') return refresh(key);
   if (act === 'open') return window.open(c.openUrl, '_blank', 'noopener');
   if (act === 'link') return copyText(c.modelUrl, c.label + ' link');
@@ -398,13 +399,7 @@ async function packAct(act) {
   if (act === 'download') { const p = await buildPack(); if (!p) return; const t = bkkParts(); download('BP_SHIFT_PACK_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); return; }
   if (act === 'docscopy') { const p = await buildDocs(); if (p) copyText(p, 'Addendum + Tracker'); return; }
   if (act === 'docsdownload') { const p = await buildDocs(); if (!p) return; const t = bkkParts(); download('BP_DESK_DOCS_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); return; }
-  if (act === 'separate') {
-    await ensure(KEYS);
-    const ks = KEYS.filter(k => usable(state[k])); if (!ks.length) return toast('No stored copies to download.');
-    if (!confirmFresh(ks)) return;
-    for (const k of ks) { download(SOURCES[k].filename, state[k].text); await sleep(900); }
-    toast('Downloaded ' + ks.length + ' file(s). If only one arrived, allow multiple downloads for this site.', 7000);
-  }
+  if (act === 'separate') return deployAct('portable');
 }
 
 // ---------- render ----------
@@ -414,29 +409,33 @@ function render() {
     const c = SOURCES[key], s = state[key] || {}, st = busy[key] ? 'FETCHING' : (s.state || 'NONE');
     const meta = [s.version, s.chars ? Number(s.chars).toLocaleString() + ' chars' : '', s.retrieved ? (s.manual ? 'pasted ' : 'retrieved ') + bkk(s.retrieved) + ' (' + ago(s.retrieved) + ')' : '', s.detail].filter(Boolean).join(' · ');
     const bar = el('div', { className: 'bar' });
-    [['Refresh', 'refresh'], ['Copy', 'copy'], ['Save', 'save'], ['Open', 'open'], ['Link', 'link'], ['Paste', 'paste']]
+    (key === 'master' ? [['Refresh', 'refresh'], ['Open', 'open'], ['Paste', 'paste']] : [['Refresh', 'refresh'], ['Copy', 'copy'], ['Save', 'save'], ['Open', 'open'], ['Link', 'link'], ['Paste', 'paste']])
       .forEach(([l, a]) => bar.append(el('button', { textContent: l, onclick: () => sourceAct(key, a) })));
     host.append(el('div', { className: 'src' },
       el('div', { className: 'row' }, el('span', { className: 'name', textContent: c.label }),
         el('span', { className: 'state ' + st, textContent: st + (s.state === 'CACHED' && s.lastFail ? ' · ' + s.lastFail : '') })),
       el('div', { className: 'meta', textContent: meta || 'Not fetched yet.' }), bar));
   });
-  const mods = modules(), names = Object.keys(mods), mh = $('#modules'); mh.textContent = '';
-  $('#modinfo').textContent = names.length ? 'From the stored Blueprint' + (state.blueprint.version ? ' ' + state.blueprint.version : '') + ' · ' + state.blueprint.state : 'No Blueprint stored yet. Copy or Save fetches it.';
-  names.forEach(n => {
-    mh.append(el('div', { className: 'mod' }, el('span', { className: 'n', textContent: n + ' · ' + count(mods[n]).toLocaleString() }),
-      el('button', { textContent: 'Copy', onclick: () => moduleAction([n], 'copy') }),
-      el('button', { textContent: 'Save', onclick: () => moduleAction([n], 'save') })));
+  const m = masterOrNull(), mh = $('#modules'); mh.textContent = '';
+  $('#modinfo').textContent = m ? 'Assembled from master ' + (m.edition || '') + ' · ' + state.master.state : 'No master stored yet. Any button fetches it.';
+  (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
+    mh.append(el('div', { className: 'mod' }, el('span', { className: 'n', textContent: OUTPUT_LABELS[n] || n }),
+      el('button', { textContent: 'Copy', onclick: () => outputAct(n, 'copy') }),
+      el('button', { textContent: 'Save', onclick: () => outputAct(n, 'save') })));
   });
-  $('#pairsave').disabled = names.length > 0 && !(mods.EDIT && mods.DIRECTORY);
+  const uh = $('#units'), ticked = new Set([...uh.querySelectorAll('input:checked')].map(x => x.dataset.unit)); uh.textContent = '';
+  (m ? m.meta.custom : [['1', 'boot'], ['2', 'thai-places'], ['3', 'directory'], ['4', 'pr'], ['5', 'photo'], ['6', 'check'], ['7', 'addendum'], ['8', 'edit']])
+    .forEach(u => { const c = el('input', { type: 'checkbox', checked: ticked.has(u[0]) }); c.dataset.unit = u[0]; uh.append(el('label', {}, c, ' ' + u[0] + '. ' + u[1])); });
 }
 
 $('#ver').textContent = 'v' + VERSION;
 document.querySelectorAll('[data-act]').forEach(b => { b.onclick = () => packAct(b.dataset.act); });
-$('#pairsave').onclick = () => moduleAction(['EDIT', 'DIRECTORY'], 'save');
+DEPLOYS.forEach(([l, k]) => $('#deploys').append(el('button', { textContent: l, className: k === 'skillsgen' ? '' : 'primary', onclick: () => deployAct(k) })));
+$('#customcopy').onclick = () => customAct('copy');
+$('#customsave').onclick = () => customAct('save');
 LINKS.forEach(([label, url]) => $('#links').append(el('li', {}, el('a', { href: url, target: '_blank', rel: 'noopener', textContent: label }))));
 render();
-refresh('blueprint', true); // Addendum and Tracker are fetched only when asked for
+refresh('master', true); // Addendum and Tracker are fetched only when asked for
 </script>
 </body>
 </html>

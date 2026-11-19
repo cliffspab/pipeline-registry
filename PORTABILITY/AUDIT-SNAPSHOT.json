@@ -1,15 +1,13 @@
 {
   "edition": "171126_gpt_resequenced",
   "files": {
-    "Blueprint/BLUEPRINT.md": "ffb7e36c50a4891695051d817ebd0d6bfac3b71f4650ba76b68edca24543093f",
-    "Blueprint/build.py": "b2abba8237263174766b200f1febfb50cc85537816ae211a414d04456673445f",
-    "Blueprint/build_human_volume.py": "881516b890a7238a75b582dc1019a31107b28b52e68d6401468b3185bd9d46fb",
-    "push.bat": "c0d13be3e578ed720b42dd79a3fdc0f47b00da8172787239a6c72cc891ac1f1f",
-    "bootstrap/AGENTS.md": "aa15b84f6cec62f82c8e9a1e0a262dd71d43e7b7c975ed293237ef1b3c2b9f63",
-    "bootstrap/00_START-HERE.md": "79665d819c41a62720e478f596717c40faeef68d91e9f7714a9ebb3ae15bf06c",
-    "bootstrap/clear_pending.py": "58474ecb748d9fa33fa313decfb40500eff3595685a525a3b6a54b897c72839c",
-    "bootstrap/distribute_blueprint.py": "5eafae8fcbb01d64c21513939f02c63ca7ef432a5eb1bd904018ae797bc66e58",
-    "bootstrap/shift.py": "a075161e2837b154f1bb4c401aea4be523786e14e61da4f0e484dd608d4f14fc",
-    ".github/workflows/compile.yml": "7dae811fb87b252fa99c27a6b743f5c3f46bbf26fc87beb1bf56c0bdfe9cd402"
+    "Blueprint/MASTER.md": "e1684befa9acf72efb9a08ba45c72312db5b61a8f7903ffa509f1d6c455dd33f",
+    "Blueprint/assemble.js": "9cfe07384575c45eea416d3da49b20e665b9378b1b29de20bf682b8a174f5585",
+    ".github/workflows/pages.yml": "adffc11cfbb56feff92c72a212f97e1da4ee5a2b9f16f0662b0dba26ad9cc7a3",
+    "desk/index.html": "8d5a1825d87d610505123ac148254e870899e73e65bae577840475dfd02219a0",
+    "DC-X Desk Hub.user.js": "1da41392e68d539f17eaaeb8dcaa122049ccbe181b994d69900a2c7f55cd3bd7",
+    "index.html": "59db51c7a81b7c570796c8cac16ebfc15b50c9c6ea9b678b3f86ef2494a3571c",
+    "bootstrap/AGENTS.md": "9f31050211621beb59dd64decd3b6a7351cb7e312a831c4e0926ed640ace4d29",
+    "bootstrap/00_START-HERE.md": "50b39c7b7e63fb105acc1416257dec15daa9b81065aba05be615bf832088f892"
   }
 }

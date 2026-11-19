@@ -1,21 +1,16 @@
-# Recovery and failure boundaries
+# Recovery
 
-Preserve failed state and repair the first failed guard. Do not use
-`git reset --hard`, force push, broad deletion or `rclone sync`.
+Git history is the primary recovery mechanism. Do not use destructive resets or
+force-pushes to repair a disputed state.
 
-- If the build fails, correct the source or generator and reproduce locally.
-- If GitHub validation fails, prepare a bounded corrective commit; cloud
-  publication remains stopped.
-- If a cloud copy fails, repair that remote and rerun publication with the
-  already validated full commit SHA.
-- Remote-only files are informational and are never deleted automatically.
-- Duplicate remote paths fail publication. Inspect them read-only with
-  `rclone dedupe DESTINATION --dedupe-mode list`; any deleting dedupe still
-  requires supervisor approval.
-- If `.git/index.lock` exists, close Git clients and establish that it is stale
-  before a human removes it.
-- If upstream advances, integrate it separately and rerun the complete local
-  validation; the guarded push never rebases automatically.
-- For a lost workstation, follow `COLD-REBUILD.md`. GitHub is authoritative;
-  cloud mirrors are recovery evidence, not source control.
+If the live tree is damaged:
 
+1. Preserve the damaged tree and record its commit identity.
+2. Clone the repository into a new directory.
+3. Run the cold-rebuild checks.
+4. Compare the clone with `PORTABILITY/snapshot/` and the portability manifest.
+5. Restore through a reviewed commit, not by copying generated hosted outputs
+   back into the repository.
+
+`MASTER.md` is data, not an operational model input. Recovery must preserve its
+exclusion from the published site.

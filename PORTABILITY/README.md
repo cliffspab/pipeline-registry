@@ -1,24 +1,22 @@
-# BKPDE portability and mechanism-audit kit
+# BKPDE portability kit
 
-This folder is the independent entry point for reconstructing, operating and
-auditing the Bangkok Post Desk Editor distribution mechanism without relying on
-chat history or the original workstation.
+This directory is the self-contained recovery and audit kit for the
+single-master desk mechanism.
 
-Start here when the project folder is unavailable:
+The live authority is `Blueprint/MASTER.md`; `Blueprint/assemble.js` renders
+operational outputs at the point of use. The snapshot records the exact files
+needed to understand, test and restore that mechanism without relying on the
+retired publisher, cloud mirrors or Shift tree.
 
-1. Read `COLD-REBUILD.md`.
-2. Use `ARCHITECTURE.md` to understand authority and generated surfaces.
-3. Follow `RELEASE-RUNBOOK.md` for a distribution.
-4. Use `RECOVERY.md` only when a guard or publication stage fails.
-5. Run `python verify_portability.py` to verify this kit.
+## Commands
 
-For an independent mechanism audit, give an auditor the complete exported ZIP
-and begin with `audit/AUDIT-BRIEF.md`. The ZIP carries frozen readable machinery
-under `snapshot/`. Auditors propose findings; they do not edit the live
-repository or redefine editorial rules.
+From the repository root:
 
-For repeatable multi-model review, use `audit/DISPATCH-PROMPT.md` unchanged for
-each model and consolidate only afterward in `audit/COMPARISON-TABLE.md`.
+```powershell
+python PORTABILITY/make_bundle.py
+python PORTABILITY/verify_portability.py --live
+```
 
-The kit deliberately excludes credentials, rclone tokens, browser sessions and
-machine-specific secrets. `DEPENDENCIES.md` explains how to restore access.
+`make_bundle.py` refreshes `snapshot/`, `AUDIT-SNAPSHOT.json`, `MANIFEST.json`
+and `BKPDE-Portability.zip`. The verifier checks the kit, the snapshot against
+the live files and the assembler itself.

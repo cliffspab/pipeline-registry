@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.0.7
-// @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and verified Blueprint/Addendum/Tracker shift-pack building.
+// @version      2.1.0
+// @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and shift packs assembled at point of use from the desk master.
 // @match        https://dcx.bangkokpost.co.th/*
 // @match        http://dcx.bangkokpost.co.th/*
 // @match        https://grok.com/*
@@ -19,11 +19,18 @@
 // @connect      docs.google.com
 // @connect      googleusercontent.com
 // @connect      go.fuzzylogic.page
+// @require      https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/assemble.js
 // ==/UserScript==
 
 /*
-  2.0.7: adds a Sync master index control for the 20-file Shift pickup across
-  GitHub, Google Drive, OneDrive and pCloud.
+  2.1.0: the Blueprint source is now Blueprint/MASTER.md, fetched fresh and
+  assembled here by assemble.js (shared with the desk page). Nothing derived
+  is fetched: blueprint.md, the skills, directory.md and the deployments
+  (Portable, Skills, GUIDE, REFS, CUSTOM) are built on demand. Skillsgen opens
+  the UPLOAD zips. Model links point at the hosted build on GitHub Pages
+  (live/blueprint.md), which the workflow rebuilds whenever the master changes. The master is never copied, saved or linked for a model;
+  its row offers Refresh, Open and Paste only. VERSION.txt check retired.
+  Cache and config keys moved to V4.
 
   2.0.6: Copy/Download full pack and Download separate fetch any Blueprint or
   Addendum not yet stored before building, instead of stopping with
@@ -73,14 +80,13 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.0.7';
-  const SYNC_MASTER_URL = 'https://github.com/cliffspab/pipeline-registry/blob/main/SYNC-MASTER.md';
+  const VERSION = '2.1.0';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
   const GROK_KEY = 'dcxGrokPending';
-  const CACHE_KEY = 'dcxShiftPackCacheV3';
-  const CONFIG_KEY = 'dcxShiftPackConfigV3';
+  const CACHE_KEY = 'dcxShiftPackCacheV4';
+  const CONFIG_KEY = 'dcxShiftPackConfigV4';
   const PANEL_ID = 'dcx-desk-hub-panel';
   const BUTTON_ID = 'dcx-desk-hub-button';
   const REVIEW_ID = 'dcx-grab-review';
@@ -89,24 +95,21 @@
   const STATUS_RE = /^(Planning|Subeditor|Clean|Ready for Layout|Ready for output|Typeset|Published)$/i;
   const FINAL_RE = /^(Ready for output|Published)$/i;
 
-  const KEYS = ['blueprint','addendum','tracker'];
-  const PACK_KEYS = ['blueprint','addendum']; // Tracker is carried as links only
-  const BP_COMPONENTS = ['BOOT','EDIT','CHECK','PHOTO','PR','DIRECTORY'];
+  const KEYS = ['master','addendum','tracker'];
+  const PACK_KEYS = ['master','addendum']; // Tracker is carried as links only
+  const UPLOAD_URL = 'https://github.com/cliffspab/pipeline-registry/tree/main/Blueprint/UPLOAD';
   const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
   const TRACKER_GID = '1313569477';
   const ADDENDUM_ID = '1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk';
   const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 
   const DEFAULT_CONFIG = {
-    blueprint: {
-      label: 'Blueprint',
-      url: RAW_BP + 'BLUEPRINT.txt',
-      versionUrl: RAW_BP + 'VERSION.txt',
-      openUrl: 'https://github.com/cliffspab/pipeline-registry/blob/main/Blueprint/BLUEPRINT.txt',
-      shareUrl: RAW_BP + 'BLUEPRINT.txt',
-      filename: 'BLUEPRINT.txt',
-      markers: BP_COMPONENTS.flatMap(n => ['<!-- COMPONENT: ' + n + ' -->', '<!-- END COMPONENT: ' + n + ' -->']),
-      endMarker: 'END COMPONENT: DIRECTORY',
+    master: {
+      label: 'Master',
+      url: RAW_BP + 'MASTER.md',
+      openUrl: 'https://github.com/cliffspab/pipeline-registry/blob/main/Blueprint/MASTER.md',
+      modelUrl: 'https://cliffspab.github.io/pipeline-registry/live/blueprint.md', // hosted build, refreshed by the workflow on every push
+      markers: ['NOT FOR EDITORIAL USE', '<!-- @meta'],
       minChars: 20000
     },
     addendum: {
@@ -154,7 +157,7 @@
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
   function getConfig() {
     // Saved overrides merge per source, so a partial override never drops defaults (header regex etc.).
-    const base = { blueprint: { ...DEFAULT_CONFIG.blueprint }, addendum: { ...DEFAULT_CONFIG.addendum }, tracker: { ...DEFAULT_CONFIG.tracker } };
+    const base = { master: { ...DEFAULT_CONFIG.master }, addendum: { ...DEFAULT_CONFIG.addendum }, tracker: { ...DEFAULT_CONFIG.tracker } };
     try { const saved = JSON.parse(GM_getValue(CONFIG_KEY, '{}')) || {}; KEYS.forEach(k => { if (saved[k]) Object.assign(base[k], saved[k]); }); } catch (_) {}
     return base;
   }
@@ -294,8 +297,8 @@
   function firstLine(text) { return String(text).replace(/^﻿/,'').split(/\r?\n/,1)[0]; }
   function versionOf(key, text) {
     text = String(text || '');
-    if (key === 'blueprint') {
-      const m = text.match(/<!--\s*MASTER\s+(\S+?)\s*-->/) || text.match(/^﻿?<!--\s*(\S+?)\s*-->/);
+    if (key === 'master') {
+      const m = text.match(/"edition":\s*"([^"]+)"/);
       return m ? m[1] : '';
     }
     if (key === 'addendum') {
@@ -324,7 +327,14 @@
     if (missing.length) return { state:'PARTIAL', detail:'Missing ' + missing.length + ' marker(s): ' + missing.join(', ').replace(/<!--\s*|\s*-->/g,'') };
     if (cfg.endMarker && !text.slice(-1500).includes(cfg.endMarker)) return { state:'PARTIAL', detail:'Does not end at ' + cfg.endMarker + ' (possibly truncated)' };
     if (cfg.header && !(cfg.header instanceof RegExp ? cfg.header : new RegExp(cfg.header)).test(firstLine(text))) return { state:'PARTIAL', detail:'Unexpected header row: ' + firstLine(text).slice(0,60) };
-    if (key === 'blueprint') return { state:'READY', detail:'6/6 components; ends at DIRECTORY' };
+    if (key === 'master') {
+      if (typeof BKPAssemble === 'undefined') return { state:'PARTIAL', detail:'Assembler (assemble.js) not loaded' };
+      try {
+        const m = BKPAssemble.parse(text), outs = BKPAssemble.outputs(m).filter(n => n !== 'addendum');
+        outs.forEach(n => BKPAssemble.render(m, n));
+        return { state:'READY', detail:outs.length + ' outputs assemble' };
+      } catch (e) { return { state:'PARTIAL', detail:'Does not assemble: ' + e.message }; }
+    }
     return { state:'READY', detail:'Verified' };
   }
   // PURE-END
@@ -372,10 +382,6 @@
                         retrieved:nowISO(), lastAttempt:nowISO(), chars:textCount(r.text), version:versionOf(key, r.text), manual:false };
         if (check.state === 'READY') {
           if (fails.length) fresh.detail += ' (via ' + labelFromUrl(url) + ' fallback)';
-          if (key === 'blueprint' && cfg.versionUrl) {
-            try { const v = (await requestText(cfg.versionUrl)).text.trim().split(/\s+/)[0]; fresh.versionFile = v;
-                  if (v && fresh.version && v !== fresh.version) fresh.detail += ' · VERSION.txt says ' + v + ' (raw cache lag or stale file)'; } catch (_) {}
-          }
           sourceState[key] = fresh; saveCache(); return fresh;
         }
         if (check.state === 'PARTIAL') { if (!partial) partial = fresh; continue; }
@@ -425,23 +431,41 @@
   }
   async function sha256(text) { const b = new TextEncoder().encode(text), h = await crypto.subtle.digest('SHA-256', b); return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2,'0')).join(''); }
 
-  async function manifest() {
-    const cfg = getConfig(), lines = ['Bangkok Post Desk Shift Pack', 'Built: ' + bangkokStamp() + ' Thailand time', 'Desk Hub: v' + VERSION, ''];
-    for (const key of PACK_KEYS) {
-      const c = cfg[key], s = sourceState[key] || {};
-      lines.push(c.label.toUpperCase());
-      lines.push('State: ' + (s.state || 'NOT FETCHED') + (s.contentState && s.contentState !== s.state ? ' (content check: ' + s.contentState + ')' : ''));
-      lines.push('Version: ' + (s.version || 'not found') + (s.versionFile ? ' (VERSION.txt: ' + s.versionFile + ')' : ''));
-      lines.push('Source: ' + (s.manual ? 'manual paste' : (s.requestUrl || c.url)));
-      lines.push('Public link: ' + c.shareUrl);
-      lines.push('Retrieved: ' + (s.retrieved ? bkk(s.retrieved) + ' Thailand time (' + ago(s.retrieved) + ')' : 'not available'));
-      lines.push('Characters: ' + (s.chars || 0));
-      if (s.text) lines.push('SHA-256: ' + await sha256(s.text));
-      lines.push('Cached: ' + (s.state === 'CACHED' ? 'YES — last refresh failed (' + (s.lastFailState || 'ERROR') + ') at ' + bkk(s.lastAttempt) : 'no'));
-      lines.push('Manual: ' + (s.manual ? 'YES' : 'no'));
-      if (s.detail) lines.push('Note: ' + s.detail);
-      lines.push('');
-    }
+  // ---------- assembly (assemble.js, from the stored master) ----------
+  function master() {
+    const s = sourceState.master;
+    if (!s || !s.text) throw new Error('No master stored. Refresh it first.');
+    if (typeof BKPAssemble === 'undefined') throw new Error('Assembler not loaded (check the @require line).');
+    return BKPAssemble.parse(s.text);
+  }
+  function addendumText() { const s = sourceState.addendum; return s && s.text ? s.text : ''; }
+  function assembled(name) { return BKPAssemble.render(master(), name, { addendum: addendumText() }); }
+
+  async function manifest(blueprint) {
+    const cfg = getConfig(), s = sourceState.master || {}, a = sourceState.addendum || {};
+    const lines = ['Bangkok Post Desk Shift Pack', 'Built: ' + bangkokStamp() + ' Thailand time', 'Desk Hub: v' + VERSION, ''];
+    lines.push('BLUEPRINT');
+    lines.push('Assembled from master edition: ' + (s.version || 'not found'));
+    lines.push('Master state: ' + (s.state || 'NOT FETCHED') + (s.contentState && s.contentState !== s.state ? ' (content check: ' + s.contentState + ')' : ''));
+    lines.push('Master retrieved: ' + (s.retrieved ? bkk(s.retrieved) + ' Thailand time (' + ago(s.retrieved) + ')' : 'not available') + (s.manual ? ' · manual paste' : ''));
+    lines.push('Characters: ' + textCount(blueprint));
+    lines.push('SHA-256: ' + await sha256(blueprint));
+    if (s.state === 'CACHED') lines.push('Cached: YES — last refresh failed (' + (s.lastFailState || 'ERROR') + ') at ' + bkk(s.lastAttempt));
+    if (s.detail) lines.push('Note: ' + s.detail);
+    lines.push('');
+    const c = cfg.addendum;
+    lines.push('DESK ADDENDUM');
+    lines.push('State: ' + (a.state || 'NOT FETCHED') + (a.contentState && a.contentState !== a.state ? ' (content check: ' + a.contentState + ')' : ''));
+    lines.push('Version: ' + (a.version || 'not found'));
+    lines.push('Source: ' + (a.manual ? 'manual paste' : (a.requestUrl || c.url)));
+    lines.push('Public link: ' + c.shareUrl);
+    lines.push('Retrieved: ' + (a.retrieved ? bkk(a.retrieved) + ' Thailand time (' + ago(a.retrieved) + ')' : 'not available'));
+    lines.push('Characters: ' + (a.chars || 0));
+    if (a.text) lines.push('SHA-256: ' + await sha256(a.text));
+    lines.push('Cached: ' + (a.state === 'CACHED' ? 'YES — last refresh failed (' + (a.lastFailState || 'ERROR') + ') at ' + bkk(a.lastAttempt) : 'no'));
+    lines.push('Manual: ' + (a.manual ? 'YES' : 'no'));
+    if (a.detail) lines.push('Note: ' + a.detail);
+    lines.push('');
     lines.push('TRACKER', 'Included as links only; no Tracker content in this pack.', 'Sheet: ' + cfg.tracker.openUrl, 'CSV: ' + cfg.tracker.shareUrl);
     return lines.join('\n').trim();
   }
@@ -455,37 +479,42 @@
 BOOT routes each job and EDIT is the base every job builds on.`;
   }
   function modelLinks() {
-    const c = getConfig();
-    return ['Blueprint (plain text): ' + c.blueprint.shareUrl,
-            'Desk Addendum (plain text): ' + c.addendum.shareUrl,
-            'Desk Addendum (web view fallback): ' + c.addendum.altShareUrl,
-            'Tracker (CSV): ' + c.tracker.shareUrl,
-            'Tracker (CSV fallback): ' + c.tracker.altShareUrl].join('\n');
+    const c = getConfig(), out = [];
+    if (c.master.modelUrl) out.push('Blueprint (plain text): ' + c.master.modelUrl);
+    out.push('Desk Addendum (plain text): ' + c.addendum.shareUrl,
+             'Desk Addendum (web view fallback): ' + c.addendum.altShareUrl,
+             'Tracker (CSV): ' + c.tracker.shareUrl,
+             'Tracker (CSV fallback): ' + c.tracker.altShareUrl);
+    return out.join('\n');
   }
   function editorLinks() {
     const c = getConfig();
-    return ['Blueprint: ' + c.blueprint.openUrl, 'Desk Addendum: ' + c.addendum.openUrl, 'Tracker: ' + c.tracker.openUrl, 'Tracker usage: ' + c.tracker.usageUrl].join('\n');
+    return ['Master: ' + c.master.openUrl, 'Desk Addendum: ' + c.addendum.openUrl, 'Tracker: ' + c.tracker.openUrl, 'Tracker usage: ' + c.tracker.usageUrl].join('\n');
   }
-  async function ensurePackSources() {
-    const need = PACK_KEYS.filter(k => !usableState(sourceState[k]));
+  async function ensureSources(keys) {
+    const need = keys.filter(k => !usableState(sourceState[k]));
     if (!need.length) return;
     notify('Fetching ' + need.map(k => getConfig()[k].label).join(' and ') + '...', 3000);
     for (const k of need) await refreshSource(k, true);
+  }
+  async function ensurePackSources() { return ensureSources(PACK_KEYS); }
+  function confirmFresh(keys, what) {
+    const cfg = getConfig(), warn = keys.filter(k => needsWarning(sourceState[k]));
+    if (!warn.length) return true;
+    const list = warn.map(k => { const s = sourceState[k]; return '- ' + cfg[k].label + ': ' + s.state + (s.contentState && s.contentState !== s.state ? ' / content ' + s.contentState : '') + (s.retrieved ? ', retrieved ' + ago(s.retrieved) : ''); }).join('\n');
+    return confirm(what + ' uses sources that are not fresh verified copies:\n\n' + list + '\n\nGo ahead anyway?');
   }
   async function buildPack() {
     const cfg = getConfig();
     await ensurePackSources();
     const missing = PACK_KEYS.filter(k => !usableState(sourceState[k]));
     if (missing.length) throw new Error('Unavailable: ' + missing.map(k => cfg[k].label + ' (' + ((sourceState[k] || {}).state || 'NOT FETCHED') + ')').join(', ') + '\nRefresh, or Paste the content manually.');
-    const warn = PACK_KEYS.filter(k => needsWarning(sourceState[k]));
-    if (warn.length) {
-      const list = warn.map(k => { const s = sourceState[k]; return '- ' + cfg[k].label + ': ' + s.state + (s.contentState && s.contentState !== s.state ? ' / content ' + s.contentState : '') + (s.retrieved ? ', retrieved ' + ago(s.retrieved) : ''); }).join('\n');
-      if (!confirm('This pack includes components that are not fresh verified copies:\n\n' + list + '\n\nBuild anyway? Each is labelled in the manifest.')) return null;
-    }
-    const man = await manifest();
+    if (!confirmFresh(PACK_KEYS, 'This pack')) return null;
+    const blueprint = assembled('blueprint');
+    const man = await manifest(blueprint);
     return ['===== BEGIN MANIFEST =====', man, '===== END MANIFEST =====', '',
             '===== BEGIN OPENING PROMPT =====', openingPrompt(), '===== END OPENING PROMPT =====', '',
-            '===== BEGIN BLUEPRINT =====', sourceState.blueprint.text, '===== END BLUEPRINT =====', '',
+            '===== BEGIN BLUEPRINT =====', blueprint.replace(/\n$/, ''), '===== END BLUEPRINT =====', '',
             '===== BEGIN DESK ADDENDUM =====', sourceState.addendum.text, '===== END DESK ADDENDUM =====', '',
             '===== BEGIN TRACKER =====', trackerLinks(), '===== END TRACKER ====='].join('\n');
   }
@@ -507,6 +536,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   }
   function sourceAction(key, action) {
     const cfg = getConfig()[key], s = sourceState[key] || {};
+    if (key === 'master' && !['refresh','open','manual'].includes(action)) return notify('The master is not for editorial use; use the Outputs below.');
     if (action === 'refresh') return refreshSource(key);
     if (action === 'open') return openTab(cfg.openUrl || cfg.url, true);
     if (action === 'link') return copy(cfg.shareUrl, ok => notify(ok ? cfg.label + ' public link copied.' : 'Copy failed.'));
@@ -527,12 +557,12 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       meta.textContent = [s.version, s.chars ? Number(s.chars).toLocaleString() + ' chars' : '', s.retrieved ? (s.manual ? 'pasted ' : 'retrieved ') + bkk(s.retrieved).slice(5,16) + ' (' + ago(s.retrieved) + ')' : '', s.detail].filter(Boolean).join(' · ');
       row.appendChild(meta);
       const bar = document.createElement('div'); bar.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px';
-      [['Refresh','refresh'],['Copy','copy'],['Save','download'],['Open','open'],['Link','link'],['Paste','manual']].forEach(([lab, act]) => {
+      (key === 'master' ? [['Refresh','refresh'],['Open','open'],['Paste','manual']] : [['Refresh','refresh'],['Copy','copy'],['Save','download'],['Open','open'],['Link','link'],['Paste','manual']]).forEach(([lab, act]) => {
         const b = document.createElement('button'); b.textContent = lab; b.style.cssText = 'font-size:10px;padding:3px 6px;cursor:pointer'; b.onclick = () => sourceAction(key, act); bar.appendChild(b);
       });
       row.appendChild(bar); host.appendChild(row);
     });
-    renderModules();
+    renderOutputs();
   }
   async function packAction(action) {
     try {
@@ -541,64 +571,80 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       if (action === 'prompt') return copy(openingPrompt(), ok => notify(ok ? 'Opening prompt copied.' : 'Copy failed.'));
       if (action === 'modellinks') return copy(modelLinks(), ok => notify(ok ? 'Public model links copied.' : 'Copy failed.'));
       if (action === 'links') return copy(editorLinks(), ok => notify(ok ? 'Editor links copied.' : 'Copy failed.'));
-      if (action === 'syncmaster') return openTab(SYNC_MASTER_URL, true);
       if (action === 'open') { const c = getConfig(); KEYS.forEach(k => openTab(c[k].openUrl || c[k].url, false)); return; }
       if (action === 'usage') return openTab(getConfig().tracker.usageUrl, true);
       if (action === 'copy') { const p = await buildPack(); if (p === null) return; return copy(p, ok => notify(ok ? 'Complete shift pack copied (' + textCount(p).toLocaleString() + ' chars).' : 'Copy failed.')); }
       if (action === 'download') { const p = await buildPack(); if (p === null) return; const t = bkkParts(); return downloadText('BP_SHIFT_PACK_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); }
-      if (action === 'separate') {
-        await ensurePackSources();
-        const ks = PACK_KEYS.filter(k => usableState(sourceState[k])); if (!ks.length) return notify('No stored content to download.');
-        const warn = ks.filter(k => needsWarning(sourceState[k]));
-        if (warn.length && !confirm('Not fresh verified copies: ' + warn.map(k => getConfig()[k].label + ' (' + sourceState[k].state + ')').join(', ') + '\n\nDownload anyway?')) return;
-        for (const k of ks) { downloadText(fileNameFor(k, sourceState[k]), sourceState[k].text); await sleep(900); }
-        return notify('Downloaded ' + ks.length + ' file(s). If only one arrived, allow multiple downloads for this site in Chrome.', 7000);
-      }
+      if (action === 'separate') return deployAction('portable', 'save');
       if (action === 'clear') { if (confirm('Clear all cached shift-pack content?')) clearCache(); return; }
     } catch (e) { alert('Shift Pack: ' + e.message); }
   }
 
-  // ---------- Blueprint modules ----------
-  function blueprintModules() {
-    const s = sourceState.blueprint, out = {};
-    if (!s || !s.text) return out;
-    BP_COMPONENTS.forEach(n => {
-      const m = s.text.match(new RegExp('<!-- COMPONENT: ' + n + ' -->\\r?\\n([\\s\\S]*?)\\r?\\n<!-- END COMPONENT: ' + n + ' -->'));
-      if (m) out[n] = (s.version ? '<!-- ' + s.version + ' -->\n' : '') + m[1] + '\n';
-    });
-    return out;
+  // ---------- Outputs (assembled from the master) ----------
+  const OUTPUT_LABELS = { blueprint:'blueprint.md', boot:'boot', 'thai-places':'thai-places', check:'check', photo:'photo', pr:'pr',
+                          edit:'edit', 'edit-section':'edit section (no Directory)', directory:'directory' };
+  async function outputsReady(needAddendum) {
+    await ensureSources(needAddendum ? ['master','addendum'] : ['master']);
+    if (!usableState(sourceState.master)) { notify('Master unavailable: ' + ((sourceState.master || {}).state || 'NOT FETCHED')); return false; }
+    if (needAddendum && !usableState(sourceState.addendum)) { notify('Desk Addendum unavailable: ' + ((sourceState.addendum || {}).state || 'NOT FETCHED')); return false; }
+    return confirmFresh(needAddendum ? ['master','addendum'] : ['master'], 'This output');
   }
-  function moduleFile(n) { const v = (sourceState.blueprint || {}).version; return n + (v ? '_' + v : '') + (n === 'DIRECTORY' ? '.txt' : '.md'); }
-  function moduleGuard() {
-    const s = sourceState.blueprint;
-    if (!s || !s.text) { notify('No Blueprint stored. Refresh it first.'); return false; }
-    if (needsWarning(s) && !confirm('The Blueprint is ' + s.state + (s.contentState && s.contentState !== s.state ? ' / content ' + s.contentState : '') + '. Use these modules anyway?')) return false;
-    return true;
+  async function outputAction(name, action) {
+    try {
+      if (!await outputsReady(false)) return;
+      const text = assembled(name), file = BKPAssemble.file(master(), name);
+      if (action === 'copy') return copy(text, ok => notify(ok ? file + ' copied (' + textCount(text).toLocaleString() + ' chars).' : 'Copy failed.'));
+      return downloadText(file, text);
+    } catch (e) { alert('Outputs: ' + e.message); }
   }
-  async function moduleAction(names, action) {
-    if (!usableState(sourceState.blueprint)) { notify('Fetching Blueprint...', 3000); await refreshSource('blueprint', true); }
-    if (!moduleGuard()) return;
-    const mods = blueprintModules(), missing = names.filter(n => !mods[n]);
-    if (missing.length) return notify('Not found in stored Blueprint: ' + missing.join(', '), 7000);
-    if (action === 'copy') return copy(mods[names[0]], ok => notify(ok ? names[0] + ' copied (' + textCount(mods[names[0]]).toLocaleString() + ' chars).' : 'Copy failed.'));
-    for (let i = 0; i < names.length; i++) { downloadText(moduleFile(names[i]), mods[names[i]]); if (i < names.length - 1) await sleep(900); }
-    if (names.length > 1) notify('Saved ' + names.join(' + ') + '. If only one arrived, allow multiple downloads for this site in Chrome.', 7000);
+  async function deployAction(key, action) {
+    try {
+      if (key === 'skillsgen') return openTab(UPLOAD_URL, true);
+      const m0 = sourceState.master && sourceState.master.text ? master() : null;
+      const needAdd = !m0 || (m0.meta.deployments[key].outputs || []).includes('addendum');
+      if (!await outputsReady(needAdd)) return;
+      const files = BKPAssemble.deployment(master(), key, { addendum: addendumText() });
+      for (let i = 0; i < files.length; i++) { downloadText(files[i].file, files[i].text); if (i < files.length - 1) await sleep(900); }
+      notify('Saved ' + files.map(f => f.file).join(', ') + '. If only one arrived, allow multiple downloads for this site in Chrome.', 8000);
+    } catch (e) { alert('Deploy: ' + e.message); }
   }
-  function renderModules() {
-    const host = document.getElementById('dcx-modules'); if (!host) return; host.innerHTML = '';
-    const mods = blueprintModules(), v = (sourceState.blueprint || {}).version;
+  async function customAction(action) {
+    try {
+      const picks = [...document.querySelectorAll('#dcx-outputs input[data-unit]:checked')].map(x => x.dataset.unit);
+      if (!picks.length) return notify('Tick at least one part.');
+      if (!await outputsReady(picks.includes('7'))) return;
+      const text = BKPAssemble.custom(master(), picks, { addendum: addendumText() });
+      if (action === 'copy') return copy(text, ok => notify(ok ? 'Custom document copied (' + textCount(text).toLocaleString() + ' chars).' : 'Copy failed.'));
+      return downloadText('custom_' + picks.join('') + '.md', text);
+    } catch (e) { alert('Custom: ' + e.message); }
+  }
+  function renderOutputs() {
+    const host = document.getElementById('dcx-outputs'); if (!host) return; host.innerHTML = '';
+    const s = sourceState.master || {};
+    let m = null; try { if (s.text && typeof BKPAssemble !== 'undefined') m = BKPAssemble.parse(s.text); } catch (_) {}
     const info = document.createElement('div'); info.style.cssText = 'font-size:10px;color:#64748b;margin:4px 0';
-    info.textContent = Object.keys(mods).length ? 'From stored Blueprint' + (v ? ' ' + v : '') + ' · ' + ((sourceState.blueprint || {}).state || '') : 'No Blueprint stored yet.';
+    info.textContent = m ? 'Assembled from master ' + (m.edition || '') + ' · ' + (s.state || '') : 'No master stored yet; any button fetches it.';
     host.appendChild(info);
-    BP_COMPONENTS.forEach(n => {
+    const sec = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:6px'; host.appendChild(d); };
+    sec('Deployments');
+    const dg = document.createElement('div'); dg.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:3px';
+    [['Portable','portable'],['Skills','skills'],['Skillsgen','skillsgen'],['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => dg.appendChild(button(l, () => deployAction(k, 'save'), k === 'skillsgen' ? '#475569' : '#0b5a7a')));
+    host.appendChild(dg);
+    sec('Single outputs');
+    (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
       const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:4px;margin-top:3px;font-size:11px';
-      const lab = document.createElement('span'); lab.style.cssText = 'flex:1'; lab.textContent = n + (mods[n] ? ' · ' + textCount(mods[n]).toLocaleString() : ' · —');
-      row.appendChild(lab);
-      [['Copy','copy'],['Save','save']].forEach(([l, a]) => { const b = document.createElement('button'); b.textContent = l; b.style.cssText = 'font-size:10px;padding:2px 6px;cursor:pointer'; b.disabled = !mods[n]; b.onclick = () => moduleAction([n], a); row.appendChild(b); });
+      const lab = document.createElement('span'); lab.style.cssText = 'flex:1'; lab.textContent = OUTPUT_LABELS[n] || n; row.appendChild(lab);
+      [['Copy','copy'],['Save','save']].forEach(([l, a]) => { const b = document.createElement('button'); b.textContent = l; b.style.cssText = 'font-size:10px;padding:2px 6px;cursor:pointer'; b.onclick = () => outputAction(n, a); row.appendChild(b); });
       host.appendChild(row);
     });
-    const pair = button('Save EDIT + DIRECTORY', () => moduleAction(['EDIT','DIRECTORY'], 'save'), '#475569'); pair.style.cssText += ';width:100%;margin-top:6px'; pair.disabled = !(mods.EDIT && mods.DIRECTORY);
-    host.appendChild(pair);
+    sec('Custom single document');
+    const units = m ? m.meta.custom : [['1','boot'],['2','thai-places'],['3','directory'],['4','pr'],['5','photo'],['6','check'],['7','addendum'],['8','edit']];
+    const ug = document.createElement('div'); ug.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:11px;margin-top:3px';
+    units.forEach(u => { const l = document.createElement('label'); const c = document.createElement('input'); c.type = 'checkbox'; c.dataset.unit = u[0]; l.append(c, ' ' + u[0] + '. ' + u[1]); ug.appendChild(l); });
+    host.appendChild(ug);
+    const cb = document.createElement('div'); cb.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px';
+    cb.append(button('Copy custom', () => customAction('copy'), '#475569'), button('Save custom', () => customAction('save'), '#475569'));
+    host.appendChild(cb);
   }
   function dropdown(title, open) {
     const d = document.createElement('details'); d.open = !!open; d.style.cssText = 'margin:6px 0;border:1px solid #d7dee8;border-radius:5px;padding:4px 6px';
@@ -614,14 +660,13 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     const title=document.createElement('div');title.innerHTML='<b>DC-X Desk Hub v'+VERSION+'</b><button style="float:right" id="dcxhub-close">×</button>';p.appendChild(title);
     const grabBtn=button('Grab open story',()=>{closePanel();grab();},'#0b5a7a');grabBtn.style.cssText+=';width:100%;padding:8px;font-weight:700;margin:8px 0';p.appendChild(grabBtn);
     const grid=document.createElement('div');grid.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:6px';for(let i=0;i<=5;i++)grid.appendChild(button('DCX '+i+' '+TOOL_NAMES[i],()=>{closePanel();runTool(i);},i===4?'#b45309':i===5?'#7c3aed':'#2563eb'));const tools=dropdown('DCX tools 0-5',false);grid.style.marginTop='6px';tools.appendChild(grid);p.appendChild(tools);
-    const hr=document.createElement('hr');hr.style.margin='10px 0';p.appendChild(hr);const h=document.createElement('div');h.innerHTML='<b>SHIFT PACK</b><span style="float:right;font-size:10px;color:#64748b">logged-in sources</span>';p.appendChild(h);const host=document.createElement('div');host.id='dcx-shift-pack';p.appendChild(host);const modsBox=dropdown('Blueprint modules',false);const modsHost=document.createElement('div');modsHost.id='dcx-modules';modsBox.appendChild(modsHost);p.appendChild(modsBox);
+    const hr=document.createElement('hr');hr.style.margin='10px 0';p.appendChild(hr);const h=document.createElement('div');h.innerHTML='<b>SHIFT PACK</b><span style="float:right;font-size:10px;color:#64748b">logged-in sources</span>';p.appendChild(h);const host=document.createElement('div');host.id='dcx-shift-pack';p.appendChild(host);const modsBox=dropdown('Outputs',false);const modsHost=document.createElement('div');modsHost.id='dcx-outputs';modsBox.appendChild(modsHost);p.appendChild(modsBox);
     const actions=document.createElement('div');actions.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px';
     [['Refresh all','refresh','#0b5a7a'],['Verify sources','verify','#0b5a7a'],
      ['Copy full pack','copy','#137333'],['Download full pack','download','#137333'],
      ['Copy opening prompt','prompt','#0b5a7a'],['Copy model links','modellinks','#475569'],
      ['Copy editor links','links','#475569'],
-     ['Download separate','separate','#475569'],['Open sources','open','#475569'],
-     ['Sync master index','syncmaster','#475569'],
+     ['Download Portable','separate','#475569'],['Open sources','open','#475569'],
      ['Tracker usage','usage','#475569'],['Clear cache','clear','#b91c1c']].forEach(([l,a,c])=>actions.appendChild(button(l,()=>packAction(a),c)));p.appendChild(actions);
     const note=document.createElement('div');note.textContent='DCX 4 remains the broad team-history sweep. Narrow broad views before DCX 5. A failed refresh never replaces a stored copy; CACHED, PARTIAL and MANUAL components are labelled and need confirmation before they go into a pack. The pack carries the Tracker as links only.';note.style.cssText='font-size:10px;color:#64748b;margin-top:8px;line-height:1.3';p.appendChild(note);document.body.appendChild(p);document.getElementById('dcxhub-close').onclick=closePanel;renderPackPanel();
   }
@@ -630,7 +675,6 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   if(typeof GM_registerMenuCommand==='function'){
     GM_registerMenuCommand('Grab open story (Alt+B)',grab);for(let i=0;i<=5;i++)GM_registerMenuCommand('DCX '+i+' '+TOOL_NAMES[i],()=>runTool(i));
     GM_registerMenuCommand('Shift Pack: refresh all',refreshAll);GM_registerMenuCommand('Shift Pack: copy opening prompt',()=>packAction('prompt'));GM_registerMenuCommand('Shift Pack: copy model links',()=>packAction('modellinks'));GM_registerMenuCommand('Shift Pack: copy full pack',()=>packAction('copy'));GM_registerMenuCommand('Shift Pack: download full pack',()=>packAction('download'));
-    GM_registerMenuCommand('Shift Pack: open sync master index',()=>packAction('syncmaster'));
   }
   document.addEventListener('keydown',e=>{if(e.altKey&&!e.shiftKey&&!e.ctrlKey&&e.code==='KeyB'){e.preventDefault();grab();}if(e.altKey&&e.shiftKey&&!e.ctrlKey&&e.code==='KeyX'){e.preventDefault();document.getElementById(PANEL_ID)?closePanel():openPanel();}},true);
   setInterval(()=>{if(!window.tinymce||!tinymce.editors)return;for(const ed of tinymce.editors){if(ed._deskHubHooked)continue;ed._deskHubHooked=true;ed.on('keydown',e=>{if(e.altKey&&!e.shiftKey&&!e.ctrlKey&&e.code==='KeyB'){e.preventDefault();grab();}});}},1500);

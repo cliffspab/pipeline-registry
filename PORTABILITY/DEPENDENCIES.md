@@ -1,35 +1,11 @@
-# Dependencies, accounts and secrets
+# Dependencies
 
-## Runtime
+Required for maintenance and recovery:
 
-- Python 3.12 or newer.
-- `PyYAML==6.0.3`.
-- `python-docx==1.2.0`.
-- Git.
-- GitHub CLI authenticated to `cliffspab/pipeline-registry`.
-- rclone.
+- Git
+- Node.js, for `Blueprint/assemble.js` and hosted-output validation
+- Python 3, for portability tooling
+- GitHub access with permission to push and manage Pages
 
-GitHub Actions uses Python 3.12 and the same pinned PyYAML version. The Word
-builder is local because its visual output is separately reviewed when changed.
-
-## Cloud access
-
-Required rclone remotes:
-
-- `pCloud:`
-- `GDrive:`
-- `onedrivebkp:`
-
-Approved destinations are the `pipeline-registry/Blueprint` tree on each
-remote, with pCloud under `Public Folder`.
-
-Never commit rclone configuration, OAuth tokens, GitHub tokens, browser
-sessions or recovery codes. Restore them through `gh auth login` and
-`rclone config`, then run:
-
-```powershell
-gh auth status
-rclone listremotes
-python bootstrap/distribute_blueprint.py --preflight
-```
-
+No rclone remotes or cloud-mirror credentials are part of this architecture.
+Browser and GitHub credentials stay outside the repository and portability ZIP.

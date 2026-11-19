@@ -1,44 +1,20 @@
-# Architecture and authority
+# Architecture
 
-## Authority chain
+`Blueprint/MASTER.md` is the sole editable desk-content authority. It contains
+the edition, output/deployment metadata and tagged content blocks.
 
-1. The supervisor controls scope, edition identity and publication.
-2. `Blueprint/BLUEPRINT.md` is the single editable modular authority.
-3. `Blueprint/build.py` validates and generates all text, routed, skill, ZIP
-   and receipt surfaces.
-4. `Blueprint/build_human_volume.py` generates the Word reading volume from
-   the same source and embeds its edition and source hash.
-5. Git commit identity plus successful GitHub validation confirms publication.
-6. The exact validated commit is copied to the three cloud destinations.
+`Blueprint/assemble.js` is the sole assembler. The desk page, userscript and
+GitHub Pages workflow consume it. Operational Markdown and the standalone
+Directory copies are built at the point of use rather than committed beside
+the master.
 
-Generated outputs and cloud mirrors are never independent authority.
+GitHub Actions publishes the repository, excluding `MASTER.md`, plus assembled
+files under `live/`. `live/DIRECTORY.txt` and `live/DIRECTORY.yaml` come from
+`directoryText()` and therefore cannot drift from the Directory block.
 
-## Components and invariants
+Word production is outside this architecture, portability kit and publication
+process.
 
-The master contains exactly one each of Boot, Edit, Check, Photo, PR and Thai
-Places. Unmarked content between components is invalid. Boot contains the sole
-House Essentials copy and the semantic routing table. Edit contains the common
-method and embedded Directory. Thai Places remains a conditional lookup.
-
-The build enforces six components, 37 routes, 21 real Markdown heading targets,
-16 reference routes, 76 Thai provinces, deterministic ZIPs and matching edition
-witnesses.
-
-## Publication boundary
-
-The cloud publisher does not copy the mutable working tree. It extracts
-`Blueprint/` from the full commit SHA that passed GitHub validation into a
-temporary directory, copies that immutable tree with `rclone copy`, performs a
-one-way content check and inventories duplicate or remote-only paths. Remote
-extras are reported and never deleted.
-
-The same committed archive carries the portability ZIP, manifest and audit
-snapshot to the separate Bangkok Post OneDrive portability backup.
-
-After validation, `pipeline-registry/Blueprint/Shift/` is refreshed from generated
-outputs: eight loose documents, six installable skill folders and six ZIPs.
-It is Git-ignored, not authority, and included in the Blueprint tree on all
-three cloud mirrors for straightforward human or AI pickup.
-
-A successful run writes `.publication/last.json`. Normal success output is
-short; detailed command output is reserved for failures.
+The former guarded batch publisher, cloud distribution, Shift refresher and
+static Directory copies are retired. GitHub is the registry and publication
+base.
