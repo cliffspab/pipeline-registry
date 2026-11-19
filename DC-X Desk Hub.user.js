@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.1.0
+// @version      2.2.0
 // @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and shift packs assembled at point of use from the desk master.
 // @match        https://dcx.bangkokpost.co.th/*
 // @match        http://dcx.bangkokpost.co.th/*
@@ -23,11 +23,15 @@
 // ==/UserScript==
 
 /*
+  2.2.0: installable skill ZIPs and the complete skill ZIP set are built in
+  memory from the current master. The retired static UPLOAD copies are no
+  longer used.
+
   2.1.0: the Blueprint source is now Blueprint/MASTER.md, fetched fresh and
   assembled here by assemble.js (shared with the desk page). Nothing derived
   is fetched: blueprint.md, the skills, directory.md and the deployments
-  (Portable, Skills, GUIDE, REFS, CUSTOM) are built on demand. Skillsgen opens
-  the UPLOAD zips. Model links point at the hosted build on GitHub Pages
+  (Portable, Skills, GUIDE, REFS, CUSTOM) are built on demand. Model links
+  point at the hosted build on GitHub Pages
   (live/blueprint.md), which the workflow rebuilds whenever the master changes. The master is never copied, saved or linked for a model;
   its row offers Refresh, Open and Paste only. VERSION.txt check retired.
   Cache and config keys moved to V4.
@@ -80,7 +84,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.1.0';
+  const VERSION = '2.2.0';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
@@ -97,7 +101,6 @@
 
   const KEYS = ['master','addendum','tracker'];
   const PACK_KEYS = ['master','addendum']; // Tracker is carried as links only
-  const UPLOAD_URL = 'https://github.com/cliffspab/pipeline-registry/tree/main/Blueprint/UPLOAD';
   const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
   const TRACKER_GID = '1313569477';
   const ADDENDUM_ID = '1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk';
@@ -592,17 +595,27 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   async function outputAction(name, action) {
     try {
       if (!await outputsReady(false)) return;
-      const text = assembled(name), file = BKPAssemble.file(master(), name);
+      const m = master();
+      if (action === 'zip') {
+        const archive = BKPAssemble.skillZip(m, name);
+        downloadText(archive.file, archive.bytes, 'application/zip');
+        return notify('Built ' + archive.file + ' from the current master.');
+      }
+      const text = BKPAssemble.render(m, name, { addendum: addendumText() }), file = BKPAssemble.file(m, name);
       if (action === 'copy') return copy(text, ok => notify(ok ? file + ' copied (' + textCount(text).toLocaleString() + ' chars).' : 'Copy failed.'));
       return downloadText(file, text);
     } catch (e) { alert('Outputs: ' + e.message); }
   }
   async function deployAction(key, action) {
     try {
-      if (key === 'skillsgen') return openTab(UPLOAD_URL, true);
       const m0 = sourceState.master && sourceState.master.text ? master() : null;
       const needAdd = !m0 || (m0.meta.deployments[key].outputs || []).includes('addendum');
       if (!await outputsReady(needAdd)) return;
+      if (key === 'skillsgen') {
+        const archive = BKPAssemble.skillSetZip(master(), key, { addendum: addendumText() });
+        downloadText(archive.file, archive.bytes, 'application/zip');
+        return notify('Built ' + archive.file + ' from the current master.');
+      }
       const files = BKPAssemble.deployment(master(), key, { addendum: addendumText() });
       for (let i = 0; i < files.length; i++) { downloadText(files[i].file, files[i].text); if (i < files.length - 1) await sleep(900); }
       notify('Saved ' + files.map(f => f.file).join(', ') + '. If only one arrived, allow multiple downloads for this site in Chrome.', 8000);
@@ -628,13 +641,14 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     const sec = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:6px'; host.appendChild(d); };
     sec('Deployments');
     const dg = document.createElement('div'); dg.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:3px';
-    [['Portable','portable'],['Skills','skills'],['Skillsgen','skillsgen'],['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => dg.appendChild(button(l, () => deployAction(k, 'save'), k === 'skillsgen' ? '#475569' : '#0b5a7a')));
+    [['Portable','portable'],['Skills','skills'],['Skill ZIP set','skillsgen'],['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => dg.appendChild(button(l, () => deployAction(k, 'save'), k === 'skillsgen' ? '#475569' : '#0b5a7a')));
     host.appendChild(dg);
     sec('Single outputs');
     (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
       const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:4px;margin-top:3px;font-size:11px';
       const lab = document.createElement('span'); lab.style.cssText = 'flex:1'; lab.textContent = OUTPUT_LABELS[n] || n; row.appendChild(lab);
       [['Copy','copy'],['Save','save']].forEach(([l, a]) => { const b = document.createElement('button'); b.textContent = l; b.style.cssText = 'font-size:10px;padding:2px 6px;cursor:pointer'; b.onclick = () => outputAction(n, a); row.appendChild(b); });
+      if (m && m.meta.deployments.skillsgen.zips.includes(n)) { const b = document.createElement('button'); b.textContent = 'ZIP'; b.style.cssText = 'font-size:10px;padding:2px 6px;cursor:pointer'; b.onclick = () => outputAction(n, 'zip'); row.appendChild(b); }
       host.appendChild(row);
     });
     sec('Custom single document');

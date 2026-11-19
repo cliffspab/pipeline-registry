@@ -159,5 +159,68 @@
   function outputs(master) { return Object.keys(master.meta.outputs); }
   function deployments(master) { return Object.keys(master.meta.deployments); }
 
-  return { parse, render, deployment, custom, outputs, deployments, file, routeEntries, directoryText, version: '1.1.0' };
+  // Deterministic, dependency-free ZIP writer. Skill ZIPs are assembled in
+  // memory from the current master and never stored as generated authorities.
+  const CRC_TABLE = (() => {
+    const table = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+      table[n] = c >>> 0;
+    }
+    return table;
+  })();
+
+  function crc32(bytes) {
+    let c = 0xffffffff;
+    for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  }
+
+  function zip(files) {
+    const enc = new TextEncoder(), local = [], central = [];
+    let offset = 0, centralSize = 0;
+    const put16 = (v, n, x) => { v.setUint16(n, x, true); };
+    const put32 = (v, n, x) => { v.setUint32(n, x >>> 0, true); };
+    files.forEach(f => {
+      const name = enc.encode(f.path), data = f.bytes instanceof Uint8Array ? f.bytes : enc.encode(String(f.text || ''));
+      const crc = crc32(data), lh = new Uint8Array(30 + name.length), lv = new DataView(lh.buffer);
+      put32(lv, 0, 0x04034b50); put16(lv, 4, 20); put16(lv, 6, 0x0800); put16(lv, 8, 0);
+      put16(lv, 10, 0); put16(lv, 12, 33); put32(lv, 14, crc); put32(lv, 18, data.length); put32(lv, 22, data.length);
+      put16(lv, 26, name.length); put16(lv, 28, 0); lh.set(name, 30);
+      local.push(lh, data);
+
+      const ch = new Uint8Array(46 + name.length), cv = new DataView(ch.buffer);
+      put32(cv, 0, 0x02014b50); put16(cv, 4, 20); put16(cv, 6, 20); put16(cv, 8, 0x0800); put16(cv, 10, 0);
+      put16(cv, 12, 0); put16(cv, 14, 33); put32(cv, 16, crc); put32(cv, 20, data.length); put32(cv, 24, data.length);
+      put16(cv, 28, name.length); put16(cv, 30, 0); put16(cv, 32, 0); put16(cv, 34, 0); put16(cv, 36, 0);
+      put32(cv, 38, 0); put32(cv, 42, offset); ch.set(name, 46); central.push(ch);
+      offset += lh.length + data.length; centralSize += ch.length;
+    });
+    const end = new Uint8Array(22), ev = new DataView(end.buffer);
+    put32(ev, 0, 0x06054b50); put16(ev, 4, 0); put16(ev, 6, 0); put16(ev, 8, files.length); put16(ev, 10, files.length);
+    put32(ev, 12, centralSize); put32(ev, 16, offset); put16(ev, 20, 0);
+    const parts = local.concat(central, end), size = parts.reduce((n, p) => n + p.length, 0), out = new Uint8Array(size);
+    let at = 0; parts.forEach(p => { out.set(p, at); at += p.length; });
+    return out;
+  }
+
+  function skillFile(master, name, opts) {
+    const o = master.meta.outputs && master.meta.outputs[name];
+    if (!o || !o.skill) throw new Error('Output is not an installable skill: ' + name);
+    return { path: o.skill + '/SKILL.md', text: render(master, name, opts) };
+  }
+
+  function skillZip(master, name, opts) {
+    const f = skillFile(master, name, opts);
+    return { file: f.path.split('/')[0] + '.zip', bytes: zip([f]) };
+  }
+
+  function skillSetZip(master, key, opts) {
+    const d = master.meta.deployments && master.meta.deployments[key];
+    if (!d || !Array.isArray(d.zips)) throw new Error('Deployment is not a skill ZIP set: ' + key);
+    return { file: 'bkpde-skills.zip', bytes: zip(d.zips.map(name => skillFile(master, name, opts))) };
+  }
+
+  return { parse, render, deployment, custom, outputs, deployments, file, routeEntries, directoryText, skillZip, skillSetZip, zip, version: '1.2.0' };
 });

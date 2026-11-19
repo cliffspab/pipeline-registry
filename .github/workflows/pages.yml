@@ -5,8 +5,8 @@ name: Hosted builds from master
 # always-current builds assembled from Blueprint/MASTER.md by Blueprint/assemble.js.
 # Nothing is committed, checked against itself or written back to the master.
 # DIRECTORY.txt and DIRECTORY.yaml are generated from the master's Directory
-# block on every deployment. Skill zips are not built here: Blueprint/UPLOAD
-# holds the last generated set.
+# block on every deployment. Installable skill ZIPs are generated in the desk
+# tools from the current master at download time and are never stored.
 # Pages must be set to deploy from GitHub Actions (Settings > Pages > Source).
 
 on:

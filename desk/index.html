@@ -189,8 +189,8 @@ async function copyText(text, label) {
     toast(ok ? label + ' copied.' : 'Copy failed: ' + label);
   }
 }
-function download(name, text) {
-  const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+function download(name, data, type = 'text/plain;charset=utf-8') {
+  const url = URL.createObjectURL(new Blob([data], { type }));
   const a = el('a', { href: url, download: name.replace(/[^A-Za-z0-9._-]+/g, '_') }); document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 3000);
 }
@@ -318,8 +318,7 @@ async function buildDocs() {
 // ---------- outputs (assembled from the master) ----------
 const OUTPUT_LABELS = { blueprint: 'blueprint.md', boot: 'boot', 'thai-places': 'thai-places', check: 'check', photo: 'photo', pr: 'pr',
   edit: 'edit', 'edit-section': 'edit section (no Directory)', directory: 'directory' };
-const DEPLOYS = [['Portable', 'portable'], ['Skills', 'skills'], ['Skillsgen', 'skillsgen'], ['GUIDE', 'guide'], ['REFS', 'refs']];
-const UPLOAD_URL = 'https://github.com/cliffspab/pipeline-registry/tree/main/Blueprint/UPLOAD';
+const DEPLOYS = [['Portable', 'portable'], ['Skills', 'skills'], ['Skill ZIP set', 'skillsgen'], ['GUIDE', 'guide'], ['REFS', 'refs']];
 function master() {
   if (typeof BKPAssemble === 'undefined') throw new Error('Assembler not loaded');
   if (!state.master || !state.master.text) throw new Error('No master stored');
@@ -336,16 +335,26 @@ const opts = () => ({ addendum: (state.addendum && state.addendum.text) || '' })
 async function outputAct(name, act) {
   if (!await ready(['master'])) return;
   try {
-    const m = master(), text = BKPAssemble.render(m, name);
+    const m = master();
+    if (act === 'zip') {
+      const archive = BKPAssemble.skillZip(m, name);
+      download(archive.file, archive.bytes, 'application/zip');
+      return toast('Built ' + archive.file + ' from the current master.');
+    }
+    const text = BKPAssemble.render(m, name);
     if (act === 'copy') return copyText(text, BKPAssemble.file(m, name));
     download(BKPAssemble.file(m, name), text);
   } catch (e) { toast('Output failed: ' + e.message, 8000); }
 }
 async function deployAct(key) {
-  if (key === 'skillsgen') return window.open(UPLOAD_URL, '_blank', 'noopener');
   const m0 = masterOrNull(), needAdd = !m0 || (m0.meta.deployments[key].outputs || []).includes('addendum');
   if (!await ready(needAdd ? ['master', 'addendum'] : ['master'])) return;
   try {
+    if (key === 'skillsgen') {
+      const archive = BKPAssemble.skillSetZip(master(), key, opts());
+      download(archive.file, archive.bytes, 'application/zip');
+      return toast('Built ' + archive.file + ' from the current master.');
+    }
     const files = BKPAssemble.deployment(master(), key, opts());
     for (let i = 0; i < files.length; i++) { download(files[i].file, files[i].text); if (i < files.length - 1) await sleep(900); }
     toast('Saved ' + files.map(f => f.file).join(', ') + '. If only one arrived, allow multiple downloads for this site.', 8000);
@@ -419,9 +428,11 @@ function render() {
   const m = masterOrNull(), mh = $('#modules'); mh.textContent = '';
   $('#modinfo').textContent = m ? 'Assembled from master ' + (m.edition || '') + ' · ' + state.master.state : 'No master stored yet. Any button fetches it.';
   (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
-    mh.append(el('div', { className: 'mod' }, el('span', { className: 'n', textContent: OUTPUT_LABELS[n] || n }),
+    const parts = [el('span', { className: 'n', textContent: OUTPUT_LABELS[n] || n }),
       el('button', { textContent: 'Copy', onclick: () => outputAct(n, 'copy') }),
-      el('button', { textContent: 'Save', onclick: () => outputAct(n, 'save') })));
+      el('button', { textContent: 'Save', onclick: () => outputAct(n, 'save') })];
+    if (m && m.meta.deployments.skillsgen.zips.includes(n)) parts.push(el('button', { textContent: 'ZIP', onclick: () => outputAct(n, 'zip') }));
+    mh.append(el('div', { className: 'mod' }, ...parts));
   });
   const uh = $('#units'), ticked = new Set([...uh.querySelectorAll('input:checked')].map(x => x.dataset.unit)); uh.textContent = '';
   (m ? m.meta.custom : [['1', 'boot'], ['2', 'thai-places'], ['3', 'directory'], ['4', 'pr'], ['5', 'photo'], ['6', 'check'], ['7', 'addendum'], ['8', 'edit']])

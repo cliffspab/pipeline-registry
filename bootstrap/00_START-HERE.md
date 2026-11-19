@@ -26,6 +26,8 @@ Report any failure plainly. Do not infer state from an old conversation.
 `Blueprint/assemble.js` builds every operational output at the point of use.
 GitHub Actions publishes the assembled outputs under `live/` and generates
 `DIRECTORY.txt` and `DIRECTORY.yaml` from the same master block.
+The desk tools create installable skill ZIPs in memory from that master; there
+are no maintained ZIP copies.
 
 Word production is outside this mechanism and its checks.
 
@@ -37,6 +39,8 @@ history is the complete change record.
 A routine content commit changes `Blueprint/MASTER.md` only. It does not
 rebuild portability. GitHub's commit page is the exact archival record of
 changed files and lines.
+The commit SHA is the version identifier for that master and everything
+assembled from it; no separate content-version ledger is maintained.
 
 The old guarded publisher, cloud distributor and Shift refresher are retired.
 Publication is a reviewed Git commit and push followed by a successful GitHub

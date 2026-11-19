@@ -16,8 +16,9 @@ machinery work.
 
 `Blueprint/MASTER.md` is the only editable desk-content authority. It contains
 metadata and tagged content blocks. `Blueprint/assemble.js` produces the
-Blueprint, skills, deployments and Directory copies at the point of use.
-Generated outputs are not committed as parallel authorities.
+Blueprint, skills, deployments and Directory copies at the point of use,
+including installable individual-skill ZIPs and the skill ZIP set. Generated
+outputs are not committed as parallel authorities.
 
 Word production is outside this mechanism. Do not build, validate, publish or
 include Word material in routine maintenance, recovery or release checks.
@@ -53,3 +54,5 @@ PORTABILITY/make_bundle.py` only after process changes.
 
 The commit message and GitHub commit page are the change record. Do not maintain
 parallel changelog, version-history, pending or archive ledgers.
+The Git commit SHA is the content version identifier. Any edition label carried
+inside the master is descriptive metadata, not a second version system.
