@@ -3,8 +3,11 @@ name: Hosted builds from master
 # On every push to main, publishes the site to GitHub Pages: the repo as it
 # stands (desk page included, MASTER.md left out) plus live/<output>, the
 # always-current builds assembled from Blueprint/MASTER.md by Blueprint/assemble.js.
-# Nothing is committed, checked against itself or written back to the master.
-# DIRECTORY.txt and DIRECTORY.yaml are generated from the master's Directory
+# The same builds are also committed to live/ in the repo whenever they change, so a
+# permanent copy exists outside Pages. live/ is output only: never edit it and never
+# build from it; the master stays the one source. Commits made here use the workflow's
+# own token, which does not start another run. Nothing is written back to the master.
+# DIRECTORY.txt is generated from the master's Directory
 # block on every deployment. Installable skill ZIPs are generated in the desk
 # tools from the current master at download time and are never stored.
 # shortlinks.html and shortlinks.json list every Dub link tagged "blueprint", read
@@ -20,7 +23,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -46,15 +49,23 @@ jobs:
             for (const n of m.meta.hosted) fs.writeFileSync("_live/" + A.file(m, n), A.render(m, n));
             const directory = A.directoryText(m);
             fs.writeFileSync("_live/DIRECTORY.txt", directory);
-            fs.writeFileSync("_live/DIRECTORY.yaml", directory);
             fs.writeFileSync("_live/EDITION.txt", m.edition + "\n");
           '
+
+      - name: Keep a permanent copy in live/
+        run: |
+          rm -rf live && mkdir live && cp _live/* live/
+          printf '%s\n' 'Generated from Blueprint/MASTER.md on every push and each hour.' 'Do not edit: changes here are overwritten. Edit the master instead.' > live/README.txt
+          git add -A live
+          if git diff --cached --quiet; then echo "live/ unchanged"; exit 0; fi
+          git -c user.name="desk-builds" -c user.email="actions@users.noreply.github.com" commit -m "Rebuild live/ from master"
+          git push || echo "live/ push skipped: the branch moved during the run; the next run will catch up"
 
       - name: Build site
         run: |
           mkdir _site
           git ls-files -z | grep -zv '^Blueprint/MASTER.md$' | xargs -0 -I{} cp --parents {} _site/
-          cp -r _live _site/live
+          rm -rf _site/live && mkdir -p _site/live && cp _live/* _site/live/
           touch _site/.nojekyll
 
       - name: Shortlinks from Dub
