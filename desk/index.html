@@ -6,7 +6,7 @@
 <title>Desk Hub</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
-/* Layout: one narrow working column; sources as rows, pack actions and downloads below. */
+/* Layout: one narrow working column with the supervisor's deployment menu. */
 :root {
   --bg: #f6f7f8; --panel: #ffffff; --fg: #1d2329; --muted: #5d6873; --line: #d6dce2;
   --accent: #0f4c6b; --accent-fg: #ffffff; --ok: #1d7a3a; --warn: #a35c08; --bad: #b3261e;
@@ -20,9 +20,10 @@
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.45 var(--sans); }
-main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 18px; }
-h1 { font-size: 20px; margin: 0; letter-spacing: .01em; }
-h2 { font-size: 12px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 14px; }
+h1 { font-size: 20px; margin: 0; letter-spacing: .01em; text-transform: uppercase; }
+h2 { font-size: 13px; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg); }
+h2:first-child { margin-top: 0; }
 .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
 section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
 .src { padding: 10px 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
@@ -42,76 +43,79 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 600; }
 button.danger { color: var(--bad); }
 button:disabled { opacity: .45; cursor: default; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
 ul.links { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 ul.links a { color: var(--accent); text-decoration: none; }
 ul.links a:hover { text-decoration: underline; }
 ul.links span { color: var(--muted); font-size: 12px; }
-.mod { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-top: 1px solid var(--line); }
-.mod:first-child { border-top: 0; }
-.mod .n { flex: 1; min-width: 120px; font: 12px var(--mono); }
-#deploys { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-#deploys button { width: 100%; }
+.tool-list { display: grid; gap: 6px; }
+.tool-row { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 10px; }
+.tool-row button { width: 100%; font-weight: 650; }
+.tool-desc { min-width: 0; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.source-files { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.choice { display: flex; align-items: center; gap: 5px; min-height: 30px; padding: 4px 7px; border: 1px solid var(--line); border-radius: 5px; }
+.choice input { margin: 0; }
+.footnote { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+table.directory { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 12px; }
+table.directory th, table.directory td { padding: 6px 4px; border-top: 1px solid var(--line); text-align: left; vertical-align: top; }
+table.directory tr:first-child th, table.directory tr:first-child td { border-top: 0; }
+table.directory th { width: 34%; font-weight: 600; }
+table.directory td { overflow-wrap: anywhere; }
+table.directory a { color: var(--accent); text-decoration: none; margin-right: 10px; white-space: nowrap; }
+table.directory a:hover { text-decoration: underline; }
 #toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: var(--fg); color: var(--bg);
   padding: 8px 14px; border-radius: 6px; font-size: 13px; max-width: 90vw; white-space: pre-line; }
 dialog { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--fg); width: min(860px, 94vw); }
 dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background: var(--bg); color: var(--fg); border: 1px solid var(--line); }
 @media (prefers-reduced-motion: no-preference) { button { transition: border-color .15s; } }
 @media (max-width: 560px) {
-  #deploys { grid-template-columns: 1fr; }
-  .mod { flex-wrap: wrap; }
-  .mod .n { flex-basis: 100%; }
+  .tool-row { grid-template-columns: 1fr; gap: 3px; }
+  .source-files { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>Desk Hub</h1>
-    <div class="sub">Shift pack, downloads and reference links · <span id="ver"></span></div>
+    <h1>Deployments</h1>
+    <div class="sub">Freshly assembled at download · <span id="ver"></span></div>
   </header>
 
-  <section aria-labelledby="h-src">
-    <h2 id="h-src">Sources</h2>
-    <div id="sources"></div>
-  </section>
-
-  <section aria-labelledby="h-pack">
-    <h2 id="h-pack">Shift pack</h2>
-    <div class="grid">
-      <button class="primary" data-act="copy">Copy full pack</button>
-      <button class="primary" data-act="download">Download full pack</button>
-      <button data-act="refresh">Refresh all</button>
-      <button data-act="separate">Download Portable</button>
-      <button data-act="prompt">Copy opening prompt</button>
-      <button data-act="modellinks">Copy model links</button>
-      <button data-act="editorlinks">Copy editor links</button>
-      <button data-act="openall">Open sources</button>
-      <button class="danger" data-act="clear">Clear stored copies</button>
+  <section aria-label="Deployment downloads">
+    <h2>1 Full*</h2>
+    <div class="sub" id="menuinfo"></div>
+    <div class="tool-list" style="margin-top:8px">
+      <div class="tool-row"><button class="primary" id="portable">Portable</button><span class="tool-desc">blueprint.md + addendum</span></div>
+      <div class="tool-row"><button class="primary" id="skills">Skills</button><span class="tool-desc">boot.md + thai-places.md + directory.md + pr.md + photo.md + check.md + edit.md + addendum</span></div>
     </div>
-    <div class="sub" style="margin-top:6px">The pack is the opening prompt, the full Blueprint and links to the Addendum and Tracker.</div>
-    <h2 style="margin-top:14px">Full documents</h2>
-    <div class="grid">
-      <button data-act="docscopy">Copy Addendum + Tracker</button>
-      <button data-act="docsdownload">Download Addendum + Tracker</button>
-    </div>
-  </section>
 
-  <section aria-labelledby="h-downloads">
-    <h2 id="h-downloads">Downloads</h2>
-    <div class="sub" id="modinfo"></div>
-    <h2 style="margin-top:10px">Documents and sets</h2>
-    <div class="grid" id="deploys"></div>
-    <h2 style="margin-top:10px">Individual files and skill ZIPs</h2>
-    <div id="modules"></div>
-    <h2 style="margin-top:10px">Custom single document</h2>
+    <h2>2 Custom</h2>
+    <div class="sub">Single doc switch</div>
     <div class="grid" id="units"></div>
-    <div class="bar" style="margin-top:6px"><button id="customcopy">Copy custom</button><button id="customsave">Download custom</button></div>
-  </section>
+    <div class="sub" style="margin-top:7px">Note: (1–7) = optimized single document layout</div>
+    <div class="bar" style="margin-top:7px"><button class="primary" id="customsave">Generate document</button><button id="customzips">Generate ZIPs</button></div>
 
-  <section aria-labelledby="h-links">
-    <h2 id="h-links">Links</h2>
-    <ul class="links" id="links"></ul>
+    <h2>3 Modular*</h2>
+    <div class="tool-list">
+      <div class="tool-row"><button id="guide">GUIDE</button><span class="tool-desc">boot.md + edit.md + check.md + photo.md + pr.md</span></div>
+      <div class="tool-row"><button id="refs">REFS</button><span class="tool-desc">addendum + directory.md + thai-places.md</span></div>
+    </div>
+
+    <h2>4 Other</h2>
+    <div class="source-files">
+      <button id="blueprintfile">blueprint.md</button>
+      <button id="addendumfile">addendum</button>
+      <button id="trackerfile">story tracker</button>
+    </div>
+
+    <p class="footnote">* Includes addendum.</p>
+
+    <h2>5 Links</h2>
+    <table class="directory" aria-label="Internal file directory">
+      <tbody id="links"></tbody>
+    </table>
+
+    <div id="sources" hidden></div>
   </section>
 </main>
 
@@ -128,7 +132,7 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
 <script src="../Blueprint/assemble.js"></script>
 <script>
 'use strict';
-const VERSION = '1.5.0';
+const VERSION = '1.6.0';
 const STORE_KEY = 'bkpDeskHubV2';
 const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
@@ -152,14 +156,17 @@ const SOURCES = {
 const KEYS = Object.keys(SOURCES);
 const LIVE = 'https://cliffspab.github.io/pipeline-registry/live/'; // hosted builds, rebuilt on every push
 const LINKS = [
-  ['Blueprint (hosted build)', LIVE + 'blueprint.md'],
-  ['Directory (hosted build)', LIVE + 'directory.md'],
-  ['Desk Addendum (edit)', SOURCES.addendum.openUrl],
-  ['Desk Addendum (published)', ADDENDUM_PUB],
-  ['Tracker (edit)', SOURCES.tracker.openUrl],
-  ['Tracker (published CSV)', TRACKER_PUB],
-  ['Tracker usage', 'https://go.fuzzylogic.page/usage'],
-  ['DCX desk notes', 'https://docs.google.com/document/d/1RmwVnZ5Od4tityr6ePg1kmy8lKUmSiFIoXbdtS8chJQ/edit']
+  ['Blueprint', [['Pages', LIVE + 'blueprint.md']]],
+  ['Boot', [['Pages', LIVE + 'boot.md']]],
+  ['Thai places', [['Pages', LIVE + 'thai-places.md']]],
+  ['Directory', [['Pages', LIVE + 'directory.md']]],
+  ['Check', [['Pages', LIVE + 'check.md']]],
+  ['Photo', [['Pages', LIVE + 'photo.md']]],
+  ['PR', [['Pages', LIVE + 'pr.md']]],
+  ['Edit', [['Pages', LIVE + 'edit.md']]],
+  ['Addendum', [['Published', ADDENDUM_PUB], ['Edit', SOURCES.addendum.openUrl]]],
+  ['Story tracker', [['Published CSV', TRACKER_PUB], ['Edit', SOURCES.tracker.openUrl], ['Usage', 'https://go.fuzzylogic.page/usage']]],
+  ['DC-X desk notes', [['Open', 'https://docs.google.com/document/d/1RmwVnZ5Od4tityr6ePg1kmy8lKUmSiFIoXbdtS8chJQ/edit']]]
 ];
 
 // ---------- storage ----------
@@ -325,7 +332,6 @@ async function buildDocs() {
 // ---------- outputs (assembled from the master) ----------
 const OUTPUT_LABELS = { blueprint: 'blueprint.md', boot: 'boot', 'thai-places': 'thai-places', check: 'check', photo: 'photo', pr: 'pr',
   edit: 'edit', 'edit-section': 'edit section (no Directory)', directory: 'directory' };
-const DEPLOYS = [['Download Portable', 'portable'], ['Download skill files', 'skills'], ['Download Skill ZIP set', 'skillsgen'], ['Download GUIDE', 'guide'], ['Download REFS', 'refs']];
 function master() {
   if (typeof BKPAssemble === 'undefined') throw new Error('Assembler not loaded');
   if (!state.master || !state.master.text) throw new Error('No master stored');
@@ -353,16 +359,16 @@ async function outputAct(name, act) {
     download(BKPAssemble.file(m, name), text);
   } catch (e) { toast('Output failed: ' + e.message, 8000); }
 }
-async function deployAct(key) {
+async function deployAct(key, zipped) {
   const m0 = masterOrNull(), needAdd = !m0 || (m0.meta.deployments[key].outputs || []).includes('addendum');
   if (!await ready(needAdd ? ['master', 'addendum'] : ['master'])) return;
   try {
-    if (key === 'skillsgen') {
-      const archive = BKPAssemble.skillSetZip(master(), key, opts());
-      download(archive.file, archive.bytes, 'application/zip');
-      return toast('Built ' + archive.file + ' from the current master.');
-    }
     const files = BKPAssemble.deployment(master(), key, opts());
+    if (zipped) {
+      const bytes = BKPAssemble.zip(files.map(f => ({ path: f.file, text: f.text })));
+      download(key + '.zip', bytes, 'application/zip');
+      return toast('Built ' + key + '.zip from the current master.');
+    }
     for (let i = 0; i < files.length; i++) { download(files[i].file, files[i].text); if (i < files.length - 1) await sleep(900); }
     const saved = 'Saved ' + files.map(f => f.file).join(', ') + '.';
     toast(files.length > 1 ? saved + ' If only one arrived, allow multiple downloads for this site.' : saved, 8000);
@@ -377,6 +383,24 @@ async function customAct(act) {
     if (act === 'copy') return copyText(text, 'Custom document');
     download('custom_' + picks.join('') + '.md', text);
   } catch (e) { toast('Custom failed: ' + e.message, 8000); }
+}
+async function customZips() {
+  const picks = [...document.querySelectorAll('#units input:checked')].map(x => x.dataset.unit);
+  if (!picks.length) return toast('Tick at least one part.');
+  if (!await ready(picks.includes('7') ? ['master', 'addendum'] : ['master'])) return;
+  try {
+    const m = master(), want = new Set(picks), members = [];
+    m.meta.custom.filter(u => want.has(u[0])).forEach(u => {
+      if (u[2] === 'addendum') members.push({ path: 'addendum.txt', text: state.addendum.text });
+      else {
+        const archive = BKPAssemble.skillZip(m, u[2], opts());
+        members.push({ path: archive.file, bytes: archive.bytes });
+      }
+    });
+    const filename = 'custom-zips-' + picks.join('') + '.zip';
+    download(filename, BKPAssemble.zip(members), 'application/zip');
+    toast('Built ' + filename + ' from the current master.');
+  } catch (e) { toast('Custom ZIPs failed: ' + e.message, 8000); }
 }
 
 // ---------- actions ----------
@@ -404,6 +428,10 @@ async function sourceAct(key, act) {
   if (!s.text) return toast(c.label + ' has no stored copy. Refresh it first.');
   if (act === 'copy') return copyText(s.text, c.label);
   if (act === 'save') return download(c.filename, s.text);
+}
+async function sourceDownload(key) {
+  if (!await ready([key])) return;
+  download(SOURCES[key].filename, state[key].text);
 }
 async function packAct(act) {
   if (act === 'refresh') return refreshAll();
@@ -433,18 +461,12 @@ function render() {
         el('span', { className: 'state ' + st, textContent: st + (s.state === 'CACHED' && s.lastFail ? ' · ' + s.lastFail : '') })),
       el('div', { className: 'meta', textContent: meta || 'Not fetched yet.' }), bar));
   });
-  const m = masterOrNull(), mh = $('#modules'); mh.textContent = '';
-  $('#modinfo').textContent = m ? 'Assembled from master ' + (m.edition || '') + ' · ' + state.master.state : 'No master stored yet. Any button fetches it.';
-  (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
-    const parts = [el('span', { className: 'n', textContent: OUTPUT_LABELS[n] || n }),
-      el('button', { textContent: 'Copy', onclick: () => outputAct(n, 'copy') }),
-      el('button', { textContent: 'Download', onclick: () => outputAct(n, 'save') })];
-    if (m && m.meta.deployments.skillsgen.zips.includes(n)) parts.push(el('button', { textContent: 'Download ZIP', onclick: () => outputAct(n, 'zip') }));
-    mh.append(el('div', { className: 'mod' }, ...parts));
-  });
+  const m = masterOrNull();
+  $('#menuinfo').textContent = m ? 'Current master: ' + (m.edition || '') : 'The current master will be fetched when a download is selected.';
   const uh = $('#units'), ticked = new Set([...uh.querySelectorAll('input:checked')].map(x => x.dataset.unit)); uh.textContent = '';
-  (m ? m.meta.custom : [['1', 'boot'], ['2', 'thai-places'], ['3', 'directory'], ['4', 'pr'], ['5', 'photo'], ['6', 'check'], ['7', 'addendum'], ['8', 'edit']])
-    .forEach(u => { const c = el('input', { type: 'checkbox', checked: ticked.has(u[0]) }); c.dataset.unit = u[0]; uh.append(el('label', {}, c, ' ' + u[0] + '. ' + u[1])); });
+  const labels = { '1': 'boot.md', '2': 'thai-places.md', '3': 'directory.md', '4': 'pr.md', '5': 'photo.md', '6': 'check.md', '7': 'addendum', '8': 'edit.md' };
+  (m ? m.meta.custom : Object.keys(labels).map(n => [n, labels[n], labels[n]]))
+    .forEach(u => { const c = el('input', { type: 'checkbox', checked: ticked.has(u[0]) }); c.dataset.unit = u[0]; uh.append(el('label', { className: 'choice' }, c, u[0] + '. ' + labels[u[0]])); });
 }
 
 $('#ver').textContent = 'v' + VERSION;

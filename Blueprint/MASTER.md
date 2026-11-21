@@ -660,9 +660,6 @@ directory:
       East Timor: Avoid Timor-Leste.
       Ivory Coast: Avoid Cote d'Ivoire.
       Gambia: Avoid "The Gambia".
-      United Kingdom: >
-        Avoid Britain; UK preferred. The UK INCLUDES Northern Ireland; Great Britain is
-        the one that excludes it (England, Scotland, Wales only). Not interchangeable.
     demonyms:
       Argentina: Argentine (people); Argentinian (things).
       Cambodia: Khmer = language only, not people.
