@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.2.0
+// @version      2.2.1
+// @updateURL    https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
+// @downloadURL  https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and shift packs assembled at point of use from the desk master.
 // @match        https://dcx.bangkokpost.co.th/*
 // @match        http://dcx.bangkokpost.co.th/*
@@ -23,6 +25,12 @@
 // ==/UserScript==
 
 /*
+  2.2.1: updates now come from GitHub Pages (@updateURL/@downloadURL). The Desk
+  Addendum's public link is its published page, which opens in a tab, not the
+  export download. The Tracker is off the shift set: it is no longer fetched or put
+  in packs or model links; its usage page stays as a contingency. Pack text and
+  filenames no longer carry the paper's name.
+
   2.2.0: installable skill ZIPs and the complete skill ZIP set are built in
   memory from the current master. The retired static UPLOAD copies are no
   longer used.
@@ -84,7 +92,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.2.0';
+  const VERSION = '2.2.1';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
@@ -99,11 +107,12 @@
   const STATUS_RE = /^(Planning|Subeditor|Clean|Ready for Layout|Ready for output|Typeset|Published)$/i;
   const FINAL_RE = /^(Ready for output|Published)$/i;
 
-  const KEYS = ['master','addendum','tracker'];
+  const KEYS = ['master','addendum'];
   const PACK_KEYS = ['master','addendum']; // Tracker is carried as links only
   const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
   const TRACKER_GID = '1313569477';
   const ADDENDUM_ID = '1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk';
+  const ADDENDUM_PUB = 'https://docs.google.com/document/d/e/2PACX-1vRlS6VxrVmMwXAUuNhcCdD3WBCFsCWMQr4cUOYsTSIebwEhSri0B84Ew94hyFdvyQqymtaloCYfebPJ/pub';
   const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 
   const DEFAULT_CONFIG = {
@@ -119,8 +128,7 @@
       label: 'Desk Addendum',
       url: 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/export?format=txt',
       openUrl: 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/edit',
-      shareUrl: 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/export?format=txt',
-      altShareUrl: 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/mobilebasic',
+      shareUrl: ADDENDUM_PUB,
       filename: 'Desk_Addendum.txt',
       markers: ['DESK ADDENDUM'],
       minChars: 500
@@ -446,7 +454,7 @@
 
   async function manifest(blueprint) {
     const cfg = getConfig(), s = sourceState.master || {}, a = sourceState.addendum || {};
-    const lines = ['Bangkok Post Desk Shift Pack', 'Built: ' + bangkokStamp() + ' Thailand time', 'Desk Hub: v' + VERSION, ''];
+    const lines = ['Desk Shift Pack', 'Built: ' + bangkokStamp() + ' Thailand time', 'Desk Hub: v' + VERSION, ''];
     lines.push('BLUEPRINT');
     lines.push('Assembled from master edition: ' + (s.version || 'not found'));
     lines.push('Master state: ' + (s.state || 'NOT FETCHED') + (s.contentState && s.contentState !== s.state ? ' (content check: ' + s.contentState + ')' : ''));
@@ -468,31 +476,22 @@
     lines.push('Cached: ' + (a.state === 'CACHED' ? 'YES — last refresh failed (' + (a.lastFailState || 'ERROR') + ') at ' + bkk(a.lastAttempt) : 'no'));
     lines.push('Manual: ' + (a.manual ? 'YES' : 'no'));
     if (a.detail) lines.push('Note: ' + a.detail);
-    lines.push('');
-    lines.push('TRACKER', 'Included as links only; no Tracker content in this pack.', 'Sheet: ' + cfg.tracker.openUrl, 'CSV: ' + cfg.tracker.shareUrl);
     return lines.join('\n').trim();
   }
-  function trackerLinks() {
-    const c = getConfig().tracker;
-    return ['Tracker sheet: ' + c.openUrl, 'Tracker CSV: ' + c.shareUrl].join('\n');
-  }
   function openingPrompt() {
-    return `Bangkok Post desk package for this chat.
+    return `Desk package for this chat.
 
 BOOT routes each job and EDIT is the base every job builds on.`;
   }
   function modelLinks() {
     const c = getConfig(), out = [];
     if (c.master.modelUrl) out.push('Blueprint (plain text): ' + c.master.modelUrl);
-    out.push('Desk Addendum (plain text): ' + c.addendum.shareUrl,
-             'Desk Addendum (web view fallback): ' + c.addendum.altShareUrl,
-             'Tracker (CSV): ' + c.tracker.shareUrl,
-             'Tracker (CSV fallback): ' + c.tracker.altShareUrl);
+    out.push('Desk Addendum: ' + c.addendum.shareUrl);
     return out.join('\n');
   }
   function editorLinks() {
     const c = getConfig();
-    return ['Master: ' + c.master.openUrl, 'Desk Addendum: ' + c.addendum.openUrl, 'Tracker: ' + c.tracker.openUrl, 'Tracker usage: ' + c.tracker.usageUrl].join('\n');
+    return ['Master: ' + c.master.openUrl, 'Desk Addendum: ' + c.addendum.openUrl, 'Tracker usage (contingency): ' + c.tracker.usageUrl].join('\n');
   }
   async function ensureSources(keys) {
     const need = keys.filter(k => !usableState(sourceState[k]));
@@ -518,8 +517,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     return ['===== BEGIN MANIFEST =====', man, '===== END MANIFEST =====', '',
             '===== BEGIN OPENING PROMPT =====', openingPrompt(), '===== END OPENING PROMPT =====', '',
             '===== BEGIN BLUEPRINT =====', blueprint.replace(/\n$/, ''), '===== END BLUEPRINT =====', '',
-            '===== BEGIN DESK ADDENDUM =====', sourceState.addendum.text, '===== END DESK ADDENDUM =====', '',
-            '===== BEGIN TRACKER =====', trackerLinks(), '===== END TRACKER ====='].join('\n');
+            '===== BEGIN DESK ADDENDUM =====', sourceState.addendum.text, '===== END DESK ADDENDUM =====', ''].join('\n');
   }
   function manualSource(key) {
     const cfg = getConfig()[key], old = (sourceState[key] && sourceState[key].text) || '';
@@ -577,7 +575,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       if (action === 'open') { const c = getConfig(); KEYS.forEach(k => openTab(c[k].openUrl || c[k].url, false)); return; }
       if (action === 'usage') return openTab(getConfig().tracker.usageUrl, true);
       if (action === 'copy') { const p = await buildPack(); if (p === null) return; return copy(p, ok => notify(ok ? 'Complete shift pack copied (' + textCount(p).toLocaleString() + ' chars).' : 'Copy failed.')); }
-      if (action === 'download') { const p = await buildPack(); if (p === null) return; const t = bkkParts(); return downloadText('BP_SHIFT_PACK_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); }
+      if (action === 'download') { const p = await buildPack(); if (p === null) return; const t = bkkParts(); return downloadText('DESK_SHIFT_PACK_' + t.year + '-' + t.month + '-' + t.day + '_' + t.hour + t.minute + '.txt', p); }
       if (action === 'separate') return deployAction('portable', 'save');
       if (action === 'clear') { if (confirm('Clear all cached shift-pack content?')) clearCache(); return; }
     } catch (e) { alert('Shift Pack: ' + e.message); }
