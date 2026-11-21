@@ -10,7 +10,7 @@
   "boot": "Entry point and router for the set: resources, routes and mode dispatch. Use to start or route any desk job and load the shared base.",
   "thai-places": "Lookup of held forms for Thai districts, provinces and other Thai places under directory.thai_places. Use only when a Thai district or an unfamiliar Thai place name needs its form checked during edit, check, photo or PR work.",
   "check": "Fast check of a DC-X task the chief sub has already read, or a QC review of another operator's Job Report. Use when the supervisor says check, check only or qc, or gives a slug from the Output view for initialling.",
-  "photo": "standalone photo or mugshot work, returning a head plus caption or NAME caption. Use when the supervisor says photo, gives a Pix, Stand or St slug, or pastes a picture with a caption.",
+  "photo": "Standalone photo or mugshot work, returning a head plus caption or NAME caption. Use when the supervisor says photo, gives a Pix, Stand or St slug, or pastes a picture with a caption.",
   "pr": "Minimum-intervention paid-placement, advertorial or PR copy pass. Use when the supervisor says PR or supplies paid-placement copy for house-style correction.",
   "edit": "Desk method for full EDIT and fit jobs and the shared base for every desk mode, with Directory reference routes inline. Use when the supervisor says edit, supplies filed news copy for subbing, asks for fit or line-fitting work, or states no other job type; do not use as the return mode for check, photo or PR jobs.",
   "directory": "House style Directory: the reference branches for numbers, times, dates, datelines, currency, measurements, names and honorifics, acronyms, headline country forms, title styling, language forms, Thai conventions, countries, foreign places and organisations. Thai places are in thai-places. Use alongside edit, check, photo or pr."
@@ -300,7 +300,7 @@ directory:
   thai_places:
 
     note: >
-      An unlisted Thai name stands as filed. Where it matches neither a held BKP
+      An unlisted Thai name stands as filed. Where it matches neither a held 
       form nor standard RTGS, query it without alteration.
 
     third_party_spellings: >
@@ -631,7 +631,7 @@ directory:
       - computer programs
       - websites
     vessels: Italicise named manned vessels; keep models, operators, prefixes and unmanned craft plain.
-    web_addresses: Use lower case without protocol or subdomain, eg bangkokpost.com; capitalise the publication name in running text.
+    web_addresses: Use lower case without protocol or subdomain, eg reuters.com; capitalise the publication name in running text.
     foreign_words: Familiar English borrowings stand plain; otherwise italicise first mention and translate when context does not supply the meaning.
     plain_foreign_examples: [soi, wat, tuk-tuk, muay Thai, ya ba, Songkran, tsunami, kamikaze, feng shui, pad Thai, som tam, sushi, lasagne]
     species: Put the bracketed Latin name after the common name on first reference; italicise it and capitalise the first word only.
@@ -885,11 +885,11 @@ Verification is part of the edit, not a separate performance. No list, saved ans
 
 - Search every material fact the edit would change, and any the copy gives reason to doubt: a contradiction, suspicious identity or title, appointment, removal, death, charge, verdict or superlative.
 - Check the arithmetic in every figure set. A correction drawn entirely from the copy's own figures needs no outside source; show the working in FACT CHANGES.
-- Copy credited to a mainstream global news organisation is not searched or recalculated: the agency is the named author and the Post cedes verification to it. A doubt becomes a query. </what_to_search>
+- Copy credited to a mainstream global news organisation is not searched or recalculated: the agency is the named author and the paper cedes verification to it. A doubt becomes a query. </what_to_search>
 
 <how_to_search> Never correct a recent fact from memory. Search from the fact's date (not this year only), with a status word (died, removed, appointed) and the role where a name is shared; date Thai events in Thailand time. Find sources on the job: prefer the primary record (gazette, courts, regulators, election bodies, filings, international organisations) and corroborate through established reporting. Judge the pages actually opened; a blocked page is no evidence. </how_to_search>
 
-<two_sources> A fact change you originate needs two independent sources, both opened and read, strong enough to displace the filed account: a primary record and an independent reputable outlet, or two outlets that each establish the fact. Pages from one wire report or announcement are one line. Never a source: the filing, the Post's own version of the story, a search or AI summary, the Directory, memory, or an addendum entry without recorded verification. A change directed by the news desk or senior staff is applied and logged with the desk as its source. </two_sources>
+<two_sources> A fact change you originate needs two independent sources, both opened and read, strong enough to displace the filed account: a primary record and an independent reputable outlet, or two outlets that each establish the fact. Pages from one wire report or announcement are one line. Never a source: the filing, the paper's own version of the story, a search or AI summary, the Directory, memory, or an addendum entry without recorded verification. A change directed by the news desk or senior staff is applied and logged with the desk as its source. </two_sources>
 
 <unsettled> If a correction cannot be established, leave the fact as filed and query it. HOLD, pending the supervisor, only when the filed fact itself looks materially unsafe and two sources cannot settle it; complete the edit and add the point to OUTSTANDING. Lack of access is not a hold. </unsettled>
 
