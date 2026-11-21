@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.3.0
+// @version      2.3.2
 // @updateURL    https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @downloadURL  https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and shift packs assembled at point of use from the desk master.
@@ -18,6 +18,7 @@
 // @grant        GM_openInTab
 // @grant        GM_xmlhttpRequest
 // @connect      raw.githubusercontent.com
+// @connect      cliffspab.github.io
 // @connect      docs.google.com
 // @connect      googleusercontent.com
 // @connect      go.fuzzylogic.page
@@ -25,6 +26,14 @@
 // ==/UserScript==
 
 /*
+  2.3.2: Custom is the one selector for every output. Each part's name opens its live
+  copy; the ticks choose what to download; Single document compiles the ticked parts
+  into one file, otherwise they download as separate files or as ZIPs. The Links table
+  keeps only what the selector does not cover.
+
+  2.3.1: each link row offers Open and Download. Section 3 is Resources: small downloads for blueprint.md, the addendum and
+  the story tracker, with Modules (GUIDE, REFS) and Links in a dropdown beneath it.
+
   2.3.0: the hub is now the grabber, the DCX 0-5 tools and the outputs. Outputs are
   primary and fetch the master and addendum fresh at each download, so the master is
   never shown, opened or pasted. Modules and links are secondary. The shift-pack
@@ -104,7 +113,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.3.0';
+  const VERSION = '2.3.2';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
@@ -506,7 +515,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   }
   function editorLinks() {
     const c = getConfig();
-    return ['Desk Addendum: ' + c.addendum.openUrl, 'Story tracker: ' + c.tracker.openUrl, 'Tracker usage: ' + c.tracker.usageUrl, 'DC-X desk notes: ' + DESK_NOTES].join('\n');
+    return ['Desk Addendum: ' + c.addendum.openUrl, 'Story tracker: ' + c.tracker.openUrl, 'Tracker usage: ' + c.tracker.usageUrl].join('\n');
   }
   async function ensureSources(keys) {
     const need = keys.filter(k => !usableState(sourceState[k]));
@@ -625,15 +634,38 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       return downloadText('custom_' + picks.join('') + '.md', text);
     } catch (e) { alert('Custom: ' + e.message); }
   }
+  // Each row: label, address to open, and how to download (a URL to fetch and save, or a function).
   const PAGE_LINKS = [
-    ['Blueprint', [['Pages', LIVE + 'blueprint.md']]], ['Boot', [['Pages', LIVE + 'boot.md']]],
-    ['Thai places', [['Pages', LIVE + 'thai-places.md']]], ['Directory', [['Pages', LIVE + 'directory.md']]],
-    ['Check', [['Pages', LIVE + 'check.md']]], ['Photo', [['Pages', LIVE + 'photo.md']]],
-    ['PR', [['Pages', LIVE + 'pr.md']]], ['Edit', [['Pages', LIVE + 'edit.md']]],
-    ['Addendum', [['Published', ADDENDUM_PUB], ['Edit', 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/edit']]],
-    ['Story tracker', [['Published CSV', TRACKER_PUB], ['Edit', DEFAULT_CONFIG.tracker.openUrl], ['Usage', 'https://go.fuzzylogic.page/usage']]],
-    ['DC-X desk notes', [['Open', DESK_NOTES]]]
+    ['Blueprint', LIVE + 'blueprint.md', null],
+    ['Story tracker', DEFAULT_CONFIG.tracker.openUrl, null],
+    ['Tracker usage', 'https://go.fuzzylogic.page/usage', null],
+    ['Shortlinks', 'https://cliffspab.github.io/pipeline-registry/shortlinks.html', null]
   ];
+  async function linkDownload(label, how) {
+    if (typeof how === 'function') return how();
+    try {
+      const r = await requestText(how);
+      const name = /\.md$/.test(how) ? how.split('/').pop() : label.replace(/\s+/g, '_') + '.txt';
+      downloadText(name, r.text);
+    } catch (e) { notify(label + ' download failed: ' + e.message, 6000); }
+  }
+  let singleDoc = false;
+  // A ticked part downloaded on its own is the standalone skill, so edit comes with its Directory.
+  function standaloneName(n) { return n === 'edit-section' ? 'edit' : n; }
+  async function customFiles() {
+    try {
+      const picks = [...document.querySelectorAll('#dcx-outputs input[data-unit]:checked')].map(x => x.dataset.unit);
+      if (!picks.length) return notify('Tick at least one part.');
+      if (!await outputsReady(picks.includes('7'))) return;
+      const m = master(), want = new Set(picks), files = [];
+      m.meta.custom.filter(u => want.has(u[0])).forEach(u => {
+        if (u[2] === 'addendum') files.push(['Desk_Addendum.txt', addendumText()]);
+        else { const n = standaloneName(u[2]); files.push([BKPAssemble.file(m, n), BKPAssemble.render(m, n, {})]); }
+      });
+      for (let i = 0; i < files.length; i++) { downloadText(files[i][0], files[i][1]); if (i < files.length - 1) await sleep(900); }
+      notify('Saved ' + files.map(f => f[0]).join(', ') + '.', 6000);
+    } catch (e) { alert('Custom files: ' + e.message); }
+  }
   async function customZips() {
     try {
       const picks = [...document.querySelectorAll('#dcx-outputs input[data-unit]:checked')].map(x => x.dataset.unit);
@@ -642,7 +674,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       const m = master(), want = new Set(picks), members = [];
       m.meta.custom.filter(u => want.has(u[0])).forEach(u => {
         if (u[2] === 'addendum') members.push({ path: 'addendum.txt', text: addendumText() });
-        else { const z = BKPAssemble.skillZip(m, u[2], {}); members.push({ path: z.file, bytes: z.bytes }); }
+        else { const z = BKPAssemble.skillZip(m, standaloneName(u[2]), {}); members.push({ path: z.file, bytes: z.bytes }); }
       });
       const name = 'custom-zips-' + picks.join('') + '.zip';
       downloadText(name, BKPAssemble.zip(members), 'application/zip');
@@ -670,28 +702,45 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     sec('1 Full*');
     const g1 = grid(2); [['Portable','portable'],['Skills','skills']].forEach(([l, k]) => g1.appendChild(button(l, () => deployAction(k, 'save'), '#0b5a7a')));
     sec('2 Custom');
-    const labels = { '1':'boot.md','2':'thai-places.md','3':'directory.md','4':'pr.md','5':'photo.md','6':'check.md','7':'addendum','8':'edit.md' };
-    const units = m ? m.meta.custom : Object.keys(labels).map(n => [n, labels[n], labels[n]]);
+    const names = { '1':'boot','2':'thai-places','3':'directory','4':'pr','5':'photo','6':'check','7':'addendum','8':'edit' };
+    const units = m ? m.meta.custom : Object.keys(names).map(n => [n, names[n], n === '8' ? 'edit-section' : names[n]]);
     const ug = document.createElement('div'); ug.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:11px;margin-top:3px';
-    units.forEach(u => { const l = document.createElement('label'); const c = document.createElement('input'); c.type = 'checkbox'; c.checked = ticked.has(u[0]); c.dataset.unit = u[0]; l.append(c, ' ' + u[0] + '. ' + (labels[u[0]] || u[1])); ug.appendChild(l); });
+    units.forEach(u => {
+      const l = document.createElement('label'); l.style.cssText = 'display:flex;align-items:center;gap:4px';
+      const c = document.createElement('input'); c.type = 'checkbox'; c.checked = ticked.has(u[0]); c.dataset.unit = u[0];
+      const a = document.createElement('a'); a.textContent = u[0] + '. ' + u[1]; a.target = '_blank'; a.rel = 'noopener'; a.style.cssText = 'color:#0b5a7a';
+      a.href = u[2] === 'addendum' ? ADDENDUM_PUB : LIVE + standaloneName(u[2]) + '.md';
+      l.append(c, a); ug.appendChild(l);
+    });
     host.appendChild(ug);
-    const g2 = grid(2); g2.append(button('Generate document', () => customAction('save'), '#0b5a7a'), button('Generate ZIPs', () => customZips(), '#475569'));
-    sec('3 Modular*');
-    const g3 = grid(2); [['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => g3.appendChild(button(l, () => deployAction(k, 'save'), '#475569')));
+    const sw = document.createElement('label'); sw.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:11px;margin-top:5px';
+    const single = document.createElement('input'); single.type = 'checkbox'; single.id = 'dcx-single'; single.checked = singleDoc; single.setAttribute('role', 'switch');
+    sw.append(single, 'Single document'); host.appendChild(sw);
+    const g2 = grid(2);
+    const dl = button(singleDoc ? 'Compile document' : 'Download files', () => singleDoc ? customAction('save') : customFiles(), '#0b5a7a');
+    const zb = button('Download ZIPs', () => customZips(), '#475569'); zb.disabled = singleDoc; zb.style.opacity = singleDoc ? '.45' : '1';
+    single.onchange = () => { singleDoc = single.checked; dl.textContent = singleDoc ? 'Compile document' : 'Download files'; zb.disabled = singleDoc; zb.style.opacity = singleDoc ? '.45' : '1'; };
+    g2.append(dl, zb);
+    sec('3 Resources');
+    const small = (label, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.onclick = fn; b.style.cssText = 'font-size:10px;padding:2px 6px;border:1px solid #cbd5e1;border-radius:4px;background:#f8fafc;color:#0b5a7a;cursor:pointer'; return b; };
+    const rr = document.createElement('div'); rr.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;margin-top:3px'; host.appendChild(rr);
+    rr.append(small('blueprint.md', () => outputAction('blueprint', 'save')),
+              small('addendum', async () => { await refreshSource('addendum', true); sourceAction('addendum', 'download'); }),
+              small('story tracker', () => trackerDownload()));
     const sh = document.getElementById('dcx-secondary'); if (sh) { sh.innerHTML = ''; }
-    const target = sh || host; const sec2 = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:8px'; target.appendChild(d); };
-    sec2('Modules');
-    const g4 = document.createElement('div'); g4.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:3px'; target.appendChild(g4);
-    g4.append(button('blueprint.md', () => outputAction('blueprint', 'save'), '#475569'),
-              button('addendum', async () => { await refreshSource('addendum', true); sourceAction('addendum', 'download'); }, '#475569'),
-              button('story tracker', () => trackerDownload(), '#475569'));
+    const target = sh || host; const sec2 = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:6px'; target.appendChild(d); };
+    sec2('Modules*');
+    const g4 = document.createElement('div'); g4.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:3px'; target.appendChild(g4);
+    [['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => g4.appendChild(button(l, () => deployAction(k, 'save'), '#475569')));
     sec2('Links');
     const t = document.createElement('table'); t.style.cssText = 'width:100%;border-collapse:collapse;font-size:11px;margin-top:3px';
-    PAGE_LINKS.forEach(([label, links]) => {
+    PAGE_LINKS.forEach(([label, openUrl, how]) => {
       const tr = document.createElement('tr'), th = document.createElement('th'), td = document.createElement('td');
+      const links = [['Open', openUrl]];
       th.textContent = label; th.style.cssText = 'text-align:left;font-weight:600;padding:3px 4px;border-top:1px solid #e2e8f0;width:38%';
       td.style.cssText = 'padding:3px 4px;border-top:1px solid #e2e8f0';
       links.forEach(([txt, url]) => { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = txt; a.style.cssText = 'margin-right:8px;color:#0b5a7a'; td.appendChild(a); });
+      if (how) { const d = document.createElement('a'); d.href = '#'; d.textContent = 'Download'; d.style.cssText = 'margin-right:8px;color:#0b5a7a'; d.onclick = e => { e.preventDefault(); linkDownload(label, how); }; td.appendChild(d); }
       tr.append(th, td); t.appendChild(tr);
     });
     target.appendChild(t);

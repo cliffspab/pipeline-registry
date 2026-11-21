@@ -108,13 +108,22 @@
     return out;
   }
 
-  function render(master, name, opts, skip) {
+  // Real frontmatter only opens an installable skill file. Anywhere else (inside
+  // blueprint.md, GUIDE, REFS or a custom document) a skill's name and description
+  // go into one HTML comment, which no Markdown viewer renders, so a description is
+  // never turned into a heading by the closing --- line.
+  function componentMarker(master, name) {
+    const fm = frontmatter(master, name);
+    return ['<!-- skill: ' + name + ' | ' + fm[2].slice('description: '.length).replace(/--/g, '-') + ' -->'];
+  }
+
+  function render(master, name, opts, skip, embedded) {
     const o = master.meta.outputs && master.meta.outputs[name];
     if (!o) throw new Error('Unknown output: ' + name);
     const out = [];
     o.blocks.forEach(sel => {
       if (skip && skip.has(sel)) return;
-      if (sel.startsWith('@fm:')) out.push(...frontmatter(master, sel.slice(4)));
+      if (sel.startsWith('@fm:')) out.push(...(o.skill && !embedded && out.length === 0 ? frontmatter(master, sel.slice(4)) : componentMarker(master, sel.slice(4))));
       else if (sel === '@addendum') {
         const a = opts && opts.addendum;
         if (!a || !String(a).trim()) throw new Error('Addendum not supplied');
@@ -140,7 +149,7 @@
   function joined(master, names, opts) {
     const last = {};
     names.forEach((n, i) => master.meta.outputs[n].blocks.forEach(b => { if (!b.startsWith('@fm:')) last[b] = i; }));
-    return names.map((n, i) => render(master, n, opts, new Set(Object.keys(last).filter(b => last[b] > i)))).join('\n');
+    return names.map((n, i) => render(master, n, opts, new Set(Object.keys(last).filter(b => last[b] > i)), true)).join('\n');
   }
 
   // Single document from chosen custom units, always in the master's canonical unit order.
@@ -243,5 +252,5 @@
     return { file: 'desk-skills.zip', bytes: zip(d.zips.map(name => { const z = skillZip(master, name, opts); return { path: z.file, bytes: z.bytes }; })) };
   }
 
-  return { parse, render, deployment, custom, outputs, deployments, file, routeEntries, directoryText, skillZip, skillSetZip, zip, version: '1.3.0' };
+  return { parse, render, deployment, custom, outputs, deployments, file, routeEntries, directoryText, skillZip, skillSetZip, zip, version: '1.3.1' };
 });

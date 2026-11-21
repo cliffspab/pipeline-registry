@@ -7,11 +7,16 @@ name: Hosted builds from master
 # DIRECTORY.txt and DIRECTORY.yaml are generated from the master's Directory
 # block on every deployment. Installable skill ZIPs are generated in the desk
 # tools from the current master at download time and are never stored.
+# shortlinks.html and shortlinks.json list every Dub link tagged "blueprint", read
+# through the Dub API with the DUB_API_KEY repository secret; a scheduled run each hour
+# keeps them current. If the key is missing or Dub fails, the rest still publishes.
 # Pages must be set to deploy from GitHub Actions (Settings > Pages > Source).
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -51,6 +56,36 @@ jobs:
           git ls-files -z | grep -zv '^Blueprint/MASTER.md$' | xargs -0 -I{} cp --parents {} _site/
           cp -r _live _site/live
           touch _site/.nojekyll
+
+      - name: Shortlinks from Dub
+        continue-on-error: true
+        env:
+          DUB_API_KEY: ${{ secrets.DUB_API_KEY }}
+        run: |
+          node -e '
+            const fs = require("fs"), key = process.env.DUB_API_KEY;
+            if (!key) { console.log("DUB_API_KEY not set; shortlinks skipped"); process.exit(0); }
+            const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]);
+            (async () => {
+              const links = [];
+              for (let page = 1; page <= 20; page++) {
+                const r = await fetch("https://api.dub.co/links?tagNames=blueprint&pageSize=100&page=" + page, { headers: { Authorization: "Bearer " + key } });
+                if (!r.ok) throw new Error("Dub API " + r.status);
+                const batch = await r.json();
+                links.push(...batch);
+                if (batch.length < 100) break;
+              }
+              const rows = links.map(l => ({ short: l.shortLink, key: l.key, url: l.url, note: l.title || l.comments || "" }))
+                .sort((a, b) => a.key.localeCompare(b.key));
+              const stamp = new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
+              fs.writeFileSync("_site/shortlinks.json", JSON.stringify({ updated: stamp, links: rows }, null, 2) + "\n");
+              const tr = rows.map(x => "<tr><td><a href=\"" + esc(x.short) + "\">" + esc(x.key) + "</a></td><td><a href=\"" + esc(x.url) + "\">" + esc(x.url) + "</a></td><td>" + esc(x.note) + "</td></tr>").join("\n");
+              fs.writeFileSync("_site/shortlinks.html", "<!DOCTYPE html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex, nofollow\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Shortlinks</title>" +
+                "<style>body{font:14px/1.45 system-ui,sans-serif;max-width:900px;margin:20px auto;padding:0 16px;color:#1d2329}table{width:100%;border-collapse:collapse;table-layout:fixed}td,th{padding:6px 4px;border-top:1px solid #d6dce2;text-align:left;vertical-align:top;overflow-wrap:anywhere}th{font-size:12px;text-transform:uppercase;color:#5d6873}td:first-child,th:first-child{width:18%}a{color:#0f4c6b}.sub{color:#5d6873;font-size:12px}</style></head>" +
+                "<body><h1>Shortlinks</h1><div class=\"sub\">" + rows.length + " links tagged blueprint · updated " + esc(stamp) + "</div><table><tr><th>Short</th><th>Destination</th><th>Note</th></tr>\n" + tr + "\n</table></body></html>\n");
+              console.log("Shortlinks written: " + rows.length);
+            })().catch(e => { console.error(e.message); process.exit(1); });
+          '
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
