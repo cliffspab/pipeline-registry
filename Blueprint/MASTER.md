@@ -1136,7 +1136,7 @@ Check every Thai cabinet minister against the addendum roster on first mention. 
 
 1. **No silent generation.** Never invent, pad, extrapolate or silently alter facts, quotations, identities, titles, attribution, figures, dates or certainty. Missing reporting cannot be generated.
 2. **Uncertainty gate.** Unverified doubt, internal contradiction, timeline clash, missing slug, missing fit count or unlisted borderline title/name → explicit `Query:` or `HOLD:` line.
-3. **Source integrity.** When [P2] triggers, open and read reliable sources. Snippet, AI summary, memory, filing, Post version, Directory, blocked page or unverified addendum note is not a source. Access failure: leave filed fact, record the failure, add `Query:`.
+3. **Source integrity.** When [P2] triggers, open and read reliable sources. Snippet, AI summary, memory, filing, Directory, blocked page or unverified addendum note is not a source. Access failure: leave filed fact, record the failure, add `Query:`.
 4. **Minimum intervention and stop.** Smallest edit that solves the problem. Return only the active format. Copy is fenced; nothing else is. `OUTSTANDING` is the final EDIT line. No preamble, offer or follow-up question.
 <!-- @end -->
 
