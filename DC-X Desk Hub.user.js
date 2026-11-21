@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.2.2
+// @version      2.3.0
 // @updateURL    https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @downloadURL  https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and shift packs assembled at point of use from the desk master.
@@ -25,6 +25,13 @@
 // ==/UserScript==
 
 /*
+  2.3.0: the hub is now the grabber, the DCX 0-5 tools and the outputs. Outputs are
+  primary and fetch the master and addendum fresh at each download, so the master is
+  never shown, opened or pasted. Modules and links are secondary. The shift-pack
+  section and its actions are retired.
+
+  2.2.3: the page-matching section is titled Deployments and opens by default.
+
   2.2.2: the Outputs panel now mirrors the Desk Hub page: 1 Full (Portable, Skills),
   2 Custom (Generate document, Generate ZIPs), 3 Modular (GUIDE, REFS), 4 Other
   (blueprint.md, addendum, story tracker) and 5 Links. The single-outputs list and
@@ -97,7 +104,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.2.2';
+  const VERSION = '2.3.0';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
@@ -553,26 +560,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     if (action === 'download') { if (!s.text) return notify(cfg.label + ' has no stored content.'); return downloadText(fileNameFor(key, s), s.text); }
     if (action === 'manual') return manualSource(key);
   }
-  function renderPackPanel() {
-    const host = document.getElementById('dcx-shift-pack'); if (!host) return; host.innerHTML = ''; const cfg = getConfig();
-    KEYS.forEach(key => {
-      const c = cfg[key], s = sourceState[key] || {}, state = busy[key] ? 'FETCHING' : (s.state || 'NOT FETCHED');
-      const row = document.createElement('div'); row.style.cssText = 'border:1px solid #d7dee8;border-radius:5px;padding:6px;margin-top:6px';
-      const top = document.createElement('div'); top.style.cssText = 'display:flex;justify-content:space-between;gap:8px;font-weight:600';
-      const name = document.createElement('span'); name.textContent = c.label;
-      const st = document.createElement('span'); st.textContent = state + (s.state === 'CACHED' && s.lastFailState ? ' · ' + s.lastFailState : ''); st.style.color = STATE_COLOURS[state] || '#b91c1c';
-      top.append(name, st); row.appendChild(top);
-      const meta = document.createElement('div'); meta.style.cssText = 'font-size:10px;color:#64748b;margin:3px 0;line-height:1.35';
-      meta.textContent = [s.version, s.chars ? Number(s.chars).toLocaleString() + ' chars' : '', s.retrieved ? (s.manual ? 'pasted ' : 'retrieved ') + bkk(s.retrieved).slice(5,16) + ' (' + ago(s.retrieved) + ')' : '', s.detail].filter(Boolean).join(' · ');
-      row.appendChild(meta);
-      const bar = document.createElement('div'); bar.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px';
-      (key === 'master' ? [['Refresh','refresh'],['Open','open'],['Paste','manual']] : [['Refresh','refresh'],['Copy','copy'],['Save','download'],['Open','open'],['Link','link'],['Paste','manual']]).forEach(([lab, act]) => {
-        const b = document.createElement('button'); b.textContent = lab; b.style.cssText = 'font-size:10px;padding:3px 6px;cursor:pointer'; b.onclick = () => sourceAction(key, act); bar.appendChild(b);
-      });
-      row.appendChild(bar); host.appendChild(row);
-    });
-    renderOutputs();
-  }
+  function renderPackPanel() { renderOutputs(); }
   async function packAction(action) {
     try {
       if (action === 'refresh') return refreshAll();
@@ -593,7 +581,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   const OUTPUT_LABELS = { blueprint:'blueprint.md', boot:'boot', 'thai-places':'thai-places', check:'check', photo:'photo', pr:'pr',
                           edit:'edit', 'edit-section':'edit section (no Directory)', directory:'directory' };
   async function outputsReady(needAddendum) {
-    await ensureSources(needAddendum ? ['master','addendum'] : ['master']);
+    for (const k of (needAddendum ? ['master','addendum'] : ['master'])) if (!busy[k]) await refreshSource(k, true);
     if (!usableState(sourceState.master)) { notify('Master unavailable: ' + ((sourceState.master || {}).state || 'NOT FETCHED')); return false; }
     if (needAddendum && !usableState(sourceState.addendum)) { notify('Desk Addendum unavailable: ' + ((sourceState.addendum || {}).state || 'NOT FETCHED')); return false; }
     return confirmFresh(needAddendum ? ['master','addendum'] : ['master'], 'This output');
@@ -663,18 +651,19 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   }
   async function trackerDownload() {
     try {
-      await ensureSources(['tracker']);
+      await refreshSource('tracker', true);
       const s = sourceState.tracker;
       if (!s || !s.text) return notify('Story tracker unavailable.');
       downloadText(fileNameFor('tracker', s), s.text);
     } catch (e) { alert('Story tracker: ' + e.message); }
   }
   function renderOutputs() {
-    const host = document.getElementById('dcx-outputs'); if (!host) return; host.innerHTML = '';
+    const host = document.getElementById('dcx-outputs'); if (!host) return;
+    const ticked = new Set([...host.querySelectorAll('input[data-unit]:checked')].map(x => x.dataset.unit)); host.innerHTML = '';
     const s = sourceState.master || {};
     let m = null; try { if (s.text && typeof BKPAssemble !== 'undefined') m = BKPAssemble.parse(s.text); } catch (_) {}
     const info = document.createElement('div'); info.style.cssText = 'font-size:10px;color:#64748b;margin:4px 0';
-    info.textContent = m ? 'Current master: ' + (m.edition || '') : 'The current master will be fetched when a download is selected.';
+    info.textContent = (busy.master || busy.addendum) ? 'Fetching fresh copies…' : (m ? 'Last assembled from ' + (m.edition || 'the master') + '. Each download fetches fresh copies.' : 'Each download fetches the master and addendum fresh.');
     host.appendChild(info);
     const sec = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:8px'; host.appendChild(d); };
     const grid = (cols) => { const g = document.createElement('div'); g.style.cssText = 'display:grid;grid-template-columns:repeat(' + cols + ',1fr);gap:4px;margin-top:3px'; host.appendChild(g); return g; };
@@ -684,18 +673,19 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     const labels = { '1':'boot.md','2':'thai-places.md','3':'directory.md','4':'pr.md','5':'photo.md','6':'check.md','7':'addendum','8':'edit.md' };
     const units = m ? m.meta.custom : Object.keys(labels).map(n => [n, labels[n], labels[n]]);
     const ug = document.createElement('div'); ug.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:11px;margin-top:3px';
-    units.forEach(u => { const l = document.createElement('label'); const c = document.createElement('input'); c.type = 'checkbox'; c.dataset.unit = u[0]; l.append(c, ' ' + u[0] + '. ' + (labels[u[0]] || u[1])); ug.appendChild(l); });
+    units.forEach(u => { const l = document.createElement('label'); const c = document.createElement('input'); c.type = 'checkbox'; c.checked = ticked.has(u[0]); c.dataset.unit = u[0]; l.append(c, ' ' + u[0] + '. ' + (labels[u[0]] || u[1])); ug.appendChild(l); });
     host.appendChild(ug);
     const g2 = grid(2); g2.append(button('Generate document', () => customAction('save'), '#0b5a7a'), button('Generate ZIPs', () => customZips(), '#475569'));
     sec('3 Modular*');
     const g3 = grid(2); [['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => g3.appendChild(button(l, () => deployAction(k, 'save'), '#475569')));
-    sec('4 Other');
-    const g4 = grid(3);
+    const sh = document.getElementById('dcx-secondary'); if (sh) { sh.innerHTML = ''; }
+    const target = sh || host; const sec2 = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:8px'; target.appendChild(d); };
+    sec2('Modules');
+    const g4 = document.createElement('div'); g4.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:3px'; target.appendChild(g4);
     g4.append(button('blueprint.md', () => outputAction('blueprint', 'save'), '#475569'),
-              button('addendum', async () => { await ensureSources(['addendum']); sourceAction('addendum', 'download'); }, '#475569'),
+              button('addendum', async () => { await refreshSource('addendum', true); sourceAction('addendum', 'download'); }, '#475569'),
               button('story tracker', () => trackerDownload(), '#475569'));
-    const foot = document.createElement('div'); foot.textContent = '* Includes addendum.'; foot.style.cssText = 'font-size:10px;color:#64748b;margin-top:4px'; host.appendChild(foot);
-    sec('5 Links');
+    sec2('Links');
     const t = document.createElement('table'); t.style.cssText = 'width:100%;border-collapse:collapse;font-size:11px;margin-top:3px';
     PAGE_LINKS.forEach(([label, links]) => {
       const tr = document.createElement('tr'), th = document.createElement('th'), td = document.createElement('td');
@@ -704,7 +694,8 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       links.forEach(([txt, url]) => { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = txt; a.style.cssText = 'margin-right:8px;color:#0b5a7a'; td.appendChild(a); });
       tr.append(th, td); t.appendChild(tr);
     });
-    host.appendChild(t);
+    target.appendChild(t);
+    const foot = document.createElement('div'); foot.textContent = '* Includes addendum.'; foot.style.cssText = 'font-size:10px;color:#64748b;margin-top:4px'; host.appendChild(foot);
   }
   function dropdown(title, open) {
     const d = document.createElement('details'); d.open = !!open; d.style.cssText = 'margin:6px 0;border:1px solid #d7dee8;border-radius:5px;padding:4px 6px';
@@ -720,20 +711,15 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     const title=document.createElement('div');title.innerHTML='<b>DC-X Desk Hub v'+VERSION+'</b><button style="float:right" id="dcxhub-close">×</button>';p.appendChild(title);
     const grabBtn=button('Grab open story',()=>{closePanel();grab();},'#0b5a7a');grabBtn.style.cssText+=';width:100%;padding:8px;font-weight:700;margin:8px 0';p.appendChild(grabBtn);
     const grid=document.createElement('div');grid.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:6px';for(let i=0;i<=5;i++)grid.appendChild(button('DCX '+i+' '+TOOL_NAMES[i],()=>{closePanel();runTool(i);},i===4?'#b45309':i===5?'#7c3aed':'#2563eb'));const tools=dropdown('DCX tools 0-5',false);grid.style.marginTop='6px';tools.appendChild(grid);p.appendChild(tools);
-    const hr=document.createElement('hr');hr.style.margin='10px 0';p.appendChild(hr);const h=document.createElement('div');h.innerHTML='<b>SHIFT PACK</b><span style="float:right;font-size:10px;color:#64748b">logged-in sources</span>';p.appendChild(h);const host=document.createElement('div');host.id='dcx-shift-pack';p.appendChild(host);const modsBox=dropdown('Outputs',false);const modsHost=document.createElement('div');modsHost.id='dcx-outputs';modsBox.appendChild(modsHost);p.appendChild(modsBox);
-    const actions=document.createElement('div');actions.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px';
-    [['Refresh all','refresh','#0b5a7a'],['Verify sources','verify','#0b5a7a'],
-     ['Copy full pack','copy','#137333'],['Download full pack','download','#137333'],
-     ['Copy opening prompt','prompt','#0b5a7a'],['Copy model links','modellinks','#475569'],
-     ['Copy editor links','links','#475569'],
-     ['Open sources','open','#475569'],['Clear cache','clear','#b91c1c']].forEach(([l,a,c])=>actions.appendChild(button(l,()=>packAction(a),c)));p.appendChild(actions);
-    const note=document.createElement('div');note.textContent='DCX 4 remains the broad team-history sweep. Narrow broad views before DCX 5. A failed refresh never replaces a stored copy; CACHED, PARTIAL and MANUAL components are labelled and need confirmation before they go into a pack.';note.style.cssText='font-size:10px;color:#64748b;margin-top:8px;line-height:1.3';p.appendChild(note);document.body.appendChild(p);document.getElementById('dcxhub-close').onclick=closePanel;renderPackPanel();
+    const h=document.createElement('div');h.innerHTML='<b>OUTPUTS</b>';h.style.cssText='margin-top:10px';p.appendChild(h);const host=document.createElement('div');host.id='dcx-outputs';p.appendChild(host);
+    const sec=dropdown('Modules and links',false);const sh=document.createElement('div');sh.id='dcx-secondary';sec.appendChild(sh);p.appendChild(sec);
+    const note=document.createElement('div');note.textContent='DCX 4 remains the broad team-history sweep. Narrow broad views before DCX 5.';note.style.cssText='font-size:10px;color:#64748b;margin-top:8px;line-height:1.3';p.appendChild(note);
+    document.body.appendChild(p);document.getElementById('dcxhub-close').onclick=closePanel;renderOutputs();
   }
   function addLauncher(){if(!document.body||document.getElementById(BUTTON_ID))return;const style=document.createElement('style');style.textContent='#dcx-grab-btn,#dcx-desk-tools-button{display:none!important}';document.head.appendChild(style);const b=document.createElement('button');b.id=BUTTON_ID;b.type='button';b.textContent='DCX';b.title='Open DC-X Desk Hub (Alt+Shift+X)';b.style.cssText='position:fixed;left:8px;bottom:8px;z-index:2147483646;padding:5px 10px;font:12px sans-serif;background:#0f3d56;color:#fff;border:0;border-radius:5px;cursor:pointer;opacity:.9';b.onclick=()=>document.getElementById(PANEL_ID)?closePanel():openPanel();document.body.appendChild(b);}
 
   if(typeof GM_registerMenuCommand==='function'){
     GM_registerMenuCommand('Grab open story (Alt+B)',grab);for(let i=0;i<=5;i++)GM_registerMenuCommand('DCX '+i+' '+TOOL_NAMES[i],()=>runTool(i));
-    GM_registerMenuCommand('Shift Pack: refresh all',refreshAll);GM_registerMenuCommand('Shift Pack: copy opening prompt',()=>packAction('prompt'));GM_registerMenuCommand('Shift Pack: copy model links',()=>packAction('modellinks'));GM_registerMenuCommand('Shift Pack: copy full pack',()=>packAction('copy'));GM_registerMenuCommand('Shift Pack: download full pack',()=>packAction('download'));
   }
   document.addEventListener('keydown',e=>{if(e.altKey&&!e.shiftKey&&!e.ctrlKey&&e.code==='KeyB'){e.preventDefault();grab();}if(e.altKey&&e.shiftKey&&!e.ctrlKey&&e.code==='KeyX'){e.preventDefault();document.getElementById(PANEL_ID)?closePanel():openPanel();}},true);
   setInterval(()=>{if(!window.tinymce||!tinymce.editors)return;for(const ed of tinymce.editors){if(ed._deskHubHooked)continue;ed._deskHubHooked=true;ed.on('keydown',e=>{if(e.altKey&&!e.shiftKey&&!e.ctrlKey&&e.code==='KeyB'){e.preventDefault();grab();}});}},1500);
