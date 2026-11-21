@@ -304,10 +304,10 @@ directory:
       form nor standard RTGS, query it without alteration.
 
     third_party_spellings: >
-      Some institutions named after places spell their own names differently from BKP house
-      style. Follow their official spelling for their name. Examples — Hatyai Hospital (BKP
+      Some institutions named after places spell their own names differently from house
+      style. Follow their official spelling for their name. Examples — Hatyai Hospital (the desk
       spells the town "Hat Yai"), Prince of Songkla University (not "Songkhla"), Sriracha
-      Tiger Zoo (not "Sri Racha"), Minburi Prison (BKP spells the district "Min Buri"),
+      Tiger Zoo (not "Sri Racha"), Minburi Prison (the desk spells the district "Min Buri"),
       Khlong Prem Prachakon (canal/prison area — an institutional name).
 
     bangkok_districts: [Bang Bon, Bang Kae, Bang Kapi, Bang Khen, Bang Kholaem, Bang Khunthian, Bang Na, Bang Phlat, Bang Rak, Bang Sue, Bangkok Noi, Bangkok Yai, Bung Kum, Chatuchak, Chom Thong, Din Daeng, Don Muang, Dusit, Huai Khwang, Kannayao, Klong Sam Wa, Klong San, Klong Toey, Laksi, Lat Krabang, Lat Phrao, Min Buri, Nong Chok, Nong Khaem, Pathumwan, Phasicharoen, Phaya Thai, Phra Khanong, Phra Nakhon, Pomprap Sattruphai, Prawet, Rat Burana, Ratchathewi, Sai Mai, Saphan Sung, Samphanthawong, Sathon, Suan Luang, Taling Chan, Thawi Watthana, Thon Buri, Thung Kru, Watthana, Wang Thonglang, Yannawa]
