@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DC-X Desk Hub: Grab + Tools 0-5 + Shift Pack
 // @namespace    bkp-desk
-// @version      2.2.1
+// @version      2.2.2
 // @updateURL    https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @downloadURL  https://cliffspab.github.io/pipeline-registry/DC-X%20Desk%20Hub.user.js
 // @description  One DC-X hub for story grabbing, the six desk tools, Grok handoff and shift packs assembled at point of use from the desk master.
@@ -25,6 +25,11 @@
 // ==/UserScript==
 
 /*
+  2.2.2: the Outputs panel now mirrors the Desk Hub page: 1 Full (Portable, Skills),
+  2 Custom (Generate document, Generate ZIPs), 3 Modular (GUIDE, REFS), 4 Other
+  (blueprint.md, addendum, story tracker) and 5 Links. The single-outputs list and
+  the Skill ZIP set are gone; editor links no longer point at the master.
+
   2.2.1: updates now come from GitHub Pages (@updateURL/@downloadURL). The Desk
   Addendum's public link is its published page, which opens in a tab, not the
   export download. The Tracker is off the shift set: it is no longer fetched or put
@@ -92,7 +97,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '2.2.1';
+  const VERSION = '2.2.2';
   const GROK_URL = 'https://grok.com/project/be3fb1fa-1ecc-4f20-b883-80ed54504adf';
   const AUTO_SUBMIT = true;
   const SEND_ON_GRAB = false;
@@ -112,6 +117,9 @@
   const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
   const TRACKER_GID = '1313569477';
   const ADDENDUM_ID = '1KukKHnoSOAuZiyg_u1k1NiRAQDx4QbuePCVxz4ehXsk';
+  const TRACKER_PUB = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTY4md4NUkzdNHRVYZJQQTwJbaEygbC_JhxWvjqGjioAv4rB0yxpLmG85I0hzsWY4pfZqAHpy6J0PFj/pub?gid=1313569477&single=true&output=csv';
+  const LIVE = 'https://cliffspab.github.io/pipeline-registry/live/';
+  const DESK_NOTES = 'https://docs.google.com/document/d/1RmwVnZ5Od4tityr6ePg1kmy8lKUmSiFIoXbdtS8chJQ/edit';
   const ADDENDUM_PUB = 'https://docs.google.com/document/d/e/2PACX-1vRlS6VxrVmMwXAUuNhcCdD3WBCFsCWMQr4cUOYsTSIebwEhSri0B84Ew94hyFdvyQqymtaloCYfebPJ/pub';
   const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 
@@ -491,7 +499,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
   }
   function editorLinks() {
     const c = getConfig();
-    return ['Master: ' + c.master.openUrl, 'Desk Addendum: ' + c.addendum.openUrl, 'Tracker usage (contingency): ' + c.tracker.usageUrl].join('\n');
+    return ['Desk Addendum: ' + c.addendum.openUrl, 'Story tracker: ' + c.tracker.openUrl, 'Tracker usage: ' + c.tracker.usageUrl, 'DC-X desk notes: ' + DESK_NOTES].join('\n');
   }
   async function ensureSources(keys) {
     const need = keys.filter(k => !usableState(sourceState[k]));
@@ -629,34 +637,74 @@ BOOT routes each job and EDIT is the base every job builds on.`;
       return downloadText('custom_' + picks.join('') + '.md', text);
     } catch (e) { alert('Custom: ' + e.message); }
   }
+  const PAGE_LINKS = [
+    ['Blueprint', [['Pages', LIVE + 'blueprint.md']]], ['Boot', [['Pages', LIVE + 'boot.md']]],
+    ['Thai places', [['Pages', LIVE + 'thai-places.md']]], ['Directory', [['Pages', LIVE + 'directory.md']]],
+    ['Check', [['Pages', LIVE + 'check.md']]], ['Photo', [['Pages', LIVE + 'photo.md']]],
+    ['PR', [['Pages', LIVE + 'pr.md']]], ['Edit', [['Pages', LIVE + 'edit.md']]],
+    ['Addendum', [['Published', ADDENDUM_PUB], ['Edit', 'https://docs.google.com/document/d/' + ADDENDUM_ID + '/edit']]],
+    ['Story tracker', [['Published CSV', TRACKER_PUB], ['Edit', DEFAULT_CONFIG.tracker.openUrl], ['Usage', 'https://go.fuzzylogic.page/usage']]],
+    ['DC-X desk notes', [['Open', DESK_NOTES]]]
+  ];
+  async function customZips() {
+    try {
+      const picks = [...document.querySelectorAll('#dcx-outputs input[data-unit]:checked')].map(x => x.dataset.unit);
+      if (!picks.length) return notify('Tick at least one part.');
+      if (!await outputsReady(picks.includes('7'))) return;
+      const m = master(), want = new Set(picks), members = [];
+      m.meta.custom.filter(u => want.has(u[0])).forEach(u => {
+        if (u[2] === 'addendum') members.push({ path: 'addendum.txt', text: addendumText() });
+        else { const z = BKPAssemble.skillZip(m, u[2], {}); members.push({ path: z.file, bytes: z.bytes }); }
+      });
+      const name = 'custom-zips-' + picks.join('') + '.zip';
+      downloadText(name, BKPAssemble.zip(members), 'application/zip');
+      notify('Built ' + name + ' from the current master.');
+    } catch (e) { alert('Custom ZIPs: ' + e.message); }
+  }
+  async function trackerDownload() {
+    try {
+      await ensureSources(['tracker']);
+      const s = sourceState.tracker;
+      if (!s || !s.text) return notify('Story tracker unavailable.');
+      downloadText(fileNameFor('tracker', s), s.text);
+    } catch (e) { alert('Story tracker: ' + e.message); }
+  }
   function renderOutputs() {
     const host = document.getElementById('dcx-outputs'); if (!host) return; host.innerHTML = '';
     const s = sourceState.master || {};
     let m = null; try { if (s.text && typeof BKPAssemble !== 'undefined') m = BKPAssemble.parse(s.text); } catch (_) {}
     const info = document.createElement('div'); info.style.cssText = 'font-size:10px;color:#64748b;margin:4px 0';
-    info.textContent = m ? 'Assembled from master ' + (m.edition || '') + ' · ' + (s.state || '') : 'No master stored yet; any button fetches it.';
+    info.textContent = m ? 'Current master: ' + (m.edition || '') : 'The current master will be fetched when a download is selected.';
     host.appendChild(info);
-    const sec = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:6px'; host.appendChild(d); };
-    sec('Deployments');
-    const dg = document.createElement('div'); dg.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:3px';
-    [['Portable','portable'],['Skills','skills'],['Skill ZIP set','skillsgen'],['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => dg.appendChild(button(l, () => deployAction(k, 'save'), k === 'skillsgen' ? '#475569' : '#0b5a7a')));
-    host.appendChild(dg);
-    sec('Single outputs');
-    (m ? BKPAssemble.outputs(m).filter(n => n !== 'addendum') : Object.keys(OUTPUT_LABELS)).forEach(n => {
-      const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:4px;margin-top:3px;font-size:11px';
-      const lab = document.createElement('span'); lab.style.cssText = 'flex:1'; lab.textContent = OUTPUT_LABELS[n] || n; row.appendChild(lab);
-      [['Copy','copy'],['Save','save']].forEach(([l, a]) => { const b = document.createElement('button'); b.textContent = l; b.style.cssText = 'font-size:10px;padding:2px 6px;cursor:pointer'; b.onclick = () => outputAction(n, a); row.appendChild(b); });
-      if (m && m.meta.deployments.skillsgen.zips.includes(n)) { const b = document.createElement('button'); b.textContent = 'ZIP'; b.style.cssText = 'font-size:10px;padding:2px 6px;cursor:pointer'; b.onclick = () => outputAction(n, 'zip'); row.appendChild(b); }
-      host.appendChild(row);
-    });
-    sec('Custom single document');
-    const units = m ? m.meta.custom : [['1','boot'],['2','thai-places'],['3','directory'],['4','pr'],['5','photo'],['6','check'],['7','addendum'],['8','edit']];
+    const sec = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'font-weight:600;font-size:11px;margin-top:8px'; host.appendChild(d); };
+    const grid = (cols) => { const g = document.createElement('div'); g.style.cssText = 'display:grid;grid-template-columns:repeat(' + cols + ',1fr);gap:4px;margin-top:3px'; host.appendChild(g); return g; };
+    sec('1 Full*');
+    const g1 = grid(2); [['Portable','portable'],['Skills','skills']].forEach(([l, k]) => g1.appendChild(button(l, () => deployAction(k, 'save'), '#0b5a7a')));
+    sec('2 Custom');
+    const labels = { '1':'boot.md','2':'thai-places.md','3':'directory.md','4':'pr.md','5':'photo.md','6':'check.md','7':'addendum','8':'edit.md' };
+    const units = m ? m.meta.custom : Object.keys(labels).map(n => [n, labels[n], labels[n]]);
     const ug = document.createElement('div'); ug.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:11px;margin-top:3px';
-    units.forEach(u => { const l = document.createElement('label'); const c = document.createElement('input'); c.type = 'checkbox'; c.dataset.unit = u[0]; l.append(c, ' ' + u[0] + '. ' + u[1]); ug.appendChild(l); });
+    units.forEach(u => { const l = document.createElement('label'); const c = document.createElement('input'); c.type = 'checkbox'; c.dataset.unit = u[0]; l.append(c, ' ' + u[0] + '. ' + (labels[u[0]] || u[1])); ug.appendChild(l); });
     host.appendChild(ug);
-    const cb = document.createElement('div'); cb.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px';
-    cb.append(button('Copy custom', () => customAction('copy'), '#475569'), button('Save custom', () => customAction('save'), '#475569'));
-    host.appendChild(cb);
+    const g2 = grid(2); g2.append(button('Generate document', () => customAction('save'), '#0b5a7a'), button('Generate ZIPs', () => customZips(), '#475569'));
+    sec('3 Modular*');
+    const g3 = grid(2); [['GUIDE','guide'],['REFS','refs']].forEach(([l, k]) => g3.appendChild(button(l, () => deployAction(k, 'save'), '#475569')));
+    sec('4 Other');
+    const g4 = grid(3);
+    g4.append(button('blueprint.md', () => outputAction('blueprint', 'save'), '#475569'),
+              button('addendum', async () => { await ensureSources(['addendum']); sourceAction('addendum', 'download'); }, '#475569'),
+              button('story tracker', () => trackerDownload(), '#475569'));
+    const foot = document.createElement('div'); foot.textContent = '* Includes addendum.'; foot.style.cssText = 'font-size:10px;color:#64748b;margin-top:4px'; host.appendChild(foot);
+    sec('5 Links');
+    const t = document.createElement('table'); t.style.cssText = 'width:100%;border-collapse:collapse;font-size:11px;margin-top:3px';
+    PAGE_LINKS.forEach(([label, links]) => {
+      const tr = document.createElement('tr'), th = document.createElement('th'), td = document.createElement('td');
+      th.textContent = label; th.style.cssText = 'text-align:left;font-weight:600;padding:3px 4px;border-top:1px solid #e2e8f0;width:38%';
+      td.style.cssText = 'padding:3px 4px;border-top:1px solid #e2e8f0';
+      links.forEach(([txt, url]) => { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = txt; a.style.cssText = 'margin-right:8px;color:#0b5a7a'; td.appendChild(a); });
+      tr.append(th, td); t.appendChild(tr);
+    });
+    host.appendChild(t);
   }
   function dropdown(title, open) {
     const d = document.createElement('details'); d.open = !!open; d.style.cssText = 'margin:6px 0;border:1px solid #d7dee8;border-radius:5px;padding:4px 6px';
@@ -678,9 +726,8 @@ BOOT routes each job and EDIT is the base every job builds on.`;
      ['Copy full pack','copy','#137333'],['Download full pack','download','#137333'],
      ['Copy opening prompt','prompt','#0b5a7a'],['Copy model links','modellinks','#475569'],
      ['Copy editor links','links','#475569'],
-     ['Download Portable','separate','#475569'],['Open sources','open','#475569'],
-     ['Tracker usage','usage','#475569'],['Clear cache','clear','#b91c1c']].forEach(([l,a,c])=>actions.appendChild(button(l,()=>packAction(a),c)));p.appendChild(actions);
-    const note=document.createElement('div');note.textContent='DCX 4 remains the broad team-history sweep. Narrow broad views before DCX 5. A failed refresh never replaces a stored copy; CACHED, PARTIAL and MANUAL components are labelled and need confirmation before they go into a pack. The pack carries the Tracker as links only.';note.style.cssText='font-size:10px;color:#64748b;margin-top:8px;line-height:1.3';p.appendChild(note);document.body.appendChild(p);document.getElementById('dcxhub-close').onclick=closePanel;renderPackPanel();
+     ['Open sources','open','#475569'],['Clear cache','clear','#b91c1c']].forEach(([l,a,c])=>actions.appendChild(button(l,()=>packAction(a),c)));p.appendChild(actions);
+    const note=document.createElement('div');note.textContent='DCX 4 remains the broad team-history sweep. Narrow broad views before DCX 5. A failed refresh never replaces a stored copy; CACHED, PARTIAL and MANUAL components are labelled and need confirmation before they go into a pack.';note.style.cssText='font-size:10px;color:#64748b;margin-top:8px;line-height:1.3';p.appendChild(note);document.body.appendChild(p);document.getElementById('dcxhub-close').onclick=closePanel;renderPackPanel();
   }
   function addLauncher(){if(!document.body||document.getElementById(BUTTON_ID))return;const style=document.createElement('style');style.textContent='#dcx-grab-btn,#dcx-desk-tools-button{display:none!important}';document.head.appendChild(style);const b=document.createElement('button');b.id=BUTTON_ID;b.type='button';b.textContent='DCX';b.title='Open DC-X Desk Hub (Alt+Shift+X)';b.style.cssText='position:fixed;left:8px;bottom:8px;z-index:2147483646;padding:5px 10px;font:12px sans-serif;background:#0f3d56;color:#fff;border:0;border-radius:5px;cursor:pointer;opacity:.9';b.onclick=()=>document.getElementById(PANEL_ID)?closePanel():openPanel();document.body.appendChild(b);}
 

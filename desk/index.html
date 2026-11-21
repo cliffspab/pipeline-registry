@@ -132,7 +132,7 @@ dialog textarea { width: 100%; height: 60vh; font: 12px var(--mono); background:
 <script src="../Blueprint/assemble.js"></script>
 <script>
 'use strict';
-const VERSION = '1.6.0';
+const VERSION = '1.6.1';
 const STORE_KEY = 'bkpDeskHubV2';
 const RAW_BP = 'https://raw.githubusercontent.com/cliffspab/pipeline-registry/refs/heads/main/Blueprint/';
 const TRACKER_ID = '1X-5vfO8lLYRxwgpyg3RDTqc9d8sz42WKUT4-b8X9DGw';
@@ -308,7 +308,7 @@ function confirmFresh(keys) {
 const PACK_KEYS = ['master'];
 const DOC_KEYS = ['addendum', 'tracker'];
 function sourceLinks() {
-  return ['Desk Addendum (plain text): ' + ADDENDUM_TXT, 'Tracker (CSV): ' + TRACKER_PUB].join('\n');
+  return ['Desk Addendum: ' + ADDENDUM_PUB, 'Tracker (CSV): ' + TRACKER_PUB].join('\n');
 }
 async function buildPack() {
   await ensure(PACK_KEYS);
@@ -471,10 +471,17 @@ function render() {
 
 $('#ver').textContent = 'v' + VERSION;
 document.querySelectorAll('[data-act]').forEach(b => { b.onclick = () => packAct(b.dataset.act); });
-DEPLOYS.forEach(([l, k]) => $('#deploys').append(el('button', { textContent: l, className: k === 'skillsgen' ? '' : 'primary', onclick: () => deployAct(k) })));
-$('#customcopy').onclick = () => customAct('copy');
+$('#portable').onclick = () => deployAct('portable');
+$('#skills').onclick = () => deployAct('skills');
+$('#guide').onclick = () => deployAct('guide');
+$('#refs').onclick = () => deployAct('refs');
 $('#customsave').onclick = () => customAct('save');
-LINKS.forEach(([label, url]) => $('#links').append(el('li', {}, el('a', { href: url, target: '_blank', rel: 'noopener', textContent: label }))));
+$('#customzips').onclick = () => customZips();
+$('#blueprintfile').onclick = () => outputAct('blueprint', 'save');
+$('#addendumfile').onclick = () => sourceDownload('addendum');
+$('#trackerfile').onclick = () => sourceDownload('tracker');
+LINKS.forEach(([label, links]) => $('#links').append(el('tr', {}, el('th', { textContent: label }),
+  el('td', {}, ...links.map(([t, u]) => el('a', { href: u, target: '_blank', rel: 'noopener', textContent: t }))))));
 render();
 refresh('master', true); // Addendum and Tracker are fetched only when asked for
 </script>
