@@ -957,9 +957,18 @@ Open `edit` first if it is not already in context: this file runs on its method.
 
 Give paid-placement copy a minimum-intervention style pass. Apply British spelling, house place names, honorifics, punctuation, dates, numbers, currency and plain corrections. Give captions the same pass.
 
-Add literal `[Head]` and `[Deck]` lines before the body, in sentence case. The head may run to 90 characters and the deck to 120.
+Head and deck: write a literal `[Head]` line (sentence case, up to 90 characters) and a `[Deck]` line (up to 120). They replace the client's headline and subhead.
 
-Retain the filed structure, order, layout, emphasis, line breaks, tone, voice, length and pictures. Retain client capitalisation of brand and product names. Add no background. Raise obvious misattribution or factual contradiction for the desk.
+Filed:
+Brand X Inspires More Than 6,000 Runners at Its Annual Festival in Hua Hin
+Brand X, in collaboration with ...
+
+Returned:
+[Head] More than 6,000 join Brand X festival in Hua Hin
+[Deck] Trail race for the Royal Trophy is followed by a concert and carnival
+Brand X, in collaboration with ...
+
+Below the head and deck, retain the filed structure, order, layout, emphasis, line breaks, tone, voice, length and pictures. Retain client capitalisation of brand and product names. Add no background. Raise obvious misattribution or factual contradiction for the desk.
 
 PR copy comes with case-specific return guidance because its format, deployment and available tools vary. Follow that guidance. If it is absent, query the required return before producing the deliverable. End with the requested deliverable; do not offer further work or ask a follow-up question.
 <!-- @end -->
