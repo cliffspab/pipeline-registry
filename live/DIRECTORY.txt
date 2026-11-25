@@ -59,7 +59,7 @@ directory:
     dollar_rule: Specify the dollar type at first reference; US is the default type, not an omitted label.
     baht_heads: Use B, eg B500, B5m or B5bn.
     thai_baht: Use baht, not "Thai baht".
-    conversion: Convert foreign currency to baht at first mention, once, at the current Google exchange rate, rounded to three leading digits.
+    conversion: Convert foreign currency to baht at first mention, once, at a current market rate, rounded to three leading digits.
     tickers: Do not use THB, USD or GBP in news copy.
     yuan: Use yuan, not yuan renminbi.
     subunits: Use the decimal inside a larger amount and digits plus the full unit when standing alone.
@@ -161,7 +161,7 @@ directory:
       Somchai Dee, company president John Smith, human rights lawyer Niran Thep or
       head coach Ken Sato. Query an unlisted borderline role;
       do not infer capitalisation from seniority alone.
-    ranks: Take ranks from copy and apply a filed rank consistently; if unclear, repeat the full name or query it.
+    ranks: Keep a rank exactly as filed. On later references, use the rank with the given name in place of Mr/Ms (Pol Gen Samran). If the filed rank is unclear or inconsistent, keep it as filed at each mention and query it.
     title_abbreviations: Against a name, use Prof, Dr, Jr, Sr, St, Mt, Corp and Co.
     convention_travels: A person's naming convention does not change with location.
 
@@ -332,5 +332,3 @@ directory:
     Fifa: Never FIFA, eg "2026 Fifa World Cup".
     7-Eleven: Use exact form; not 7-11.
     AirAsia: One word; Asia capped.
-
-
