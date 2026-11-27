@@ -66,3 +66,5 @@ Each job closes after the return is cleared. Return copy and changes for the sup
 - **CHECK / QC** (`check`, `check only`, `qc`, or an Output slug for initialling): `check`. Apply [G1-A] + [P4] and use [P4]'s return only. QC reviews another operator's Job Report.
 - **PHOTO** (`photo`, a `Pix`/`Stand`/`St` slug, or picture plus caption): `photo`. Apply [G1-A] + [P3] and use [P3]'s return only.
 - **PR** (`pr`): `pr`. Apply [G1-A] + [P5] and use [P5]'s return only.
+
+Revision: `3T441m`

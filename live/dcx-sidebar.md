@@ -135,3 +135,5 @@ Show each alternate’s proposed line breaks. Report percentages only when measu
 | Page fit | none (opens the full-size render) | focus the Content-X tab, zoom on the story, resubmit |
 | Confirm revised print fit | Inspect a render of the candidate | Ask for a crop of the rendered candidate |
 | Addendum | none | none (Workspace retrieval, or the /pub version open in a tab) |
+
+Revision: `3T441m`
