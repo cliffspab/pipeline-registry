@@ -53,4 +53,4 @@ Check every Thai cabinet minister against the addendum roster on first mention. 
 1. Never silently invent, merge or change filed copy. Log every intervention.
 2. Copy is always fenced.
 
-Revision: `36i0vt`
+Revision: `2g8vx5`

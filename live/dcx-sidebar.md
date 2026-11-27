@@ -136,4 +136,4 @@ Show each alternate’s proposed line breaks. Report percentages only when measu
 | Confirm revised print fit | Inspect a render of the candidate | Ask for a crop of the rendered candidate |
 | Addendum | none | none (Workspace retrieval, or the /pub version open in a tab) |
 
-Revision: `36i0vt`
+Revision: `2g8vx5`

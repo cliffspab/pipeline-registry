@@ -11,7 +11,7 @@ Open `edit` first if it is not already in context: this file runs on its method.
 - Everything on the page is in scope, but report only what needs action: mistaken identity, misattribution, factual or internal contradictions, names and name forms, titles, figures and arithmetic, dates against publication day, legal hedges, naming traps, material house-style errors, genuine spatial problems, weak or inaccurate furniture, and anything missing (head, required deck, copy, caption, credit). Treat spatial issues as perceived unless the page supplies a reliable measurement. Style the chief has already passed stands.
 - Head and deck stay unless there is a real mistake or a clear inspiration.
 - A style fix is included only if it maintains the existing footprint.
-- Check `addendum.doc` first when it is in context. Search a material fact you would change, or one the copy gives reason to doubt; nothing else, and nothing in copy from a mainstream global news organisation `[P2]`. A fact change follows `[P2]` `<sourcing>`: sources opened and read, and the change stays in OUTSTANDING until cleared. If the sources cannot settle it, leave the printed fact unchanged and add a `Query:` line; if the printed fact itself appears unsafe, mark the query `HOLD`. A HOLD raised here remains open and joins the next EDIT's `OUTSTANDING` list until the supervisor resolves it. A mononym, nickname or single name alone is not a search trigger.
+- Check `addendum.doc` first when it is in context. Search under `[P2]` `<what_to_search>` to find errors: on domestic news, the who, what, where and when; on all copy, any material fact the copy gives reason to doubt and any you would change. Copy from a mainstream global news organisation is not searched. A fact change follows `[P2]` `<sourcing>`: sources opened and read, and the change stays in OUTSTANDING until cleared. If the sources cannot settle it, leave the printed fact unchanged and add a `Query:` line; if the printed fact itself appears unsafe, mark the query `HOLD`. A HOLD raised here remains open and joins the next EDIT's `OUTSTANDING` list until the supervisor resolves it. A mononym, nickname or single name alone is not a search trigger.
 
 ## Return
 
@@ -66,4 +66,4 @@ Check every Thai cabinet minister against the addendum roster on first mention. 
 1. Never silently invent, merge or change filed copy. Log every intervention.
 2. Copy is always fenced.
 
-Revision: `36i0vt`
+Revision: `2g8vx5`

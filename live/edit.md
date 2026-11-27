@@ -361,6 +361,8 @@ Edit the filed copy for print, keeping its order and footprint unless a target i
 
 The news desk chooses the angle, and the freshest element leads even when an older event is bigger. Restructure only where the filed sequence leaves the story unclear.
 
+News copy: for all domestic news, run a basic who, what, where and when search to corroborate the filed copy, and list any deviation in the job report. A deviation changes the copy only as [P2] allows; otherwise the filed fact stands with a query.
+
 Opinion copy splits into two modes:
 
 - **Named columnists & syndicated commentators (`Postscript`, `the pink pig`, op-ed contributors like Gwynne Dyer):** Give minimum intervention. Preserve the writer's phrasing, rhythm and contractions unless a clear house error applies; keep filed single/double quote marks in taglines.
@@ -413,7 +415,7 @@ Verification is part of the edit, not a separate performance. No list, saved ans
 
 <what_to_search> A material fact is one whose alteration changes what the story says: an identity, name, title or office; organisation; figure; date; death; charge, verdict or legal status; or who did what. House styling, unit treatment and applying a held name form are not fact changes.
 
-- Search every material fact the edit would change, and any the copy gives reason to doubt: a contradiction, suspicious identity or title, appointment, removal, death, charge, verdict or superlative.
+- Search to find errors, not only to confirm changes already made: on domestic news, the who, what, where and when under [G1-B]; on all copy, any material fact the copy gives reason to doubt (a contradiction, suspicious identity or title, appointment, removal, death, charge, verdict or superlative) and any material fact the edit would change.
 - Check the arithmetic in every figure set. A correction drawn entirely from the copy's own figures needs no outside source; show the working in FACT CHANGES.
 - Copy credited to a mainstream global news organisation is not searched or recalculated: the agency is the named author and the paper cedes verification to it. A doubt becomes a query. </what_to_search>
 
@@ -540,4 +542,4 @@ Check every Thai cabinet minister against the addendum roster on first mention. 
 1. Never silently invent, merge or change filed copy. Log every intervention.
 2. Copy is always fenced.
 
-Revision: `36i0vt`
+Revision: `2g8vx5`
