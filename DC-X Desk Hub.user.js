@@ -702,7 +702,7 @@ BOOT routes each job and EDIT is the base every job builds on.`;
     sec('1 Full*');
     const g1 = grid(2); [['Portable','portable'],['Skills','skills']].forEach(([l, k]) => g1.appendChild(button(l, () => deployAction(k, 'save'), '#0b5a7a')));
     sec('2 Custom');
-    const names = { '1':'boot','2':'thai-places','3':'directory','4':'pr','5':'photo','6':'check','7':'addendum','8':'edit' };
+    const names = { '1':'boot','2':'thai-places','3':'directory','4':'pr','5':'photo','6':'check','7':'addendum','8':'edit','9':'dcx-sidebar' };
     const units = m ? m.meta.custom : Object.keys(names).map(n => [n, names[n], n === '8' ? 'edit-section' : names[n]]);
     const ug = document.createElement('div'); ug.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:11px;margin-top:3px';
     units.forEach(u => {

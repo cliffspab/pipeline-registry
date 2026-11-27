@@ -482,7 +482,7 @@ function render() {
   const m = masterOrNull();
   $('#menuinfo').textContent = m ? 'Current master: ' + (m.edition || '') : 'The current master will be fetched when a download is selected.';
   const uh = $('#units'), ticked = new Set([...uh.querySelectorAll('input:checked')].map(x => x.dataset.unit)); uh.textContent = '';
-  const names = { '1': 'boot', '2': 'thai-places', '3': 'directory', '4': 'pr', '5': 'photo', '6': 'check', '7': 'addendum', '8': 'edit' };
+  const names = { '1': 'boot', '2': 'thai-places', '3': 'directory', '4': 'pr', '5': 'photo', '6': 'check', '7': 'addendum', '8': 'edit', '9': 'dcx-sidebar' };
   (m ? m.meta.custom : Object.keys(names).map(n => [n, names[n], n === '8' ? 'edit-section' : names[n]]))
     .forEach(u => {
       const c = el('input', { type: 'checkbox', checked: ticked.has(u[0]) }); c.dataset.unit = u[0];
