@@ -813,4 +813,4 @@ Check every Thai cabinet minister against the addendum roster on first mention. 
 2. Copy is always fenced.
 <!-- END COMPONENT: EDIT -->
 
-Revision: `2g8vx5`
+Revision: `1G6WPR`

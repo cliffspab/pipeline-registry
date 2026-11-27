@@ -42,7 +42,7 @@ A snapshot sidebar gets the context sent with the prompt. Background tab text ca
 
 - On the observed rich-text fields, the counter included spaces and excluded paragraph separators. A non-breaking space counted as one character, including the one at the body’s end. A soft wrap adds no character. Reconcile a local count against the actual field before assuming the same convention.
 - Check the unit by adding up the paragraph lengths. On 27tariff the 15 body paragraphs summed to exactly 3512.
-- The displayed `Words:` count differed from a whitespace count in the probe (body 542 versus 555, head 5 versus 6 with “18%”). State the counting method if matching a word target.
+- **OBSERVED in DC-X field tests:** The `Words:` counter skipped standalone figures such as `1.25`, `$5`, `10:30` and `2026-27`, fractions such as `½` and `5½`, and punctuation-only tokens such as `–`, `&` and `/`. Mixed tokens such as `5bn`, `MP3` and `9-year-old` counted. The Thai word `ไทย` and the digit `๕` also counted. Use these observations to estimate a DC-X word target and check the displayed counter when available.
 - A sidebar that can run code but not scripts on the page can still check counts: run them over the text it received in the snapshot (OBSERVED: Neon reproduced every counter this way).
 - In the probes, field text and counters arrived together, including fields below the visible viewport. Check the received editor section first.
 - The allowance comes from the layout and changes during the night when design resizes or squeezes. Quote the counter as read, with the time.
@@ -136,4 +136,4 @@ Show each alternate’s proposed line breaks. Report percentages only when measu
 | Confirm revised print fit | Inspect a render of the candidate | Ask for a crop of the rendered candidate |
 | Addendum | none | none (Workspace retrieval, or the /pub version open in a tab) |
 
-Revision: `2g8vx5`
+Revision: `1G6WPR`
