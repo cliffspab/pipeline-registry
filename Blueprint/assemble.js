@@ -41,7 +41,7 @@
       order.push(a.id);
       i = j;
     }
-    return { meta, blocks, order, edition: meta.edition || '' };
+    return { meta, blocks, order, edition: meta.edition || '', revision: masterRevision(text) };
   }
 
   function resourceOf(master, block) {
@@ -130,7 +130,13 @@
         out.push(...String(a).replace(/\r\n/g, '\n').replace(/\s+$/, '').split('\n'));
       } else out.push(...blockLines(master, sel));
     });
-    return out.join('\n').replace(/\s+$/, '') + '\n';
+    const body = out.join('\n').replace(/\s+$/, '') + '\n';
+    if (embedded || o.blocks.every(sel => sel === '@addendum')) return body;
+    return withRevision(master, body);
+  }
+
+  function withRevision(master, body) {
+    return body + '\nRevision: `' + master.revision + '`\n';
   }
 
   function file(master, name) { return master.meta.outputs[name].file; }
@@ -149,7 +155,8 @@
   function joined(master, names, opts) {
     const last = {};
     names.forEach((n, i) => master.meta.outputs[n].blocks.forEach(b => { if (!b.startsWith('@fm:')) last[b] = i; }));
-    return names.map((n, i) => render(master, n, opts, new Set(Object.keys(last).filter(b => last[b] > i)), true)).join('\n');
+    const body = names.map((n, i) => render(master, n, opts, new Set(Object.keys(last).filter(b => last[b] > i)), true)).join('\n');
+    return withRevision(master, body);
   }
 
   // Single document from chosen custom units, always in the master's canonical unit order.
@@ -169,7 +176,7 @@
     const start = b.lines.indexOf('```yaml');
     const end = start < 0 ? -1 : b.lines.indexOf('```', start + 1);
     if (start < 0 || end < 0) throw new Error('Directory YAML fence is missing');
-    return '# ' + master.edition + '\n' + b.lines.slice(start + 1, end).join('\n') + '\n';
+    return '# ' + master.edition + '\n# Revision: ' + master.revision + '\n' + b.lines.slice(start + 1, end).join('\n') + '\n';
   }
 
   function outputs(master) { return Object.keys(master.meta.outputs); }
@@ -191,6 +198,19 @@
     let c = 0xffffffff;
     for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xff] ^ (c >>> 8);
     return (c ^ 0xffffffff) >>> 0;
+  }
+
+  // Six base-62 characters hold all 32 checksum bits. parse() supplies the
+  // same BOM-free, LF text used to assemble, regardless of the delivery path.
+  function masterRevision(text) {
+    const digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let value = crc32(new TextEncoder().encode(text));
+    let code = '';
+    do {
+      code = digits[value % digits.length] + code;
+      value = Math.floor(value / digits.length);
+    } while (value > 0);
+    return code.padStart(6, '0');
   }
 
   // Folders are written as their own entries ("edit/") ahead of their files, and every
@@ -252,5 +272,5 @@
     return { file: 'desk-skills.zip', bytes: zip(d.zips.map(name => { const z = skillZip(master, name, opts); return { path: z.file, bytes: z.bytes }; })) };
   }
 
-  return { parse, render, deployment, custom, outputs, deployments, file, routeEntries, directoryText, skillZip, skillSetZip, zip, version: '1.3.1' };
+  return { parse, render, deployment, custom, outputs, deployments, file, routeEntries, directoryText, skillZip, skillSetZip, zip, version: '1.3.2' };
 });

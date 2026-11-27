@@ -22,8 +22,11 @@ process.
 GitHub commit history is the archive for `Blueprint/MASTER.md` and all other
 content. The portability kit contains process tools only; it neither snapshots
 content nor changes for a content-only commit.
-The Git commit SHA is the content version identifier. The edition field in the
-master is descriptive metadata rather than an independent version system.
+The Git commit SHA identifies a repository revision. The assembler stamps each
+master-derived document with a case-sensitive, six-character fingerprint of
+the master text it used. This works for app-synced edits before a Git push.
+The fingerprint can collide, so use the archived master or commit for exact
+recovery. The edition field describes the desk edition.
 
 The former guarded batch publisher, cloud distribution, Shift refresher and
 static Directory copies are retired. GitHub is the registry and publication
