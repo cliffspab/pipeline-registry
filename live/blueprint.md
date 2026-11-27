@@ -274,6 +274,7 @@ PR copy comes with case-specific return guidance because its format, deployment 
 
 # DIRECTORY
 <!-- COMPONENT: DIRECTORY -->
+<!-- skill: directory | House style Directory: the reference branches for numbers, times, dates, datelines, currency, measurements, names and honorifics, acronyms, headline country forms, title styling, language forms, Thai conventions, countries, foreign places and organisations. Thai places are in thai-places. Use alongside edit, check, photo or pr. -->
 ```yaml
 directory:
 
@@ -810,4 +811,4 @@ Check every Thai cabinet minister against the addendum roster on first mention. 
 2. Copy is always fenced.
 <!-- END COMPONENT: EDIT -->
 
-Revision: `3T441m`
+Revision: `36i0vt`

@@ -67,4 +67,4 @@ Each job closes after the return is cleared. Return copy and changes for the sup
 - **PHOTO** (`photo`, a `Pix`/`Stand`/`St` slug, or picture plus caption): `photo`. Apply [G1-A] + [P3] and use [P3]'s return only.
 - **PR** (`pr`): `pr`. Apply [G1-A] + [P5] and use [P5]'s return only.
 
-Revision: `3T441m`
+Revision: `36i0vt`
