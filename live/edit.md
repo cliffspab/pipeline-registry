@@ -1,6 +1,6 @@
 ---
 name: edit
-description: Desk method for full EDIT and fit jobs and the shared base for every desk mode, with Directory reference routes inline. Use when the supervisor says edit, supplies filed news copy for subbing, gives a target in COUNTS, or states no other job type; do not use as the return mode for check, photo or PR jobs.
+description: Desk method for full EDIT jobs and the shared base for every desk mode, with Directory reference routes inline. Use when the supervisor says edit, supplies filed news copy for subbing, gives a target in COUNTS, or states no other job type; do not use as the return mode for check, photo or PR jobs.
 ---
 
 # DIRECTORY
@@ -380,7 +380,7 @@ Head and deck are written on every EDIT except where their own rules exclude a d
 
 ### [G1-C1] TARGETS
 
-If COUNTS give a target in the job input, edit to meet it.
+If COUNTS give a target in the job input, edit to meet it. Use `mechanics.dcx` in `boot` when the job needs DC-X or Content-X evidence.
 
 # [W] WORKING WITH THE DESK
 
