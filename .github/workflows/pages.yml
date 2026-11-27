@@ -49,7 +49,7 @@ jobs:
             for (const n of m.meta.hosted) fs.writeFileSync("_live/" + A.file(m, n), A.render(m, n));
             const directory = A.directoryText(m);
             fs.writeFileSync("_live/DIRECTORY.txt", directory);
-            fs.writeFileSync("_live/EDITION.txt", m.edition + "\n");
+            fs.writeFileSync("_live/EDITION.txt", m.edition + "\n# Revision: " + m.revision + "\n");
           '
 
       - name: Keep a permanent copy in live/
