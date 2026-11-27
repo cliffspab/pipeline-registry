@@ -44,6 +44,7 @@
     "@fm:edit",
     "edit.intro",
     "directory.open",
+    "@fm:directory",
     "directory",
     "directory.close",
     "edit.method",
@@ -161,7 +162,8 @@
     "photo",
     "check",
     "edit",
-    "addendum"
+    "addendum",
+    "dcx-sidebar"
    ]
   },
   "skillsgen": {
@@ -172,7 +174,8 @@
     "check",
     "photo",
     "pr",
-    "edit"
+    "edit",
+    "dcx-sidebar"
    ]
   },
   "guide": {
